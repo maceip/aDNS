@@ -12,9 +12,6 @@ changed by these fixes. Frozen native acceptance sources remain unchanged.
 
 | Alert | Path or group | Review and action |
 | --- | --- | --- |
-| 24 | `3rdparty/test/doctest/doctest.h` | A real retained test-library defect: self-append aliases the source while resizing and ASan reports overlapping `memcpy`. A defensive copy handles self-aliasing before mutation. Eight sizes around the inline/heap boundary, three repeated self-appends, and independent appends pass ASan/UBSan. This header is used by the legacy resolver tests, not the current CCF application build. |
-| 22 | `demo/client/ksk.py` | The unverified public quote fetch is in retained demo bootstrap. Following that path uncovered a tautological TLS/report comparison. It now checks the observed TLS SPKI SHA256 against the authenticated 64-byte report's first32 bytes, rejects malformed/mismatched inputs, and remains enforced under `python -O`. Real generated public keys and all32 digest-byte mutations are tested. This does not modernize the rest of the legacy bootstrap. |
-| 23, 6 | `demo/server/service.py` | The retained demo still submits to a legacy endpoint with certificate verification disabled and uses a default TLS server context. It is not an approved current registration or deployment path. No active runtime imports this module; its remaining limitations are explicit in the README. |
 | 4 | `tools/ccf_control.py` | The current client already sets `minimum_version=TLSv1_2`, uses CA verification, checks the hostname, and preserves SNI with numeric connections. The reported sink does not account for the existing floor. Tests assert those properties and reject the wrong hostname before HTTP. |
 | 3, 5 | Archived copies of `ccf_control.py` | The frozen files also contain the explicit TLS1.2 floor. They were preserved byte-for-byte as historical evidence. |
 | 18 | Current `verify_native_mail.py` | Set explicit TLS1.2 floors on its positive and untrusted-CA negative client contexts. |
