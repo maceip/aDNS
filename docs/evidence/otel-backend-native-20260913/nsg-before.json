@@ -1,0 +1,42 @@
+[
+  {
+    "access": "Allow",
+    "destinationAddressPrefix": "*",
+    "destinationAddressPrefixes": [],
+    "destinationPortRange": "53",
+    "destinationPortRanges": [],
+    "direction": "Inbound",
+    "etag": "W/\"746f944a-a0b3-4457-8b50-02e25c25bd95\"",
+    "id": "/subscriptions/1b191b4c-2968-420a-b275-5087e94bf355/resourceGroups/agentdns-port-validation-20260913/providers/Microsoft.Network/networkSecurityGroups/agentdns-secondary-vm-nsg/securityRules/allow-dns-tcp",
+    "name": "allow-dns-tcp",
+    "priority": 100,
+    "protocol": "Tcp",
+    "provisioningState": "Succeeded",
+    "resourceGroup": "agentdns-port-validation-20260913",
+    "sourceAddressPrefix": "*",
+    "sourceAddressPrefixes": [],
+    "sourcePortRange": "*",
+    "sourcePortRanges": [],
+    "type": "Microsoft.Network/networkSecurityGroups/securityRules"
+  },
+  {
+    "access": "Allow",
+    "destinationAddressPrefix": "*",
+    "destinationAddressPrefixes": [],
+    "destinationPortRange": "53",
+    "destinationPortRanges": [],
+    "direction": "Inbound",
+    "etag": "W/\"746f944a-a0b3-4457-8b50-02e25c25bd95\"",
+    "id": "/subscriptions/1b191b4c-2968-420a-b275-5087e94bf355/resourceGroups/agentdns-port-validation-20260913/providers/Microsoft.Network/networkSecurityGroups/agentdns-secondary-vm-nsg/securityRules/allow-dns-udp",
+    "name": "allow-dns-udp",
+    "priority": 110,
+    "protocol": "Udp",
+    "provisioningState": "Succeeded",
+    "resourceGroup": "agentdns-port-validation-20260913",
+    "sourceAddressPrefix": "*",
+    "sourceAddressPrefixes": [],
+    "sourcePortRange": "*",
+    "sourcePortRanges": [],
+    "type": "Microsoft.Network/networkSecurityGroups/securityRules"
+  }
+]

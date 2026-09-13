@@ -5,6 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 [dependencies]
+adns-telemetry = { path = "../adns-telemetry" }
 adns-wire = { path = "../adns-wire" }
 adns-dnssec = { path = "../adns-dnssec" }
 adns-auth = { path = "../adns-auth" }

@@ -1,0 +1,25 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "213",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.2587",
+    "x-ms-ccf-transaction-id": "2.2592"
+  },
+  "body": {
+    "active_ports": [
+      465,
+      993
+    ],
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+    "registration_status": "active",
+    "status": "committed",
+    "tx_id": "2.2587",
+    "zone_serial": 20
+  },
+  "confirmed_ccf_transaction_id": "2.2587"
+}

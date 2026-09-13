@@ -1,0 +1,26 @@
+# Merge after otel-collector.yaml. Only the authenticated receiver enters pipelines.
+extensions:
+  basicauth/native:
+    htpasswd:
+      file: /run/agentdns-otel/htpasswd
+receivers:
+  otlp/native:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:8443
+        max_request_body_size: 4194304
+        read_timeout: 5s
+        write_timeout: 5s
+        tls:
+          cert_file: /run/agentdns-otel/server.pem
+          key_file: /run/agentdns-otel/server-key.pem
+          min_version: "1.3"
+        auth:
+          authenticator: basicauth/native
+service:
+  extensions: [basicauth/native]
+  pipelines:
+    traces:
+      receivers: [otlp/native]
+    logs:
+      receivers: [otlp/native]

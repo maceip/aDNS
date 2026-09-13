@@ -1,0 +1,1 @@
+{"status": "passed", "actual_listeners": {"465": "0100007F", "25": "0100007F", "993": "0100007F"}, "authenticated_tls_versions": {"25": "TLSv1.3", "465": "TLSv1.3", "993": "TLSv1.3"}, "tls11_rejected": true, "scope": "isolated Ubuntu SMTP fixture; no mail delivery or native appraisal"}

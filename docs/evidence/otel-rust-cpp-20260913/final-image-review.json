@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "image_index": "b7f684387fae207e17a5390ac358fb63164740435f88ff01611e362501af2006",
+  "amd64_manifest": "656da81a843d48c6c46625fa0e68698ea43481e0858c6ae59e3f710f258afe4d",
+  "source_manifest": "source-v4-manifest.json",
+  "sdk_import_probe": "runtime-v4-import.json",
+  "full_image_secret_scan": "secret-v4-audit.json",
+  "ubuntu_compatibility": {
+    "original": "The exact Ubuntu cryptography 41 package rejected the newly used aware certificate-date properties. The initial failure log is preserved.",
+    "fix": "Use aware UTC properties when available and assign UTC to the older documented naive UTC dates otherwise.",
+    "validation": "Both suites passed with Ubuntu system dependencies: 7 preflight and 17 control tests; both also passed with current local cryptography."
+  },
+  "initial_probe": "The first ad hoc import probe used the preceding registry tag and omitted the script directory from sys.path. It was corrected before the final image was scanned or pushed; the final full image result is recorded above."
+}

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "tests": 29,
+  "test_elapsed_seconds": 4.249,
+  "runtime": "Actual local Azure Linux3 container onDocker/OrbStack; notAzurehardwaredeployment",
+  "image": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+  "python": "3.12.14 (main, Aug 18 2026, 15:00:50) [GCC 13.2.0]",
+  "started_unix_seconds": 1789291704.970449,
+  "ended_unix_seconds": 1789291712.5096242,
+  "source_integrity_passed": true,
+  "cleanup_passed": true,
+  "coverage": [
+    "realHTTPandHTTPSOTLPprotobuf",
+    "customCAandconfiguredTLSauthenticationheaders",
+    "wronghostnameandtrustrejected",
+    "headersandresourcesallowlisted",
+    "nativeIDstimeparentlinkspreserved",
+    "driver-versus-authorityresources",
+    "body/secret/error-exclusion",
+    "absoluteTLSheaderandexportdeadlines",
+    "queueboundsandfiniteshutdown",
+    "W3Ccontextandexplicitthreadpoolattachment",
+    "committedNOTIFY-AXFR-SOA-refreshlinks",
+    "rejectedobservationcannotadvancecontextcache"
+  ],
+  "limit": "Link-chain unitusesfakecommittedCCFgate. ActualTSIG, CCFglobalcommit andnativeSNPproofofthenewinstrumentedbuildrequireseparateintegration."
+}

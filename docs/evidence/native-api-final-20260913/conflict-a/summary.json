@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "http_status": 409,
+  "operation": "native_changed_key_registration_conflict",
+  "original_transaction_id": "2.143",
+  "signed_message_digest": "879f29a19f3edf3a962d22a970283fc9239653f536da514b618ad35668f6e968",
+  "new_key_signature_verified": true,
+  "original_result_unchanged": true,
+  "zone_serial_unchanged": true
+}

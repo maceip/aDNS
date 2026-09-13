@@ -29,6 +29,12 @@ capture = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(capture)
 
 
+def client_context(**kwargs):
+    context = ssl.create_default_context(**kwargs)
+    context.minimum_version = ssl.TLSVersion.TLSv1_2
+    return context
+
+
 def config():
     return {"request_id": "aci-capture-2026-09-13", "audience": "ccf://agentdns.test",
             "grant_id": "aci-test-owner", "zone": "example.test.", "role": "mx-edge",
@@ -171,7 +177,7 @@ class CaptureTests(unittest.TestCase):
         thread = threading.Thread(target=server.serve_forever)
         thread.start()
         self.addCleanup(lambda: (server.shutdown(), server.server_close(), thread.join()))
-        context = ssl.create_default_context(cadata=self.state.inventory()["tls_certificate_pem"])
+        context = client_context(cadata=self.state.inventory()["tls_certificate_pem"])
         for phase in ("headers", "body"):
             with mock.patch.object(capture, "HTTP_DEADLINE_SECONDS", 0.35):
                 with socket.create_connection(server.server_address, timeout=2) as raw:
@@ -244,7 +250,7 @@ class CaptureTests(unittest.TestCase):
         thread.start()
         self.addCleanup(lambda: (server.shutdown(), server.server_close(), thread.join()))
         cert_pem = self.state.tls_certificate.public_bytes(serialization.Encoding.PEM).decode("ascii")
-        context = ssl.create_default_context(cadata=cert_pem)
+        context = client_context(cadata=cert_pem)
         address = server.server_address
         def connect(context=context, hostname=capture.TLS_SERVER_NAME):
             raw = socket.create_connection(address, timeout=5)
@@ -297,7 +303,7 @@ class CaptureTests(unittest.TestCase):
         status, raw = request("POST", "/lifecycle/signed-request", lifecycle, token)
         self.assertEqual(status, 200)
         self.assertEqual(json.loads(raw)["action"], prepared["action"])
-        for untrusted_context, hostname in [(ssl.create_default_context(), capture.TLS_SERVER_NAME),
+        for untrusted_context, hostname in [(client_context(), capture.TLS_SERVER_NAME),
                                             (context, "wrong.example.test")]:
             with self.assertRaises(ssl.SSLCertVerificationError):
                 connect(untrusted_context, hostname)
@@ -321,7 +327,7 @@ class CaptureTests(unittest.TestCase):
 
     def test_starttls_smtp_uses_attested_key_and_refuses_mail(self):
         address = self.mail_fixture(25)
-        context = ssl.create_default_context(cadata=self.state.tls_certificate.public_bytes(serialization.Encoding.PEM).decode())
+        context = client_context(cadata=self.state.tls_certificate.public_bytes(serialization.Encoding.PEM).decode())
         with smtplib.SMTP(*address, timeout=5) as smtp:
             self.assertEqual(smtp.ehlo()[0], 250)
             self.assertTrue(smtp.has_extn("starttls"))
@@ -339,7 +345,7 @@ class CaptureTests(unittest.TestCase):
             self.assertEqual(smtp.docmd("AUTH PLAIN", "test-only")[0], 550)
 
     def test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox(self):
-        context = ssl.create_default_context(cadata=self.state.tls_certificate.public_bytes(serialization.Encoding.PEM).decode())
+        context = client_context(cadata=self.state.tls_certificate.public_bytes(serialization.Encoding.PEM).decode())
         for port in (465, 993):
             address = self.mail_fixture(port)
             with socket.create_connection(address, timeout=5) as raw:
@@ -352,7 +358,7 @@ class CaptureTests(unittest.TestCase):
                     tls.sendall(b"MAIL FROM:<sender@example.test>\r\n" if port == 465 else b"a LOGIN test-only disabled\r\n")
                     self.assertTrue(stream.readline().startswith(b"550" if port == 465 else b"a NO"))
                     stream.close()
-            for trust, hostname in [(context, "wrong.example.test"), (ssl.create_default_context(), "mail.example.test")]:
+            for trust, hostname in [(context, "wrong.example.test"), (client_context(), "mail.example.test")]:
                 with socket.create_connection(address, timeout=5) as raw:
                     with self.assertRaises(ssl.SSLCertVerificationError):
                         trust.wrap_socket(raw, server_hostname=hostname)

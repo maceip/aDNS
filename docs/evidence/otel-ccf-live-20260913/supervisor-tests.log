@@ -1,0 +1,21 @@
+test_active_replacement_listener_is_preserved_after_old_child_death (test_supervisor.SupervisorSocketRecoveryTests.test_active_replacement_listener_is_preserved_after_old_child_death) ... ok
+test_actual_crash_leaves_socket_and_reaped_child_can_restart (test_supervisor.SupervisorSocketRecoveryTests.test_actual_crash_leaves_socket_and_reaped_child_can_restart) ... ok
+test_nonprivate_replaced_or_wrong_owner_parent_is_preserved (test_supervisor.SupervisorSocketRecoveryTests.test_nonprivate_replaced_or_wrong_owner_parent_is_preserved) ... ok
+test_regular_file_symlink_and_wrong_configured_path_are_never_removed (test_supervisor.SupervisorSocketRecoveryTests.test_regular_file_symlink_and_wrong_configured_path_are_never_removed) ... ok
+test_socket_path_limit_matches_receiver (test_supervisor.SupervisorSocketRecoveryTests.test_socket_path_limit_matches_receiver) ... ok
+test_child_environment_does_not_inherit_secret_values (test_supervisor.SupervisorTest.test_child_environment_does_not_inherit_secret_values) ... ok
+test_confidential_readonly_secret_volume_and_write_permissions (test_supervisor.SupervisorTest.test_confidential_readonly_secret_volume_and_write_permissions) ... ok
+test_disabled_or_unavailable_tracing_does_not_prevent_startup (test_supervisor.SupervisorTest.test_disabled_or_unavailable_tracing_does_not_prevent_startup) ... ok
+test_duplicate_manifest_key_rejected (test_supervisor.SupervisorTest.test_duplicate_manifest_key_rejected) ... ok
+test_exporter_credentials_never_enter_ccf_environment (test_supervisor.SupervisorTest.test_exporter_credentials_never_enter_ccf_environment) ... ok
+test_provisioning_requires_object_and_matching_committed_transaction (test_supervisor.SupervisorTest.test_provisioning_requires_object_and_matching_committed_transaction) ... ok
+test_tampered_file_manifest_and_missing_member_rejected (test_supervisor.SupervisorTest.test_tampered_file_manifest_and_missing_member_rejected) ... ok
+test_verified_bootstrap_is_frozen_before_input_can_change (test_supervisor.SupervisorTest.test_verified_bootstrap_is_frozen_before_input_can_change) ... ok
+test_real_tls_response_size_duplicate_header_and_success (test_supervisor.SupervisorTlsBoundsTests.test_real_tls_response_size_duplicate_header_and_success) ... ok
+test_real_tls_trickling_headers_and_body_have_one_absolute_deadline (test_supervisor.SupervisorTlsBoundsTests.test_real_tls_trickling_headers_and_body_have_one_absolute_deadline) ... ok
+test_unresponsive_tls_handshake_consumes_the_same_deadline (test_supervisor.SupervisorTlsBoundsTests.test_unresponsive_tls_handshake_consumes_the_same_deadline) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.208s
+
+OK

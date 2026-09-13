@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "server": "20.166.33.141",
+  "port": 53,
+  "minimum_committed_serial": 20,
+  "observed_serial": 20,
+  "started_unix_seconds": 1789289895.1243722,
+  "matched_unix_seconds": 1789289896.1805449,
+  "elapsed_seconds": 3.09515280100004,
+  "poll_samples": 1,
+  "checks": [
+    {
+      "owner": "mail.example.test.",
+      "type": "A",
+      "expected_rdata": [
+        "192.0.2.1"
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "AAAA",
+      "expected_rdata": [
+        "2001:db8::1"
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "MX",
+      "expected_rdata": [
+        "10 mail.example.test."
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_25._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_465._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [
+        "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_993._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [
+        "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+      ],
+      "dnssec_validated": true
+    }
+  ],
+  "boundary": "Exact public authoritative RRsets and stock DNSSEC validation; cause/timing is correlated with separate committed mutation/maintenance evidence."
+}

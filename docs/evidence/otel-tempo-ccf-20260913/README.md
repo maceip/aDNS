@@ -1,0 +1,9 @@
+# Actual Virtual CCF spans independently retrieved from Tempo
+
+This bundle verifies the storage/export path for the corrected real CCF quorum and member-share recovery workload. It is **local Virtual CCF**, not a native-hardware trace claim. The corrected workload captured 29 actual SDK HTTP/protobuf batches; all 78 traces, 324 spans and 5 links were independently retrieved from the running pinned Collector → Tempo backend and matched to the normalized captured spans.
+
+The comparison checks every trace/span/parent identity, name, kind, start/end timestamp, status, approved attribute projection and asynchronous link. Collector intentionally removes `dns.zone` and `error.type`; the expected projection explicitly accounts for those omissions. Tempo represents IDs as base64 and enums as strings, while the capture uses normalized hex IDs and integer enums; the verifier normalizes only those equivalent encodings and absent root-parent values. Two earlier harness attempts stopped on these JSON representation differences and remain in the private run directory. They are not dropped-span failures.
+
+`expected/` contains the exact capture span bytes named by the source hashes in `result.json`; `tempo/` contains all 78 actual HTTP responses; `source/` contains the exact executed comparison helper. Its historical input/output paths refer to the preserved private run. The adjacent local backend bundle binds the running Collector configuration and official image versions. Credentials, cookies, private keys and runtime environment files are excluded. These raw requests contain only the reviewed telemetry fields; source and copied output hashes were checked before export.
+
+The source CCF proof and earlier Unix-datagram backpressure failure/correction are owned by the separate live CCF acceptance report; this bundle does not replace quorum/recovery execution evidence or claim native deployment.

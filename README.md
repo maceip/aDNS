@@ -69,6 +69,8 @@ cd build
 
 ## Legacy C++ end-to-end demo
 
+This retained demo uses legacy endpoints and calls that disable TLS certificate verification. It is separate from the active Rust/CCF validation and native deployment path described in [operations](docs/operations.md). See the [CodeQL triage](docs/codeql-triage-20260913.md) for the narrowly tested legacy fixes and remaining demo limitations.
+
 Make sure you're running in the container (devcontainer setup is suitable). Check out [demo](./demo/README.md) for details.
 
 ## Contributing

@@ -2,6 +2,8 @@
 # RPM digest and Rust version. Record this image's resulting digest for rollout.
 ARG TOOLCHAIN_IMAGE=agentdns-ccf-toolchain:7.0.15
 FROM ${TOOLCHAIN_IMAGE} AS build
+COPY ccf/requirements-otel.txt /tmp/requirements-otel.txt
+RUN python3 -m pip install --no-cache-dir --target /out/python -r /tmp/requirements-otel.txt
 COPY Cargo.toml Cargo.lock /src/
 COPY crates /src/crates
 COPY ccf /src/ccf
@@ -15,7 +17,10 @@ FROM mcr.microsoft.com/azurelinux/base/core:3.0@sha256:c877612270d1ee2d6ab2bc1f6
 RUN tdnf -y install ca-certificates python3 libuv nghttp2 openssl-libs libcurl libstdc++ && tdnf clean all
 COPY --from=build /build/agentdns /usr/local/bin/agentdns
 COPY --from=build /out/ /opt/agentdns/
-COPY ccf/host_driver.py ccf/run.py /opt/agentdns/
+COPY ccf/host_driver.py ccf/run.py ccf/telemetry.py /opt/agentdns/
+# Direct driver invocations (including the isolated CCF/BIND harness) use the
+# same image-owned SDK directory as supervisor-spawned exporters.
+ENV PYTHONPATH=/opt/agentdns/python
 WORKDIR /state
 EXPOSE 8000/tcp 8002/tcp 5353/tcp 5353/udp
 ENTRYPOINT ["python3","/opt/agentdns/run.py"]

@@ -1,0 +1,70 @@
+{
+  "status": "all_24_published_findings_triaged",
+  "analysis_commit": "a40fae93b0bea646982794b388b719c90c6385b9",
+  "analysis_run": "https://github.com/maceip/agentdns/actions/runs/34749315137",
+  "published_alerts": 24,
+  "current_authority_image_changed": false,
+  "frozen_evidence_changed": false,
+  "generic_rule_suppressions_or_api_dismissals": false,
+  "demonstrated_defects_fixed": [
+    "legacy doctest self-aliasing append: originalASan memcpy-param-overlap exit134, fixedASan/UBSan pass",
+    "legacy demo tautological TLS/report comparison replaced with validated actual digest comparison",
+    "current SMTP test listeners narrowed toloopback; explicitTLS1.2 test-context floors"
+  ],
+  "tests": {
+    "linux_fixture_tests": 37,
+    "ubuntu_control_tests": 14,
+    "optimized_python_legacy_binding_tests": 2,
+    "legacy_cpp_asan_ubsan": {
+      "sizes": [
+        0,
+        1,
+        10,
+        22,
+        23,
+        24,
+        64,
+        129
+      ],
+      "self_appends_per_size": 3,
+      "independent_append_verified": true,
+      "apple_clang_exit_code": 0,
+      "pinned_linux_toolchain_exit_code": 0,
+      "linux_command": "clang++ -std=c++17 -g -pthread -fsanitize=address,undefined -I /src /src/tests/legacy_doctest_string.cpp -o /tmp/legacy-doctest-string && /tmp/legacy-doctest-string"
+    },
+    "actual_ubuntu_smtp": {
+      "status": "passed",
+      "actual_listeners": {
+        "465": "0100007F",
+        "25": "0100007F",
+        "993": "0100007F"
+      },
+      "authenticated_tls_versions": {
+        "25": "TLSv1.3",
+        "465": "TLSv1.3",
+        "993": "TLSv1.3"
+      },
+      "tls11_rejected": true,
+      "scope": "isolated Ubuntu SMTP fixture; no mail delivery or native appraisal"
+    }
+  },
+  "retained_limitations": [
+    "Legacy demo verify=False calls and old APIs remain outside the supported production validation path. Narrow binding fix does not modernize its complete security model.",
+    "Stock BIND receives its necessary TSIG file in plaintext at mode0600 underprivate directories; application-level encryption is not claimed.",
+    "CodeQL may continue flagging explicit floors/default models or deliberate downgrade-negative fixtures. A successful analysis is not a zero-alert claim.",
+    "An initial host attempt was unsuitable for Linux memfd/socket tests; only the actual successful Linux suites are counted.",
+    "The local Ubuntu image lacked an AMD64 variant during the first metadata probe; the actual locally installed architecture was inspected with pulls disabled."
+  ],
+  "source_sha256": {
+    "3rdparty/test/doctest/doctest.h": "951bad9dba5042f4f38c76a6305ab27540fec81a28e3679f79b415f20592321f",
+    "demo/client/ksk.py": "01da26addc598374abaf133f372c67f58e44b052824b4718ef8a28a9f6deaa69",
+    "tests/legacy_doctest_string.cpp": "ff3d26db134f9547d6817c88e6bd6a67a88c73a38bbba6b178b295582513ae31",
+    "tools/tests/test_legacy_tls_binding.py": "65fce5331ca89b7b7e2f6640b7bebc80bcc0db75bec1e887b63877464607fb34",
+    "tests/rust-integration/smtp_fixture.py": "d58252e529e905cbcb5a1f60425abc769d3bfb01f8693945c86b7b35883a9999",
+    "tests/rust-integration/verify_mail.py": "637f4b87b2f9a83fc4be1ed4e0289304760ab4547a07db3c39e0e53bfabbc271",
+    "tests/rust-integration/verify_native_mail.py": "c733157d188554b46515d3e8950a79faf85de1d8eb6f276ec71970745113c7b6",
+    "tools/tests/test_capture_aci.py": "b931b267930b2ae0d767a085a42d6a8b3e30b99938586420ec5e9b84399016f7",
+    "tools/tests/test_control_tools.py": "225476a71e06825f087d19551820de87cf18d41ba714bff6ffde242ad3eb9e1f",
+    "tools/tests/test_audit_ccf_node.py": "52b0647bcc764edc9b2a9e77fdda665f1bacafb8b0b3de9d4a398c3eec7d865a"
+  }
+}

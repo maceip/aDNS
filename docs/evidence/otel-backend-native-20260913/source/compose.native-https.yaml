@@ -1,0 +1,12 @@
+# Optional native ingress. Requires concrete host binding, TLS SAN and firewall review.
+# Compose >=2.24.4 is required for !override: cleartext OTLP ports are replaced.
+services:
+  otel-collector:
+    command:
+      - --config=/etc/otelcol/config.yaml
+      - --config=/etc/otelcol/native.yaml
+    volumes:
+      - ./otel-native-https.yaml:/etc/otelcol/native.yaml:ro
+      - ${AGENTDNS_OTEL_TLS_DIRECTORY:?Provide a protected absolute TLS runtime directory}:/run/agentdns-otel:ro
+    ports: !override
+      - "${AGENTDNS_OTEL_BIND_IP:?Explicit reviewed listen IP required}:${AGENTDNS_OTEL_TLS_PORT:-4318}:8443"

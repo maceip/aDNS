@@ -1,0 +1,35 @@
+41.0.7
+test_aci_port_numbers_unique_across_protocols_and_containers (test_aci_preflight.ArchivePreflightTests.test_aci_port_numbers_unique_across_protocols_and_containers) ... ok
+test_combined_archive_and_wrong_platform_manifest_rejected (test_aci_preflight.ArchivePreflightTests.test_combined_archive_and_wrong_platform_manifest_rejected) ... ok
+test_distinct_single_image_archive_and_actual_layer_digest (test_aci_preflight.ArchivePreflightTests.test_distinct_single_image_archive_and_actual_layer_digest) ... ok
+test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes (test_aci_preflight.ArchivePreflightTests.test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes) ... ok
+test_two_names_cannot_alias_one_archive_even_via_hardlink (test_aci_preflight.ArchivePreflightTests.test_two_names_cannot_alias_one_archive_even_via_hardlink) ... ok
+test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) ... ok
+test_optional_public_only_preflight_and_ordinary_template (test_aci_preflight.TelemetryPreflightTests.test_optional_public_only_preflight_and_ordinary_template) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.046s
+
+OK
+test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected (test_control_tools.BootstrapTemplateTests.test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected) ... ok
+test_local_virtual_control_omits_native_attestation_but_cannot_deploy_as_aci (test_control_tools.BootstrapTemplateTests.test_local_virtual_control_omits_native_attestation_but_cannot_deploy_as_aci) ... ok
+test_optional_otel_preserves_bootstrap_and_separates_secret_from_public_policy (test_control_tools.BootstrapTemplateTests.test_optional_otel_preserves_bootstrap_and_separates_secret_from_public_policy) ... ok
+test_otel_endpoint_labels_and_public_ca_are_strict (test_control_tools.BootstrapTemplateTests.test_otel_endpoint_labels_and_public_ca_are_strict) ... ok
+test_otel_private_configuration_rejects_wrong_endpoint_auth_and_permissions_without_values (test_control_tools.BootstrapTemplateTests.test_otel_private_configuration_rejects_wrong_endpoint_auth_and_permissions_without_values) ... ok
+test_prepared_files_are_pinned_and_private_files_are_owner_only (test_control_tools.BootstrapTemplateTests.test_prepared_files_are_pinned_and_private_files_are_owner_only) ... ok
+test_public_template_contains_only_secure_parameter_references (test_control_tools.BootstrapTemplateTests.test_public_template_contains_only_secure_parameter_references) ... ok
+test_invalid_mismatched_and_malformed_status_are_not_commitment (test_control_tools.CommitmentTests.test_invalid_mismatched_and_malformed_status_are_not_commitment) ... ok
+test_noncanonical_txids_and_conflicting_application_identity_are_rejected (test_control_tools.CommitmentTests.test_noncanonical_txids_and_conflicting_application_identity_are_rejected) ... ok
+test_pending_status_cannot_extend_polling_deadline (test_control_tools.CommitmentTests.test_pending_status_cannot_extend_polling_deadline) ... ok
+test_preopen_node_endpoint_and_original_application_tx_id (test_control_tools.CommitmentTests.test_preopen_node_endpoint_and_original_application_tx_id) ... ok
+test_absolute_deadline_interrupts_trickling_headers_and_body (test_control_tools.HttpBoundaryTests.test_absolute_deadline_interrupts_trickling_headers_and_body) ... ok
+test_byte_limit_and_total_read_deadline (test_control_tools.HttpBoundaryTests.test_byte_limit_and_total_read_deadline) ... ok
+test_untrusted_capture_decoding_is_bounded_and_canonical (test_control_tools.HttpBoundaryTests.test_untrusted_capture_decoding_is_bounded_and_canonical) ... ok
+test_legacy_tls_offer_is_rejected_before_http (test_control_tools.PinnedTlsTests.test_legacy_tls_offer_is_rejected_before_http) ... ok
+test_numeric_connection_preserves_authenticated_dns_sni (test_control_tools.PinnedTlsTests.test_numeric_connection_preserves_authenticated_dns_sni) ... ok
+test_wrong_tls_name_fails_before_http_bytes (test_control_tools.PinnedTlsTests.test_wrong_tls_name_fails_before_http_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.673s
+
+OK

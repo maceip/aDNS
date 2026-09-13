@@ -6,6 +6,7 @@ rust-version.workspace = true
 license.workspace = true
 
 [dependencies]
+adns-telemetry = { path = "../adns-telemetry" }
 base64.workspace = true
 coset = "0.4"
 ciborium = "0.2"

@@ -1,0 +1,32 @@
+{
+  "observed_start_unix_seconds": 1789287736.2953715,
+  "server": "20.166.33.141",
+  "samples": [
+    {
+      "protocol": "UDP",
+      "rcode": "NOERROR",
+      "authoritative": true,
+      "response_base64": "IrWFAAABAAIAAAABB2V4YW1wbGUEdGVzdAAABgABwAwABgABAAAAPAAmAm5zwAwKaG9zdG1hc3RlcsAMAAAABwAAADwAAAAeAAACWAAAADzADAAuAAEAAAA8AIAABg4CAAAAPGqmX0xqplvITv4HZXhhbXBsZQR0ZXN0ADbdkFydnhuSM5Sl2tQiml2kzcqfqLVLNE2Yj3Gn3TQCn44wr9p7oj6QuJ13/FZX7O5xfF+odmSPchvQr9ppb7Ii+MAZ0SbZj5yR5b1SyARmdw2gfPaHh4hHQ5U6h48vcwAAKQTQAACAAAAA",
+      "unix_seconds": 1789287736.452662,
+      "serial": 7,
+      "signature_expirations": [
+        1789288268
+      ],
+      "ready": true
+    },
+    {
+      "protocol": "TCP",
+      "rcode": "NOERROR",
+      "authoritative": true,
+      "response_base64": "XV2FAAABAAIAAAABB2V4YW1wbGUEdGVzdAAABgABwAwABgABAAAAPAAmAm5zwAwKaG9zdG1hc3RlcsAMAAAABwAAADwAAAAeAAACWAAAADzADAAuAAEAAAA8AIAABg4CAAAAPGqmX0xqplvITv4HZXhhbXBsZQR0ZXN0ADbdkFydnhuSM5Sl2tQiml2kzcqfqLVLNE2Yj3Gn3TQCn44wr9p7oj6QuJ13/FZX7O5xfF+odmSPchvQr9ppb7Ii+MAZ0SbZj5yR5b1SyARmdw2gfPaHh4hHQ5U6h48vcwAAKQTQAACAAAAA",
+      "unix_seconds": 1789287736.7531962,
+      "serial": 7,
+      "signature_expirations": [
+        1789288268
+      ],
+      "ready": true
+    }
+  ],
+  "both_ready": true,
+  "scope": "Independent stock DNS parser: public authoritative SOA and unexpired signature presence on TCP+UDP; cryptographic anchor validation separate"
+}

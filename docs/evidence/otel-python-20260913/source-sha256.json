@@ -1,0 +1,8 @@
+{
+  "ccf/telemetry.py": "a3cd75cc0b446d99b0a37f168a25942eca664ca11ceb45e1dde272a1b3afa84e",
+  "ccf/host_driver.py": "f7f321e5bc8011961a45f4bb6e98e5970c4a5c055cbde7c9de28a4bac75d74e0",
+  "ccf/test_telemetry.py": "aa76ff99a9880a8fa1b409875a9226cdfb74171a08b3b61466b5f2384c48a06d",
+  "ccf/test_host_driver.py": "a6b47c22a4847f956607588d05877fe1cfcaf542be79422549677651030bfc35",
+  "ccf/requirements-otel.txt": "51bb9fe5ffa45053a56df6fd2ff6940e102fb2cadef73354470cd2e8d4ec4eb6",
+  "ccf/TELEMETRY.md": "d542edba33ea3ef33a704eacc96eb849f30cb755b3f93267bf5bae94d19983fe"
+}

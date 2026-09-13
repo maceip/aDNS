@@ -1,0 +1,32 @@
+[
+  {
+    "owner": "mail.example.test.",
+    "type": "A",
+    "rdata": []
+  },
+  {
+    "owner": "mail.example.test.",
+    "type": "AAAA",
+    "rdata": []
+  },
+  {
+    "owner": "example.test.",
+    "type": "MX",
+    "rdata": []
+  },
+  {
+    "owner": "_25._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": []
+  },
+  {
+    "owner": "_465._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": []
+  },
+  {
+    "owner": "_993._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": []
+  }
+]

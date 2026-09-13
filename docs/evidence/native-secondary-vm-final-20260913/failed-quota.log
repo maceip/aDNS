@@ -1,0 +1,62 @@
+ERROR: The command failed with an unexpected error. Here is the traceback:
+ERROR: The content for this response was already consumed
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/__init__.py", line 789, in _run_job
+    result = cmd_copy(params)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/__init__.py", line 335, in __call__
+    return self.handler(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/command_operation.py", line 120, in handler
+    return op(**command_args)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/command_modules/vm/custom.py", line 1260, in create_vm
+    return sdk_no_wait(no_wait, client.begin_create_or_update, resource_group_name, deployment_name, deployment)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/util.py", line 794, in sdk_no_wait
+    return func(*args, **kwargs)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/core/tracing/decorator.py", line 119, in wrapper_use_tracer
+    return func(*args, **kwargs)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/mgmt/resource/resources/v2024_11_01/operations/_operations.py", line 11281, in begin_create_or_update
+    raw_result = self._create_or_update_initial(
+        resource_group_name=resource_group_name,
+    ...<7 lines>...
+        **kwargs
+    )
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/mgmt/resource/resources/v2024_11_01/operations/_operations.py", line 11174, in _create_or_update_initial
+    raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+azure.core.exceptions.HttpResponseError: (InvalidTemplateDeployment) The template deployment 'vm_deploy_Gdn4usN8ayaMbHbpZHaEwoIoAmrrQPG6' is not valid according to the validation procedure. The following resource provider(s) - 'Microsoft.Compute/virtualMachines (2025-04-01)' reported preflight validation errors. Tracking id is '04d50994-8475-46df-9c77-0e3630cf65d8'. See inner errors for details.
+Code: InvalidTemplateDeployment
+Message: The template deployment 'vm_deploy_Gdn4usN8ayaMbHbpZHaEwoIoAmrrQPG6' is not valid according to the validation procedure. The following resource provider(s) - 'Microsoft.Compute/virtualMachines (2025-04-01)' reported preflight validation errors. Tracking id is '04d50994-8475-46df-9c77-0e3630cf65d8'. See inner errors for details.
+Exception Details:	(QuotaExceeded) Operation could not be completed as it results in exceeding approved standardDCasv6Family Cores quota. Additional details - Deployment Model: Resource Manager, Location: northeurope, Current Limit: 0, Current Usage: 0, Additional Required: 2, (Minimum) New Limit Required: 2. Setup Alerts when Quota reaches threshold. Learn more at https://aka.ms/quotamonitoringalerting . Submit a request for Quota increase at https://aka.ms/ProdportalCRP/#blade/Microsoft_Azure_Capacity/UsageAndQuota.ReactView/Parameters/%7B%22subscriptionId%22:%221b191b4c-2968-420a-b275-5087e94bf355%22,%22command%22:%22openQuotaApprovalBlade%22,%22quotas%22:[%7B%22location%22:%22northeurope%22,%22providerId%22:%22Microsoft.Compute%22,%22resourceName%22:%22standardDCasv6Family%22,%22quotaRequest%22:%7B%22properties%22:%7B%22limit%22:2,%22unit%22:%22Count%22,%22name%22:%7B%22value%22:%22standardDCasv6Family%22%7D%7D%7D%7D]%7D by specifying parameters listed in the ‘Details’ section for deployment to succeed. Please read more about quota limits at https://docs.microsoft.com/en-us/azure/azure-supportability/per-vm-quota-requests
+	Code: QuotaExceeded
+	Message: Operation could not be completed as it results in exceeding approved standardDCasv6Family Cores quota. Additional details - Deployment Model: Resource Manager, Location: northeurope, Current Limit: 0, Current Usage: 0, Additional Required: 2, (Minimum) New Limit Required: 2. Setup Alerts when Quota reaches threshold. Learn more at https://aka.ms/quotamonitoringalerting . Submit a request for Quota increase at https://aka.ms/ProdportalCRP/#blade/Microsoft_Azure_Capacity/UsageAndQuota.ReactView/Parameters/%7B%22subscriptionId%22:%221b191b4c-2968-420a-b275-5087e94bf355%22,%22command%22:%22openQuotaApprovalBlade%22,%22quotas%22:[%7B%22location%22:%22northeurope%22,%22providerId%22:%22Microsoft.Compute%22,%22resourceName%22:%22standardDCasv6Family%22,%22quotaRequest%22:%7B%22properties%22:%7B%22limit%22:2,%22unit%22:%22Count%22,%22name%22:%7B%22value%22:%22standardDCasv6Family%22%7D%7D%7D%7D]%7D by specifying parameters listed in the ‘Details’ section for deployment to succeed. Please read more about quota limits at https://docs.microsoft.com/en-us/azure/azure-supportability/per-vm-quota-requests
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/arm.py", line 109, in handle_template_based_exception
+    raise CLIError(ex.inner_exception.error.message)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'error'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/knack/cli.py", line 233, in invoke
+    cmd_result = self.invocation.execute(args)
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/__init__.py", line 677, in execute
+    raise ex
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/__init__.py", line 820, in _run_jobs_serially
+    results.append(self._run_job(expanded_arg, cmd_copy))
+                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/__init__.py", line 812, in _run_job
+    return cmd_copy.exception_handler(ex)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/azure/cli/core/commands/arm.py", line 112, in handle_template_based_exception
+    raise_subdivision_deployment_error(ex.response.internal_response.text, ex.error.code if ex.error else None)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/requests/models.py", line 928, in text
+    if not self.content:
+           ^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/azure-cli/2.85.0/libexec/lib/python3.13/site-packages/requests/models.py", line 899, in content
+    raise RuntimeError("The content for this response was already consumed")
+RuntimeError: The content for this response was already consumed
+To check existing issues, please visit: https://github.com/Azure/azure-cli/issues

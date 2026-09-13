@@ -1,0 +1,16 @@
+{
+  "completed_unix_seconds": 1789287868.746871,
+  "validator_image": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615",
+  "anchor_sha256": "0523b9491e4caab4ff75282894746bb733fe78891e734f3cfb6ae8b2f2691566",
+  "results": {
+    "udp": {
+      "sha256": "838445ede61270e3e779868f683e2ed509813d2ebd0b6b0670b5a99f7df2e71f",
+      "fully_validated": true
+    },
+    "tcp": {
+      "sha256": "838445ede61270e3e779868f683e2ed509813d2ebd0b6b0670b5a99f7df2e71f",
+      "fully_validated": true
+    }
+  },
+  "scope": "Stock delv actual SOA positive validation, defaultUDP and forcedTCP, using separately receipt-verified anchor"
+}

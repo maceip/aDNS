@@ -7,7 +7,7 @@ or hosting deployment was modified. Public delegation, public certificate
 issuance and mail handling remain outside this project.
 
 The Rust implementation and local CCF integration are built and tested. Contract
-contract review added committed pending/failed request reconciliation,
+review added committed pending/failed request reconciliation,
 permanent governed TSIG identity revocation, and immutable appraisal-policy
 identities. These mechanisms are implemented and have passed unit, real CCF
 consensus/recovery and governance checks. The earlier assembled BIND/rotation
@@ -15,16 +15,30 @@ smoke and sustained local run passed on executable `7b41a3a9…`. The current
 native image contains executable `6bcbf0a8…`, including reviewed SNP version 5
 support; its exact ELF separately passed CCF quorum/rollback and disk recovery.
 
-The port is **not yet fully accepted**: the deployed confidential primary and
-both workers passed hardware appraisal, both genuine registrations committed,
-and independent DNS/TSIG/DNSSEC, controlled mail, operator-policy and ACME
-coexistence/deletion/expiry tests passed. The 1,250-second idle observation and
-1,200-second load are running, with final withdrawal, lease-expiry and changed-key
-conflict tests still required. See the [current native acceptance report](acceptance-native-final-20260913.md).
-Deployment, runtime test credentials, image publication and these tests are
-explicitly authorized. Ordinary pulls are retained. Earlier approval-review
-rejections are resolved history; there is no current approval hold. Earlier
-binaries and failed runs retain their original identities and outcomes.
+The original port is **accepted on the identified pre-OpenTelemetry image**.
+Both genuine registrations, independent DNS/TSIG/DNSSEC and controlled mail,
+ACME concurrency/expiry, the complete idle/load window, selective/full withdrawal,
+natural lease expiry and the freshly appraised changed-key conflict all passed.
+See the [native acceptance report](acceptance-native-final-20260913.md) for raw
+proof, measured packet loss, transient synchronization states and test boundaries.
+
+The subsequent OpenTelemetry and CI/CD requests are being completed separately.
+CI corrections are pushed as `a40fae9` and `99c4bed`; the latter fixes Linux helper
+ownership while preserving private file permissions. Its [four-job Rust workflow](https://github.com/maceip/agentdns/actions/runs/34750223266)
+and [five-language CodeQL workflow](https://github.com/maceip/agentdns/actions/runs/34750223261)
+passed. All 24 findings from the first analysis were reviewed, including
+two demonstrated defects in retained legacy code, with focused fixes and tests.
+The instrumented Rust workspace passed 116 tests, strict Clippy and Rust 1.85.1
+compilation. Exact executable `6ba239f1…` passed real CCF quorum/rollback and disk
+recovery with all 324 native spans reaching the SDK's OTLP output and collector.
+The local Collector/Tempo/Loki/Grafana stack passed authenticated transport,
+resource and privacy checks; [Tempo independently returned all 78 traces](evidence/otel-tempo-ccf-20260913/README.md).
+The [isolated Azure backend](evidence/otel-backend-native-20260913/README.md) passed
+TLS/authentication and synthetic ingest checks without restarting BIND.
+Fresh native primary deployment and trace acceptance remain
+in progress. Earlier image proofs are not relabeled for this candidate.
+Deployment, runtime credentials, publication and acceptance are authorized;
+there is no current approval hold.
 
 ## Implemented workstreams
 
@@ -36,7 +50,7 @@ binaries and failed runs retain their original identities and outcomes.
 | 4.1–4.5 authorization | `adns-auth`: governed exact Owner Grants, strict schemas/JCS, fixed P256 signatures, random nonces and atomic historical result cache. [Authorization report](auth-status.md). |
 | 5.1–5.5 storage | Consolidated collections, MVCC development driver, narrow live CCF transaction bridge, private encrypted key/TSIG maps. Real CCF quorum rollback and member-share disk recovery preserve keys, results and nonces. [CCF integration](ccf-integration.md). |
 | 6.1–6.7 API and distribution | Registration/renewal/withdrawal, ACME/operator/status, real receipts, DoH, TSIG AXFR/IXFR fallback, committed NOTIFY and authenticated served-SOA observation. [Transfer review](transfer-review.md), [local CCF/BIND report](acceptance-ccf-local.md). |
-| 7.1–7.4 lifecycle and acceptance | Independent timer driver, bounded active indexes, idle/expiry tests, stock BIND/validator/mail harnesses, fuzz/leak/load measurements, CI and operational runbook. Full native acceptance remains open. [Capacity/state format](lifecycle-bounds.md), [runbook](operations.md). |
+| 7.1–7.4 lifecycle and acceptance | Independent timer driver, bounded active indexes, idle/expiry tests, stock BIND/validator/mail harnesses, fuzz/leak/load measurements, CI and operational runbook. Full native acceptance passed on the recorded image. [Capacity/state format](lifecycle-bounds.md), [runbook](operations.md). |
 
 Owned messages/snapshots allocate their storage; the zero-allocation claim is
 limited to the measured name/borrowed-RDATA/exact-query operations. TDX, Nitro
@@ -45,20 +59,20 @@ the framework's `/app` prefix with unversioned logical paths.
 
 ## Twelve mandatory acceptance checks
 
-| # | Verified evidence | Remaining acceptance |
+| # | Verified evidence | Original acceptance |
 | --- | --- | --- |
-| 1 hardware appraisal | Both current ACI workers and the corrected primary passed native Rust and independent crypto/TLS verification, including sixteen negative variants each. Both worker registrations committed. | Complete. Fresh appraisal is required again for the later changed-key worker. |
-| 2 owner scope | Six genuine signed native hostname/role/address/port/expired/revoked-grant cases returned committed403 failures. None consumed the nonce or changed the zone; the same envelope then admitted. | Complete. |
-| 3 signed requests | Native JCS/fixed64 signatures, DER/altered-signature/evidence negatives, consumed nonce and exact original committed results on retry passed. | Final changed-key native request-ID conflict remains. |
-| 4 commitment | Exact current ELF passed real three-node quorum loss/rollback and recovery. Native admission/failure/lifecycle responses and historical transactions were independently confirmed committed; BIND served the observed committed serial. | Sustained status observations are running. Local consensus proof remains explicitly Virtual. |
-| 5 DNSSEC | Native full-zone `ldns-verify-zone`, thirteen stock `delv` positive/negative/NSEC3/wildcard checks and actual two-key mail-shaped records passed against a receipt-derived anchor. Earlier extensive wire/corruption tests remain preserved. | Complete initial native zone proof; withdrawal/expiry states still require validation. |
-| 6 secondary transfer | Native primary to stock BIND: ten authenticated AXFR frames, wrong/missing TSIG denied, public TCP/UDP53 serving. CCF authenticated served-serial observation reached `in_sync`. | Complete; sustained refresh observations are running. |
-| 7 idle maintenance | Native ACME natural expiry passed at serial14. The 1,250-second mutation-free observation is running and has already validated its first automatic signature refresh. | Complete the full window and later native lease expiry. |
-| 8 TLSA rotation | Both separately appraised native keys coexist and validate at25/465/993. | Retire one port and the full A registration, preserving B; then verify B expiry. |
-| 9 ACME concurrency | Native signed create/create/delete passed; stock validators observed both values, only the survivor after deletion, and authenticated absence after its natural expiry. | Complete. |
-| 10 mail interoperability | Stock Postfix DANE-only accepted both actual native worker keys and rejected a wrong key. Controlled PKIX465/993 and wrong-name/system-trust negatives passed for both. | Complete within the specified controlled test. Client-side DNAT, private trust and no public issuance/delivery claim are explicit. |
-| 11 KSK receipt | Native CCF receipt2.48 binds canonical owner/full DNSKEY and DS; independent owner/RDATA/proof/ID tamper variants failed. Exact-ELF disk recovery separately preserved its own KSK and verified its receipt. | Complete. |
-| 12 performance | Actual native admission samples:1508.392166ms and1429.411ms including TLS/WAN; actual signing spans retained. Earlier local baseline remains separate. | Finish native1200-second query load, latency sampling, container metrics and BIND process-memory collection. |
+| 1 hardware appraisal | Native primary, original A/B and fresh restarted A passed Rust and independent cryptographic/TLS verification. | Complete. |
+| 2 owner scope | Six genuine signed scope/grant denials committed failure metadata, preserved nonce and zone, then allowed the authorized request. | Complete. |
+| 3 signed requests | JCS/fixed64, negative variants, nonce safety, exact retries and fresh-key409 preserving original2.143 passed. | Complete. |
+| 4 commitment | Exact-ELF Virtual quorum/rollback/recovery plus actual native commit confirmations and115 sustained observations passed. | Complete; Virtual/native boundaries remain explicit. |
+| 5 DNSSEC | Independent full-zone validation and initial, sustained and terminal stock delv checks passed. | Complete. |
+| 6 secondary transfer | Ten authenticated AXFR frames, missing/wrong TSIG denials and public dual-transport BIND serving passed. | Complete; eight sampled synchronization transitions are reported. |
+| 7 idle maintenance | Complete1,250-second observation crossed four autonomous refreshes; ACME and registration natural expiry passed. | Complete. |
+| 8 TLSA rotation | Both keys coexisted; A port25/full withdrawal preserved B; B expiry removed the final dynamic records; old-A cache grace was respected. | Complete. |
+| 9 ACME concurrency | Create/create/delete and natural expiry passed through stock DNSSEC validators. | Complete. |
+| 10 mail interoperability | Stock Postfix DANE-only and controlled PKIX465/993 passed for actual worker keys with negative cases. | Complete within controlled DNAT/private-trust tests. |
+| 11 KSK receipt | Native receipt2.48 and independent tamper negatives passed; exact-ELF recovery separately retained its KSK/receipt. | Complete. |
+| 12 performance | Native1,200-second load,12,000 latency probes, signing durations, Azure container metrics and139 BIND process samples retained. | Complete;993.38948 completedqps and0.604188%WAN loss, not a lossless/max-capacity claim. |
 
 ## Earlier local candidate and test boundaries
 

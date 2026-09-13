@@ -1,0 +1,22 @@
+{
+  "server": "20.166.33.141",
+  "port": 53,
+  "observed_at_utc": "2026-09-13T07:31:17.045234+00:00",
+  "results": [
+    {
+      "protocol": "UDP",
+      "rcode": 2,
+      "answer_count": 0,
+      "authoritative": false,
+      "response_bytes": 30
+    },
+    {
+      "protocol": "TCP",
+      "rcode": 2,
+      "answer_count": 0,
+      "authoritative": false,
+      "response_bytes": 30
+    }
+  ],
+  "scope": "Independent external listener proof only; transfer is held and no signed zone readiness is claimed."
+}

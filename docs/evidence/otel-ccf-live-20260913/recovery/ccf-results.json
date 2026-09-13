@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "ccf_version": "7.0.15",
+  "platform": "Virtual (consensus test only)",
+  "request_reconciliation": "committed pending observation; globally committed403 after grant revocation; unchanged zone; exact original nonce succeeds after reauthorization; historical success preserved",
+  "operator_tx_id": "2.17",
+  "receipt_tx_id": "2.19",
+  "disk_recovery": {
+    "method": "new CCF Recover process, disk ledger/snapshot, real RSA-decrypted member share",
+    "ksk": "exact DNSKEY RDATA preserved; new identity receipt verified",
+    "tsig": "original private key authenticates AXFR after recovery",
+    "history": "original committed result and transaction ID preserved",
+    "failed_observation": "globally committed authenticated rejection and its live nonce survive disk recovery",
+    "nonce": "pre-recovery unconsumed nonce commits exactly once after recovery",
+    "original_tx_id": "2.17",
+    "recovered_receipt_tx_id": "4.43",
+    "post_recovery_tx_id": "4.45"
+  }
+}

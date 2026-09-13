@@ -1,0 +1,2 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+capture startup failed: ValueError: AGENTDNS_CAPTURE_TOKEN must be 32 random bytes in lowercase hex

@@ -1,0 +1,7 @@
+; negative response, fully validated
+; example.test.		60	IN	\-MX	;-$NXRRSET
+; example.test. SOA ns.example.test. hostmaster.example.test. 22 60 30 600 60
+; example.test. RRSIG SOA ...
+; jbas736chung3bb701jkjdhqkqlhvug7.example.test. RRSIG NSEC3 ...
+; jbas736chung3bb701jkjdhqkqlhvug7.example.test. NSEC3 1 0 0 - JJI966SB7R3H14MKVMOA9MJ7EU5QG918 NS SOA TXT RRSIG DNSKEY NSEC3PARAM CAA
+;; resolution failed: ncache nxrrset

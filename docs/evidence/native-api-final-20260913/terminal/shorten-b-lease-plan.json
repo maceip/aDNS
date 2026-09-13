@@ -1,0 +1,7 @@
+{
+  "prepared_at": 1789290092,
+  "admitted_at": 1789287817,
+  "requested_lease_seconds": 2425,
+  "expected_lease_expires_at": 1789290242,
+  "previous_lease_expires_at": 1789291417
+}

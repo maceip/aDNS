@@ -1,0 +1,183 @@
+[
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "at_unix_seconds": 1789289854.209325,
+    "elapsed_ms": 888.777375,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "221",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2584",
+        "x-ms-ccf-transaction-id": "2.2584"
+      },
+      "body": {
+        "expires_at": 1789290153,
+        "intent_hash": "7fbb1f3bd4ea6627f4847ede292feafe23f2333d77bb6e1cedd8e2637f0c4092",
+        "issued_at": 1789289853,
+        "nonce": "25ba4c7dac93685f3c952c8c2f774cb53431150c016e7cd6d3702f8df769ef6a",
+        "tx_id": "2.2584"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2584",
+    "at_unix_seconds": 1789289854.842787,
+    "elapsed_ms": 630.274125,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2584"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/deregister",
+    "at_unix_seconds": 1789289856.449721,
+    "elapsed_ms": 859.076125,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "213",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2587",
+        "x-ms-ccf-transaction-id": "2.2587"
+      },
+      "body": {
+        "active_ports": [
+          465,
+          993
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "active",
+        "status": "committed",
+        "tx_id": "2.2587",
+        "zone_serial": 20
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2587",
+    "at_unix_seconds": 1789289857.0870998,
+    "elapsed_ms": 636.830416,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2587"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=native-withdraw-a25-20260913",
+    "at_unix_seconds": 1789289858.461517,
+    "elapsed_ms": 1373.182084,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "213",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2587",
+        "x-ms-ccf-transaction-id": "2.2592"
+      },
+      "body": {
+        "active_ports": [
+          465,
+          993
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "active",
+        "status": "committed",
+        "tx_id": "2.2587",
+        "zone_serial": 20
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2587",
+    "at_unix_seconds": 1789289859.0763578,
+    "elapsed_ms": 614.412875,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2587"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/deregister",
+    "at_unix_seconds": 1789289859.711885,
+    "elapsed_ms": 635.064791,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "213",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2587",
+        "x-ms-ccf-transaction-id": "2.2593"
+      },
+      "body": {
+        "active_ports": [
+          465,
+          993
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "active",
+        "status": "committed",
+        "tx_id": "2.2587",
+        "zone_serial": 20
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2587",
+    "at_unix_seconds": 1789289860.457035,
+    "elapsed_ms": 743.779208,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2587"
+      }
+    }
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "image": {
+    "exactVersion": "24.04.202608260",
+    "offer": "ubuntu-24_04-lts",
+    "publisher": "Canonical",
+    "sku": "cvm",
+    "version": "24.04.202608260"
+  },
+  "name": "agentdns-secondary-vm",
+  "powerState": "VM running",
+  "privateIps": "10.71.0.4",
+  "provisioningState": "Succeeded",
+  "publicIps": "20.166.33.141",
+  "size": "Standard_EC2as_v5"
+}

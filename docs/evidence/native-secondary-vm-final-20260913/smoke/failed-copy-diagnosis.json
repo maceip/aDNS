@@ -1,0 +1,10 @@
+{
+  "value": [
+    {
+      "code": "ProvisioningState/succeeded",
+      "displayStatus": "Provisioning succeeded",
+      "level": "Info",
+      "message": "Enable succeeded: \n[stdout]\n{\"exit_code\": 1, \"stdout\": \"\", \"stderr\": \"Error response from daemon: container rootfs is marked read-only\\n\", \"scope\": \"copy public observer only; no collector launched\"}\n\n[stderr]\n"
+    }
+  ]
+}

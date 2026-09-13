@@ -1,0 +1,54 @@
+{
+  "uid": "agentdns-architecture",
+  "title": "AgentDNS architectural traces",
+  "schemaVersion": 39,
+  "version": 1,
+  "tags": [
+    "agentdns"
+  ],
+  "timezone": "utc",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "Execution and commitment",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 5
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "Use Explore \u2192 AgentDNS Tempo to search service.name = agentdns-authority or agentdns-driver. Native execution spans are published only after the CCF global commit callback. OTLP transport and synthetic smoke spans are diagnostics, not attestation or commitment evidence. Follow real span links across asynchronous driver work."
+      }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Recent authority requests",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 24,
+        "h": 10
+      },
+      "datasource": {
+        "type": "tempo",
+        "uid": "agentdns-tempo"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "queryType": "traceql",
+          "query": "{ resource.service.name = \"agentdns-authority\" }",
+          "limit": 50
+        }
+      ]
+    }
+  ]
+}

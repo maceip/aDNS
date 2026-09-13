@@ -1,0 +1,81 @@
+{
+  "samples": [
+    {
+      "index": 0,
+      "unix_seconds": 1789286236.6652942,
+      "elapsed_seconds": 0.0003477089999250893,
+      "rss_kib": 36188,
+      "high_water_rss_kib": 36188,
+      "comm": "named",
+      "cgroup_memory_current_bytes": 30208000,
+      "cgroup_memory_peak_bytes": 30208000,
+      "cgroup_memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "counter_read_elapsed_seconds": 0.00029930800019428716
+    },
+    {
+      "index": 1,
+      "unix_seconds": 1789286246.665345,
+      "elapsed_seconds": 10.000223472000016,
+      "rss_kib": 36188,
+      "high_water_rss_kib": 36188,
+      "comm": "named",
+      "cgroup_memory_current_bytes": 30195712,
+      "cgroup_memory_peak_bytes": 30208000,
+      "cgroup_memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "counter_read_elapsed_seconds": 0.0005349140001271735
+    },
+    {
+      "index": 2,
+      "unix_seconds": 1789286256.6653345,
+      "elapsed_seconds": 20.000234738000017,
+      "rss_kib": 36188,
+      "high_water_rss_kib": 36188,
+      "comm": "named",
+      "cgroup_memory_current_bytes": 30191616,
+      "cgroup_memory_peak_bytes": 30208000,
+      "cgroup_memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "counter_read_elapsed_seconds": 0.0005034129999330617
+    },
+    {
+      "index": 3,
+      "unix_seconds": 1789286266.6653433,
+      "elapsed_seconds": 30.000239804000103,
+      "rss_kib": 36188,
+      "high_water_rss_kib": 36188,
+      "comm": "named",
+      "cgroup_memory_current_bytes": 30195712,
+      "cgroup_memory_peak_bytes": 30208000,
+      "cgroup_memory_events": {
+        "low": 0,
+        "high": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "counter_read_elapsed_seconds": 0.0005090129998279735
+    }
+  ],
+  "scope": "four actual30-second smoke samples; not acceptance/load window"
+}

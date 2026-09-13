@@ -1,0 +1,53 @@
+41.0.7
+test_aci_port_numbers_unique_across_protocols_and_containers (test_aci_preflight.ArchivePreflightTests.test_aci_port_numbers_unique_across_protocols_and_containers) ... ok
+test_combined_archive_and_wrong_platform_manifest_rejected (test_aci_preflight.ArchivePreflightTests.test_combined_archive_and_wrong_platform_manifest_rejected) ... ok
+test_distinct_single_image_archive_and_actual_layer_digest (test_aci_preflight.ArchivePreflightTests.test_distinct_single_image_archive_and_actual_layer_digest) ... ok
+test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes (test_aci_preflight.ArchivePreflightTests.test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes) ... ok
+test_two_names_cannot_alias_one_archive_even_via_hardlink (test_aci_preflight.ArchivePreflightTests.test_two_names_cannot_alias_one_archive_even_via_hardlink) ... ok
+test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) ... 
+  test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) (change='broad-policy') ... ERROR
+test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) ... ERROR
+test_optional_public_only_preflight_and_ordinary_template (test_aci_preflight.TelemetryPreflightTests.test_optional_public_only_preflight_and_ordinary_template) ... ERROR
+
+======================================================================
+ERROR: test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) (change='broad-policy')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/tools/tests/test_aci_preflight.py", line 141, in test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected
+    preflight.validate_otel(template,containers,volumes,policy)
+  File "/src/tools/check_aci_template.py", line 166, in validate_otel
+    ca_sha256=validate_otel_ca(ca)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/src/tools/build_aci_template.py", line 132, in validate_otel_ca
+    if not certificates[0].not_valid_before_utc<=now<=certificates[0].not_valid_after_utc:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'cryptography.hazmat.bindings._rust.x509.Certificate' object has no attribute 'not_valid_before_utc'. Did you mean: 'not_valid_before'?
+
+======================================================================
+ERROR: test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/tools/tests/test_aci_preflight.py", line 142, in test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected
+    self.assertNotIn('fixture-secret',str(rejected.exception))
+                                          ^^^^^^^^^^^^^^^^^^
+AttributeError: '_AssertRaisesContext' object has no attribute 'exception'
+
+======================================================================
+ERROR: test_optional_public_only_preflight_and_ordinary_template (test_aci_preflight.TelemetryPreflightTests.test_optional_public_only_preflight_and_ordinary_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/tools/tests/test_aci_preflight.py", line 122, in test_optional_public_only_preflight_and_ordinary_template
+    values=self.fixture();result=preflight.validate_otel(*values)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/tools/check_aci_template.py", line 166, in validate_otel
+    ca_sha256=validate_otel_ca(ca)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/src/tools/build_aci_template.py", line 132, in validate_otel_ca
+    if not certificates[0].not_valid_before_utc<=now<=certificates[0].not_valid_after_utc:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'cryptography.hazmat.bindings._rust.x509.Certificate' object has no attribute 'not_valid_before_utc'. Did you mean: 'not_valid_before'?
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.043s
+
+FAILED (errors=3)

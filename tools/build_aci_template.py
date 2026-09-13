@@ -14,19 +14,33 @@ import stat
 import os
 from pathlib import Path
 import re
+import datetime
+from urllib.parse import quote, unquote, urlsplit
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
 
 
 PUBLIC_FILES = ("node.json", "manifest.json", "member0_cert.pem", "member0_enc_pubk.pem")
+OTEL_CA_PATH = "/otel/exporter-ca.pem"
+OTEL_HEADER_PARAMETER = "otelExporterHeaders"
+_B64_ATOM = r"(?:[A-Za-z0-9]|%2B|%2F)"
+# The secret is standard percent-encoded HTTP Basic authorization. Only the
+# encoding shape is public; never put one concrete credential in the CCE policy.
+OTEL_HEADER_ENV_PATTERN = (r"^OTEL_EXPORTER_OTLP_HEADERS=authorization=Basic%20"
+    + r"(?:" + _B64_ATOM + r"{4}){0,106}(?:" + _B64_ATOM + r"{4}|"
+    + _B64_ATOM + r"{2}%3D%3D|" + _B64_ATOM + r"{3}%3D)$")
+OTEL_LABEL_KEYS = ("deployment.environment", "service.namespace", "service.instance.id")
 
 
-def read_small(path, maximum=65536):
+def read_small(path, maximum=65536, *, private=False):
     descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     with os.fdopen(descriptor, "rb") as stream:
-        if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+        metadata = os.fstat(stream.fileno())
+        if not stat.S_ISREG(metadata.st_mode):
             raise ValueError("control input must be a regular file")
+        if private and (metadata.st_uid != os.getuid() or metadata.st_mode & 0o077):
+            raise ValueError("private control input must be owner-only")
         data = stream.read(maximum + 1)
     if not data or len(data) > maximum:
         raise ValueError("control input size exceeds bound")
@@ -93,6 +107,84 @@ def write_output(path, content, mode):
         stream.write(content)
 
 
+def validate_otel_endpoint(endpoint):
+    if not isinstance(endpoint,str) or len(endpoint)>512:
+        raise ValueError("bounded HTTPS OTLP origin required")
+    try:
+        parsed=urlsplit(endpoint)
+        valid=(parsed.scheme=="https" and parsed.hostname is not None
+            and re.fullmatch(r"[A-Za-z0-9.-]{1,253}",parsed.hostname) is not None
+            and parsed.port is not None and 1<=parsed.port<=65535
+            and endpoint==f"https://{parsed.hostname}:{parsed.port}")
+    except ValueError:valid=False
+    if not valid:raise ValueError("canonical HTTPS OTLP origin with explicit port required")
+    return endpoint
+
+
+def validate_otel_ca(raw):
+    if not isinstance(raw,bytes) or not 0<len(raw)<=65536 or b"PRIVATE KEY" in raw:
+        raise ValueError("bounded public OTLP CA required")
+    try:
+        certificates=x509.load_pem_x509_certificates(raw)
+        if len(certificates)!=1 or not certificates[0].extensions.get_extension_for_class(x509.BasicConstraints).value.ca:
+            raise ValueError()
+        now=datetime.datetime.now(datetime.timezone.utc)
+        certificate=certificates[0]
+        # Ubuntu 24.04 ships cryptography 41; its UTC dates are naive. Newer
+        # releases expose aware properties and deprecate the old accessors.
+        if hasattr(certificate,"not_valid_before_utc"):
+            before,after=certificate.not_valid_before_utc,certificate.not_valid_after_utc
+        else:
+            before=certificate.not_valid_before.replace(tzinfo=datetime.timezone.utc)
+            after=certificate.not_valid_after.replace(tzinfo=datetime.timezone.utc)
+        if not before<=now<=after:
+            raise ValueError()
+    except (ValueError,x509.ExtensionNotFound):
+        raise ValueError("one currently valid public OTLP CA certificate required") from None
+    return hashlib.sha256(raw).hexdigest()
+
+
+def otel_environment(endpoint, labels):
+    validate_otel_endpoint(endpoint)
+    if set(labels)!=set(OTEL_LABEL_KEYS) or any(not isinstance(value,str) or re.fullmatch(r"[A-Za-z0-9_.:/-]{1,128}",value) is None for value in labels.values()):
+        raise ValueError("three bounded public OTLP resource labels required")
+    return {"OTEL_EXPORTER_OTLP_ENDPOINT":endpoint,
+        "OTEL_EXPORTER_OTLP_PROTOCOL":"http/protobuf",
+        "OTEL_EXPORTER_OTLP_CERTIFICATE":OTEL_CA_PATH,
+        "OTEL_RESOURCE_ATTRIBUTES":",".join(key+"="+labels[key] for key in OTEL_LABEL_KEYS)}
+
+
+def otel_policy_rules(environment):
+    return ([{"pattern":name+"="+value,"required":True,"strategy":"string"} for name,value in environment.items()]
+        + [{"pattern":OTEL_HEADER_ENV_PATTERN,"required":True,"strategy":"re2"}])
+
+
+def load_otel_settings(endpoint, ca_path, secret_path, labels):
+    environment=otel_environment(endpoint,labels)
+    ca=read_small(ca_path);ca_sha256=validate_otel_ca(ca)
+    try:
+        secret=strict_json(read_small(secret_path,4096,private=True))
+        if not isinstance(secret,dict) or set(secret)!={"endpoint","OTEL_EXPORTER_OTLP_HEADERS","header_name","header_value"}:
+            raise ValueError()
+        if secret["endpoint"]!=endpoint or secret["header_name"].lower()!="authorization":raise ValueError()
+        value=secret["header_value"]
+        if not isinstance(value,str) or not value.startswith("Basic ") or len(value)>512:raise ValueError()
+        token=value[6:];decoded=base64.b64decode(token,validate=True)
+        if base64.b64encode(decoded).decode()!=token:raise ValueError()
+        user,password=decoded.split(b":",1)
+        if not 1<=len(user)<=64 or not 1<=len(password)<=256 or not all(33<=byte<=126 for byte in decoded):raise ValueError()
+        encoded=secret["OTEL_EXPORTER_OTLP_HEADERS"]
+        if not isinstance(encoded,str) or len(encoded)>2048:raise ValueError()
+        name,supplied=encoded.split("=",1)
+        if name.lower()!="authorization" or unquote(supplied,errors="strict")!=value:raise ValueError()
+        header="authorization="+quote(value,safe="")
+        if re.fullmatch(OTEL_HEADER_ENV_PATTERN,"OTEL_EXPORTER_OTLP_HEADERS="+header) is None:raise ValueError()
+    except (ValueError,TypeError,AttributeError,UnicodeError):
+        raise ValueError("invalid private OTLP Basic authorization configuration") from None
+    return environment,ca,header,{"endpoint":endpoint,"public_ca_sha256":ca_sha256,"resource_labels":labels,
+        "header_policy_pattern":OTEL_HEADER_ENV_PATTERN}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--control", type=Path, required=True)
@@ -101,6 +193,12 @@ def main():
     parser.add_argument("--secondary-image", required=True)
     parser.add_argument("--pull-identity", required=True)
     parser.add_argument("--location", default="northeurope")
+    parser.add_argument("--otel-endpoint",help="Optional HTTPS origin with explicit port")
+    parser.add_argument("--otel-public-ca",type=Path)
+    parser.add_argument("--otel-secret-file",type=Path,help="Owner-only Basic-auth JSON; never copied to public output")
+    parser.add_argument("--otel-deployment-environment")
+    parser.add_argument("--otel-service-namespace")
+    parser.add_argument("--otel-service-instance")
     args = parser.parse_args()
     for image in (args.primary_image, args.secondary_image):
         if re.fullmatch(r"[a-z0-9]+\.azurecr\.io/[a-z0-9/_-]+@sha256:[0-9a-f]{64}", image) is None:
@@ -110,6 +208,12 @@ def main():
     if re.fullmatch(r"/subscriptions/[0-9a-f-]{36}/resourceGroups/[^/\s]+/providers/Microsoft.ManagedIdentity/userAssignedIdentities/[^/\s]+", args.pull_identity, re.IGNORECASE) is None:
         parser.error("pull identity must be an Azure user-assigned identity resource ID")
     public, summary, transfer_standard, transfer_json = validated_control(args.control)
+    otel=None
+    otel_values=(args.otel_endpoint,args.otel_public_ca,args.otel_secret_file,args.otel_deployment_environment,args.otel_service_namespace,args.otel_service_instance)
+    if any(value is not None for value in otel_values):
+        if not all(value is not None for value in otel_values):parser.error("all six optional OTLP settings are required together")
+        labels=dict(zip(OTEL_LABEL_KEYS,otel_values[3:]))
+        otel=load_otel_settings(args.otel_endpoint,args.otel_public_ca,args.otel_secret_file,labels)
     ports_https = [{"port": 8000, "protocol": "TCP"}, {"port": 5353, "protocol": "TCP"}]
     ports_dns = [{"port": 53, "protocol": "UDP"}]
     primary = {"name": "primary", "properties": {
@@ -145,9 +249,20 @@ def main():
                   "contentVersion": "1.0.0.0", "parameters": {
                       "transferKeyB64": {"value": transfer_standard},
                       "transferKeyJson": {"value": transfer_json}}}
+    if otel is not None:
+        environment,ca,header,otel_summary=otel
+        primary["properties"]["environmentVariables"]=[{"name":name,"value":value} for name,value in environment.items()]
+        primary["properties"]["environmentVariables"].append({"name":"OTEL_EXPORTER_OTLP_HEADERS","secureValue":f"[parameters('{OTEL_HEADER_PARAMETER}')]"})
+        primary["properties"]["volumeMounts"].append({"name":"otel-public-ca","mountPath":"/otel","readOnly":True})
+        properties["volumes"].append({"name":"otel-public-ca","secret":{"exporter-ca.pem":base64.b64encode(ca).decode()}})
+        template["parameters"][OTEL_HEADER_PARAMETER]={"type":"secureString"}
+        parameters["parameters"][OTEL_HEADER_PARAMETER]={"value":header}
     args.output.mkdir(mode=0o700, parents=True, exist_ok=True)
     write_output(args.output / "ccf.template.json", json.dumps(template, indent=2) + "\n", 0o644)
     write_output(args.output / "ccf.parameters.json", json.dumps(parameters) + "\n", 0o600)
+    if otel is not None:
+        write_output(args.output / "otel-public-summary.json",json.dumps(otel_summary,indent=2)+"\n",0o644)
+        write_output(args.output / "otel-env-rules.json",json.dumps(otel_policy_rules(environment),indent=2)+"\n",0o644)
     print("Prepared public template and separate secure parameters; CCE policy generation and review are still required.")
 
 

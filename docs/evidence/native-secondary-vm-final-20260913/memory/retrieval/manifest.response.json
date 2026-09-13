@@ -1,0 +1,10 @@
+{
+  "value": [
+    {
+      "code": "ProvisioningState/succeeded",
+      "displayStatus": "Provisioning succeeded",
+      "level": "Info",
+      "message": "Enable succeeded: \n[stdout]\n{\"encoding\": \"zlib+standard-base64\", \"raw_bytes\": 57279, \"raw_sha256\": \"2cde6fc26f0de183ddabee331d719f2530072c732df2a312e1990eaff0ea6349\", \"base64_chars\": 8112, \"chunk_chars\": 2700, \"chunks\": 4, \"chunk_sha256\": [\"9843f1b59a412108ba4c02fba6f664a1edc45595fdda5b3942fa7c3db5b85260\", \"16003c8d77c8b9bf3cbfeca262f5b0ac03f2f56dbdb6dcdea2830a223811887c\", \"9a66b62f0b37eccf46a711e36994669caff381b45588a080e9c4f81549e2ac26\", \"3fb0106e5796ae0fd0737c2a6b2b99fe112bcbb4307e59f63b56421c83a18408\"]}\n\n[stderr]\n"
+    }
+  ]
+}

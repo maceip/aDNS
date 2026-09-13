@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "tracing_tests": 29,
+  "supervisor_tests": 16,
+  "host_driver_sha256": "16687b6ebbd71c01e10782c191c72569e647e6b6b66da5de598b7e68f6574e51",
+  "finding": "CI unittest discovery exposed duplicate package/top-level telemetry classes; package imports now explicitly use their relative telemetry module. Direct script import behavior is preserved.",
+  "test_environment_note": "The tracing-only venv lacks cryptography, so the attempted combined supervisor invocation failed at import; the separate existing cryptography-enabled venv passed all16 supervisor tests. Both raw outputs are retained.",
+  "native_elf_unchanged": "6ba239f1dba3bc7f027b0857501c834b8049e5f6cf34f70844bbf2425299032f"
+}

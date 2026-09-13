@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "scenario": "recovery",
+  "requests": 86,
+  "otlp_spans": 140,
+  "committed_parentage_checks": 24,
+  "committed403_trace_ids": [
+    "36b63cbe3bc0e4c5eafcbd9f1756f134"
+  ],
+  "historical_links": [
+    {
+      "retry_trace_id": "13868cdf77b77fd7a208c4be950fe9c4",
+      "original_trace_id": "10464d37c224d32b10b5e5fd32a59e5c",
+      "transaction_id": "2.17"
+    },
+    {
+      "retry_trace_id": "156d36eb96e14fa5322d080f48859c74",
+      "original_trace_id": "10464d37c224d32b10b5e5fd32a59e5c",
+      "transaction_id": "2.17"
+    },
+    {
+      "retry_trace_id": "a36335433cdb980741994d2c17968052",
+      "original_trace_id": "d366bd411c66c3e3726346879df682bd",
+      "transaction_id": "4.45"
+    }
+  ],
+  "killed_leader_no_business_span_trace_ids": [],
+  "rejected_no_business_span_trace_ids": [
+    "fa69f5561f3a06c7cdfaec9a9c50e87c",
+    "7c6eed6ebc6fa32f92d312a835a24e0a",
+    "e815bcc37488f50d4db75cda59c4e576",
+    "3f0fde2e8640c2eae215e8bed3f991af",
+    "05870e62f3fbad77dce3b1119ea87343",
+    "3d1be8ec7ffbee12ebc0ab635af8bf16",
+    "b5a3bb1c0c3b1549b6ab2ea5f52676b0",
+    "cbf748dfd18ecf887071f7540f38c666"
+  ],
+  "commit_wait_over_one_second_trace_ids": [],
+  "native_span_names": [
+    "adns.application",
+    "adns.auth.grant",
+    "adns.auth.idempotency",
+    "adns.auth.nonce",
+    "adns.auth.signature",
+    "adns.dns.query",
+    "adns.dnssec.sign",
+    "adns.maintenance",
+    "adns.read",
+    "adns.receipt.claims",
+    "adns.request.parse",
+    "adns.storage.stage",
+    "adns.transfer",
+    "adns.transfer.provision",
+    "ccf.commit.wait",
+    "ccf.receipt",
+    "ccf.request"
+  ],
+  "same_envelope_rejection_then_commit_and_retry": 1,
+  "started_unix_seconds": 1789293356.5118964,
+  "ended_unix_seconds": 1789293376.588438,
+  "sdk_native_received": 140,
+  "sdk_native_rejected": 0,
+  "otlp_http_batches": 13,
+  "otlp_http_bytes": 21478,
+  "platform": "real CCF Virtual consensus/recovery; not native hardware",
+  "collector_forwarded_batches": 13
+}

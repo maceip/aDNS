@@ -1,0 +1,11 @@
+{
+  "primary": "52.155.227.199:5353",
+  "secondary": "20.166.33.141:53",
+  "secret_transport": "Azure CustomScript protectedSettings encrypted to targetVM; no secret values in public helper or logs",
+  "source_sha256": {
+    "secondary_vm.py": "2ac3e2ad06e035706d5594fb224762a95ba60bda7d3b820fa5169dd53ae10107",
+    "observe_process.py": "ea348a8b3462e44e204767d2a3c883742fd5eac441c3dd415affd1c26ea62fad"
+  },
+  "protected_script_sha256": "79e5a5e016cb48ebd0dc9075572f09ff986b0a88bbf2ed2dcc7e6ed7122899cf",
+  "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861"
+}

@@ -13,7 +13,9 @@ import json
 from pathlib import Path
 import re
 import tarfile
-from build_aci_template import PUBLIC_FILES, read_small, strict_json
+from build_aci_template import (PUBLIC_FILES, read_small, strict_json,
+    OTEL_HEADER_PARAMETER, otel_environment, otel_policy_rules,
+    validate_otel_ca)
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
 
 HEX = r"[0-9a-f]{64}"
@@ -125,6 +127,67 @@ def validate_ports(properties):
         raise ValueError("ACI public port must also be declared by a container")
 
 
+def validate_otel(template, containers, volumes, policies):
+    """Validate only public configuration; never open runtime parameters."""
+    expected_parameters={"transferKeyB64":{"type":"secureString"},"transferKeyJson":{"type":"secureString"}}
+    primary=containers["primary"]
+    raw_environment=primary.get("environmentVariables",[])
+    configured=any(isinstance(item,dict) and str(item.get("name","")).startswith("OTEL_") for item in raw_environment)
+    if not configured:
+        if template["parameters"]!=expected_parameters or "otel-public-ca" in volumes:
+            raise ValueError("unexpected optional OTLP parameter or CA volume")
+        return {"configured":False}
+    expected_parameters[OTEL_HEADER_PARAMETER]={"type":"secureString"}
+    if template["parameters"]!=expected_parameters:
+        raise ValueError("OTLP headers must be a secureString parameter without defaults")
+    if len(raw_environment)!=5 or any(not isinstance(item,dict) or not isinstance(item.get("name"),str) for item in raw_environment):
+        raise ValueError("exact optional OTLP environment required")
+    environment={item["name"]:item for item in raw_environment}
+    expected_names={"OTEL_EXPORTER_OTLP_ENDPOINT","OTEL_EXPORTER_OTLP_PROTOCOL","OTEL_EXPORTER_OTLP_CERTIFICATE","OTEL_RESOURCE_ATTRIBUTES","OTEL_EXPORTER_OTLP_HEADERS"}
+    if set(environment)!=expected_names or len(environment)!=len(raw_environment):
+        raise ValueError("unexpected or duplicate optional OTLP environment")
+    header=environment.pop("OTEL_EXPORTER_OTLP_HEADERS")
+    if header!={"name":"OTEL_EXPORTER_OTLP_HEADERS","secureValue":f"[parameters('{OTEL_HEADER_PARAMETER}')]"}:
+        raise ValueError("OTLP header must reference its secure parameter, never a literal")
+    if any(set(item)!={"name","value"} or not isinstance(item["value"],str) for item in environment.values()):
+        raise ValueError("public OTLP settings must be exact literal values")
+    values={name:item["value"] for name,item in environment.items()}
+    try:
+        pairs=[item.split("=",1) for item in values["OTEL_RESOURCE_ATTRIBUTES"].split(",")]
+        labels=dict(pairs)
+        if len(pairs)!=3 or len(labels)!=3:raise ValueError()
+        expected=otel_environment(values["OTEL_EXPORTER_OTLP_ENDPOINT"],labels)
+    except (ValueError,TypeError):raise ValueError("invalid public OTLP resource labels or endpoint") from None
+    if values!=expected:raise ValueError("OTLP protocol, CA path or resource encoding differs")
+    volume=volumes.get("otel-public-ca")
+    if not isinstance(volume,dict) or set(volume)!={"name","secret"} or set(volume["secret"])!={"exporter-ca.pem"}:
+        raise ValueError("one separate public OTLP CA volume required")
+    ca=base64.b64decode(volume["secret"]["exporter-ca.pem"],validate=True)
+    ca_sha256=validate_otel_ca(ca)
+    mounts=[item for item in primary["volumeMounts"] if item.get("name")=="otel-public-ca" or item.get("mountPath")=="/otel"]
+    if mounts!=[{"name":"otel-public-ca","mountPath":"/otel","readOnly":True}]:
+        raise ValueError("OTLP CA must use the exact separate read-only mount")
+    if any(item.get("name")=="otel-public-ca" or item.get("mountPath")=="/otel" for item in containers["secondary"].get("volumeMounts",[])):
+        raise ValueError("OTLP configuration belongs only to the primary")
+    rules=policies["primary"]["env_rules"]
+    otel_rules=[rule for rule in rules if rule["pattern"].lstrip("^").startswith("OTEL_")]
+    if sorted(otel_rules,key=lambda rule:rule["pattern"])!=sorted(otel_policy_rules(expected),key=lambda rule:rule["pattern"]):
+        raise ValueError("CCE must constrain exact public OTLP settings and a nonliteral Basic-auth pattern")
+    # Broad extra patterns must not bypass the explicit auth/environment rules.
+    platform_patterns={r"(?i)(FABRIC)_.+=.+",r"HOSTNAME=.+",r"T(E)?MP=.+",r"FabricPackageFileName=.+",
+        r"HostedServiceName=.+",r"IDENTITY_API_VERSION=.+",r"IDENTITY_HEADER=.+",r"IDENTITY_SERVER_THUMBPRINT=.+",
+        r"azurecontainerinstance_restarted_by=.+",r"^UVM_SECURITY_CONTEXT_DIR=/security-context[-a-zA-Z0-9]*$"}
+    for rule in rules:
+        if rule not in otel_rules and rule["strategy"]=="re2" and rule["pattern"] not in platform_patterns:
+            raise ValueError("unexpected broad CCE environment pattern with OTLP credentials")
+    policy_mounts=[item for item in policies["primary"]["mounts"] if item["destination"]=="/otel"]
+    if len(policy_mounts)!=1 or policy_mounts[0]!={"destination":"/otel","options":["rbind","rshared","ro"],"source":"sandbox:///tmp/atlas/secretsVolume/.+","type":"bind"}:
+        raise ValueError("CCE must constrain the read-only public OTLP CA mount")
+    return {"configured":True,"endpoint":expected["OTEL_EXPORTER_OTLP_ENDPOINT"],
+            "public_ca_sha256":ca_sha256,"resource_labels":labels,
+            "credential_policy":"secureString reference and bounded nonliteral percent-encoded Basic authorization"}
+
+
 def check(template_path, archives, mappings):
     validate_archives(archives, mappings)
     raw = read_small(template_path, 1024 * 1024)
@@ -183,7 +246,8 @@ def check(template_path, archives, mappings):
     validate_native_internal_readiness(node)
     if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != "agentdns.test:8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:agentdns.test" not in node["node_certificate"]["subject_alt_names"]:
         raise ValueError("public TLS name or internal interface differs")
-    if template["parameters"] != {"transferKeyB64":{"type":"secureString"}, "transferKeyJson":{"type":"secureString"}} or volumes["transfer-secret"]["secret"] != {"transfer-key.json":"[base64(parameters('transferKeyJson'))]"} or containers["secondary"]["environmentVariables"] != [{"name":"AGENTDNS_TRANSFER_KEY_B64","secureValue":"[parameters('transferKeyB64')]"}]:
+    otel=validate_otel(template,containers,volumes,policies)
+    if volumes["transfer-secret"]["secret"] != {"transfer-key.json":"[base64(parameters('transferKeyJson'))]"} or containers["secondary"]["environmentVariables"] != [{"name":"AGENTDNS_TRANSFER_KEY_B64","secureValue":"[parameters('transferKeyB64')]"}]:
         raise ValueError("transfer secrets must be secure parameter references")
     secret_rules = [rule for rule in policies["secondary"]["env_rules"] if rule["pattern"].lstrip("^").startswith("AGENTDNS_TRANSFER_KEY_B64=")]
     if len(secret_rules) != 1 or secret_rules[0]["strategy"] != "re2" or not secret_rules[0]["required"] or secret_rules[0]["pattern"] != "^AGENTDNS_TRANSFER_KEY_B64=[A-Za-z0-9+/]{43}=$":
@@ -191,6 +255,7 @@ def check(template_path, archives, mappings):
     return {"template_sha256": sha(raw), "cce_policy_sha256": sha(policy),
             "bootstrap_manifest_sha256": sha(public["manifest.json"]),
             "containers": summaries, "pause_layer_count": 1,
+            "telemetry":otel,
             "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
             "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight"}
 

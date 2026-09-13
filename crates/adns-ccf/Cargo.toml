@@ -13,6 +13,7 @@ default = []
 ccf = ["dep:cxx", "dep:cxx-build"]
 
 [dependencies]
+adns-telemetry = { path = "../adns-telemetry" }
 adns-auth = { path = "../adns-auth" }
 adns-storage = { path = "../adns-storage" }
 adns-server = { path = "../adns-server" }

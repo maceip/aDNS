@@ -1,0 +1,82 @@
+{
+  "status": "passed",
+  "source": "actual public Azure native primary and stock BIND VM",
+  "primary": "4.208.82.123",
+  "secondary": "20.166.33.141",
+  "started_unix_seconds": 1789288403.557139,
+  "ended_unix_seconds": 1789289671.521415,
+  "dnssec": {
+    "source": "independent-public-BIND-DNSSEC-probes",
+    "server": "20.166.33.141",
+    "port": 53,
+    "elapsed_seconds": 1267.4548004130002,
+    "observed_serials": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "external_validations": 84,
+    "crossed_initial_signature_expiration": true,
+    "all_samples_passed": true,
+    "proof_limit": "CCF transaction provenance, leases and hardware require separate evidence; this verifier sends no mutations."
+  },
+  "committed_status": {
+    "samples": 115,
+    "failures": 0,
+    "elapsed_seconds": 1250.9010947039997,
+    "observed_serials": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "all_samples_committed_unexpired": true
+  },
+  "fixed_load": {
+    "server": "20.166.33.141",
+    "port": 53,
+    "dnssec_ok_bit": true,
+    "offered_load_qps": 1000,
+    "offered_sample_qps": 10,
+    "started_unix_seconds": 1789288403.8701122,
+    "ended_unix_seconds": 1789289604.3706431,
+    "elapsed_seconds": 1200.5005318719996,
+    "samples": 11985,
+    "failed_samples": 15,
+    "p50_ms": 152.115665,
+    "p99_ms": 220.194206,
+    "maximum_ms": 230.841123,
+    "dnsperf": {
+      "queries_sent": 1199461,
+      "queries_completed": 1192214,
+      "queries_lost": 7247,
+      "completed_qps": 993.38948
+    },
+    "sampling": {
+      "planned_samples": 12000,
+      "maximum_inflight_samples": 22,
+      "started_unix_seconds": 1789288403.870945,
+      "ended_unix_seconds": 1789289603.9258883,
+      "sampling_window_seconds": 1200,
+      "attempted_samples": 12000,
+      "missed_samples": 0,
+      "achieved_sample_qps": 10.0
+    },
+    "load_maximum_outstanding_queries": 2000,
+    "query_timeout_seconds": 2,
+    "boundary": "Public DNS only; no registration or governance mutations. External idle delv validates signatures separately. This is a fixed offered load, not maximum capacity."
+  },
+  "source_and_public_inputs_rechecked_after_execution": true,
+  "cleanup_failures": [],
+  "limits": [
+    "Fixed offered load, not maximum capacity; WAN timings include client and network.",
+    "Latency percentiles use successful probes; timeout and unscheduled counts are separate.",
+    "DO=1 load probes check authoritative response codes. Independent periodic stock delv validates signatures.",
+    "Native quote, KSK receipt, admission and controlled mail proofs are linked separately.",
+    "Signing spans and actual memory measurements are exported separately; none inferred here.",
+    "No operator, service, lease or governance mutations during this window; autonomous maintenance continued."
+  ]
+}

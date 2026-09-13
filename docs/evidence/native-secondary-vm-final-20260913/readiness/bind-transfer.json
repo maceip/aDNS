@@ -1,0 +1,19 @@
+{
+  "observed_unix_seconds": 1789287871.0170848,
+  "exit_code": 0,
+  "full_log_bytes": 4373,
+  "last_lines": [
+    "13-Sep-2026 08:23:40.168 zone example.test/IN: Transfer started.",
+    "13-Sep-2026 08:23:40.169 transfer of 'example.test/IN' from 4.208.82.123#5353: connected using 4.208.82.123#5353 TSIG agentdns-transfer",
+    "13-Sep-2026 08:23:40.336 client @0x715f8893c238 20.82.173.102#6657/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'",
+    "13-Sep-2026 08:23:40.336 zone example.test/IN: notify from 20.82.173.102#6657: refresh in progress, refresh check queued",
+    "13-Sep-2026 08:23:40.339 zone example.test/IN: transferred serial 9: TSIG 'agentdns-transfer'",
+    "13-Sep-2026 08:23:40.339 transfer of 'example.test/IN' from 4.208.82.123#5353: Transfer status: success",
+    "13-Sep-2026 08:23:40.339 transfer of 'example.test/IN' from 4.208.82.123#5353: Transfer completed: 10 messages, 1015 records, 148394 bytes, 0.170 secs (872905 bytes/sec) (serial 9)",
+    "13-Sep-2026 08:24:10.366 zone example.test/IN: refresh: retry limit for primary 4.208.82.123#5353 exceeded (source 0.0.0.0#0)",
+    "13-Sep-2026 08:24:10.366 zone example.test/IN: Transfer started.",
+    "13-Sep-2026 08:24:10.368 transfer of 'example.test/IN' from 4.208.82.123#5353: connected using 4.208.82.123#5353 TSIG agentdns-transfer",
+    "13-Sep-2026 08:24:10.541 transfer of 'example.test/IN' from 4.208.82.123#5353: Transfer status: up to date",
+    "13-Sep-2026 08:24:10.541 transfer of 'example.test/IN' from 4.208.82.123#5353: Transfer completed: 0 messages, 1 records, 0 bytes, 0.173 secs (0 bytes/sec) (serial 9)"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checked_unix_seconds": 1789289671.580533,
+  "expected_source_files": 2,
+  "verified_source_files": 2,
+  "post_execution_sha256": {
+    "service_cert.pem": "50cb7ff11a90b5f317f9bcac82d37219bab33749ad780d66f4904ec75a12ee4e",
+    "trust-anchor.conf": "0523b9491e4caab4ff75282894746bb733fe78891e734f3cfb6ae8b2f2691566"
+  },
+  "failures": []
+}

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "local loopback-only optional native overlay test; no cloud deployment",
+  "trace_id": "770bf841042966a54e78db9c221ac658",
+  "checks": [
+    "TLS custom CA verified",
+    "missing credentials rejected401",
+    "wrong credentials rejected401",
+    "untrusted CA rejected",
+    "authenticated OTLP accepted200",
+    "exact trace retrieved from Tempo"
+  ],
+  "finished_unix": 1789292440.4387689
+}

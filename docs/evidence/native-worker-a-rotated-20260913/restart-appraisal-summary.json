@@ -1,0 +1,18 @@
+{
+  "status": "fresh Rust appraisal and actual peer binding passed; independent verification pending",
+  "ip": "128.251.109.121",
+  "image": "agentdnsport20260913.azurecr.io/capture@sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "cce_sha256": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+  "verification_time": 1789290438,
+  "fetch_started_unix_seconds": 1789290437.5553029,
+  "fetch_and_appraise_ended_unix_seconds": 1789290438.711932,
+  "old_spki_sha256": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+  "new_spki_sha256": "5433484ea015af0033d25a63399000d460e4e38921498a3971a0d3886ed8f811",
+  "grant_id": "aci-test-owner",
+  "request_id": "aci-capture-20260913-01",
+  "fixed_action_unchanged_except_key_and_evidence": true,
+  "appraiser_sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+  "cloud_state_sha256": "cfb43d07c5d9de09dd0ef4c72d0195da8dc2c045901142ebc9cc04541625e46f",
+  "original_inputs_unchanged": true,
+  "no_token_or_signature_sent": true
+}

@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "scope": "isolated local synthetic observability transport/privacy; no native CCF proof",
+  "verified_unix": 1789292493.94198,
+  "architecture": "linux/arm64 local image execution",
+  "containers": [
+    {
+      "service": "otel-collector",
+      "container_id": "236e84481400348d1966847b95d63c4b31d46eabffb8f5d49bea076b844394b0",
+      "image": "otel/opentelemetry-collector-contrib:0.160.0@sha256:799dc6cf12c96192af37b5bdba804da8c10b3bc563b43cb90c3f3c58d9572ad6",
+      "running": true,
+      "restart_count": 0,
+      "networks": [
+        "agentdns-otel-validation_default"
+      ],
+      "published_ports": {
+        "4317/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "14317"
+          }
+        ],
+        "4318/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "14318"
+          }
+        ],
+        "55679/tcp": null
+      }
+    },
+    {
+      "service": "tempo",
+      "container_id": "bc9bcc99c127ba0b77c615ed84c893c85cfc089296c012d5c2de2f0a9e14b75b",
+      "image": "grafana/tempo:3.0.3@sha256:0296560ac66f8a3600d7fb3014a52c189d4d9c3549ad6ff441bf2409855d68d5",
+      "running": true,
+      "restart_count": 0,
+      "networks": [
+        "agentdns-otel-validation_default"
+      ],
+      "published_ports": {
+        "3200/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13200"
+          }
+        ]
+      }
+    },
+    {
+      "service": "loki",
+      "container_id": "db8d8aa62f4cde32f4ab2c0cb10efb74cb5b13b03d972bbfcdc8701ea5813c5d",
+      "image": "grafana/loki:3.7.7@sha256:d70e4659623f3e109af669cae76fe2a5dd5be54e2298fe8aed380d982fbc2500",
+      "running": true,
+      "restart_count": 0,
+      "networks": [
+        "agentdns-otel-validation_default"
+      ],
+      "published_ports": {
+        "3100/tcp": null
+      }
+    },
+    {
+      "service": "grafana",
+      "container_id": "54383df4719669d0ff485c446ab6e32d3e1bb425c6b7c4462bad3b3e31770d80",
+      "image": "grafana/grafana:13.2.1@sha256:f772d434e8fab0049deb2b1b30abd43342bcfca1537614aa8d36080232cf4283",
+      "running": true,
+      "restart_count": 0,
+      "networks": [
+        "agentdns-otel-validation_default"
+      ],
+      "published_ports": {
+        "3000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13000"
+          }
+        ]
+      }
+    }
+  ],
+  "synthetic_smoke": {
+    "status": "passed",
+    "scope": "synthetic transport/privacy smoke only; no native CCF assertion",
+    "trace_id": "0f5abcb2ff27a9761665d2cea2ec9e11",
+    "linked_trace_id": "7433d657d8b2d7eb8baf3fe3a7fd3982",
+    "checks": [
+      "OTLP HTTP accepted",
+      "Tempo exact trace retrieved",
+      "async link preserved",
+      "private fields scrubbed",
+      "Grafana login",
+      "authenticated datasource/dashboard/trace resource access"
+    ]
+  },
+  "tls_smoke": {
+    "status": "passed",
+    "scope": "local loopback-only optional native overlay test; no cloud deployment",
+    "trace_id": "770bf841042966a54e78db9c221ac658",
+    "checks": [
+      "TLS custom CA verified",
+      "missing credentials rejected401",
+      "wrong credentials rejected401",
+      "untrusted CA rejected",
+      "authenticated OTLP accepted200",
+      "exact trace retrieved from Tempo"
+    ],
+    "finished_unix": 1789292440.4387689
+  },
+  "loki_smoke": "Loki OTLP log queried with body/severity/attributes scrubbed",
+  "fixed_source_span_names_accepted": 34,
+  "sources_sha256": {
+    "infra/observability/compose.native-https.yaml": "8d8a176c33f6fb360861880e1d7a43da99157db295ebc8dda96b88ec523c4934",
+    "infra/observability/compose.yaml": "656a58da7a39802c37dc4a7b75b70a75120b89a1c0d8b175e05083b8d25c0fe0",
+    "infra/observability/dashboards/architecture.json": "a9ca7ae4ef18261046b49ab14fc1abc9ce6d4f5ab752f2c36429b9ff9c876ee1",
+    "infra/observability/grafana-dashboards.yaml": "26294864b983545db186935dbe4f3427745f08c463ae6a2296014dcaf8802091",
+    "infra/observability/grafana-datasources.yaml": "39c34406fbc9f4b195a575605dd9edc5dc1a360872d5af4b715b26f45eb2d1fe",
+    "infra/observability/loki.yaml": "9885792171a9923ab9380ae0c642fb5a7edb33f6519659f140e12c060d9ffcd4",
+    "infra/observability/otel-collector.yaml": "cb49e4106dc3d425f9a12dfe72be9cf0124d70a742fe363431d5eebb5bbbcb1e",
+    "infra/observability/otel-native-https.yaml": "1327306db85c33ea1485645aaf728bf1c5ddd91cf1d6c65cca7997e68ad83506",
+    "infra/observability/runtime.env.example": "dfd282cc8ea9116c80504a4a939b4457032a53005f2fa691586a42a35e1c3923",
+    "infra/observability/tempo.yaml": "cc49dd21ca2082b5bcfc41ef3984dd43034931d445bcbc0e1ff3f59e310e3f58",
+    "infra/observability/verify.sh": "6cf52afbc78d5f6588fe36b1bf3ca74c4a3c526899f01096c264ee85d725cc86"
+  },
+  "docs_sha256": "87c7140e044a0ae46f1571ac3f9282da782f3f3963dfb21d3784d5958e31476f",
+  "limitations": [
+    "No native CCF transaction was performed by this smoke",
+    "Grafana login and resources verified through HTTP APIs; no browser rendering claim",
+    "ID-only link privacy is enforced by the reviewed application receiver/SDK, not individual link-attribute transformation in Collector",
+    "Optional HTTPS overlay tested on loopback only and test ingress container removed",
+    "First Tempo2-style compactor config failed and was corrected for Tempo3 before passing readiness"
+  ]
+}

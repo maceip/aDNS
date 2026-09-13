@@ -756,3 +756,46 @@ fn ccf_node_audit_checks_real_crypto_and_cannot_relabel_unbound_reports() {
         Err(AttestationError::CertificateInvalid(_))
     ));
 }
+
+#[test]
+fn request_diagnostics_preserve_genuine_native_verification_and_hide_evidence() {
+    use adns_telemetry::{Name, RequestScope};
+    let (payload, policy) = genoa_v5_fixture();
+    let baseline = verify_native(&payload, &policy, GENOA_V5_TIME).unwrap();
+    let scope = RequestScope::new();
+    let traced = verify_native(&payload, &policy, GENOA_V5_TIME).unwrap();
+    assert_eq!(traced.report.measurement, baseline.report.measurement);
+    assert_eq!(traced.product, baseline.product);
+    assert_eq!(
+        traced.certificates_valid_until,
+        baseline.certificates_valid_until
+    );
+    let spans = scope.finish();
+    for name in [Name::AmdChain, Name::Snp, Name::Uvm] {
+        assert!(
+            spans
+                .iter()
+                .any(|span| span.name == name && span.outcome == 1)
+        );
+    }
+    let diagnostic_text = format!("{spans:?}");
+    assert!(!diagnostic_text.contains(&hex::encode(traced.report.measurement)));
+    assert!(!diagnostic_text.contains(&hex::encode(traced.report.host_data)));
+    assert!(!diagnostic_text.contains(&traced.uvm.did));
+    let scope = RequestScope::new();
+    assert!(matches!(
+        appraise(
+            "unactivated",
+            b"PRIVATE_EVIDENCE_MARKER",
+            b"PRIVATE_KEY_MARKER",
+            &policy,
+            GENOA_V5_TIME
+        ),
+        Err(AttestationError::UnsupportedProfile)
+    ));
+    let rejected = scope.finish();
+    assert_eq!(rejected.len(), 1);
+    assert_eq!(rejected[0].name, Name::Appraisal);
+    assert_eq!(rejected[0].outcome, 2);
+    assert!(!format!("{rejected:?}").contains("PRIVATE_"));
+}

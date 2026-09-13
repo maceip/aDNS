@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "checked_unix": 1789294268.9819279,
+  "name": "agentdns-otel-https-from-primary",
+  "source": "20.82.173.102/32",
+  "destination": "10.71.0.4",
+  "port": 4318,
+  "existing_dns_rules_unchanged": true
+}

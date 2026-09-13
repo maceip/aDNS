@@ -1,0 +1,9 @@
+{
+  "operation": "deregister",
+  "samples": 1,
+  "submission_to_globally_committed_response_ms_including_tls": 859.076125,
+  "signed_message_digest": "91b98896e1c53ae73b2f3d4809d57e4e49ea684ca3e930a94e64ec29659dc9fc",
+  "transaction_id": "2.2587",
+  "historical_result_exactly_matches": true,
+  "exact_retry_matches": true
+}

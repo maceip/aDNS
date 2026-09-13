@@ -1,0 +1,31 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "register",
+    "parameters": {
+      "addresses": {
+        "ipv4": [
+          "192.0.2.1"
+        ],
+        "ipv6": [
+          "2001:db8::1"
+        ]
+      },
+      "evidence_digest": "75d7893b3c2e2882435e112ffcb462c3acdad0af94c42b915d2f43a3e14768e6",
+      "evidence_profile": "azure-aci-snp",
+      "lease_seconds": 3600,
+      "mailbox_domain": "example.test.",
+      "ports": [
+        25,
+        465,
+        993
+      ],
+      "role": "mx-edge",
+      "service_host": "mail.example.test."
+    },
+    "request_id": "aci-capture-20260913-01",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEa-pvuPVpQWIKmERRogII6mRjccr_K9XwUnfRea_5f6oplSgzxwFV4SiWU10bRZr2hPE582-1wRNX1S0msngw3w",
+    "zone": "example.test."
+  }
+}

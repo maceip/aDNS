@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "server": "20.166.33.141",
+  "port": 53,
+  "minimum_committed_serial": 22,
+  "observed_serial": 22,
+  "started_unix_seconds": 1789290353.2392213,
+  "matched_unix_seconds": 1789290354.490018,
+  "elapsed_seconds": 3.359024266999768,
+  "poll_samples": 1,
+  "checks": [
+    {
+      "owner": "mail.example.test.",
+      "type": "A",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "AAAA",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "MX",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_25._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_465._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_993._tcp.mail.example.test.",
+      "type": "TLSA",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    }
+  ],
+  "boundary": "Exact public authoritative RRsets and stock DNSSEC validation; cause/timing is correlated with separate committed mutation/maintenance evidence."
+}

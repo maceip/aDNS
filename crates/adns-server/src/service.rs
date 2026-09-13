@@ -2,6 +2,7 @@ use crate::*;
 use adns_attest::AppraisalPolicy;
 use adns_auth::*;
 use adns_storage::{Collection, ReadTx, WriteTx, get_json, put_json};
+use adns_telemetry::{Name, Span, observe};
 use adns_wire::{RData, ResourceRecord, WireName};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
@@ -111,9 +112,12 @@ pub fn mutate(
         return Err(AppError::Invalid("time moved backwards"));
     }
     if method == "POST" && path == "/service/nonce" {
-        let request = parse_nonce_request(body)?;
-        let g = grant(tx, &request.action.grant_id)?;
-        authorize_action(&request.action, &g, &config.audience, now)?;
+        let request = observe(Name::Parse, || parse_nonce_request(body))?;
+        let g = observe(Name::Grant, || {
+            let grant = grant(tx, &request.action.grant_id)?;
+            authorize_action(&request.action, &grant, &config.audience, now)?;
+            Ok::<_, AppError>(grant)
+        })?;
         let origin: WireName = request.action.zone.parse()?;
         zone_metadata(tx, &origin)?;
         let nonces = collect_live_nonces(tx, now, config.epoch)?;
@@ -126,7 +130,7 @@ pub fn mutate(
         {
             return Err(AppError::Capacity("outstanding nonces"));
         }
-        let nonce = issue_nonce(&request.action, now)?;
+        let nonce = observe(Name::Nonce, || issue_nonce(&request.action, now))?;
         let key = nonce_key(config.epoch, &nonce.nonce);
         if tx.get(Collection::Nonces, &key)?.is_some() {
             return Err(AppError::Conflict("nonce collision"));
@@ -141,29 +145,41 @@ pub fn mutate(
         )?;
         return Ok(AppResponse::new(json!(nonce.response())));
     }
-    let request = parse_signed_request(body)?;
+    let request = observe(Name::Parse, || parse_signed_request(body))?;
     if expected_route(request.action.operation()) != (method, path) {
         return Err(AppError::Invalid("operation does not match endpoint"));
     }
-    let verified = verify_request_signature(&request)?;
+    let verified = observe(Name::Signature, || verify_request_signature(&request))?;
     let result_key = request_key(&request.action.grant_id, &request.action.request_id);
-    if let Some(v) = tx.get(Collection::RequestResults, &result_key)? {
-        let result: RequestResult =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
-        if result.signed_message_digest != verified.signed_message_digest {
-            return Err(AppError::Auth(AuthError::RequestIdConflict));
+    let replay = observe(Name::Idempotency, || {
+        if let Some(v) = tx.get(Collection::RequestResults, &result_key)? {
+            let result: RequestResult =
+                serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+            if result.signed_message_digest != verified.signed_message_digest {
+                return Err(AppError::Auth(AuthError::RequestIdConflict));
+            }
+            let mut response = AppResponse::new(result.body);
+            response.http_status = result.http_status;
+            response.original_version = Some(v.version);
+            return Ok(Some(response));
         }
-        let mut response = AppResponse::new(result.body);
-        response.http_status = result.http_status;
-        response.original_version = Some(v.version);
+        Ok(None)
+    })?;
+    if let Some(response) = replay {
         return Ok(response);
     }
     let key = nonce_key(config.epoch, &request.nonce);
-    let nonce: NonceRecord =
-        get_json(tx, Collection::Nonces, &key)?.ok_or(AppError::Auth(AuthError::InvalidNonce))?;
-    validate_nonce(&request, &nonce, now)?;
-    let g = grant(tx, &request.action.grant_id)?;
-    authorize_action(&request.action, &g, &config.audience, now)?;
+    observe(Name::Nonce, || {
+        let nonce: NonceRecord = get_json(tx, Collection::Nonces, &key)?
+            .ok_or(AppError::Auth(AuthError::InvalidNonce))?;
+        validate_nonce(&request, &nonce, now)?;
+        Ok::<_, AppError>(())
+    })?;
+    let g = observe(Name::Grant, || {
+        let grant = grant(tx, &request.action.grant_id)?;
+        authorize_action(&request.action, &grant, &config.audience, now)?;
+        Ok::<_, AppError>(grant)
+    })?;
     let origin: WireName = request.action.zone.parse()?;
     zone_metadata(tx, &origin)?;
     let mut changed = false;
@@ -181,6 +197,7 @@ pub fn mutate(
                 &policy,
                 now,
             )?;
+            let mut admission_span = Span::start(Name::Admission);
             let id = format!("reg-{}", &verified.signed_message_digest[..32]);
             if tx.get(Collection::Registrations, id.as_bytes())?.is_some() {
                 return Err(AppError::Conflict("registration ID collision"));
@@ -217,6 +234,7 @@ pub fn mutate(
             put_json(tx, Collection::Registrations, id.as_bytes().to_vec(), &r)?;
             index_active_registration(tx, &id)?;
             changed = true;
+            admission_span.success();
             json!({"status":"pending","registration_id":id,"lease_expires_at":lease,"contributions":contributions})
         }
         ActionParameters::Renew(p) => {

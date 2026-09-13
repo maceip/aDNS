@@ -1,0 +1,18 @@
+name: agentdns-otel-native-validation
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib@sha256:5b66b0dc6921f2a439cf50b942ccb9e2a4375f136239a9fdf709ef33e4bfc668
+    platform: linux/amd64
+    cpus: 0.25
+  tempo:
+    image: grafana/tempo@sha256:05321ebf1f191fde34282b3dc86e68f511d489133df7963cd1670a2e1e11b33c
+    platform: linux/amd64
+    cpus: 0.25
+  loki:
+    image: grafana/loki@sha256:550d599ec4efacd8ebc0a5871766855057cba2bd0c669c0711d898c00d6d901f
+    platform: linux/amd64
+    cpus: 0.25
+  grafana:
+    image: grafana/grafana@sha256:1dec240d14e232597dce9bfa56dae55f4397b138cdc91e3ee92ac6b157e2fc49
+    platform: linux/amd64
+    cpus: 0.25

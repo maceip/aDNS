@@ -1,9 +1,10 @@
 # Native Azure acceptance — September 13, 2026
 
-Execution is in progress. This document does not yet claim all twelve checks
-have passed. The user explicitly authorized deployment, runtime test
-credentials, and the remaining attestation, registration, DNS and lifecycle
-acceptance. Ordinary image pulls are retained.
+All twelve original `port.md` acceptance checks are complete for the image
+and ELF identified below. The user authorized deployment, runtime test credentials
+and native acceptance. Ordinary image pulls are retained. OpenTelemetry and
+CI/CD improvements were requested afterwards and have separate validation;
+this report does not attribute these measurements to a later instrumented image.
 
 ## Deployment under test
 
@@ -64,23 +65,56 @@ transport, were 1,508.392166 ms and 1,429.411 ms respectively (one sample each).
 
 | Check | Native execution status |
 | --- | --- |
-| Hardware appraisal | Both workers and the corrected primary passed actual TLS/SPKI binding, Rust appraisal, independent cryptographic verification and sixteen evidence negatives each. Both genuine signed registrations committed. |
-| Owner scope | Six authentic signed native denials passed: hostname, role, address, port, expired grant and revoked grant. Each retained a globally committed failure observation without consuming the nonce or changing the zone. |
-| Signed requests | Native fixed-width/JCS signatures, DER rejection, altered signature/evidence, consumed nonce and exact historical retries passed. Changed-key conflict still pending. |
-| Commitment | Both native registrations and six authenticated failure observations were independently confirmed committed; exact retries preserved original transaction IDs. Lifecycle and sustained served-serial observations remain pending. |
-| DNSSEC | Native full-zone and stock-validator checks pending primary/secondary readiness. |
-| AXFR | Runtime BIND provisioning and public TCP/UDP port 53 serving passed with transferred signed SOA serial 9. Independent full transfer-chain and negative tests are running. |
-| Idle maintenance | A 1,250-second mutation-free observation with a 1,200-second fixed load is prepared; not yet run. |
-| TLSA rotation | Both independently appraised keys are available; coexistence and selective withdrawal pending registration. |
-| ACME concurrency | Signed create/create/delete and natural expiry prepared; not yet run. |
-| Mail interoperability | Controlled DANE/PKIX checks against actual native worker keys pending published TLSA records. |
-| KSK receipt | Native receipt at transaction 2.48 verified; KSK tag 9055. Independent tamper variants are running with the full DNS verifier. |
-| Performance | Native registration, signing, WAN frontend and Azure memory measurements pending. Local measurements are reported separately. |
+| Hardware appraisal | Primary and both original workers passed native Rust and independent cryptographic/TLS verification. Freshly restarted A passed again before its changed-key conflict test. Genuine report versions and explicit UVM release-time policy are recorded. |
+| Owner scope | Six authentic native hostname/role/address/port/expired/revoked-grant denials committed failure observations without consuming the nonce or changing the zone. |
+| Signed requests | Fixed-width/JCS signatures, DER/altered-signature/evidence/consumed-nonce negatives and historical retries passed. The freshly appraised changed key received HTTP409 `REQUEST_ID_CONFLICT`; original transaction2.143 and zone serial remained unchanged. |
+| Commitment | Native responses, failed-attempt observations and exact original historical transaction identities were independently confirmed. The exact ELF separately passed real CCF quorum loss/rollback and disk recovery in Virtual mode. |
+| DNSSEC | Full zone passed independent ldns validation; stock delv verified initial positive/NSEC3/wildcard cases, 84 sustained checks and 18 final withdrawal/expiry checks. |
+| AXFR | Ten authenticated frames transferred the native signed zone to stock BIND. Wrong/missing TSIG requests failed; public TCP/UDP53 serving and authenticated served-SOA observations passed. |
+| Idle maintenance | 1,267.964-second external run and 1,250.901-second committed-status observation passed across four autonomous refreshes, serials14–18. No registration or zone mutation was issued during that window. |
+| TLSA rotation | Both keys coexisted at25/465/993. A's port25 withdrawal committed2.2587/serial20; full withdrawal2.2696/serial21 preserved B and shared records. B naturally expired after a signed short lease, leaving all six dynamic RRsets absent at serial22. A's old listener remained through the full300-second cache grace before its restart. |
+| ACME concurrency | Signed create/create/delete, exact coexistence, survivor preservation and natural expiry passed through stock DNSSEC validators. |
+| Mail interoperability | Stock Postfix DANE-only authenticated each actual worker key and rejected a wrong key. Controlled PKIX465/993 and wrong-name/system-trust negatives passed. Client-side DNAT and private test trust are explicit; no public certificate issuance or mail delivery is claimed. |
+| KSK receipt | Native receipt2.48 binds owner/full DNSKEY/DS; owner/RDATA/proof/ID tampering failed. Exact-ELF disk recovery separately preserved its own KSK and verified the recovered receipt. |
+| Performance | Native admission samples, 1,200-second WAN load, independent latency sampling, signing durations, Azure container metrics and actual BIND process RSS were collected and are distinguished below. |
+
+The fixed load sent 1,199,461 queries and completed 1,192,214 over 1,200.501 seconds:
+993.38948 completed queries/second and 7,247 losses (0.604188%). The independent
+sampler attempted all12,000 probes, with zero missed schedule slots, 11,985
+successes and15 failures. Successful-probe p50/p99 were152.115665/220.194206ms.
+This measures the observed WAN path under fixed offered load, not maximum capacity.
+
+All84 stock DNSSEC checks and115 committed-status observations passed. Eight
+status samples briefly reported `in_sync=false` after serial advances; each caught
+up. The first-in-sync sample followed the first-new-serial sample by roughly11–33s,
+which bounds observation intervals rather than exact transfer latency.
+Four actual signing diagnostics measured209.325–216.897ms for260 source records.
+Those pre-OpenTelemetry diagnostic lines have no event timestamps; the log
+snapshot/serial correlation method is preserved.
+
+The1,380.002-second BIND process collector retained139 samples, fully covering the
+load. Named RSS ranged54,684–54,752KiB with the same PID/start identity throughout.
+Separate Azure primary container memory samples ranged79,343,616–81,993,728bytes,
+with CPU28–41millicores. Container usage is not process RSS, and this finite
+measurement does not establish general leak freedom.
+
+Evidence: [native API and terminal review](evidence/native-api-final-20260913/README.md),
+[initial DNS/mail/ACME](evidence/native-external-preidle-20260913/README.md),
+[idle/load raw samples](evidence/native-external-idle-20260913/README.md),
+[withdrawal and expiry DNS](evidence/native-external-lifecycle-20260913/README.md),
+[primary signing/platform metrics](evidence/native-primary-idle-20260913/README.md),
+[actual BIND process samples](evidence/native-secondary-vm-final-20260913/README.md),
+and [fresh restarted worker appraisal](evidence/native-worker-a-rotated-20260913/README.md).
+
+B's requested total lease2425s produced the exact deadline1789290242. Final
+absence was first probed at1789290354.490,112.490s later; this is an observation
+bound, not a measured112-second removal delay. The fresh-key409 test preserves
+its complete signed envelope and does not represent a new admitted registration.
 
 Worker evidence is published in
 [the native worker bundle](evidence/native-workers-final-20260913/README.md).
 Rebuilt-primary hardware verification is preserved in
-[the independent primary bundle](evidence/native-primary-final-v5-independent-20260913/README.md),
+[the independent primary bundle](evidence/native-primary-ready-independent-20260913/README.md),
 and exact-ELF quorum/recovery evidence is in
 [the version 5 build bundle](evidence/ccf-native-v5-20260913/README.md).
 Earlier exact-image local checks remain in

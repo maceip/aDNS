@@ -1,6 +1,7 @@
 use crate::*;
 use adns_dnssec::{DenialMode, SignedZone, SigningKey};
 use adns_storage::{Collection, WriteTx, composite_key, put_json};
+use adns_telemetry::{Name, observe};
 use adns_wire::*;
 use sha2::{Digest, Sha256};
 
@@ -83,31 +84,21 @@ pub fn resign_zone(
     // Governed base records and owned contributions may share an RRset. Its
     // TTL and duplicate handling must include every source before signing.
     let all = normalize_rrsets(all)?;
-    let unsigned_record_count = all.len();
-    let signing_started = std::time::Instant::now();
-    let signed = SignedZone::sign_with_keys(
-        *origin,
-        all,
-        &ksk,
-        &zsk,
-        u32::try_from(now).map_err(|_| AppError::Invalid("DNSSEC time range"))?,
-        metadata.signature_validity,
-        DenialMode::Nsec3 {
-            iterations: 0,
-            salt: vec![],
-        },
-    )
-    .map_err(|e| AppError::Dnssec(e.to_string()))?;
-    // Diagnostics are outside the replicated state and never influence time,
-    // authorization, signing inputs, or a consensus decision.
-    eprintln!(
-        "{}",
-        serde_json::json!({
-            "event": "agentdns.dnssec.signing", "zone": origin.to_string(),
-            "serial": metadata.serial, "record_count": unsigned_record_count,
-            "elapsed_micros": signing_started.elapsed().as_micros()
-        })
-    );
+    let signed = observe(Name::DnssecSign, || {
+        SignedZone::sign_with_keys(
+            *origin,
+            all,
+            &ksk,
+            &zsk,
+            u32::try_from(now).map_err(|_| AppError::Invalid("DNSSEC time range"))?,
+            metadata.signature_validity,
+            DenialMode::Nsec3 {
+                iterations: 0,
+                salt: vec![],
+            },
+        )
+        .map_err(|e| AppError::Dnssec(e.to_string()))
+    })?;
     metadata.signed_records = signed.records;
     metadata.ksk_dnskey_rdata = RData::Dnskey(ksk.dnskey(257)).to_wire()?;
     metadata.last_signed_at = now;

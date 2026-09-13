@@ -3476,6 +3476,11 @@ String& String::operator=(const String& other) {
 }
 
 String& String::operator+=(const String& other) {
+    // Preserve the source when resizing or updating this object's inline data.
+    if(this == &other) {
+        const String copy(other);
+        return operator+=(copy);
+    }
     const unsigned my_old_size = size();
     const unsigned other_size  = other.size();
     const unsigned total_size  = my_old_size + other_size;

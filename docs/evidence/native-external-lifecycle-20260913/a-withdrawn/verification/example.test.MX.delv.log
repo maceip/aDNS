@@ -1,0 +1,3 @@
+; fully validated
+example.test.		529	IN	MX	10 mail.example.test.
+example.test.		529	IN	RRSIG	MX 14 2 3600 20260913090903 20260913085403 20222 example.test. SQUoAamFfzIWG4lHcVqOr+6gFPhJuw5i6bRnZO7v3j7831xu2PDri7VL KPNjpAecposfdN/m2RpCSwAJujfvL77j17Emz2rIi8YVZxq6hh10Ge7J MAVERteMKT0b0tw9

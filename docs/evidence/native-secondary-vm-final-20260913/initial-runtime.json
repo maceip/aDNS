@@ -1,0 +1,18 @@
+{
+  "status": "container_started_not_zone_ready",
+  "image_manifest": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+  "image_id": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+  "container_id": "553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d",
+  "host_pid": 2475,
+  "primary": "52.155.227.199",
+  "primary_port": 5353,
+  "listen_private_ip": "10.71.0.4",
+  "public_protocols": [
+    "TCP53",
+    "UDP53"
+  ],
+  "named_version": "BIND 9.18.39-0ubuntu0.24.04.7-Ubuntu (Extended Support Version) <id:>\nrunning on Linux x86_64 6.17.0-1018-azure-fde #18~24.04.1-Ubuntu SMP Mon Jul  6 22:24:09 UTC 2026\nbuilt by make with  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/x86_64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=/usr/src/bind9-1:9.18.39-0ubuntu0.24.04.7 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -ledit' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'\ncompiled by GCC 13.3.0\ncompiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024\nlinked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024\ncompiled with libuv version: 1.48.0\nlinked to libuv version: 1.48.0\ncompiled with libnghttp2 version: 1.59.0\nlinked to libnghttp2 version: 1.59.0\ncompiled with libxml2 version: 2.9.14\nlinked to libxml2 version: 20914\ncompiled with json-c version: 0.17\nlinked to json-c version: 0.17\ncompiled with zlib version: 1.3\nlinked to zlib version: 1.3\nlinked to maxminddb version: 1.9.1\nthreads support is enabled\nDNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448\nDS algorithms: SHA-1 SHA-256 SHA-384\nHMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512\nTKEY mode 2 support (Diffie-Hellman): yes\nTKEY mode 3 support (GSS-API): yes\n\ndefault paths:\n  named configuration:  /etc/bind/named.conf\n  rndc configuration:   /etc/bind/rndc.conf\n  DNSSEC root key:      /etc/bind/bind.keys\n  nsupdate session key: //run/named/session.key\n  named PID file:       //run/named/named.pid\n  named lock file:      //run/named/named.lock\n  geoip-directory:      /usr/share/GeoIP\n",
+  "docker_version": "29.1.3",
+  "configuration_sha256": "f2924979ee3c3808e0db683349d8688d93ceca8b3bdf57e751ba2d963b54110c",
+  "boundary": "Stock secondary only; no DNSSEC private keys and no native VM appraisal claim."
+}

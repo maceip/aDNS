@@ -1,0 +1,11 @@
+{
+  "updated_unix_seconds": 1789286684.3456187,
+  "container_id": "553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d",
+  "host_pid_before": 2475,
+  "old_configuration_sha256": "f2924979ee3c3808e0db683349d8688d93ceca8b3bdf57e751ba2d963b54110c",
+  "new_configuration_sha256": "634b63843cfa8ff69324048b8b7fbbe4e16509036031c41d7e2c35a483c36cf7",
+  "primary": "20.166.239.227",
+  "port": 5353,
+  "allow_notify": "TSIGidentity agentdns-transfer.; independent of sourceIP",
+  "state": "configuration_validated_reloaded; outbound hold removal and actual signed-zone readiness remain separate"
+}

@@ -1,0 +1,174 @@
+[
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "at_unix_seconds": 1789289941.070959,
+    "elapsed_ms": 1549.119625,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "221",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2690",
+        "x-ms-ccf-transaction-id": "2.2690"
+      },
+      "body": {
+        "expires_at": 1789290240,
+        "intent_hash": "a8e2d8fd98d74847fda785380a48bc9a8dc7636d95ddf1b0e2fbae0957fd1073",
+        "issued_at": 1789289940,
+        "nonce": "7acccd1c362149957725cdab140d2e6aee0f936bd2e0d83a9488af447fb46b2e",
+        "tx_id": "2.2690"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2690",
+    "at_unix_seconds": 1789289941.72275,
+    "elapsed_ms": 651.379042,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2690"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/deregister",
+    "at_unix_seconds": 1789289943.3296058,
+    "elapsed_ms": 866.730458,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "209",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2696",
+        "x-ms-ccf-transaction-id": "2.2696"
+      },
+      "body": {
+        "active_ports": [],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "withdrawn",
+        "status": "committed",
+        "tx_id": "2.2696",
+        "zone_serial": 21
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2696",
+    "at_unix_seconds": 1789289943.9757361,
+    "elapsed_ms": 645.713708,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2696"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=native-withdraw-a-all-20260913",
+    "at_unix_seconds": 1789289944.702971,
+    "elapsed_ms": 726.839625,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "209",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2696",
+        "x-ms-ccf-transaction-id": "2.2697"
+      },
+      "body": {
+        "active_ports": [],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "withdrawn",
+        "status": "committed",
+        "tx_id": "2.2696",
+        "zone_serial": 21
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2696",
+    "at_unix_seconds": 1789289945.3926988,
+    "elapsed_ms": 688.413083,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2696"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/deregister",
+    "at_unix_seconds": 1789289946.1042619,
+    "elapsed_ms": 711.142417,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "209",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.2696",
+        "x-ms-ccf-transaction-id": "2.2698"
+      },
+      "body": {
+        "active_ports": [],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "withdrawn",
+        "status": "committed",
+        "tx_id": "2.2696",
+        "zone_serial": 21
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.2696",
+    "at_unix_seconds": 1789289946.751746,
+    "elapsed_ms": 646.638833,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.2696"
+      }
+    }
+  }
+]

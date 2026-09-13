@@ -8,6 +8,7 @@ pub mod node_audit;
 mod snp;
 mod uvm;
 
+use adns_telemetry::{Name, observe};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 pub use snp::{SnpAttestationReport, TcbVersion};
@@ -118,20 +119,36 @@ pub fn appraise(
     policy: &AppraisalPolicy,
     now: u64,
 ) -> Result<VerifiedAppraisal, AttestationError> {
+    observe(Name::Appraisal, || {
+        appraise_inner(profile, evidence, spki_der, policy, now)
+    })
+}
+
+fn appraise_inner(
+    profile: &str,
+    evidence: &[u8],
+    spki_der: &[u8],
+    policy: &AppraisalPolicy,
+    now: u64,
+) -> Result<VerifiedAppraisal, AttestationError> {
     if profile != AZURE_ACI_SNP {
         return Err(AttestationError::UnsupportedProfile);
     }
     validate_policy(policy, now)?;
-    let envelope = cose::parse_sign1(evidence)?;
-    cose::verify_es256(&envelope, spki_der)?;
-    let payload = cose::parse_native_payload(
-        envelope
-            .payload
-            .as_deref()
-            .ok_or(AttestationError::Malformed("detached payload"))?,
-    )?;
+    let payload = observe(Name::Cose, || {
+        let envelope = cose::parse_sign1(evidence)?;
+        cose::verify_es256(&envelope, spki_der)?;
+        cose::parse_native_payload(
+            envelope
+                .payload
+                .as_deref()
+                .ok_or(AttestationError::Malformed("detached payload"))?,
+        )
+    })?;
     let verified = verify_native(&payload, policy, now)?;
-    verified.report.verify_key_binding(spki_der)?;
+    observe(Name::KeyBinding, || {
+        verified.report.verify_key_binding(spki_der)
+    })?;
     let deadline = now
         .checked_add(policy.max_appraisal_lifetime)
         .ok_or(AttestationError::PolicyNotValid)?;
@@ -190,45 +207,55 @@ fn verify_native(
     policy: &AppraisalPolicy,
     now: u64,
 ) -> Result<NativeVerification, AttestationError> {
-    let report = SnpAttestationReport::parse(&payload.report)?;
-    report.verify_security_policy()?;
-    let endorsements = certificates::verify_amd_endorsements(&payload.endorsements, now)?;
-    report.verify_signature(&payload.report, &endorsements.vcek)?;
-    certificates::verify_vcek_extensions(&endorsements.vcek, &report, &endorsements.product)?;
-    let minimum = policy
-        .minimum_tcb
-        .get(&endorsements.product)
-        .ok_or(AttestationError::TcbBelowMinimum)?;
-    // All four TCB states are checked component-wise; integer ordering is unsafe.
-    for tcb in [
-        report.current_tcb,
-        report.reported_tcb,
-        report.committed_tcb,
-        report.launch_tcb,
-    ] {
-        if !tcb.meets(minimum) {
-            return Err(AttestationError::TcbBelowMinimum);
+    let report = observe(Name::Snp, || {
+        let report = SnpAttestationReport::parse(&payload.report)?;
+        report.verify_security_policy()?;
+        Ok::<_, AttestationError>(report)
+    })?;
+    let endorsements = observe(Name::AmdChain, || {
+        certificates::verify_amd_endorsements(&payload.endorsements, now)
+    })?;
+    observe(Name::Snp, || {
+        report.verify_signature(&payload.report, &endorsements.vcek)?;
+        certificates::verify_vcek_extensions(&endorsements.vcek, &report, &endorsements.product)?;
+        let minimum = policy
+            .minimum_tcb
+            .get(&endorsements.product)
+            .ok_or(AttestationError::TcbBelowMinimum)?;
+        // All four TCB states are checked component-wise; integer ordering is unsafe.
+        for tcb in [
+            report.current_tcb,
+            report.reported_tcb,
+            report.committed_tcb,
+            report.launch_tcb,
+        ] {
+            if !tcb.meets(minimum) {
+                return Err(AttestationError::TcbBelowMinimum);
+            }
         }
-    }
-    if !policy
-        .approved_measurements
-        .contains(&hex::encode(report.measurement))
-    {
-        return Err(AttestationError::MeasurementRejected);
-    }
-    if !policy
-        .approved_host_data
-        .contains(&hex::encode(report.host_data))
-    {
-        return Err(AttestationError::HostDataRejected);
-    }
-    let uvm = uvm::verify(
-        &payload.uvm,
-        &report.measurement,
-        &policy.uvm,
-        now,
-        policy.uvm_endorsement_time_policy,
-    )?;
+        if !policy
+            .approved_measurements
+            .contains(&hex::encode(report.measurement))
+        {
+            return Err(AttestationError::MeasurementRejected);
+        }
+        if !policy
+            .approved_host_data
+            .contains(&hex::encode(report.host_data))
+        {
+            return Err(AttestationError::HostDataRejected);
+        }
+        Ok::<_, AttestationError>(())
+    })?;
+    let uvm = observe(Name::Uvm, || {
+        uvm::verify(
+            &payload.uvm,
+            &report.measurement,
+            &policy.uvm,
+            now,
+            policy.uvm_endorsement_time_policy,
+        )
+    })?;
     let certificates_valid_until = endorsements.valid_until.min(uvm.valid_until);
     Ok(NativeVerification {
         report,

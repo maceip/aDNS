@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "observed_at": 1789290319.8919911,
+  "lease_plan": {
+    "prepared_at": 1789290092,
+    "admitted_at": 1789287817,
+    "requested_lease_seconds": 2425,
+    "expected_lease_expires_at": 1789290242,
+    "previous_lease_expires_at": 1789291417
+  },
+  "registration": {
+    "http_status": 200,
+    "headers": {
+      "content-length": "950",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.3151",
+      "x-ms-ccf-transaction-id": "2.3151"
+    },
+    "body": {
+      "active_contributions": [],
+      "active_ports": [],
+      "admitted_at": 1789287817,
+      "committed_contributions": [],
+      "committed_status": "expired",
+      "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+      "grant_id": "aci-test-owner-rotation",
+      "lease_expires_at": 1789290242,
+      "parameters": {
+        "addresses": {
+          "ipv4": [
+            "192.0.2.1"
+          ],
+          "ipv6": [
+            "2001:db8::1"
+          ]
+        },
+        "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+        "evidence_profile": "azure-aci-snp",
+        "lease_seconds": 3600,
+        "mailbox_domain": "example.test.",
+        "ports": [
+          25,
+          465,
+          993
+        ],
+        "role": "mx-edge",
+        "service_host": "mail.example.test."
+      },
+      "policy_id": "71e2d37baddd664f9b292d84c67b2cc31ed7db1a3d8eee2ae4e9debb60a5495d",
+      "policy_valid_until": 1789297503,
+      "reappraisal_deadline": 1789297299,
+      "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+      "signer_spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "status": "expired",
+      "tx_id": "2.3151",
+      "zone": "example.test."
+    },
+    "confirmed_ccf_transaction_id": "2.3151"
+  },
+  "zone_status": {
+    "http_status": 200,
+    "headers": {
+      "content-length": "358",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.3152",
+      "x-ms-ccf-transaction-id": "2.3152"
+    },
+    "body": {
+      "committed_state": {
+        "ccf_tx_id": "2.3152",
+        "earliest_rrsig_expiration": 1789290845,
+        "maintenance_health": "ok",
+        "rrsig_inception": 1789289945,
+        "serial": 22
+      },
+      "frontend_propagation": {
+        "secondaries": [
+          {
+            "endpoint": "20.166.33.141:53",
+            "in_sync": true,
+            "last_notified_serial": 22,
+            "last_observed_at": 1789290316,
+            "last_observed_serial": 22
+          }
+        ]
+      },
+      "tx_id": "2.3152",
+      "zone": "example.test."
+    },
+    "confirmed_ccf_transaction_id": "2.3152"
+  },
+  "exact_requested_expiry_verified": true
+}

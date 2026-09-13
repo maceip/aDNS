@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: AgentDNS
+    orgId: 1
+    folder: AgentDNS
+    type: file
+    disableDeletion: true
+    editable: false
+    options:
+      path: /var/lib/grafana/dashboards

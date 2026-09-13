@@ -1,0 +1,14 @@
+id 7706
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+mail.example.test. IN A
+;ANSWER
+mail.example.test. 300 IN A 192.0.2.1
+mail.example.test. 300 IN RRSIG A 14 3 300 20260913090903 20260913085403 20222 example.test. IKb/zG/CwYad3LQoHRyo/qRoW4xv1R7D hmkdyoKU6JAx12++UKZs4I0L9JaKgDJC C82dSYoeqRIM2eTIcvBBvpEyXWmcTCAq EwK+jpsU0ROTfpAO+d9VK2qHfg0SiEbO
+;AUTHORITY
+;ADDITIONAL

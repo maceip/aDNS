@@ -1,0 +1,14 @@
+id 23445
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_25._tcp.mail.example.test. IN TLSA
+;ANSWER
+_25._tcp.mail.example.test. 300 IN TLSA 3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed
+_25._tcp.mail.example.test. 300 IN RRSIG TLSA 14 5 300 20260913090736 20260913085236 20222 example.test. AnYssFBuRxv79ZZLh/DxU9ReGjk7yr9n G492HXvObzjQEW3RFxgYPHo0AUse6yun YHySfp7mb4E/gJe2SZ4TBf8NvLg6kfQh Z49VSR+ypfmmVmRKGKo594oZXQb9fTlU
+;AUTHORITY
+;ADDITIONAL

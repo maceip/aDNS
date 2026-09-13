@@ -4,6 +4,7 @@ use adns_auth::{
     AuthError, NonceRecord, parse_signed_request, validate_nonce, verify_request_signature,
 };
 use adns_storage::{Collection, ReadTx, WriteOverlay, WriteTx, composite_key, get_json, put_json};
+use adns_telemetry::{Name, Span, observe};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -41,7 +42,7 @@ pub fn mutate_observed(
     let mut staged = WriteOverlay::new(tx);
     let error = match mutate(&mut staged, method, path, body, now) {
         Ok(response) => {
-            staged.flush()?;
+            observe(Name::StorageStage, || staged.flush())?;
             return Ok(response);
         }
         Err(error) => error,
@@ -64,11 +65,11 @@ pub fn mutate_observed(
         if now < config.last_time {
             return Err(AppError::Invalid("time moved backwards"));
         }
-        let request = parse_signed_request(body)?;
+        let request = observe(Name::Parse, || parse_signed_request(body))?;
         if crate::service::expected_route(request.action.operation()) != (method, path) {
             return Err(AppError::Invalid("operation does not match endpoint"));
         }
-        let verified = verify_request_signature(&request)?;
+        let verified = observe(Name::Signature, || verify_request_signature(&request))?;
         if tx
             .get(
                 Collection::RequestResults,
@@ -81,7 +82,7 @@ pub fn mutate_observed(
         let key = nonce_key(config.epoch, &request.nonce);
         let nonce: NonceRecord = get_json(tx, Collection::Nonces, &key)?
             .ok_or(AppError::Auth(AuthError::InvalidNonce))?;
-        validate_nonce(&request, &nonce, now)?;
+        observe(Name::Nonce, || validate_nonce(&request, &nonce, now))?;
         Ok((key, nonce, verified.signed_message_digest, config))
     })();
     let (key, nonce, digest, mut config) = match authenticated {
@@ -100,6 +101,7 @@ pub fn mutate_observed(
         http_status: error.http_status(),
         error: error.to_string().chars().take(4096).collect(),
     };
+    let mut storage_span = Span::start(Name::StorageStage);
     config.last_time = now;
     put_json(
         tx,
@@ -108,6 +110,8 @@ pub fn mutate_observed(
         &config,
     )?;
     put_json(tx, Collection::Lifecycle, attempt_key(&key), &attempt)?;
+    storage_span.success();
+    drop(storage_span);
     let mut response = AppResponse::new(json!({
         "status":"failed", "execution_state":"failed", "phase":"last_authenticated_attempt",
         "error":attempt.error, "http_status":attempt.http_status, "retryable":true,

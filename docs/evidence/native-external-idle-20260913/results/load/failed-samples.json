@@ -1,0 +1,137 @@
+[
+  {
+    "sample_index": 398,
+    "scheduled_elapsed_seconds": 39.8,
+    "started_elapsed_seconds": 39.80020488199989,
+    "dispatch_lag_seconds": 0.0002048819997071405,
+    "attempted": true,
+    "elapsed_seconds": 41.80108030700012,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 814,
+    "scheduled_elapsed_seconds": 81.4,
+    "started_elapsed_seconds": 81.40195564700025,
+    "dispatch_lag_seconds": 0.0019556470006136806,
+    "attempted": true,
+    "elapsed_seconds": 83.40534254399972,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 1420,
+    "scheduled_elapsed_seconds": 142.0,
+    "started_elapsed_seconds": 142.0029377840001,
+    "dispatch_lag_seconds": 0.002937784000096144,
+    "attempted": true,
+    "elapsed_seconds": 144.00591130300018,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 1866,
+    "scheduled_elapsed_seconds": 186.6,
+    "started_elapsed_seconds": 186.60287481500018,
+    "dispatch_lag_seconds": 0.0028748149998136796,
+    "attempted": true,
+    "elapsed_seconds": 188.60421139699974,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 2500,
+    "scheduled_elapsed_seconds": 250.0,
+    "started_elapsed_seconds": 250.00083817300037,
+    "dispatch_lag_seconds": 0.0008381730003748089,
+    "attempted": true,
+    "elapsed_seconds": 252.00225367199982,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 2583,
+    "scheduled_elapsed_seconds": 258.3,
+    "started_elapsed_seconds": 258.30082741800015,
+    "dispatch_lag_seconds": 0.000827417999971658,
+    "attempted": true,
+    "elapsed_seconds": 260.3032018410004,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 8246,
+    "scheduled_elapsed_seconds": 824.6,
+    "started_elapsed_seconds": 824.6052145900003,
+    "dispatch_lag_seconds": 0.0052145899999231915,
+    "attempted": true,
+    "elapsed_seconds": 826.6089124509999,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 8758,
+    "scheduled_elapsed_seconds": 875.8,
+    "started_elapsed_seconds": 875.8002110019997,
+    "dispatch_lag_seconds": 0.00021100199955981225,
+    "attempted": true,
+    "elapsed_seconds": 877.8026138539999,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 8776,
+    "scheduled_elapsed_seconds": 877.6,
+    "started_elapsed_seconds": 877.6002847059999,
+    "dispatch_lag_seconds": 0.000284705999547441,
+    "attempted": true,
+    "elapsed_seconds": 879.6028193920001,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 8977,
+    "scheduled_elapsed_seconds": 897.7,
+    "started_elapsed_seconds": 897.7003271550002,
+    "dispatch_lag_seconds": 0.0003271550003773882,
+    "attempted": true,
+    "elapsed_seconds": 899.7028467569999,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 9589,
+    "scheduled_elapsed_seconds": 958.9,
+    "started_elapsed_seconds": 958.9001640870001,
+    "dispatch_lag_seconds": 0.00016408700048486935,
+    "attempted": true,
+    "elapsed_seconds": 960.9040138380005,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 9931,
+    "scheduled_elapsed_seconds": 993.1,
+    "started_elapsed_seconds": 993.1001575259997,
+    "dispatch_lag_seconds": 0.00015752599938423373,
+    "attempted": true,
+    "elapsed_seconds": 995.1027830479998,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 9966,
+    "scheduled_elapsed_seconds": 996.6,
+    "started_elapsed_seconds": 996.6001607039998,
+    "dispatch_lag_seconds": 0.00016070399942691438,
+    "attempted": true,
+    "elapsed_seconds": 998.6022016530005,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 10015,
+    "scheduled_elapsed_seconds": 1001.5,
+    "started_elapsed_seconds": 1001.5001387130005,
+    "dispatch_lag_seconds": 0.0001387130005241488,
+    "attempted": true,
+    "elapsed_seconds": 1003.5021923280001,
+    "error": "Timeout"
+  },
+  {
+    "sample_index": 11513,
+    "scheduled_elapsed_seconds": 1151.3,
+    "started_elapsed_seconds": 1151.3002924430002,
+    "dispatch_lag_seconds": 0.0002924430000348366,
+    "attempted": true,
+    "elapsed_seconds": 1153.305441478,
+    "error": "Timeout"
+  }
+]

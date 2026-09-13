@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checked_unix_seconds": 1789289671.5819352,
+  "expected_source_files": 6,
+  "verified_source_files": 6,
+  "post_execution_sha256": {
+    "tests/rust-integration/run_native_idle.py": "fb465523ba1e7801344b052540c7a3d82393e752f966fcd83ec47111241a2ae6",
+    "tests/rust-integration/run_ccf.py": "e36bb7afe331e1a02cd7c75be5d8a4d1f06d354e92600b67a6be0165361db5c2",
+    "tests/rust-integration/monitor_remote.py": "50e43df191a6a2b578940be52189e1708691cc9a14788b02532a87897518759f",
+    "tests/rust-integration/benchmark_remote.py": "a91f7e173ec7f658e7b24856a2370c3c00c28aebd44b78e6513ab7690a16f201",
+    "ccf/tests/observe_status.py": "0b703a8dd2812e749770932f73abecdaf5c793cbe708b10044644fcc1dba5498",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+  },
+  "failures": []
+}

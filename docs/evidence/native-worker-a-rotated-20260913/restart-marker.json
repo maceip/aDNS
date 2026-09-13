@@ -1,0 +1,8 @@
+{
+  "state": "restart_request_returned",
+  "prepared_unix_seconds": 1789290358.973824,
+  "not_before_unix_seconds": 1789290315.461,
+  "scope": "one restart of worker A only; unchanged image/configuration/CCE and credentials; no signing or governance",
+  "exit_code": 0,
+  "returned_unix_seconds": 1789290393.024551
+}

@@ -1,0 +1,240 @@
+   Compiling allocation-counter v0.8.1
+   Compiling adns-transfer v0.1.0 (/Users/mac/agentdns/crates/adns-transfer)
+   Compiling adns-auth v0.1.0 (/Users/mac/agentdns/crates/adns-auth)
+   Compiling adns-storage v0.1.0 (/Users/mac/agentdns/crates/adns-storage)
+   Compiling adns-attest v0.1.0 (/Users/mac/agentdns/crates/adns-attest)
+   Compiling adns-dnssec v0.1.0 (/Users/mac/agentdns/crates/adns-dnssec)
+   Compiling adns-wire v0.1.0 (/Users/mac/agentdns/crates/adns-wire)
+   Compiling adns-server v0.1.0 (/Users/mac/agentdns/crates/adns-server)
+   Compiling adns-ccf v0.1.0 (/Users/mac/agentdns/crates/adns-ccf)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.49s
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_attest-f744c9f36c3d3605)
+
+running 24 tests
+test tests::ambiguous_governance_publisher_entries_fail_closed ... ok
+test tests::malformed_inputs_are_bounded_and_do_not_panic ... ok
+test tests::report_layout_reserves_exact_version_specific_boundaries ... ok
+test tests::unsupported_and_inactive_profiles_fail_before_decoding ... ok
+test tests::report_data_requires_digest_and_every_padding_byte ... ok
+test tests::duplicate_algorithm_and_critical_headers_are_rejected ... ok
+test tests::modified_hardware_report_signature_fails ... ok
+test tests::outer_signature_key_and_p1363_format_are_enforced ... ok
+test tests::pinned_amd_root_is_not_replaceable_by_an_attacker ... ok
+test tests::v5_cpuid_must_match_the_authenticated_vcek_product ... ok
+test tests::swapped_milan_and_genoa_endorsements_fail ... ok
+test tests::expired_historical_uvm_certificates_are_not_current_proof ... ok
+test tests::genuine_legacy_and_current_cwt_uvm_endorsements_verify ... ok
+test tests::altered_uvm_payload_and_signature_are_rejected ... ok
+test tests::governed_immutable_release_mode_accepts_genuine_expired_uvm_signers ... ok
+test tests::genuine_milan_and_genoa_report_and_microsoft_uvm_are_verified ... ok
+test tests::approved_release_keeps_governance_signatures_and_amd_time_checks ... ok
+test tests::request_diagnostics_preserve_genuine_native_verification_and_hide_evidence ... ok
+test tests::genuine_genoa_v5_chain_mitigations_and_actual_ccf_tls_key_verify ... ok
+test tests::every_security_policy_and_tcb_component_is_enforced ... ok
+test tests::native_test_quotes_cannot_be_presented_as_bound_service_evidence ... ok
+test tests::v5_mitigation_bytes_are_signed_and_cannot_be_downgraded ... ok
+test tests::ccf_node_audit_checks_real_crypto_and_cannot_relabel_unbound_reports ... ok
+test tests::workload_allowlists_and_uvm_identity_fail_closed ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests examples/appraise.rs (.validation/otel-rust-target/debug/examples/appraise-6a7c5ba1fa7e8e38)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/audit_ccf_node.rs (.validation/otel-rust-target/debug/examples/audit_ccf_node-6af4c836e055a40f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_auth-efa12bee7d210f2d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/contract.rs (.validation/otel-rust-target/debug/deps/contract-ccb37a090c8f394f)
+
+running 11 tests
+test jcs_vectors_use_utf16_sorting_minimal_escapes_and_safe_integer_subset ... ok
+test canonical_names_addresses_and_scope_boundaries ... ok
+test renewal_rechecks_scope_without_requiring_register_permission ... ok
+test lifecycle_and_acme_target_ownership_and_lease_bounds ... ok
+test nonce_boundaries_corruption_and_consumption_fail_closed ... ok
+test owner_grant_rejects_authentic_keys_outside_every_scope ... ok
+test operator_and_withdrawal_schemas_are_narrow_and_round_trip ... ok
+test actual_p256_signature_round_trip_and_single_hash ... ok
+test strict_schema_rejects_unknown_duplicate_float_null_and_bad_encoding ... ok
+test historical_idempotency_is_exact_and_authenticates_retries ... ok
+test all_tampering_and_der_signatures_fail ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_ccf-2b789179399315ed)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/adapter.rs (.validation/otel-rust-target/debug/deps/adapter-b60c848ccb59b9f0)
+
+running 11 tests
+test legacy_transfer_configuration_is_active_but_explicit_revocation_is_preserved ... ok
+test private_transfer_key_one_time_digest_pin_and_revocation ... ok
+test governed_configuration_cannot_regress_live_time_watermark ... ok
+test doh_refuses_expired_signed_snapshots_and_noncanonical_queries ... ok
+test axfr_frames_and_udp_soa_are_authenticated_and_no_key_export_occurs ... ok
+test doh_rejects_a_missing_lifecycle_recovery_marker ... ok
+test ksk_claims_bind_canonical_owner_and_complete_rdata_with_real_leaf_counter ... ok
+test secondary_work_commits_before_observation_and_rejects_replays_forgery_and_source_mismatch ... ok
+test complete_revocation_invalidates_pending_work_and_preserves_replacement ... ok
+test doh_ds_at_a_hosted_child_apex_uses_the_parent_zone ... ok
+test secondary_partial_batches_make_progress_and_rotate_past_fast_earlier_peers ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_dnssec-8093fe7044174524)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/dnssec.rs (.validation/otel-rust-target/debug/deps/dnssec-ed9d06019eaf06ad)
+
+running 12 tests
+test tlsa_key_overlap_and_scoped_withdrawal ... ok
+test rfc5155_hash_vectors_and_limits ... ok
+test rfc6605_p384_key_tag_ds_and_signature_vector ... ok
+test invalid_zones_and_rrset_ttl_mismatch_rejected ... ok
+test any_returns_real_rrset_and_multiple_signatures_are_filtered ... ok
+test wildcard_signatures_verify_synthesized_owner ... ok
+test exact_positive_resolution_allocates_zero_bytes ... ok
+test nsec3_nxdomain_proves_closest_next_and_wildcard ... ok
+test immutable_snapshot_rehydration ... ok
+test both_denial_modes_cover_nodata_empty_nonterminals_and_wildcards ... ok
+test delegation_referral_glue_and_ds_nodata ... ok
+test live_signing_all_rrsets_and_key_persistence ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests examples/export.rs (.validation/otel-rust-target/debug/examples/export-a9cc45663f59b908)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_server-e86ca117e2a8234d)
+
+running 1 test
+test limits::tests::byte_budget_rejects_large_governed_initial_records_before_signing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/adns-dev.rs (.validation/otel-rust-target/debug/deps/adns_dev-1a59e5f03f5f7695)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/transactions.rs (.validation/otel-rust-target/debug/deps/transactions-bce5906fe20b2bee)
+
+running 29 tests
+test ksk_claims_bind_owner_and_full_rdata ... ok
+test failed_attempt_overlay_discards_partial_records_and_preserves_nonce_quota ... ok
+test failed_attempts_expire_on_epoch_change_and_survive_authenticated_recovery ... ok
+test failed_dns_write_rolls_back_nonce_records_and_serial ... ok
+test reconciliation_tracks_committed_nonce_failed_attempt_and_success_without_burning_nonce ... ok
+test complete_snapshot_deduplicates_case_canonical_base_records_after_ttl_normalization ... ok
+test issuer_cannot_use_revoked_registration_before_maintenance_runs ... ok
+test idle_maintenance_refreshes_and_sealed_recovery_keeps_signing_keys ... ok
+test rotation_and_challenge_contributions_do_not_delete_other_owners ... ok
+test normalization_does_not_hide_base_cname_conflicts_or_consume_rejected_nonce ... ok
+test changing_appraisal_policy_identity_withdraws_existing_registration ... ok
+test saturated_diagnostics_do_not_change_business_failure_or_commit_partial_records ... ok
+test renewal_duration_is_measured_from_admission_and_cannot_end_in_the_past ... ok
+test unverifiable_attempts_and_internal_failures_leave_no_diagnostic_state ... ok
+test signed_mutation_is_atomic_replayed_historically_and_conflict_does_not_consume_nonce ... ok
+test revoked_grants_are_withdrawn_by_idle_maintenance ... ok
+test live_nonce_quota_is_freed_by_success_and_expiry ... ok
+test renewal_keeps_signatures_and_honors_all_validity_bounds ... ok
+test request_diagnostics_preserve_transaction_results_and_isolate_exact_retries ... ok
+test legacy_or_inconsistent_active_indexes_fail_closed_after_recovery ... ok
+test registration_reads_distinguish_current_eligibility_from_pending_withdrawal ... ok
+test global_nonce_quota_and_challenge_capacity_fail_without_partial_mutation ... ok
+test base_and_operator_txt_share_minimum_ttl_without_losing_ownership ... ok
+test signed_challenge_orders_coexist_delete_individually_and_expire ... ok
+test maintenance_uses_active_index_and_batches_expiry_per_zone ... ok
+test zone_and_initial_record_admission_caps_are_enforced ... ok
+test contribution_limits_roll_back_partial_operator_mutations_and_release_quota ... ok
+test challenge_maintenance_rechecks_tightened_issuer_scope ... ok
+test zone_rrset_admission_counts_base_records_and_reuses_removed_slots ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_storage-d721155afee5e0bc)
+
+running 5 tests
+test tests::discardable_overlay_isolates_reads_deletions_and_flush ... ok
+test tests::caller_discards_backend_transaction_after_partial_overlay_flush_failure ... ok
+test tests::prefix_scan_overlays_deletions_and_private_names_are_private ... ok
+test tests::atomic_conflict_and_snapshot_isolation ... ok
+test tests::recovery_preserves_private_and_replay_state_and_detects_tamper ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_telemetry-4a93f40723a9fa88)
+
+running 4 tests
+test tests::isolation_parentage_and_unchanged_results ... ok
+test tests::unavailable_diagnostic_state_is_a_noop_not_a_business_failure ... ok
+test tests::capacity_and_depth_are_bounded ... ok
+test tests::nested_requests_threads_and_unwind_do_not_contaminate ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_transfer-9b1a664f173ba3df)
+
+running 8 tests
+test tests::notification_is_not_observation ... ok
+test tests::aggregate_transfer_limits_are_enforced_during_construction ... ok
+test tests::algorithm_spelling_is_case_insensitive_but_uncompressed ... ok
+test tests::request_authentication_and_tcp_chain ... ok
+test ixfr_tests::stock_secondary_ixfr_falls_back_to_authenticated_full_snapshot ... ok
+test ixfr_tests::ixfr_serial_arithmetic_handles_wraparound_and_undefined_distance ... ok
+test tests::request_fields_and_chaining_prerequisites_are_checked ... ok
+test ixfr_tests::packing_stays_bounded_and_preserves_authenticated_snapshot_order ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/interop_vectors.rs (.validation/otel-rust-target/debug/examples/interop_vectors-ee053bce1ca10118)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.validation/otel-rust-target/debug/deps/adns_wire-129e3f1fc15449a2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/codec.rs (.validation/otel-rust-target/debug/deps/codec-250d4e4383d36325)
+
+running 11 tests
+test record_code_eq_ord_and_hash_agree ... ok
+test bitmap_windows_and_malformed_input ... ok
+test short_rdata_and_edns_rejected ... ok
+test name_limits_and_binary_labels ... ok
+test pointer_loops_and_exact_depth_limit ... ok
+test canonical_names_and_rfc4034_order ... ok
+test encoders_rfc4648_vectors_and_padding ... ok
+test borrowed_typed_rdata_and_names_allocate_zero_bytes ... ok
+test bounded_adversarial_packet_sweep ... ok
+test all_typed_records_roundtrip_compression_and_bounds ... ok
+test compression_dictionary_does_not_create_deep_chains ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

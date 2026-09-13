@@ -1,0 +1,18 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner-rotation",
+    "operation": "renew",
+    "parameters": {
+      "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+      "evidence_profile": "azure-aci-snp",
+      "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+      "requested_lease_seconds": 2425
+    },
+    "request_id": "native-shorten-b-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOVsmuKl_ObPJSmUYw83glbqsb1nR24p5KYnRU43wFLmOkjB8ENyeDEzZj6PI_-rmtaFA3KlDwjn-fAEcECEdbQ",
+    "zone": "example.test."
+  },
+  "action_id": "2c598e143e3a724ec9e57e6d944ea924888eebbb341b2e89b48b02d050fd0434",
+  "intent_hash": "2c598e143e3a724ec9e57e6d944ea924888eebbb341b2e89b48b02d050fd0434"
+}

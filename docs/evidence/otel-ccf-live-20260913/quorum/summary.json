@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "scenario": "quorum",
+  "requests": 175,
+  "otlp_spans": 184,
+  "committed_parentage_checks": 34,
+  "committed403_trace_ids": [
+    "b5bd5012b760ecf9470860139961e56e"
+  ],
+  "historical_links": [
+    {
+      "retry_trace_id": "47387b6f73409f555af8371e4e16757c",
+      "original_trace_id": "c885e182fa7a2fdc7cbda3e63df5a0f9",
+      "transaction_id": "2.17"
+    },
+    {
+      "retry_trace_id": "d48c6c5cae5ead43b7ac11bed6360efa",
+      "original_trace_id": "c885e182fa7a2fdc7cbda3e63df5a0f9",
+      "transaction_id": "2.17"
+    }
+  ],
+  "killed_leader_no_business_span_trace_ids": [
+    "46ca49187be00726d526e4de5b7af453",
+    "a6e7bb4f9b0cd96e47e51141576d18de",
+    "31727d0f34d1775c9e8818a1ed702b3f",
+    "57be0a567c982870fc74c263cc0ffffc"
+  ],
+  "rejected_no_business_span_trace_ids": [
+    "56fd1e80f1990bdb28387c26f338f0d2",
+    "c34685a12b8d800baee63917cc65742a",
+    "26c2b9e3b19217e5f040846c91225f10",
+    "22e5712a430ed0e8e8a37f459a65161d",
+    "522349b74a8f4d89939359d57d28a7a7",
+    "37c1844557885b8f8ff6a75d68c43cea",
+    "9dd6362e02ba5408d0d90a2187b492b6",
+    "cd7dc040774f1d0813caa7a6c85bcb55",
+    "653740ed74b84915b02234529af84b4b",
+    "4df1d4ab9864e6d27b91ece4abfeb213"
+  ],
+  "commit_wait_over_one_second_trace_ids": [
+    "1e02e34b2478956ff4a448070bab48d0",
+    "ccf82b2d21d0a7a8b647cb1c0dd42cde",
+    "1ea10d9877a8bf4166de3534962eece1",
+    "5d1474262bbf10272b8199dc9416b757",
+    "92649d3b232120f08d19a79fa0996af6",
+    "2468bf987180adeb4c44a45d1e302d72",
+    "43264a4e1d8cfb85119bb880a7604346",
+    "6d12c4ea93105746922fad925ff0d59f",
+    "f28b8791895dbc0354e09932fa930e61",
+    "eac64c6abedb0b93d7e7ce193e012fd1",
+    "d58df3df32324dc6466092180f8ae1b0",
+    "2d72efdaa34820007f2741a826054610",
+    "f205b558f97d69b543eb5e5a6b9fdfde"
+  ],
+  "native_span_names": [
+    "adns.application",
+    "adns.auth.grant",
+    "adns.auth.idempotency",
+    "adns.auth.nonce",
+    "adns.auth.signature",
+    "adns.dns.query",
+    "adns.dnssec.sign",
+    "adns.maintenance",
+    "adns.read",
+    "adns.receipt.claims",
+    "adns.request.parse",
+    "adns.secondary.requests",
+    "adns.storage.stage",
+    "adns.transfer",
+    "adns.transfer.provision",
+    "ccf.commit.wait",
+    "ccf.receipt",
+    "ccf.request"
+  ],
+  "same_envelope_rejection_then_commit_and_retry": 1,
+  "started_unix_seconds": 1789293327.7934496,
+  "ended_unix_seconds": 1789293356.475501,
+  "sdk_native_received": 184,
+  "sdk_native_rejected": 0,
+  "otlp_http_batches": 16,
+  "otlp_http_bytes": 28853,
+  "platform": "real CCF Virtual consensus/recovery; not native hardware",
+  "collector_forwarded_batches": 16
+}

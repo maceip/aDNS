@@ -1,0 +1,7 @@
+{
+  "operation": "renew",
+  "request_id": "native-shorten-b-20260913",
+  "parameters": {
+    "requested_lease_seconds": 2425
+  }
+}

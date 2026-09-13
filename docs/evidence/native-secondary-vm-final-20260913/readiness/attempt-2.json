@@ -1,0 +1,28 @@
+{
+  "observed_start_unix_seconds": 1789287008.8397439,
+  "server": "20.166.33.141",
+  "samples": [
+    {
+      "protocol": "UDP",
+      "rcode": "SERVFAIL",
+      "authoritative": false,
+      "response_base64": "1eKBAgABAAAAAAABB2V4YW1wbGUEdGVzdAAABgABAAApBNAAAIAAAAA=",
+      "unix_seconds": 1789287008.9894576,
+      "serial": null,
+      "signature_expirations": [],
+      "ready": false
+    },
+    {
+      "protocol": "TCP",
+      "rcode": "SERVFAIL",
+      "authoritative": false,
+      "response_base64": "0tqBAgABAAAAAAABB2V4YW1wbGUEdGVzdAAABgABAAApBNAAAIAAAAA=",
+      "unix_seconds": 1789287009.2875023,
+      "serial": null,
+      "signature_expirations": [],
+      "ready": false
+    }
+  ],
+  "both_ready": false,
+  "scope": "Independent stock DNS parser: public authoritative SOA and unexpired signature presence on TCP+UDP; cryptographic anchor validation separate"
+}

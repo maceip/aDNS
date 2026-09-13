@@ -1,0 +1,44 @@
+[
+  {
+    "owner": "mail.example.test.",
+    "type": "A",
+    "rdata": [
+      "192.0.2.1"
+    ]
+  },
+  {
+    "owner": "mail.example.test.",
+    "type": "AAAA",
+    "rdata": [
+      "2001:db8::1"
+    ]
+  },
+  {
+    "owner": "example.test.",
+    "type": "MX",
+    "rdata": [
+      "10 mail.example.test."
+    ]
+  },
+  {
+    "owner": "_25._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  },
+  {
+    "owner": "_465._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  },
+  {
+    "owner": "_993._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  }
+]

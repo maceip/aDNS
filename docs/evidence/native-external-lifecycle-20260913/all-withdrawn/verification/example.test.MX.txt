@@ -1,0 +1,16 @@
+id 22302
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+example.test. IN MX
+;ANSWER
+;AUTHORITY
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 22 60 30 600 60
+example.test. 60 IN RRSIG SOA 14 2 60 20260913091405 20260913085905 20222 example.test. lgSh/6siX4trPHFTJe37REukVcMIVYDc sEKYhabaMoeQdbH8xUc3+UcDDnnZBDIK pchnZ8oEx6UV6uYNp4CbeQ6OuMYAhBhd I2sIBlOhOguJxMoOKwrJ8BhTNOW1KnHq
+jbas736chung3bb701jkjdhqkqlhvug7.example.test. 60 IN NSEC3 1 0 0 - jji966sb7r3h14mkvmoa9mj7eu5qg918 NS SOA TXT RRSIG DNSKEY NSEC3PARAM CAA
+jbas736chung3bb701jkjdhqkqlhvug7.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913091405 20260913085905 20222 example.test. uycflytunzpkIqY68KOZbnWFoqmUm1yd LlMOv3rukMM662soBecTaZWhJi6ovvZq d3GvHbJO7xR7l3pZtXzE2GhVFcGEj+Ot w+SnkfEiQkgbgtssYMWxtcvR2NssgEyX
+;ADDITIONAL

@@ -30,7 +30,11 @@ jobs:
           rustup toolchain install 1.85.1 --profile minimal
           rustup override set 1.95.0
           sudo apt-get update
-          sudo apt-get install -y python3-cbor2 python3-cryptography python3-dnspython python3-yaml libssl-dev pkg-config bind9-utils
+          sudo apt-get install -y python3-cbor2 python3-cryptography python3-dnspython python3-yaml python3-venv libssl-dev pkg-config bind9-utils
+      - name: Install the pinned telemetry SDK in an isolated Python environment
+        run: |
+          python3 -m venv --system-site-packages .validation/ci-python
+          .validation/ci-python/bin/python -m pip install -r ccf/requirements-otel.txt
       - name: Safe Rust and cryptographic checks
         run: |
           cargo +1.85.1 check --locked --workspace --all-targets
@@ -38,7 +42,7 @@ jobs:
           cargo test --locked --workspace --all-targets
           cargo clippy --locked --workspace --all-targets -- -D warnings
           /usr/bin/python3 -m unittest discover -s tools/tests -v
-          /usr/bin/python3 -m unittest discover -s ccf -p test_host_driver.py -v
+          .validation/ci-python/bin/python -m unittest discover -s ccf -p 'test_*.py' -v
           /usr/bin/python3 -m unittest discover -s ccf/tests -p test_supervisor.py -v
           /usr/bin/python3 -m unittest discover -s tests/rust-integration -p 'test_*.py' -v
           node --test ccf/tests/governance_actions_test.js
@@ -70,6 +74,17 @@ jobs:
           docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/tools/tests/ccf_control_smoke.py | tee .validation/ci-public/ccf-control-smoke.log
           docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --quorum | tee .validation/ci-public/ccf-smoke.log
           docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --recovery | tee .validation/ci-public/ccf-recovery.log
+      - name: Bounded native telemetry transport and dead-consumer regression
+        run: |
+          set -o pipefail
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'clang++ -std=c++23 -O2 -pthread -I/src/ccf -I/opt/ccf/include -I/opt/ccf/include/3rdparty /src/ccf/tests/telemetry_fixture.cpp /src/ccf/telemetry.cpp -o /build/telemetry_fixture && python3 /src/ccf/tests/verify_native_telemetry.py /build/telemetry_fixture' | tee .validation/ci-public/ccf-telemetry-transport.log
+      - name: Real CCF quorum and recovery through the telemetry SDK
+        run: |
+          set -o pipefail
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'python3 -m pip install --no-cache-dir --target /build/otel-test-python -r /src/ccf/requirements-otel.txt && PYTHONPATH=/build/otel-test-python:/opt/agentdns-test-python python3 /src/ccf/tests/live_telemetry.py --output /build/otel-proof' | tee .validation/ci-public/ccf-telemetry-live.log
+      - name: Retained legacy test-library self-append sanitizer regression
+        run: |
+          docker run --rm --network none --platform linux/amd64 -v "$PWD:/src:ro" agentdns-ccf-toolchain:7.0.15 sh -c 'clang++ -std=c++17 -g -pthread -fsanitize=address,undefined -I /src /src/tests/legacy_doctest_string.cpp -o /tmp/legacy-doctest-string && /tmp/legacy-doctest-string && python3 -O -m unittest discover -s /src/tools/tests -p test_legacy_tls_binding.py -v'
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:

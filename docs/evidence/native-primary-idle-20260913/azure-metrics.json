@@ -1,0 +1,594 @@
+{
+  "status": "available",
+  "source": "Azure Monitor platform metrics",
+  "metric_interval": "PT1M",
+  "timespan": "2026-09-13T08:33:23Z/2026-09-13T08:54:31Z",
+  "metrics": [
+    {
+      "metric": "MemoryUsage",
+      "container": "primary",
+      "api_unit": "Bytes",
+      "semantics": "container memory usage bytes; not process RSS",
+      "available_points": 21,
+      "returned_points": 21,
+      "minimum_of_reported_minima": 79343616.0,
+      "maximum_of_reported_maxima": 81993728.0,
+      "mean_of_available_1m_averages": 80401619.3015873,
+      "samples": [
+        {
+          "timestamp": "2026-09-13T08:33:00Z",
+          "minimum": 80891904.0,
+          "average": 81043456.0,
+          "maximum": 81338368.0
+        },
+        {
+          "timestamp": "2026-09-13T08:34:00Z",
+          "minimum": 80846848.0,
+          "average": 80986112.0,
+          "maximum": 81125376.0
+        },
+        {
+          "timestamp": "2026-09-13T08:35:00Z",
+          "minimum": 80855040.0,
+          "average": 80966997.33333333,
+          "maximum": 81149952.0
+        },
+        {
+          "timestamp": "2026-09-13T08:36:00Z",
+          "minimum": 81096704.0,
+          "average": 81369088.0,
+          "maximum": 81641472.0
+        },
+        {
+          "timestamp": "2026-09-13T08:37:00Z",
+          "minimum": 81448960.0,
+          "average": 81471488.0,
+          "maximum": 81494016.0
+        },
+        {
+          "timestamp": "2026-09-13T08:38:00Z",
+          "minimum": 81453056.0,
+          "average": 81731584.0,
+          "maximum": 81993728.0
+        },
+        {
+          "timestamp": "2026-09-13T08:39:00Z",
+          "minimum": 81444864.0,
+          "average": 81471488.0,
+          "maximum": 81498112.0
+        },
+        {
+          "timestamp": "2026-09-13T08:40:00Z",
+          "minimum": 81489920.0,
+          "average": 81552725.33333333,
+          "maximum": 81666048.0
+        },
+        {
+          "timestamp": "2026-09-13T08:41:00Z",
+          "minimum": 80478208.0,
+          "average": 81113088.0,
+          "maximum": 81747968.0
+        },
+        {
+          "timestamp": "2026-09-13T08:42:00Z",
+          "minimum": 79982592.0,
+          "average": 80076800.0,
+          "maximum": 80171008.0
+        },
+        {
+          "timestamp": "2026-09-13T08:43:00Z",
+          "minimum": 79925248.0,
+          "average": 80119125.33333333,
+          "maximum": 80232448.0
+        },
+        {
+          "timestamp": "2026-09-13T08:44:00Z",
+          "minimum": 79917056.0,
+          "average": 80052224.0,
+          "maximum": 80187392.0
+        },
+        {
+          "timestamp": "2026-09-13T08:45:00Z",
+          "minimum": 79917056.0,
+          "average": 80038570.66666667,
+          "maximum": 80224256.0
+        },
+        {
+          "timestamp": "2026-09-13T08:46:00Z",
+          "minimum": 79659008.0,
+          "average": 79831040.0,
+          "maximum": 80003072.0
+        },
+        {
+          "timestamp": "2026-09-13T08:47:00Z",
+          "minimum": 79609856.0,
+          "average": 79734784.0,
+          "maximum": 79859712.0
+        },
+        {
+          "timestamp": "2026-09-13T08:48:00Z",
+          "minimum": 79343616.0,
+          "average": 79430997.33333333,
+          "maximum": 79564800.0
+        },
+        {
+          "timestamp": "2026-09-13T08:49:00Z",
+          "minimum": 79388672.0,
+          "average": 79497216.0,
+          "maximum": 79605760.0
+        },
+        {
+          "timestamp": "2026-09-13T08:50:00Z",
+          "minimum": 79396864.0,
+          "average": 79441920.0,
+          "maximum": 79532032.0
+        },
+        {
+          "timestamp": "2026-09-13T08:51:00Z",
+          "minimum": 79413248.0,
+          "average": 79417344.0,
+          "maximum": 79421440.0
+        },
+        {
+          "timestamp": "2026-09-13T08:52:00Z",
+          "minimum": 79364096.0,
+          "average": 79378432.0,
+          "maximum": 79392768.0
+        },
+        {
+          "timestamp": "2026-09-13T08:53:00Z",
+          "minimum": 79597568.0,
+          "average": 79709525.33333333,
+          "maximum": 79900672.0
+        }
+      ]
+    },
+    {
+      "metric": "MemoryUsage",
+      "container": "secondary",
+      "api_unit": "Bytes",
+      "semantics": "container memory usage bytes; not process RSS",
+      "available_points": 21,
+      "returned_points": 21,
+      "minimum_of_reported_minima": 28409856.0,
+      "maximum_of_reported_maxima": 28450816.0,
+      "mean_of_available_1m_averages": 28433164.19047619,
+      "samples": [
+        {
+          "timestamp": "2026-09-13T08:33:00Z",
+          "minimum": 28409856.0,
+          "average": 28418048.0,
+          "maximum": 28434432.0
+        },
+        {
+          "timestamp": "2026-09-13T08:34:00Z",
+          "minimum": 28426240.0,
+          "average": 28430336.0,
+          "maximum": 28434432.0
+        },
+        {
+          "timestamp": "2026-09-13T08:35:00Z",
+          "minimum": 28426240.0,
+          "average": 28426240.0,
+          "maximum": 28426240.0
+        },
+        {
+          "timestamp": "2026-09-13T08:36:00Z",
+          "minimum": 28426240.0,
+          "average": 28426240.0,
+          "maximum": 28426240.0
+        },
+        {
+          "timestamp": "2026-09-13T08:37:00Z",
+          "minimum": 28426240.0,
+          "average": 28426240.0,
+          "maximum": 28426240.0
+        },
+        {
+          "timestamp": "2026-09-13T08:38:00Z",
+          "minimum": 28426240.0,
+          "average": 28434432.0,
+          "maximum": 28438528.0
+        },
+        {
+          "timestamp": "2026-09-13T08:39:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:40:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:41:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:42:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:43:00Z",
+          "minimum": 28434432.0,
+          "average": 28437162.666666668,
+          "maximum": 28438528.0
+        },
+        {
+          "timestamp": "2026-09-13T08:44:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:45:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:46:00Z",
+          "minimum": 28430336.0,
+          "average": 28430336.0,
+          "maximum": 28430336.0
+        },
+        {
+          "timestamp": "2026-09-13T08:47:00Z",
+          "minimum": 28430336.0,
+          "average": 28436480.0,
+          "maximum": 28442624.0
+        },
+        {
+          "timestamp": "2026-09-13T08:48:00Z",
+          "minimum": 28438528.0,
+          "average": 28439893.333333332,
+          "maximum": 28442624.0
+        },
+        {
+          "timestamp": "2026-09-13T08:49:00Z",
+          "minimum": 28438528.0,
+          "average": 28438528.0,
+          "maximum": 28438528.0
+        },
+        {
+          "timestamp": "2026-09-13T08:50:00Z",
+          "minimum": 28438528.0,
+          "average": 28438528.0,
+          "maximum": 28438528.0
+        },
+        {
+          "timestamp": "2026-09-13T08:51:00Z",
+          "minimum": 28438528.0,
+          "average": 28438528.0,
+          "maximum": 28438528.0
+        },
+        {
+          "timestamp": "2026-09-13T08:52:00Z",
+          "minimum": 28450816.0,
+          "average": 28450816.0,
+          "maximum": 28450816.0
+        },
+        {
+          "timestamp": "2026-09-13T08:53:00Z",
+          "minimum": 28442624.0,
+          "average": 28442624.0,
+          "maximum": 28442624.0
+        }
+      ]
+    },
+    {
+      "metric": "CpuUsage",
+      "container": "primary",
+      "api_unit": "Count",
+      "semantics": "CPU usage across cores in millicores; Azure API unit is Count",
+      "available_points": 21,
+      "returned_points": 21,
+      "minimum_of_reported_minima": 28.0,
+      "maximum_of_reported_maxima": 41.0,
+      "mean_of_available_1m_averages": 31.325396825396826,
+      "samples": [
+        {
+          "timestamp": "2026-09-13T08:33:00Z",
+          "minimum": 29.0,
+          "average": 29.333333333333332,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:34:00Z",
+          "minimum": 28.0,
+          "average": 29.0,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:35:00Z",
+          "minimum": 29.0,
+          "average": 30.0,
+          "maximum": 31.0
+        },
+        {
+          "timestamp": "2026-09-13T08:36:00Z",
+          "minimum": 30.0,
+          "average": 35.5,
+          "maximum": 41.0
+        },
+        {
+          "timestamp": "2026-09-13T08:37:00Z",
+          "minimum": 30.0,
+          "average": 31.0,
+          "maximum": 32.0
+        },
+        {
+          "timestamp": "2026-09-13T08:38:00Z",
+          "minimum": 30.0,
+          "average": 31.333333333333332,
+          "maximum": 33.0
+        },
+        {
+          "timestamp": "2026-09-13T08:39:00Z",
+          "minimum": 30.0,
+          "average": 30.0,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:40:00Z",
+          "minimum": 30.0,
+          "average": 30.333333333333332,
+          "maximum": 31.0
+        },
+        {
+          "timestamp": "2026-09-13T08:41:00Z",
+          "minimum": 29.0,
+          "average": 34.5,
+          "maximum": 40.0
+        },
+        {
+          "timestamp": "2026-09-13T08:42:00Z",
+          "minimum": 31.0,
+          "average": 31.0,
+          "maximum": 31.0
+        },
+        {
+          "timestamp": "2026-09-13T08:43:00Z",
+          "minimum": 30.0,
+          "average": 31.0,
+          "maximum": 32.0
+        },
+        {
+          "timestamp": "2026-09-13T08:44:00Z",
+          "minimum": 30.0,
+          "average": 30.0,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:45:00Z",
+          "minimum": 29.0,
+          "average": 29.666666666666668,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:46:00Z",
+          "minimum": 31.0,
+          "average": 36.0,
+          "maximum": 41.0
+        },
+        {
+          "timestamp": "2026-09-13T08:47:00Z",
+          "minimum": 30.0,
+          "average": 31.5,
+          "maximum": 33.0
+        },
+        {
+          "timestamp": "2026-09-13T08:48:00Z",
+          "minimum": 30.0,
+          "average": 30.666666666666668,
+          "maximum": 32.0
+        },
+        {
+          "timestamp": "2026-09-13T08:49:00Z",
+          "minimum": 30.0,
+          "average": 30.5,
+          "maximum": 31.0
+        },
+        {
+          "timestamp": "2026-09-13T08:50:00Z",
+          "minimum": 30.0,
+          "average": 30.0,
+          "maximum": 30.0
+        },
+        {
+          "timestamp": "2026-09-13T08:51:00Z",
+          "minimum": 30.0,
+          "average": 34.5,
+          "maximum": 39.0
+        },
+        {
+          "timestamp": "2026-09-13T08:52:00Z",
+          "minimum": 30.0,
+          "average": 32.0,
+          "maximum": 34.0
+        },
+        {
+          "timestamp": "2026-09-13T08:53:00Z",
+          "minimum": 29.0,
+          "average": 30.0,
+          "maximum": 31.0
+        }
+      ]
+    },
+    {
+      "metric": "CpuUsage",
+      "container": "secondary",
+      "api_unit": "Count",
+      "semantics": "CPU usage across cores in millicores; Azure API unit is Count",
+      "available_points": 21,
+      "returned_points": 21,
+      "minimum_of_reported_minima": 0.0,
+      "maximum_of_reported_maxima": 0.0,
+      "mean_of_available_1m_averages": 0.0,
+      "samples": [
+        {
+          "timestamp": "2026-09-13T08:33:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:34:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:35:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:36:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:37:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:38:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:39:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:40:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:41:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:42:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:43:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:44:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:45:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:46:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:47:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:48:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:49:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:50:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:51:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:52:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        },
+        {
+          "timestamp": "2026-09-13T08:53:00Z",
+          "minimum": 0.0,
+          "average": 0.0,
+          "maximum": 0.0
+        }
+      ]
+    }
+  ],
+  "definition_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-containerinstance-containergroups-metrics",
+  "boundary": "Control-plane container metrics, not hardware-attested process measurements. Missing points remain missing; no RSS or signing duration is inferred.",
+  "resource_id": "/subscriptions/1b191b4c-2968-420a-b275-5087e94bf355/resourceGroups/agentdns-port-validation-20260913/providers/Microsoft.ContainerInstance/containerGroups/agentdns-ccf-validation",
+  "queried_unix_seconds": 1789289732.5643709,
+  "command": [
+    "az",
+    "monitor",
+    "metrics",
+    "list",
+    "--resource",
+    "/subscriptions/1b191b4c-2968-420a-b275-5087e94bf355/resourceGroups/agentdns-port-validation-20260913/providers/Microsoft.ContainerInstance/containerGroups/agentdns-ccf-validation",
+    "--metrics",
+    "MemoryUsage",
+    "CpuUsage",
+    "--aggregation",
+    "Minimum",
+    "Average",
+    "Maximum",
+    "--dimension",
+    "containerName",
+    "--interval",
+    "PT1M",
+    "--start-time",
+    "2026-09-13T08:33:23.557139Z",
+    "--end-time",
+    "2026-09-13T08:54:31.521415Z",
+    "--only-show-errors",
+    "--output",
+    "json"
+  ]
+}

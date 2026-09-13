@@ -1,0 +1,95 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+        max_recv_msg_size_mib: 4
+      http:
+        endpoint: 0.0.0.0:4318
+        max_request_body_size: 4194304
+        read_timeout: 5s
+        write_timeout: 5s
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 256
+    spike_limit_mib: 64
+  filter/allowlist:
+    error_mode: propagate
+    trace_conditions:
+      - 'not IsMatch(resource.attributes["service.name"], "^agentdns-(authority|driver|otel-smoke)$")'
+      - "not IsMatch(span.name, \"^(ccf\\\\.request|ccf\\\\.commit\\\\.wait|ccf\\\\.receipt|adns\\\\.application|adns\\\\.request\\\\.parse|adns\\\\.auth\\\\.signature|adns\\\\.auth\\\\.idempotency|adns\\\\.auth\\\\.nonce|adns\\\\.auth\\\\.grant|adns\\\\.attest\\\\.appraise|adns\\\\.attest\\\\.cose|adns\\\\.attest\\\\.amd_chain|adns\\\\.attest\\\\.snp_report|adns\\\\.attest\\\\.uvm|adns\\\\.attest\\\\.key_binding|adns\\\\.admission|adns\\\\.dnssec\\\\.sign|adns\\\\.storage\\\\.stage|adns\\\\.read|adns\\\\.maintenance|adns\\\\.transfer|adns\\\\.secondary\\\\.requests|adns\\\\.secondary\\\\.response|adns\\\\.dns\\\\.query|adns\\\\.transfer\\\\.provision|adns\\\\.receipt\\\\.claims|driver\\\\.ccf\\\\.request|driver\\\\.ccf\\\\.commit_wait|driver\\\\.lifecycle\\\\.poll|driver\\\\.secondary\\\\.requests|driver\\\\.secondary\\\\.exchange|driver\\\\.secondary\\\\.response|driver\\\\.dns\\\\.axfr|driver\\\\.dns\\\\.udp|agentdns\\\\.otel\\\\.smoke|agentdns\\\\.otel\\\\.followup)$\")"
+      - 'spanevent.name == "" or spanevent.name != ""'
+    log_conditions:
+      - 'not IsMatch(resource.attributes["service.name"], "^agentdns-(authority|driver|otel-smoke)$")'
+  transform/privacy:
+    error_mode: propagate
+    trace_statements:
+      - "keep_keys(resource.attributes, [\"service.name\", \"service.version\", \"agentdns.component\"])"
+      - 'set(resource.attributes["service.version"], "0.1.0")'
+      - 'delete_key(resource.attributes, "agentdns.component") where resource.attributes["agentdns.component"] != "authority" and resource.attributes["agentdns.component"] != "driver"'
+      - 'keep_keys(scope.attributes, [])'
+      - 'set(scope.name, "agentdns")'
+      - 'set(scope.version, "0.1.0")'
+      - "keep_keys(span.attributes, [\"http.request.method\", \"http.route\", \"http.response.status_code\", \"ccf.transaction_id\", \"ccf.observation_transaction_id\", \"agentdns.outcome\", \"dns.zone.serial\", \"dns.record.count\", \"agentdns.telemetry.dropped_batches\", \"error.type\", \"agentdns.committed\", \"agentdns.rejected\", \"agentdns.work.kind\", \"agentdns.work.id\", \"agentdns.queue.depth\", \"agentdns.queue.age_ms\", \"agentdns.transfer.bytes\", \"agentdns.transfer.frames\", \"network.transport\"])"
+      - 'set(span.status.message, "")'
+      - 'set(span.trace_state, "")'
+      - "delete_key(span.attributes, \"http.request.method\") where span.attributes[\"http.request.method\"] != \"GET\" and span.attributes[\"http.request.method\"] != \"POST\" and span.attributes[\"http.request.method\"] != \"DELETE\""
+      - "delete_key(span.attributes, \"agentdns.outcome\") where span.attributes[\"agentdns.outcome\"] != \"committed\" and span.attributes[\"agentdns.outcome\"] != \"rejected\" and span.attributes[\"agentdns.outcome\"] != \"invalid\" and span.attributes[\"agentdns.outcome\"] != \"receipt_error\""
+      - "delete_key(span.attributes, \"ccf.transaction_id\") where span.attributes[\"ccf.transaction_id\"] != nil and (not IsString(span.attributes[\"ccf.transaction_id\"]) or not IsMatch(span.attributes[\"ccf.transaction_id\"], \"^[0-9]{1,20}[.][0-9]{1,20}$\"))"
+      - "delete_key(span.attributes, \"ccf.observation_transaction_id\") where span.attributes[\"ccf.observation_transaction_id\"] != nil and (not IsString(span.attributes[\"ccf.observation_transaction_id\"]) or not IsMatch(span.attributes[\"ccf.observation_transaction_id\"], \"^[0-9]{1,20}[.][0-9]{1,20}$\"))"
+      - "delete_key(span.attributes, \"http.route\") where span.attributes[\"http.route\"] != nil and (not IsString(span.attributes[\"http.route\"]) or not IsMatch(span.attributes[\"http.route\"], \"^(/service/nonce|/service/register|/service/renew|/service/deregister|/service/registration|/service/request|/zone/acme\\\\-challenge|/zone/operator/records|/zone/status|/governance/ksk\\\\-receipt|/dns\\\\-query|/internal/maintenance|/internal/secondary/requests|/internal/secondary/response|/internal/axfr|/internal/udp|/internal/transfer\\\\-key|/app/service/nonce|/app/service/register|/app/service/renew|/app/service/deregister|/app/service/registration|/app/service/request|/app/zone/acme\\\\-challenge|/app/zone/operator/records|/app/zone/status|/app/governance/ksk\\\\-receipt|/app/dns\\\\-query|/app/internal/maintenance|/app/internal/secondary/requests|/app/internal/secondary/response|/app/internal/axfr|/app/internal/udp|/app/internal/transfer\\\\-key|/node/state)$\"))"
+      - "delete_key(span.attributes, \"error.type\")"
+      - "delete_key(span.attributes, \"http.response.status_code\") where span.attributes[\"http.response.status_code\"] != nil and (not IsInt(span.attributes[\"http.response.status_code\"]) or span.attributes[\"http.response.status_code\"] < 100 or span.attributes[\"http.response.status_code\"] > 599)"
+      - "delete_key(span.attributes, \"dns.zone.serial\") where span.attributes[\"dns.zone.serial\"] != nil and (not IsInt(span.attributes[\"dns.zone.serial\"]) or span.attributes[\"dns.zone.serial\"] < 0 or span.attributes[\"dns.zone.serial\"] > 4294967295)"
+      - "delete_key(span.attributes, \"dns.record.count\") where span.attributes[\"dns.record.count\"] != nil and (not IsInt(span.attributes[\"dns.record.count\"]) or span.attributes[\"dns.record.count\"] < 0 or span.attributes[\"dns.record.count\"] > 2147483647)"
+      - "delete_key(span.attributes, \"agentdns.telemetry.dropped_batches\") where span.attributes[\"agentdns.telemetry.dropped_batches\"] != nil and (not IsInt(span.attributes[\"agentdns.telemetry.dropped_batches\"]) or span.attributes[\"agentdns.telemetry.dropped_batches\"] < 0 or span.attributes[\"agentdns.telemetry.dropped_batches\"] > 9223372036854775807)"
+      - "delete_key(span.attributes, \"agentdns.committed\") where span.attributes[\"agentdns.committed\"] != nil and not IsBool(span.attributes[\"agentdns.committed\"])"
+      - "delete_key(span.attributes, \"agentdns.rejected\") where span.attributes[\"agentdns.rejected\"] != nil and not IsBool(span.attributes[\"agentdns.rejected\"])"
+      - "delete_key(span.attributes, \"agentdns.work.kind\") where span.attributes[\"agentdns.work.kind\"] != \"soa\" and span.attributes[\"agentdns.work.kind\"] != \"notify\""
+      - "delete_key(span.attributes, \"network.transport\") where span.attributes[\"network.transport\"] != \"tcp\" and span.attributes[\"network.transport\"] != \"udp\""
+      - "delete_key(span.attributes, \"agentdns.work.id\") where span.attributes[\"agentdns.work.id\"] != nil and (not IsString(span.attributes[\"agentdns.work.id\"]) or not IsMatch(span.attributes[\"agentdns.work.id\"], \"^[0-9a-f]{32}$\"))"
+      - "delete_key(span.attributes, \"agentdns.queue.depth\") where span.attributes[\"agentdns.queue.depth\"] != nil and (not IsInt(span.attributes[\"agentdns.queue.depth\"]) or span.attributes[\"agentdns.queue.depth\"] < 0)"
+      - "delete_key(span.attributes, \"agentdns.queue.age_ms\") where span.attributes[\"agentdns.queue.age_ms\"] != nil and (not IsInt(span.attributes[\"agentdns.queue.age_ms\"]) or span.attributes[\"agentdns.queue.age_ms\"] < 0)"
+      - "delete_key(span.attributes, \"agentdns.transfer.bytes\") where span.attributes[\"agentdns.transfer.bytes\"] != nil and (not IsInt(span.attributes[\"agentdns.transfer.bytes\"]) or span.attributes[\"agentdns.transfer.bytes\"] < 0)"
+      - "delete_key(span.attributes, \"agentdns.transfer.frames\") where span.attributes[\"agentdns.transfer.frames\"] != nil and (not IsInt(span.attributes[\"agentdns.transfer.frames\"]) or span.attributes[\"agentdns.transfer.frames\"] < 0)"
+    log_statements:
+      - "keep_keys(resource.attributes, [\"service.name\", \"service.version\", \"agentdns.component\"])"
+      - 'set(resource.attributes["service.version"], "0.1.0")'
+      - 'delete_key(resource.attributes, "agentdns.component") where resource.attributes["agentdns.component"] != "authority" and resource.attributes["agentdns.component"] != "driver"'
+      - 'keep_keys(scope.attributes, [])'
+      - 'set(scope.name, "agentdns")'
+      - 'set(scope.version, "0.1.0")'
+      - 'keep_keys(log.attributes, ["http.response.status_code"])'
+      - 'delete_key(log.attributes, "http.response.status_code") where log.attributes["http.response.status_code"] != nil and (not IsInt(log.attributes["http.response.status_code"]) or log.attributes["http.response.status_code"] < 100 or log.attributes["http.response.status_code"] > 599)'
+      - 'set(log.body, "agentdns diagnostic event")'
+      - 'set(log.severity_text, "")'
+  batch:
+    timeout: 2s
+    send_batch_size: 256
+    send_batch_max_size: 512
+exporters:
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls: {insecure: true}
+    timeout: 3s
+    sending_queue: {enabled: true, queue_size: 128, num_consumers: 2}
+    retry_on_failure: {enabled: true, initial_interval: 1s, max_interval: 5s, max_elapsed_time: 15s}
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+    timeout: 3s
+    sending_queue: {enabled: true, queue_size: 128, num_consumers: 2}
+    retry_on_failure: {enabled: true, initial_interval: 1s, max_interval: 5s, max_elapsed_time: 15s}
+service:
+  telemetry:
+    logs:
+      level: error
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, filter/allowlist, transform/privacy, batch]
+      exporters: [otlp/tempo]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, filter/allowlist, transform/privacy, batch]
+      exporters: [otlphttp/loki]

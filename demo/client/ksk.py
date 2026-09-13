@@ -3,6 +3,8 @@ import requests
 import base64
 import time
 import json
+import hmac
+import re
 import tempfile
 from http import HTTPStatus
 from tools.attestation import verify_snp_attestation, pack_tcb
@@ -54,6 +56,16 @@ def fetch_adns_attestation(adns_url):
     uvm_endorsements = nodes[0]["uvm_endorsements"]
 
     return raw, endorsements, uvm_endorsements
+
+
+def verify_tls_report_binding(tls_key_digest, report_data):
+    """Bind the observed TLS SPKI digest to the authenticated SNP report field."""
+    if not isinstance(tls_key_digest, str) or re.fullmatch(r"[0-9a-f]{64}", tls_key_digest) is None:
+        raise ValueError("invalid TLS SPKI digest")
+    if not isinstance(report_data, (bytes, bytearray)) or len(report_data) != 64:
+        raise ValueError("invalid SNP report data length")
+    if not hmac.compare_digest(tls_key_digest, bytes(report_data[:32]).hex()):
+        raise ValueError("TLS key does not match the attested node key")
 
 
 def extract_ksk_digest(keys):
@@ -299,7 +311,7 @@ def main():
 
     receipt, tls_key_digest = fetch_adns_ksk_receipt(args.adns)
     attested_node_key_digest = report.report_data[0:32]
-    assert tls_key_digest == tls_key_digest
+    verify_tls_report_binding(tls_key_digest, report.report_data)
 
     verify_receipt(receipt, attested_node_key_digest.hex())
 

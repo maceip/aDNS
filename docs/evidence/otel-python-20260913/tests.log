@@ -1,0 +1,40 @@
+test_base64_is_bounded_and_unique (ccf.test_host_driver.BoundaryTests.test_base64_is_bounded_and_unique) ... ok
+test_frame_validation_rejects_partial_and_empty (ccf.test_host_driver.BoundaryTests.test_frame_validation_rejects_partial_and_empty) ... ok
+test_peer_is_numeric_and_port_is_valid (ccf.test_host_driver.BoundaryTests.test_peer_is_numeric_and_port_is_valid) ... ok
+test_admission_happens_before_thread_creation (ccf.test_host_driver.ResourceTests.test_admission_happens_before_thread_creation) ... ok
+test_endpoints_are_canonical (ccf.test_host_driver.ResourceTests.test_endpoints_are_canonical) ... ok
+test_http_reads_obey_specific_size_and_wall_time_bounds (ccf.test_host_driver.ResourceTests.test_http_reads_obey_specific_size_and_wall_time_bounds) ... ok
+test_invalid_work_does_not_kill_lifecycle (ccf.test_host_driver.ResourceTests.test_invalid_work_does_not_kill_lifecycle) ... autonomous maintenance failed: invalid secondary work fields
+autonomous maintenance failed: invalid secondary work fields
+ok
+test_permit_released_when_handler_or_thread_start_fails (ccf.test_host_driver.ResourceTests.test_permit_released_when_handler_or_thread_start_fails) ... ok
+test_secondary_work_rows_fail_as_recoverable_value_errors (ccf.test_host_driver.ResourceTests.test_secondary_work_rows_fail_as_recoverable_value_errors) ... ok
+test_slow_secondary_work_does_not_block_maintenance (ccf.test_host_driver.ResourceTests.test_slow_secondary_work_does_not_block_maintenance) ... ok
+test_slow_trickle_cannot_extend_absolute_deadline (ccf.test_host_driver.ResourceTests.test_slow_trickle_cannot_extend_absolute_deadline) ... ok
+test_transfer_frame_count_is_bounded (ccf.test_host_driver.ResourceTests.test_transfer_frame_count_is_bounded) ... ok
+test_actual_https_otlp_headers_custom_ca_precedence_and_no_secret_in_trace_or_errors (ccf.test_telemetry.DriverTraceTests.test_actual_https_otlp_headers_custom_ca_precedence_and_no_secret_in_trace_or_errors) ... /tmp/otel/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+ok
+test_commit_gate_and_w3c_parent_propagation_without_body_export (ccf.test_telemetry.DriverTraceTests.test_commit_gate_and_w3c_parent_propagation_without_body_export) ... ok
+test_committed_notify_axfr_soa_and_next_signing_are_linked_without_dns_context_fields (ccf.test_telemetry.DriverTraceTests.test_committed_notify_axfr_soa_and_next_signing_are_linked_without_dns_context_fields) ... ok
+test_dns_diagnostic_metadata_is_bounded_and_never_modifies_packet (ccf.test_telemetry.DriverTraceTests.test_dns_diagnostic_metadata_is_bounded_and_never_modifies_packet) ... ok
+test_invalid_config_or_missing_sdk_does_not_disable_transport (ccf.test_telemetry.DriverTraceTests.test_invalid_config_or_missing_sdk_does_not_disable_transport) ... ok
+test_real_tls_slow_headers_cannot_hold_driver_operation_open (ccf.test_telemetry.DriverTraceTests.test_real_tls_slow_headers_cannot_hold_driver_operation_open) ... ok
+test_threadpool_context_is_explicit_and_restored (ccf.test_telemetry.DriverTraceTests.test_threadpool_context_is_explicit_and_restored) ... ok
+test_dead_exporter_queue_is_bounded_and_does_not_block_producers_or_shutdown (ccf.test_telemetry.ExportTests.test_dead_exporter_queue_is_bounded_and_does_not_block_producers_or_shutdown) ... Queue full, dropping Span.
+ok
+test_disabled_telemetry_needs_no_socket_or_provider (ccf.test_telemetry.ExportTests.test_disabled_telemetry_needs_no_socket_or_provider) ... ok
+test_exception_and_arbitrary_attribute_text_are_not_exported (ccf.test_telemetry.ExportTests.test_exception_and_arbitrary_attribute_text_are_not_exported) ... ok
+test_real_http_protobuf_export_keeps_resources_and_ids_and_sends_no_env_secrets (ccf.test_telemetry.ExportTests.test_real_http_protobuf_export_keeps_resources_and_ids_and_sends_no_env_secrets) ... ok
+test_trickled_export_response_obeys_absolute_deadline (ccf.test_telemetry.ExportTests.test_trickled_export_response_obeys_absolute_deadline) ... Failed to export span batch code: 400, reason: bounded export failed
+ok
+test_endpoint_rejects_credentials_query_redirect_targets_and_remote_plaintext (ccf.test_telemetry.NativeSchemaTests.test_endpoint_rejects_credentials_query_redirect_targets_and_remote_plaintext) ... ok
+test_foreign_fields_types_names_secrets_and_invalid_ids_rejected (ccf.test_telemetry.NativeSchemaTests.test_foreign_fields_types_names_secrets_and_invalid_ids_rejected) ... ok
+test_header_protocol_and_resource_configuration_is_bounded_without_secret_errors (ccf.test_telemetry.NativeSchemaTests.test_header_protocol_and_resource_configuration_is_bounded_without_secret_errors) ... ok
+test_identity_timestamps_parent_and_links_preserved (ccf.test_telemetry.NativeSchemaTests.test_identity_timestamps_parent_and_links_preserved) ... ok
+test_link_cache_is_bounded_and_expires (ccf.test_telemetry.NativeSchemaTests.test_link_cache_is_bounded_and_expires) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 4.249s
+
+OK

@@ -1,0 +1,401 @@
+{
+  "observed_at": 1789290019.103143,
+  "response": {
+    "http_status": 200,
+    "headers": {
+      "content-length": "3274",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.2788",
+      "x-ms-ccf-transaction-id": "2.2788"
+    },
+    "body": {
+      "active_contributions": [
+        {
+          "name": "example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Mx": {
+              "exchange": "mail.example.test.",
+              "preference": 10
+            }
+          },
+          "rtype": "Mx",
+          "ttl": 3600
+        },
+        {
+          "name": "mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "A": "192.0.2.1"
+          },
+          "rtype": "A",
+          "ttl": 300
+        },
+        {
+          "name": "mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Aaaa": "2001:db8::1"
+          },
+          "rtype": "Aaaa",
+          "ttl": 300
+        },
+        {
+          "name": "_25._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        },
+        {
+          "name": "_465._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        },
+        {
+          "name": "_993._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        }
+      ],
+      "active_ports": [
+        25,
+        465,
+        993
+      ],
+      "admitted_at": 1789287817,
+      "committed_contributions": [
+        {
+          "name": "example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Mx": {
+              "exchange": "mail.example.test.",
+              "preference": 10
+            }
+          },
+          "rtype": "Mx",
+          "ttl": 3600
+        },
+        {
+          "name": "mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "A": "192.0.2.1"
+          },
+          "rtype": "A",
+          "ttl": 300
+        },
+        {
+          "name": "mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Aaaa": "2001:db8::1"
+          },
+          "rtype": "Aaaa",
+          "ttl": 300
+        },
+        {
+          "name": "_25._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        },
+        {
+          "name": "_465._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        },
+        {
+          "name": "_993._tcp.mail.example.test.",
+          "rclass": "In",
+          "rdata": {
+            "Tlsa": {
+              "certificate_association_data": [
+                99,
+                42,
+                15,
+                57,
+                10,
+                3,
+                8,
+                56,
+                241,
+                17,
+                36,
+                162,
+                111,
+                65,
+                238,
+                31,
+                153,
+                86,
+                95,
+                136,
+                168,
+                85,
+                47,
+                92,
+                100,
+                101,
+                244,
+                225,
+                103,
+                193,
+                71,
+                237
+              ],
+              "matching_type": 1,
+              "selector": 1,
+              "usage": 3
+            }
+          },
+          "rtype": "Tlsa",
+          "ttl": 300
+        }
+      ],
+      "committed_status": "active",
+      "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+      "grant_id": "aci-test-owner-rotation",
+      "lease_expires_at": 1789291417,
+      "parameters": {
+        "addresses": {
+          "ipv4": [
+            "192.0.2.1"
+          ],
+          "ipv6": [
+            "2001:db8::1"
+          ]
+        },
+        "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+        "evidence_profile": "azure-aci-snp",
+        "lease_seconds": 3600,
+        "mailbox_domain": "example.test.",
+        "ports": [
+          25,
+          465,
+          993
+        ],
+        "role": "mx-edge",
+        "service_host": "mail.example.test."
+      },
+      "policy_id": "71e2d37baddd664f9b292d84c67b2cc31ed7db1a3d8eee2ae4e9debb60a5495d",
+      "policy_valid_until": 1789297503,
+      "reappraisal_deadline": 1789295017,
+      "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+      "signer_spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "status": "active",
+      "tx_id": "2.2788",
+      "zone": "example.test."
+    },
+    "confirmed_ccf_transaction_id": "2.2788"
+  }
+}

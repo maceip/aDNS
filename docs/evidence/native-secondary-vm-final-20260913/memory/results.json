@@ -1,0 +1,22 @@
+{
+  "pid_in_target_container": 1,
+  "process_start_clock_ticks": 38227,
+  "started_unix_seconds": 1789288325.2198987,
+  "requested_seconds": 1380,
+  "cgroup_v2_available": true,
+  "process_cgroup": "0::/",
+  "collector_sha256": "6bb1803905af34968bd3c5cd489ba2275dda1ac575649bc5dc15790037fa461e",
+  "rss_units": "KiB (Linux /proc kB =1024 bytes)",
+  "cgroup_units": "bytes; aggregate named+collector+other container allocations including cache",
+  "scope": "Actual named PID1 VmRSS/VmHWM; cgroup aggregate is a separate metric, not RSS. Collector runs inside this measured container. No leak-freedom claim.",
+  "ended_unix_seconds": 1789289705.2215946,
+  "elapsed_seconds": 1380.0016971769992,
+  "sample_count": 139,
+  "minimum_rss_kib": 54684,
+  "maximum_rss_kib": 54752,
+  "first_rss_kib": 54684,
+  "last_rss_kib": 54752,
+  "collector_cpu_seconds": 0.175698,
+  "collector_maximum_rss_kib": 17120,
+  "maximum_counter_read_seconds": 0.0013745360001848894
+}

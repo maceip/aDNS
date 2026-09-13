@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "toolchain_image": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+  "platform": "linux/amd64 on local Docker/OrbStack; CCF Virtual, no hardware attestation claim",
+  "binary_sha256_after_both_scenarios": "6ba239f1dba3bc7f027b0857501c834b8049e5f6cf34f70844bbf2425299032f",
+  "build_volume": "agentdns-otel-build-20260913",
+  "source_manifest_before_and_after_equal": true,
+  "source_files": 11,
+  "source_manifest_sha256": "b944fae605a5decb47c2c15130b26c8c3827f34f0fd9e666ac5fba7133187806",
+  "ccf_build_source_manifest_sha256": "b073f9433c0b8b7c44d9615d18eab954225d9427c03375241b756e665334eb91",
+  "source_mount": "read-only explicit snapshot",
+  "test_dependency_mount": "disposable /tmp tmpfs with exec for pinned compiled wheels",
+  "collector_forwarding": "exact locally verified SDK HTTP/protobuf payloads to http://127.0.0.1:4318/v1/traces in existing collector network namespace",
+  "cleanup": {
+    "container": "agentdns-live-otel-20260913",
+    "removed": true,
+    "verified_unix_seconds": 1789293508.295848
+  },
+  "private_data_excluded": [
+    "member keys",
+    "TSIG provisioning bodies",
+    "ledgers",
+    "HTTP request and response bodies",
+    "complete CCF node logs"
+  ]
+}

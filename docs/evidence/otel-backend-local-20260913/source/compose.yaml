@@ -1,0 +1,66 @@
+name: agentdns-otel-validation
+x-bounds: &bounds
+  restart: unless-stopped
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  pids_limit: 128
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: "2"}
+services:
+  otel-collector:
+    <<: *bounds
+    image: otel/opentelemetry-collector-contrib:0.160.0@sha256:799dc6cf12c96192af37b5bdba804da8c10b3bc563b43cb90c3f3c58d9572ad6
+    command: ["--config=/etc/otelcol/config.yaml"]
+    read_only: true
+    mem_limit: 384m
+    cpus: 1
+    volumes: ["./otel-collector.yaml:/etc/otelcol/config.yaml:ro"]
+    ports:
+      - "127.0.0.1:${OTEL_GRPC_PORT:-4317}:4317"
+      - "127.0.0.1:${OTEL_HTTP_PORT:-4318}:4318"
+    depends_on: [tempo, loki]
+  tempo:
+    <<: *bounds
+    image: grafana/tempo:3.0.3@sha256:0296560ac66f8a3600d7fb3014a52c189d4d9c3549ad6ff441bf2409855d68d5
+    command: ["-config.file=/etc/tempo.yaml"]
+    mem_limit: 768m
+    cpus: 1
+    volumes: ["./tempo.yaml:/etc/tempo.yaml:ro", "tempo-data:/var/tempo"]
+    ports: ["127.0.0.1:${TEMPO_HTTP_PORT:-13200}:3200"]
+  loki:
+    <<: *bounds
+    image: grafana/loki:3.7.7@sha256:d70e4659623f3e109af669cae76fe2a5dd5be54e2298fe8aed380d982fbc2500
+    command: ["-config.file=/etc/loki/config.yaml"]
+    mem_limit: 512m
+    cpus: 1
+    volumes: ["./loki.yaml:/etc/loki/config.yaml:ro", "loki-data:/loki"]
+  grafana:
+    <<: *bounds
+    image: grafana/grafana:13.2.1@sha256:f772d434e8fab0049deb2b1b30abd43342bcfca1537614aa8d36080232cf4283
+    mem_limit: 512m
+    cpus: 1
+    environment:
+      GF_SECURITY_ADMIN_USER: agentdns
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_password
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_SECURITY_COOKIE_SAMESITE: strict
+    secrets: [grafana_password]
+    volumes:
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/agentdns.yaml:ro
+      - ./grafana-dashboards.yaml:/etc/grafana/provisioning/dashboards/agentdns.yaml:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports: ["127.0.0.1:${GRAFANA_HTTP_PORT:-13000}:3000"]
+    depends_on: [tempo, loki]
+secrets:
+  grafana_password:
+    file: ${AGENTDNS_GRAFANA_PASSWORD_FILE:?Set an absolute private runtime password file}
+volumes:
+  tempo-data:
+  loki-data:
+  grafana-data:

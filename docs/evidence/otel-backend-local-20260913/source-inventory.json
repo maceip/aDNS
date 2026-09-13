@@ -1,0 +1,13 @@
+{
+  "infra/observability/compose.yaml": "656a58da7a39802c37dc4a7b75b70a75120b89a1c0d8b175e05083b8d25c0fe0",
+  "infra/observability/compose.native-https.yaml": "8d8a176c33f6fb360861880e1d7a43da99157db295ebc8dda96b88ec523c4934",
+  "infra/observability/otel-collector.yaml": "f81f8d93ae7e16cfe058f654a831008ce52dccaaf3c8c18f81010143b3d6d501",
+  "infra/observability/otel-native-https.yaml": "1327306db85c33ea1485645aaf728bf1c5ddd91cf1d6c65cca7997e68ad83506",
+  "infra/observability/tempo.yaml": "cc49dd21ca2082b5bcfc41ef3984dd43034931d445bcbc0e1ff3f59e310e3f58",
+  "infra/observability/loki.yaml": "9885792171a9923ab9380ae0c642fb5a7edb33f6519659f140e12c060d9ffcd4",
+  "infra/observability/grafana-datasources.yaml": "39c34406fbc9f4b195a575605dd9edc5dc1a360872d5af4b715b26f45eb2d1fe",
+  "infra/observability/grafana-dashboards.yaml": "26294864b983545db186935dbe4f3427745f08c463ae6a2296014dcaf8802091",
+  "infra/observability/dashboards/architecture.json": "a9ca7ae4ef18261046b49ab14fc1abc9ce6d4f5ab752f2c36429b9ff9c876ee1",
+  "infra/observability/runtime.env.example": "dfd282cc8ea9116c80504a4a939b4457032a53005f2fa691586a42a35e1c3923",
+  "infra/observability/verify.sh": "7fee9b93c03120602aaac11ef9830eeafee55997055600767e76d5632f627095"
+}

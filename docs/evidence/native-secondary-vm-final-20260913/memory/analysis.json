@@ -1,0 +1,64 @@
+{
+  "input_sha256": {
+    "results": "4820494adedf30042f0eef4b3c8e4a2c1905d3d7045e14e3207f03130ccb98dc",
+    "samples": "275edaf32d89f9aedd4fd02840308243896fb582f698a1236b09139180f44fbf",
+    "load": "7c9c505cc0d3755a32f8375ac2893cc1358668a8bf62179a17104bdc633c0876"
+  },
+  "collector_sha256": "6bb1803905af34968bd3c5cd489ba2275dda1ac575649bc5dc15790037fa461e",
+  "sample_count": 139,
+  "pid_in_target_container": 1,
+  "process_start_clock_ticks": 38227,
+  "started_utc": "2026-09-13T08:32:05.219899+00:00",
+  "ended_utc": "2026-09-13T08:55:05.221595+00:00",
+  "elapsed_seconds": 1380.0016971769992,
+  "maximum_sample_gap_seconds": 10.000105606000034,
+  "named_rss_kib": {
+    "first": 54684,
+    "last": 54752,
+    "minimum": 54684,
+    "maximum": 54752,
+    "mean": 54748.08633093525
+  },
+  "named_lifetime_high_water_rss_kib": {
+    "first": 54860,
+    "last": 54860,
+    "minimum": 54860,
+    "maximum": 54860,
+    "mean": 54860.0
+  },
+  "cgroup_charged_memory_bytes": {
+    "first": 49508352,
+    "last": 50364416,
+    "minimum": 49483776,
+    "maximum": 50589696,
+    "mean": 50036647.597122304
+  },
+  "cgroup_lifetime_peak_memory_bytes": {
+    "first": 49508352,
+    "last": 52281344,
+    "minimum": 49508352,
+    "maximum": 52281344,
+    "mean": 50445186.76258993
+  },
+  "cgroup_event_deltas": {
+    "low": 0,
+    "high": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "collector_cpu_seconds": 0.175698,
+  "collector_maximum_rss_kib": 17120,
+  "maximum_counter_read_seconds": 0.0013745360001848894,
+  "external_load_overlap": {
+    "load_started_utc": "2026-09-13T08:33:23.870112+00:00",
+    "load_ended_utc": "2026-09-13T08:53:24.370643+00:00",
+    "first_sample_lead_seconds": 78.64980340003967,
+    "last_sample_trail_seconds": 100.84972524642944,
+    "samples_within_load_window": 120,
+    "full_load_interval_covered": true,
+    "scope": "Compares independently recorded host UTC wall-clock timestamps; sample gaps and per-host monotonic elapsed times are retained separately."
+  },
+  "scope": "Actual named PID1 process RSS in KiB; cgroup charged aggregate is separate and includes collector/cache. Lifetime high-water counters were not reset. This finite sustained observation does not prove leak freedom."
+}

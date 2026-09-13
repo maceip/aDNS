@@ -1,0 +1,220 @@
+{
+  "status": "passed",
+  "claim": "synthetic native-VM backend transport/privacy smoke; no native CCF assertion",
+  "started_unix": 1789294111.0098498,
+  "finished_unix": 1789294151.7502506,
+  "trace_id": "9c11667c743d450cd4abed734436dc3a",
+  "span_id": "9843e8e4fc3afe53",
+  "tls": "TLSv1.3",
+  "missing_authorization_status": 401,
+  "wrong_authorization_status": 401,
+  "untrusted_ca_rejected": true,
+  "grafana_authenticated_resources": true,
+  "bind_after": {
+    "status": "passed",
+    "checked_unix": 1789294151.2397726,
+    "bind_container_id": "553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d",
+    "bind_image_id": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+    "bind_pid": 2475,
+    "bind_start_ticks": 38227,
+    "bind_restart_count": 0,
+    "bind_started_at": "2026-09-13T07:29:14.614361513Z",
+    "bind_config_sha256": "1ed3e45c29b882fa164dc51d48c310064a4a7ccd15448c5c2bce200b7463e3a6",
+    "bind_ports": {
+      "53/tcp": [
+        {
+          "HostIp": "10.71.0.4",
+          "HostPort": "53"
+        }
+      ],
+      "53/udp": [
+        {
+          "HostIp": "10.71.0.4",
+          "HostPort": "53"
+        }
+      ]
+    },
+    "disk_available_bytes": 26850439168,
+    "memory_bytes": {
+      "MemTotal": 15744561152,
+      "MemAvailable": 14284247040
+    },
+    "port_conflicts": false,
+    "soa": {
+      "udp": {
+        "authoritative": true,
+        "rcode": 0,
+        "serial": 34,
+        "ttl": 60,
+        "answer_bytes": 110
+      },
+      "tcp": {
+        "authoritative": true,
+        "rcode": 0,
+        "serial": 34,
+        "ttl": 60,
+        "answer_bytes": 110
+      }
+    },
+    "compose_available": false,
+    "compose_version": "",
+    "docker_version": "29.1.3"
+  },
+  "containers": {
+    "otel-collector": {
+      "container_id": "7e284b7e8473aa28a823d9e2782ba257bb2adfa1301ff0c265caaed907eb4c9d",
+      "image_id": "sha256:5b66b0dc6921f2a439cf50b942ccb9e2a4375f136239a9fdf709ef33e4bfc668",
+      "image_reference": "otel/opentelemetry-collector-contrib@sha256:5b66b0dc6921f2a439cf50b942ccb9e2a4375f136239a9fdf709ef33e4bfc668",
+      "repo_digests": [
+        "otel/opentelemetry-collector-contrib@sha256:5b66b0dc6921f2a439cf50b942ccb9e2a4375f136239a9fdf709ef33e4bfc668"
+      ],
+      "architecture": "amd64",
+      "restart_count": 0,
+      "started_at": "2026-09-13T10:08:30.150585651Z",
+      "ports": {
+        "4317/tcp": null,
+        "4318/tcp": null,
+        "55679/tcp": null,
+        "8443/tcp": [
+          {
+            "HostIp": "10.71.0.4",
+            "HostPort": "4318"
+          }
+        ]
+      },
+      "memory_limit_bytes": 402653184,
+      "nano_cpus": 250000000,
+      "pids_limit": 128
+    },
+    "tempo": {
+      "container_id": "e3c03e9ef42b23675b8c2f5c7db78773adee8f7f8e46a2b0e8006a6776071384",
+      "image_id": "sha256:05321ebf1f191fde34282b3dc86e68f511d489133df7963cd1670a2e1e11b33c",
+      "image_reference": "grafana/tempo@sha256:05321ebf1f191fde34282b3dc86e68f511d489133df7963cd1670a2e1e11b33c",
+      "repo_digests": [
+        "grafana/tempo@sha256:05321ebf1f191fde34282b3dc86e68f511d489133df7963cd1670a2e1e11b33c"
+      ],
+      "architecture": "amd64",
+      "restart_count": 0,
+      "started_at": "2026-09-13T10:08:29.662144681Z",
+      "ports": {
+        "3200/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13200"
+          }
+        ]
+      },
+      "memory_limit_bytes": 805306368,
+      "nano_cpus": 250000000,
+      "pids_limit": 128
+    },
+    "loki": {
+      "container_id": "e7c2ba237b52babed7d82aef049d9cad7092447a09df0fbcb89fc0ca8413dfa8",
+      "image_id": "sha256:550d599ec4efacd8ebc0a5871766855057cba2bd0c669c0711d898c00d6d901f",
+      "image_reference": "grafana/loki@sha256:550d599ec4efacd8ebc0a5871766855057cba2bd0c669c0711d898c00d6d901f",
+      "repo_digests": [
+        "grafana/loki@sha256:550d599ec4efacd8ebc0a5871766855057cba2bd0c669c0711d898c00d6d901f"
+      ],
+      "architecture": "amd64",
+      "restart_count": 0,
+      "started_at": "2026-09-13T10:08:29.657298054Z",
+      "ports": {
+        "3100/tcp": null
+      },
+      "memory_limit_bytes": 536870912,
+      "nano_cpus": 250000000,
+      "pids_limit": 128
+    },
+    "grafana": {
+      "container_id": "23b5ac5e5fdd3afa9c13cafc2044d6fcb502727a6fc8d7fb01edc95748877bde",
+      "image_id": "sha256:1dec240d14e232597dce9bfa56dae55f4397b138cdc91e3ee92ac6b157e2fc49",
+      "image_reference": "grafana/grafana@sha256:1dec240d14e232597dce9bfa56dae55f4397b138cdc91e3ee92ac6b157e2fc49",
+      "repo_digests": [
+        "grafana/grafana@sha256:1dec240d14e232597dce9bfa56dae55f4397b138cdc91e3ee92ac6b157e2fc49"
+      ],
+      "architecture": "amd64",
+      "restart_count": 0,
+      "started_at": "2026-09-13T10:08:30.156177897Z",
+      "ports": {
+        "3000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13000"
+          }
+        ]
+      },
+      "memory_limit_bytes": 536870912,
+      "nano_cpus": 250000000,
+      "pids_limit": 128
+    }
+  },
+  "compose_version": "5.1.2",
+  "compose_sha256": "c372e512a36e67716b0b3a1264ccdc461dec7a7beff601b81f7c5fb008e3511e",
+  "source_sha256": {
+    "compose.yaml": "656a58da7a39802c37dc4a7b75b70a75120b89a1c0d8b175e05083b8d25c0fe0",
+    "compose.native-https.yaml": "8d8a176c33f6fb360861880e1d7a43da99157db295ebc8dda96b88ec523c4934",
+    "otel-collector.yaml": "f81f8d93ae7e16cfe058f654a831008ce52dccaaf3c8c18f81010143b3d6d501",
+    "otel-native-https.yaml": "1327306db85c33ea1485645aaf728bf1c5ddd91cf1d6c65cca7997e68ad83506",
+    "tempo.yaml": "cc49dd21ca2082b5bcfc41ef3984dd43034931d445bcbc0e1ff3f59e310e3f58",
+    "loki.yaml": "9885792171a9923ab9380ae0c642fb5a7edb33f6519659f140e12c060d9ffcd4",
+    "grafana-datasources.yaml": "39c34406fbc9f4b195a575605dd9edc5dc1a360872d5af4b715b26f45eb2d1fe",
+    "grafana-dashboards.yaml": "26294864b983545db186935dbe4f3427745f08c463ae6a2296014dcaf8802091",
+    "dashboards/architecture.json": "a9ca7ae4ef18261046b49ab14fc1abc9ce6d4f5ab752f2c36429b9ff9c876ee1",
+    "compose.vm.yaml": "01dc23ffd3a51fc2300632631c300f0391ff29a1865b094e4c2fdb0f9bb2f2b8",
+    "runtime-paths.env": "180ad3e38d5614297cdcb19ccb8999845ef316767c0b4f845abf899d4e3fb22d",
+    "preflight.sh": "8d476bd913ad3d6b545136244065473341456ec89fc36108b5af22393d1419f3",
+    "verify-backend.py": "3786d244a6f111dd47aebec90e2a282fb525558373c82b45bd3e9370720b77c5",
+    "exporter-public-ca.pem": "f6e2a3e66a985d78c5bb912f81e02d59c78923d73f639308405e33d4bc71f524"
+  },
+  "bind_before": {
+    "status": "passed",
+    "checked_unix": 1789294064.6460822,
+    "bind_container_id": "553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d",
+    "bind_image_id": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+    "bind_pid": 2475,
+    "bind_start_ticks": 38227,
+    "bind_restart_count": 0,
+    "bind_started_at": "2026-09-13T07:29:14.614361513Z",
+    "bind_config_sha256": "1ed3e45c29b882fa164dc51d48c310064a4a7ccd15448c5c2bce200b7463e3a6",
+    "bind_ports": {
+      "53/tcp": [
+        {
+          "HostIp": "10.71.0.4",
+          "HostPort": "53"
+        }
+      ],
+      "53/udp": [
+        {
+          "HostIp": "10.71.0.4",
+          "HostPort": "53"
+        }
+      ]
+    },
+    "disk_available_bytes": 29685362688,
+    "memory_bytes": {
+      "MemTotal": 15744561152,
+      "MemAvailable": 15002906624
+    },
+    "port_conflicts": false,
+    "soa": {
+      "udp": {
+        "authoritative": true,
+        "rcode": 0,
+        "serial": 34,
+        "ttl": 60,
+        "answer_bytes": 110
+      },
+      "tcp": {
+        "authoritative": true,
+        "rcode": 0,
+        "serial": 34,
+        "ttl": 60,
+        "answer_bytes": 110
+      }
+    },
+    "compose_available": false,
+    "compose_version": "",
+    "docker_version": "29.1.3"
+  },
+  "project": "agentdns-otel-native-validation"
+}

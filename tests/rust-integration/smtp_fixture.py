@@ -3,6 +3,7 @@
 import concurrent.futures, pathlib, socket, ssl, threading, time
 root=pathlib.Path('/work')
 context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER);context.load_cert_chain(root/'mail.pem',root/'mail.key')
+context.minimum_version=ssl.TLSVersion.TLSv1_2
 
 def line(sock):
     out=bytearray()
@@ -25,7 +26,7 @@ def smtp(sock):
         else:sock.sendall(b'502 Test fixture accepts only EHLO, STARTTLS and QUIT\r\n')
 
 def serve(port,implicit):
-    listener=socket.socket();listener.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);listener.bind(('0.0.0.0',port));listener.listen(20)
+    listener=socket.socket();listener.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);listener.bind(('127.0.0.1',port));listener.listen(20)
     while True:
         sock,_=listener.accept()
         def client(sock=sock):

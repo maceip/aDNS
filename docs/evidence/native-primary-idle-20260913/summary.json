@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "primary_ip": "4.208.82.123",
+  "secondary_public_ip": "20.166.33.141",
+  "image_index_sha256": "c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "amd64_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "cce_sha256": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "window": {
+    "started_unix_seconds": 1789288403.557139,
+    "nominal_1250s_end_unix_seconds": 1789289653.557139,
+    "actual_external_runner_end_unix_seconds": 1789289671.521415,
+    "final_supplemental_log_capture_end_unix_seconds": 1789289728.966614
+  },
+  "signing": {
+    "samples": 4,
+    "serials": [
+      15,
+      16,
+      17,
+      18
+    ],
+    "source_records": 260,
+    "min_ms": 209.325,
+    "max_ms": 216.897,
+    "continuous_log_tail_overlap": true,
+    "snapshots": 19
+  },
+  "limitations": [
+    "Signing lines have no own timestamp; their payload and exact rolling-tail overlap are preserved with capture boundaries and separately observed committed serials.",
+    "Four signing samples describe this run; their nearest-rank p99 is simply the maximum, not a stable tail estimate.",
+    "Azure metrics are one-minute platform container usage, not process RSS or attested measurements. The API returned timestamps truncated to seconds; minute buckets may include adjacent time.",
+    "The ACI secondary metric is the auxiliary UDP-only BIND; the independently queried TCP/UDP secondary is the separate VM and has a separate process-RSS report.",
+    "Raw container stdout remains private; only fixed-schema signing diagnostics, hashes and overlap counts are public.",
+    "These measurements exercise the exact uninstrumented image above; the subsequent requested OTel implementation is a separate candidate."
+  ],
+  "analysis_sources": {
+    ".validation/azure/native-final-20260913/primary/native-v5-ready/analyze_idle_logs.py": "828a6b0bf27474745cb05bf168ed2c39a39e9bdbc5c02471eb94f31409129be1",
+    ".validation/azure/native-final-20260913/primary/native-v5-ready/capture_idle_logs.py": "a4ca708dda6251d551f57843ff9078ee9beafe159b3f9ecb541224471636760e",
+    "tools/collect_aci_metrics.py": "f878ffb64413c4e98f90d6051d09b61939da9542c2d324588305670d76d92199",
+    "tools/summarize_signing_metrics.py": "8d5c7e9b872f615bc30b74bd4234c966a15ee1871c343a73dd374b9a9d0d4526"
+  }
+}

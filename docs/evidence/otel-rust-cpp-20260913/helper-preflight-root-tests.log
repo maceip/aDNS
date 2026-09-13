@@ -1,0 +1,12 @@
+test_aci_port_numbers_unique_across_protocols_and_containers (test_aci_preflight.ArchivePreflightTests.test_aci_port_numbers_unique_across_protocols_and_containers) ... ok
+test_combined_archive_and_wrong_platform_manifest_rejected (test_aci_preflight.ArchivePreflightTests.test_combined_archive_and_wrong_platform_manifest_rejected) ... ok
+test_distinct_single_image_archive_and_actual_layer_digest (test_aci_preflight.ArchivePreflightTests.test_distinct_single_image_archive_and_actual_layer_digest) ... ok
+test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes (test_aci_preflight.ArchivePreflightTests.test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes) ... ok
+test_two_names_cannot_alias_one_archive_even_via_hardlink (test_aci_preflight.ArchivePreflightTests.test_two_names_cannot_alias_one_archive_even_via_hardlink) ... ok
+test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) ... ok
+test_optional_public_only_preflight_and_ordinary_template (test_aci_preflight.TelemetryPreflightTests.test_optional_public_only_preflight_and_ordinary_template) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.007s
+
+OK

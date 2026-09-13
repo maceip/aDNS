@@ -1,0 +1,672 @@
+[
+  {
+    "method": "GET",
+    "path": "/app/service/registration?registration_id=reg-be3840a84201959e7aa5080ba2173a65",
+    "at_unix_seconds": 1789290714.6823082,
+    "elapsed_ms": 746.8005,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "945",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.3628",
+        "x-ms-ccf-transaction-id": "2.3628"
+      },
+      "body": {
+        "active_contributions": [],
+        "active_ports": [],
+        "admitted_at": 1789287785,
+        "committed_contributions": [],
+        "committed_status": "withdrawn",
+        "evidence_digest": "d830de4a2c3af8da9f48e8c2e77083582191b24fe64cb09dd4849edc939f6222",
+        "grant_id": "aci-test-owner",
+        "lease_expires_at": 1789291385,
+        "parameters": {
+          "addresses": {
+            "ipv4": [
+              "192.0.2.1"
+            ],
+            "ipv6": [
+              "2001:db8::1"
+            ]
+          },
+          "evidence_digest": "d830de4a2c3af8da9f48e8c2e77083582191b24fe64cb09dd4849edc939f6222",
+          "evidence_profile": "azure-aci-snp",
+          "lease_seconds": 3600,
+          "mailbox_domain": "example.test.",
+          "ports": [
+            25,
+            465,
+            993
+          ],
+          "role": "mx-edge",
+          "service_host": "mail.example.test."
+        },
+        "policy_id": "71e2d37baddd664f9b292d84c67b2cc31ed7db1a3d8eee2ae4e9debb60a5495d",
+        "policy_valid_until": 1789297503,
+        "reappraisal_deadline": 1789295198,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "signer_spki_sha256": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+        "status": "withdrawn",
+        "tx_id": "2.3628",
+        "zone": "example.test."
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.3628",
+    "at_unix_seconds": 1789290715.3667672,
+    "elapsed_ms": 683.879833,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.3628"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/zone/status?zone=example.test.",
+    "at_unix_seconds": 1789290716.816619,
+    "elapsed_ms": 1449.413667,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "358",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.3629",
+        "x-ms-ccf-transaction-id": "2.3629"
+      },
+      "body": {
+        "committed_state": {
+          "ccf_tx_id": "2.3629",
+          "earliest_rrsig_expiration": 1789291145,
+          "maintenance_health": "ok",
+          "rrsig_inception": 1789290245,
+          "serial": 23
+        },
+        "frontend_propagation": {
+          "secondaries": [
+            {
+              "endpoint": "20.166.33.141:53",
+              "in_sync": true,
+              "last_notified_serial": 23,
+              "last_observed_at": 1789290712,
+              "last_observed_serial": 23
+            }
+          ]
+        },
+        "tx_id": "2.3629",
+        "zone": "example.test."
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.3629",
+    "at_unix_seconds": 1789290717.453851,
+    "elapsed_ms": 635.663375,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.3629"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=aci-capture-20260913-01",
+    "at_unix_seconds": 1789290718.831667,
+    "elapsed_ms": 1377.29025,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "1377",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.143",
+        "x-ms-ccf-transaction-id": "2.3633"
+      },
+      "body": {
+        "contributions": [
+          {
+            "name": "example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Mx": {
+                "exchange": "mail.example.test.",
+                "preference": 10
+              }
+            },
+            "rtype": "Mx",
+            "ttl": 3600
+          },
+          {
+            "name": "mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "A": "192.0.2.1"
+            },
+            "rtype": "A",
+            "ttl": 300
+          },
+          {
+            "name": "mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Aaaa": "2001:db8::1"
+            },
+            "rtype": "Aaaa",
+            "ttl": 300
+          },
+          {
+            "name": "_25._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          },
+          {
+            "name": "_465._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          },
+          {
+            "name": "_993._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          }
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.143",
+        "zone_serial": 8
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.143",
+    "at_unix_seconds": 1789290719.4556942,
+    "elapsed_ms": 623.379584,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.143"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "at_unix_seconds": 1789290720.847313,
+    "elapsed_ms": 1391.002042,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "221",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.3635",
+        "x-ms-ccf-transaction-id": "2.3635"
+      },
+      "body": {
+        "expires_at": 1789291020,
+        "intent_hash": "d6f4ebe22998f323fcd71d173c8dcea1f5ace37992f29907f61c0a26cccfca4a",
+        "issued_at": 1789290720,
+        "nonce": "f6abb4d1cc04e597a4c8c0420e6e2e069deb8765a9f99e4d7a74df3432beec10",
+        "tx_id": "2.3635"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.3635",
+    "at_unix_seconds": 1789290721.4944441,
+    "elapsed_ms": 645.753375,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.3635"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/register",
+    "at_unix_seconds": 1789290723.069747,
+    "elapsed_ms": 659.058542,
+    "response": {
+      "http_status": 409,
+      "headers": {
+        "content-length": "31",
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "REQUEST_ID_CONFLICT"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=aci-capture-20260913-01",
+    "at_unix_seconds": 1789290723.8690271,
+    "elapsed_ms": 798.745708,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "1377",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.143",
+        "x-ms-ccf-transaction-id": "2.3641"
+      },
+      "body": {
+        "contributions": [
+          {
+            "name": "example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Mx": {
+                "exchange": "mail.example.test.",
+                "preference": 10
+              }
+            },
+            "rtype": "Mx",
+            "ttl": 3600
+          },
+          {
+            "name": "mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "A": "192.0.2.1"
+            },
+            "rtype": "A",
+            "ttl": 300
+          },
+          {
+            "name": "mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Aaaa": "2001:db8::1"
+            },
+            "rtype": "Aaaa",
+            "ttl": 300
+          },
+          {
+            "name": "_25._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          },
+          {
+            "name": "_465._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          },
+          {
+            "name": "_993._tcp.mail.example.test.",
+            "rclass": "In",
+            "rdata": {
+              "Tlsa": {
+                "certificate_association_data": [
+                  174,
+                  195,
+                  176,
+                  241,
+                  196,
+                  108,
+                  107,
+                  13,
+                  12,
+                  90,
+                  110,
+                  54,
+                  93,
+                  6,
+                  249,
+                  237,
+                  212,
+                  223,
+                  159,
+                  148,
+                  67,
+                  32,
+                  116,
+                  119,
+                  121,
+                  58,
+                  149,
+                  82,
+                  253,
+                  5,
+                  24,
+                  60
+                ],
+                "matching_type": 1,
+                "selector": 1,
+                "usage": 3
+              }
+            },
+            "rtype": "Tlsa",
+            "ttl": 300
+          }
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.143",
+        "zone_serial": 8
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.143",
+    "at_unix_seconds": 1789290724.493833,
+    "elapsed_ms": 622.521625,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.143"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/zone/status?zone=example.test.",
+    "at_unix_seconds": 1789290725.183028,
+    "elapsed_ms": 687.724625,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "358",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.3642",
+        "x-ms-ccf-transaction-id": "2.3642"
+      },
+      "body": {
+        "committed_state": {
+          "ccf_tx_id": "2.3642",
+          "earliest_rrsig_expiration": 1789291145,
+          "maintenance_health": "ok",
+          "rrsig_inception": 1789290245,
+          "serial": 23
+        },
+        "frontend_propagation": {
+          "secondaries": [
+            {
+              "endpoint": "20.166.33.141:53",
+              "in_sync": true,
+              "last_notified_serial": 23,
+              "last_observed_at": 1789290722,
+              "last_observed_serial": 23
+            }
+          ]
+        },
+        "tx_id": "2.3642",
+        "zone": "example.test."
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.3642",
+    "at_unix_seconds": 1789290725.845223,
+    "elapsed_ms": 661.317584,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.3642"
+      }
+    }
+  }
+]

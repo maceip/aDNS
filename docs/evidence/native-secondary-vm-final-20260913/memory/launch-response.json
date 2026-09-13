@@ -1,0 +1,10 @@
+{
+  "value": [
+    {
+      "code": "ProvisioningState/succeeded",
+      "displayStatus": "Provisioning succeeded",
+      "level": "Info",
+      "message": "Enable succeeded: \n[stdout]\n{\"status\": \"launched\", \"launched_unix_seconds\": 1789288325.093507, \"container_id\": \"553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d\", \"container_image_id\": \"sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861\", \"host_pid_at_launch\": 2475, \"observer_sha256\": \"6bb1803905af34968bd3c5cd489ba2275dda1ac575649bc5dc15790037fa461e\", \"pid_namespace\": \"BIND container; actual named PID1\", \"output_directory\": \"/tmp/agentdns-native-memory\", \"scope\": \"1380 seconds/139 samples; /proc VmRSS+VmHWM KiB, separately cgroup-v2 aggregate bytes, collector CPU/RSS overhead; outer1445s +5s kill bound.\"}\n\n[stderr]\n"
+    }
+  ]
+}

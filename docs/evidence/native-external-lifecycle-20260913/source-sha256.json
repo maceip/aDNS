@@ -1,0 +1,6 @@
+{
+  "tests/rust-integration/verify_native_dns.py": "445fdc6b073da532b91aeb18ae98f1709cd7741a89d1760e30c177b61dc416c9",
+  "tests/rust-integration/verify_native_mail.py": "486c2c2f3a30b475723ea3ab204dc2d8b44efb205fac85e9291fbc443035ddea",
+  "tests/rust-integration/observe_native_state.py": "2dd98a97942feae316565dbb63cf3d3d18e602aebb41506d0cf2200cc6c6f515",
+  "tools/verify_ksk_receipt.py": "e7cbc38cc2d7f3ebda33f2c1e7273581284354c2e2fa555790097055f5c265ea"
+}

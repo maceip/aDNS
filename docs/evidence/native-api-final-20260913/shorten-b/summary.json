@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "operation": "renew",
+  "result": {
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "lease_expires_at": 1789290242,
+    "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+    "status": "committed",
+    "tx_id": "2.2886",
+    "zone_serial": 21
+  }
+}

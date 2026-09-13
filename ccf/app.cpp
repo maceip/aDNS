@@ -7,6 +7,7 @@
 #include "ccf/receipt.h"
 #include "ccf/rpc_context.h"
 #include "ccf/tx_status.h"
+#include "telemetry.h"
 #include <chrono>
 #include <algorithm>
 #include <cctype>
@@ -59,7 +60,8 @@ class Handlers final:public ccf::UserEndpointRegistry {
     return true;
   }
 
-  void respond(ccf::endpoints::EndpointContext& ctx,ffi::Response response) {
+  void respond(ccf::endpoints::EndpointContext& ctx,ffi::Response response,
+    const std::shared_ptr<telemetry::Request>& trace) {
     // CCF skips both transaction finalisation and the consensus callback when
     // apply_writes is false, including for read-only snapshots. Successful
     // reads therefore commit their empty write set to gate the read TxID;
@@ -72,7 +74,15 @@ class Handlers final:public ccf::UserEndpointRegistry {
     ctx.rpc_ctx->set_response_header("content-type",std::string(response.content_type));
     std::vector<uint8_t> body(response.body.begin(),response.body.end());
     ctx.rpc_ctx->set_response_body(std::move(body));
-    if(!commit_response)return;
+    if(!commit_response) {
+      if(trace)trace->finish(response.status,telemetry::Outcome::Rejected);
+      return;
+    }
+    if(trace) {
+      for(const auto& span:response.diagnostic_spans)
+        trace->diagnostic(std::string(span.name),span.start_unix_ns,
+          span.end_unix_ns,span.parent_index,span.outcome);
+    }
     const bool promote_status=response.promote_status_on_commit;
     const bool json=std::string(response.content_type)=="application/json";
     const bool receipt=!response.claims_digest.empty();
@@ -91,21 +101,32 @@ class Handlers final:public ccf::UserEndpointRegistry {
       ccf::View view;
       if(get_view_for_seqno_v1(response.original_version,view)!=ccf::ApiResult::OK) {
         ctx.rpc_ctx->set_apply_writes(false);
-        ctx.rpc_ctx->set_response_json({{"status","pending"},{"error","ORIGINAL_TRANSACTION_VIEW_UNAVAILABLE"}},HTTP_STATUS_SERVICE_UNAVAILABLE);return;
+        ctx.rpc_ctx->set_response_json({{"status","pending"},{"error","ORIGINAL_TRANSACTION_VIEW_UNAVAILABLE"}},HTTP_STATUS_SERVICE_UNAVAILABLE);
+        if(trace)trace->finish(503,telemetry::Outcome::Invalid);
+        return;
       }
       original=ccf::TxID{view,response.original_version};
     }
     std::string service_cert;
     if(receipt) {const auto service=ctx.tx.ro<ccf::Service>(ccf::Tables::SERVICE)->get();if(service)service_cert=service->cert.str();}
     // No body or signed AXFR frame reaches the caller until this callback.
-    ctx.rpc_ctx->set_consensus_committed_function([this,json,receipt,original,service_cert,promote_status](ccf::endpoints::CommittedTxInfo& info) {
+    // This public correlation value never affects transaction contents.
+    std::string changed_zone;
+    if(trace && response.changed_zones.size()==1)changed_zone=std::string(response.changed_zones[0]);
+    if(trace)trace->commit_wait();
+    ctx.rpc_ctx->set_consensus_committed_function([this,json,receipt,original,service_cert,promote_status,trace,changed_zone](ccf::endpoints::CommittedTxInfo& info) {
+      if(trace)trace->commit_resolved();
       if(info.status!=ccf::FinalTxStatus::Committed) {
-        info.rpc_ctx->set_response_json({{"status","failed"},{"error","TRANSACTION_INVALID"}},HTTP_STATUS_SERVICE_UNAVAILABLE);return;
+        info.rpc_ctx->set_response_json({{"status","failed"},{"error","TRANSACTION_INVALID"}},HTTP_STATUS_SERVICE_UNAVAILABLE);
+        if(trace)trace->finish(503,telemetry::Outcome::Invalid);
+        return;
       }
       auto txid=info.tx_id;
       if(original.has_value()) {
         if(original->seqno>info.tx_id.seqno || original->view>info.tx_id.view) {
-          info.rpc_ctx->set_response_json({{"status","pending"},{"error","ORIGINAL_TRANSACTION_NOT_COMMITTED"}},HTTP_STATUS_SERVICE_UNAVAILABLE);return;
+          info.rpc_ctx->set_response_json({{"status","pending"},{"error","ORIGINAL_TRANSACTION_NOT_COMMITTED"}},HTTP_STATUS_SERVICE_UNAVAILABLE);
+          if(trace)trace->finish(503,telemetry::Outcome::Invalid);
+          return;
         }
         txid=*original;
       }
@@ -122,16 +143,44 @@ class Handlers final:public ccf::UserEndpointRegistry {
           }
           if(result.contains("frontend_propagation") && result["frontend_propagation"].value("status","")=="pending_commit")result["frontend_propagation"]["status"]="pending";
           if(result.contains("committed_state"))result["committed_state"]["ccf_tx_id"]=txid.to_str();
+          if(trace && !changed_zone.empty() && result.contains("zone_serial") &&
+             result["zone_serial"].is_number_unsigned() && result["zone_serial"].get<uint64_t>()<=UINT32_MAX)
+            trace->zone(changed_zone,result["zone_serial"].get<uint32_t>());
           if(receipt) {
+            const auto receipt_started=telemetry::now_nanos();
             auto proof=ccf::endpoints::build_receipt_for_committed_tx(context,info);
-            if(!proof)return; // CCF has already set the receipt error response.
+            if(trace)trace->receipt(receipt_started,telemetry::now_nanos(),static_cast<bool>(proof));
+            if(!proof) {
+              // CCF has already set the receipt error response.
+              if(trace)trace->finish(info.rpc_ctx->get_response_status(),telemetry::Outcome::ReceiptError,txid.to_str(),info.tx_id.to_str());
+              return;
+            }
             result["proof"]=ccf::describe_receipt_v1(*proof);
             result["ccf_service_identity"]=service_cert;
           }
           info.rpc_ctx->set_response_body(result.dump());
         }
       }
+      if(trace)trace->finish(info.rpc_ctx->get_response_status(),telemetry::Outcome::Committed,txid.to_str(),info.tx_id.to_str());
     });
+  }
+
+  template<typename Handler>
+  void dispatch(ccf::endpoints::EndpointContext& ctx,bool internal,
+    const std::string& content_type,const std::string& method,
+    const std::string& route,Handler handler) {
+    auto trace=telemetry::Request::start(ctx.rpc_ctx->get_request_header("traceparent").value_or(""),route,method);
+    try {
+      if(!transport_guard(ctx,internal) || (!content_type.empty() && !content_guard(ctx,content_type))) {
+        if(trace)trace->finish(ctx.rpc_ctx->get_response_status(),telemetry::Outcome::Rejected);
+        return;
+      }
+      ffi::CcfTx tx(ctx.tx);
+      respond(ctx,handler(tx),trace);
+    } catch(...) {
+      if(trace)trace->finish(503,telemetry::Outcome::Invalid);
+      throw;
+    }
   }
 public:
   explicit Handlers(ccf::AbstractNodeContext& context):ccf::UserEndpointRegistry(context) {
@@ -143,44 +192,40 @@ public:
       {"POST","/service/nonce"},{"POST","/service/register"},{"POST","/service/renew"},{"POST","/service/deregister"},
       {"POST","/zone/acme-challenge"},{"DELETE","/zone/acme-challenge"},{"POST","/zone/operator/records"}}) {
       make_endpoint(path,ccf::RESTVerb(method),[this,method,path](ccf::endpoints::EndpointContext& ctx){
-        if(!transport_guard(ctx,false) || !content_guard(ctx,"application/json"))return;ffi::CcfTx tx(ctx.tx);
-        respond(ctx,ffi::handle_mutation(tx,method,path,slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+        dispatch(ctx,false,"application/json",method,path,[&](auto& tx){return ffi::handle_mutation(tx,method,path,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
       },ccf::no_auth_required).install();
     }
     for(const auto& path:{"/service/registration","/service/request","/zone/status"}) {
       make_endpoint(path,HTTP_GET,[this,path](ccf::endpoints::EndpointContext& ctx){
-        if(!transport_guard(ctx,false))return;ffi::CcfTx tx(ctx.tx);
-        respond(ctx,ffi::handle_read(tx,path,ctx.rpc_ctx->get_request_query(),now_seconds()));
+        dispatch(ctx,false,"","GET",path,[&](auto& tx){return ffi::handle_read(tx,path,ctx.rpc_ctx->get_request_query(),now_seconds());});
       },ccf::no_auth_required).install();
     }
     for(const auto& method:{"GET","POST"}) {
       make_endpoint("/dns-query",ccf::RESTVerb(std::string(method)),[this,method](ccf::endpoints::EndpointContext& ctx){
-        if(!transport_guard(ctx,false) || (std::string(method)=="POST" && !content_guard(ctx,"application/dns-message")))return;
-        ffi::CcfTx tx(ctx.tx);ctx.rpc_ctx->set_response_header("cache-control","no-store");
-        respond(ctx,ffi::handle_doh(tx,method,ctx.rpc_ctx->get_request_query(),slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+        ctx.rpc_ctx->set_response_header("cache-control","no-store");
+        dispatch(ctx,false,std::string(method)=="POST"?"application/dns-message":"",method,"/dns-query",[&](auto& tx){return ffi::handle_doh(tx,method,ctx.rpc_ctx->get_request_query(),slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
       },ccf::no_auth_required).install();
     }
     make_endpoint("/governance/ksk-receipt",HTTP_GET,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,false))return;ffi::CcfTx tx(ctx.tx);
-      respond(ctx,ffi::handle_ksk_receipt(tx,ctx.rpc_ctx->get_request_query(),now_seconds()));
+      dispatch(ctx,false,"","GET","/governance/ksk-receipt",[&](auto& tx){return ffi::handle_ksk_receipt(tx,ctx.rpc_ctx->get_request_query(),now_seconds());});
     },ccf::no_auth_required).install();
     make_endpoint("/internal/maintenance",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/json"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_maintenance(tx,now_seconds()));
+      dispatch(ctx,true,"application/json","POST","/internal/maintenance",[&](auto& tx){return ffi::handle_maintenance(tx,now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
     make_endpoint("/internal/transfer-key",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/json"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_transfer_key(tx,slice(ctx.rpc_ctx->get_request_body())));
+      dispatch(ctx,true,"application/json","POST","/internal/transfer-key",[&](auto& tx){return ffi::handle_transfer_key(tx,slice(ctx.rpc_ctx->get_request_body()));});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
     make_endpoint("/internal/secondary/requests",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/json"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_secondary_requests(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+      dispatch(ctx,true,"application/json","POST","/internal/secondary/requests",[&](auto& tx){return ffi::handle_secondary_requests(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
     make_endpoint("/internal/secondary/response",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/json"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_secondary_response(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+      dispatch(ctx,true,"application/json","POST","/internal/secondary/response",[&](auto& tx){return ffi::handle_secondary_response(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
     make_endpoint("/internal/udp",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/dns-message"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_udp(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+      dispatch(ctx,true,"application/dns-message","POST","/internal/udp",[&](auto& tx){return ffi::handle_udp(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
     make_endpoint("/internal/axfr",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
-      if(!transport_guard(ctx,true) || !content_guard(ctx,"application/dns-message"))return;ffi::CcfTx tx(ctx.tx);respond(ctx,ffi::handle_transfer(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds()));
+      dispatch(ctx,true,"application/dns-message","POST","/internal/axfr",[&](auto& tx){return ffi::handle_transfer(tx,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
   }
 };

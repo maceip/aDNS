@@ -1,0 +1,8 @@
+{
+  "operation": "deregister",
+  "request_id": "native-withdraw-a-all-20260913",
+  "parameters": {
+    "selected_ports": [],
+    "withdraw_all": true
+  }
+}

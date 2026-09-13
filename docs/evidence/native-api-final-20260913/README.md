@@ -3,9 +3,10 @@
 These are actual requests against the attested confidential primary at
 `4.208.82.123`, using the two independently appraised Azure worker keys.
 The [summary](summary.json) identifies every completed phase and original
-globally committed transaction. This bundle alone does not claim completed
-idle, withdrawal, lease-expiry or changed-key-conflict acceptance while those
-phases are still absent from its summary.
+globally committed transaction. Partial/full withdrawal, natural lease expiry
+and the freshly appraised changed-key conflict all passed. Sustained DNS/mail
+and performance proofs remain separate linked bundles. The subsequent
+OpenTelemetry candidate requires its own build and validation evidence.
 
 Worker A passed six authentic scope/grant denials, DER and fixed-signature
 negatives, altered evidence rejection, committed pending/failed observations,
@@ -15,7 +16,7 @@ create/create/delete actions also passed with the same worker-held key.
 The operator proof covers SPF, DKIM, DMARC, TLSRPT and CAA. Its saved conflicting
 response is corroborated by frozen source; that helper did not export the
 conflicting envelope itself. Later native conflict proof exports its complete
-new-key envelope when executed.
+new-key envelope and its verified HTTP 409 decision.
 
 Each runner checks the six reviewed source/binary digests before and after
 execution. The fixed 64-byte P256 signatures and RFC8785 bytes were independently

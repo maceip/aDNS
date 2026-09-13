@@ -1844,3 +1844,117 @@ fn changing_appraisal_policy_identity_withdraws_existing_registration() {
             .is_empty()
     );
 }
+
+#[test]
+fn request_diagnostics_preserve_transaction_results_and_isolate_exact_retries() {
+    use adns_telemetry::{Name, RequestScope};
+    let (db, signer, _) = setup();
+    let request = envelope(&db, &signer, operator(&signer, "traced-operation", 1), 1000);
+    let raw = serde_json::to_vec(&request).unwrap();
+    let mut uncommitted = db.write().unwrap();
+    let baseline = mutate_observed(
+        &mut uncommitted,
+        "POST",
+        "/zone/operator/records",
+        &raw,
+        1001,
+    )
+    .unwrap();
+    drop(uncommitted);
+    let scope = RequestScope::new();
+    let mut tx = db.write().unwrap();
+    let traced = mutate_observed(&mut tx, "POST", "/zone/operator/records", &raw, 1001).unwrap();
+    let spans = scope.finish();
+    assert_eq!(
+        serde_json::to_value(&baseline).unwrap(),
+        serde_json::to_value(&traced).unwrap()
+    );
+    for name in [
+        Name::Parse,
+        Name::Signature,
+        Name::Idempotency,
+        Name::Nonce,
+        Name::Grant,
+        Name::DnssecSign,
+        Name::StorageStage,
+    ] {
+        assert!(
+            spans
+                .iter()
+                .any(|span| span.name == name && span.outcome == 1),
+            "{name:?}"
+        );
+    }
+    let diagnostic_text = format!("{spans:?}");
+    for sensitive in [
+        &request.nonce,
+        &request.client_signature,
+        &request.action.signer_spki_der,
+    ] {
+        assert!(!diagnostic_text.contains(sensitive));
+    }
+    tx.commit().unwrap();
+    let metadata = zone_metadata(&db.read().unwrap(), &"example.".parse().unwrap()).unwrap();
+    verify_published_rrsets(&metadata, 1001);
+    let replay_scope = RequestScope::new();
+    let replay = mutate_observed(
+        &mut db.write().unwrap(),
+        "POST",
+        "/zone/operator/records",
+        &raw,
+        1002,
+    )
+    .unwrap();
+    assert_eq!(replay.body, traced.body);
+    assert!(replay.original_version.is_some());
+    let replay_spans = replay_scope.finish();
+    assert!(
+        replay_spans
+            .iter()
+            .any(|span| span.name == Name::Idempotency)
+    );
+    assert!(
+        !replay_spans
+            .iter()
+            .any(|span| matches!(span.name, Name::DnssecSign | Name::Nonce | Name::Grant))
+    );
+    assert!(RequestScope::new().finish().is_empty());
+}
+
+#[test]
+fn saturated_diagnostics_do_not_change_business_failure_or_commit_partial_records() {
+    use adns_telemetry::{MAX_SPANS, Name, RequestScope, observe};
+    let (db, signer, _) = setup();
+    let request = envelope(&db, &signer, operator(&signer, "traced-conflict", 9), 1000);
+    let raw = serde_json::to_vec(&request).unwrap();
+    let baseline = mutate_observed(
+        &mut db.write().unwrap(),
+        "POST",
+        "/zone/operator/records",
+        &raw,
+        1001,
+    )
+    .unwrap();
+    let scope = RequestScope::new();
+    for _ in 0..1000 {
+        observe(Name::Parse, || Ok::<_, ()>(())).unwrap();
+    }
+    let mut tx = db.write().unwrap();
+    let traced = mutate_observed(&mut tx, "POST", "/zone/operator/records", &raw, 1001).unwrap();
+    assert_eq!(
+        serde_json::to_value(&baseline).unwrap(),
+        serde_json::to_value(&traced).unwrap()
+    );
+    assert_eq!(traced.http_status, 409);
+    assert!(traced.commit_error);
+    tx.commit().unwrap();
+    assert_eq!(scope.finish().len(), MAX_SPANS);
+    let metadata = zone_metadata(&db.read().unwrap(), &"example.".parse().unwrap()).unwrap();
+    assert_eq!(metadata.serial, 1);
+    assert!(
+        !metadata
+            .signed_records
+            .iter()
+            .any(|record| record.rtype == RecordType::Txt)
+    );
+}

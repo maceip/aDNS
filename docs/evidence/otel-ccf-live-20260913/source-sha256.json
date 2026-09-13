@@ -1,0 +1,13 @@
+{
+  "ccf/tests/live_telemetry.py": "c91b4fee877cd2f49b2bf00d487c581384efa1aa3f3565b6be21b694bf536e22",
+  "ccf/tests/live_smoke.py": "3aba183e108b80b81206d3e5ce73f5ac7b7740818965fb0d5941e1847b22aaf3",
+  "ccf/tests/quorum.py": "4126f5c3ef4b1c0c3590921ef67accb55ca820c0dc1fc38e431b60d1ad7f450f",
+  "ccf/tests/recovery.py": "51819448d7d2af6e2ca249aeab11bf4d276896d5ca6b2e01b5c2c9bbd2d8f5ff",
+  "ccf/tests/test_supervisor.py": "b0f9bcb301bc1fd1b59743d988ac7e6ae9913e254d3a9f556adbecf06e27353c",
+  "ccf/run.py": "3995350db16dbbde8a8154038dfc3902e3407ac5a9b44402955ee8d93f9fb4bd",
+  "ccf/telemetry.py": "a3cd75cc0b446d99b0a37f168a25942eca664ca11ceb45e1dde272a1b3afa84e",
+  "ccf/requirements-otel.txt": "51bb9fe5ffa45053a56df6fd2ff6940e102fb2cadef73354470cd2e8d4ec4eb6",
+  "ccf/node.example.json": "ac5cafbd31a319dee46a39bd65250671ebb21abdc892bc8a7dc31e8c0c676a14",
+  "ccf/governance/actions.js": "87bc2e47389ab963de71f659c3b4d4cb8092a7139192be0a8c4f084ed96794d7",
+  "tools/verify_ksk_receipt.py": "e7cbc38cc2d7f3ebda33f2c1e7273581284354c2e2fa555790097055f5c265ea"
+}

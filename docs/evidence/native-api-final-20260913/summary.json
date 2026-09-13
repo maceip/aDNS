@@ -1,5 +1,5 @@
 {
-  "status": "completed phases verified; final native acceptance remains in progress",
+  "status": "all native API phases passed on the identified pre-OpenTelemetry image",
   "primary": "4.208.82.123",
   "canonical_secondary": "20.166.33.141",
   "image_amd64_manifest": "sha256:4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
@@ -79,6 +79,63 @@
         "tx_id": "2.577",
         "zone_serial": 13
       }
+    },
+    "withdraw-a25": {
+      "status": "passed",
+      "operation": "deregister",
+      "result": {
+        "active_ports": [
+          465,
+          993
+        ],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "active",
+        "status": "committed",
+        "tx_id": "2.2587",
+        "zone_serial": 20
+      }
+    },
+    "withdraw-a-all": {
+      "status": "passed",
+      "operation": "deregister",
+      "result": {
+        "active_ports": [],
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "registration_status": "withdrawn",
+        "status": "committed",
+        "tx_id": "2.2696",
+        "zone_serial": 21
+      }
+    },
+    "shorten-b": {
+      "status": "passed",
+      "operation": "renew",
+      "result": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789290242,
+        "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+        "status": "committed",
+        "tx_id": "2.2886",
+        "zone_serial": 21
+      }
+    },
+    "conflict-a": {
+      "status": "passed",
+      "http_status": 409,
+      "operation": "native_changed_key_registration_conflict",
+      "original_transaction_id": "2.143",
+      "signed_message_digest": "879f29a19f3edf3a962d22a970283fc9239653f536da514b618ad35668f6e968",
+      "new_key_signature_verified": true,
+      "original_result_unchanged": true,
+      "zone_serial_unchanged": true
     }
   },
   "operator": {

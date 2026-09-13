@@ -6,6 +6,7 @@ version = 4
 name = "adns-attest"
 version = "0.1.0"
 dependencies = [
+ "adns-telemetry",
  "base64",
  "ciborium",
  "coset",
@@ -40,6 +41,7 @@ dependencies = [
  "adns-dnssec",
  "adns-server",
  "adns-storage",
+ "adns-telemetry",
  "adns-transfer",
  "adns-wire",
  "cxx",
@@ -72,6 +74,7 @@ dependencies = [
  "adns-auth",
  "adns-dnssec",
  "adns-storage",
+ "adns-telemetry",
  "adns-transfer",
  "adns-wire",
  "axum",
@@ -95,6 +98,10 @@ dependencies = [
  "serde_json",
  "thiserror",
 ]
+
+[[package]]
+name = "adns-telemetry"
+version = "0.1.0"
 
 [[package]]
 name = "adns-transfer"

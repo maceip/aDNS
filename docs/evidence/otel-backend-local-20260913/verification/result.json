@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "synthetic transport/privacy smoke only; no native CCF assertion",
+  "trace_id": "b35c088c9c94f37127cb9d492aad3dec",
+  "linked_trace_id": "908cc687fe642f32253b358b4061ffe9",
+  "checks": [
+    "OTLP HTTP accepted",
+    "Tempo exact trace retrieved",
+    "async link preserved",
+    "private fields scrubbed",
+    "Grafana login",
+    "authenticated datasource/dashboard/trace resource access"
+  ]
+}

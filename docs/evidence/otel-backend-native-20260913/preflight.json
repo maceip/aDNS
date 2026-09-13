@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "checked_unix": 1789293427.9293802,
+  "bind_container_id": "553c55cd4980182a7e5ca3b56f4cc8ccb582162c57e4c123d5fb367d72cbbb4d",
+  "bind_image_id": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+  "bind_pid": 2475,
+  "bind_start_ticks": 38227,
+  "bind_restart_count": 0,
+  "bind_started_at": "2026-09-13T07:29:14.614361513Z",
+  "bind_config_sha256": "1ed3e45c29b882fa164dc51d48c310064a4a7ccd15448c5c2bce200b7463e3a6",
+  "bind_ports": {
+    "53/tcp": [
+      {
+        "HostIp": "10.71.0.4",
+        "HostPort": "53"
+      }
+    ],
+    "53/udp": [
+      {
+        "HostIp": "10.71.0.4",
+        "HostPort": "53"
+      }
+    ]
+  },
+  "disk_available_bytes": 29733261312,
+  "memory_bytes": {
+    "MemTotal": 15744561152,
+    "MemAvailable": 15010357248
+  },
+  "port_conflicts": false,
+  "soa": {
+    "udp": {
+      "authoritative": true,
+      "rcode": 0,
+      "serial": 32,
+      "ttl": 60,
+      "answer_bytes": 110
+    },
+    "tcp": {
+      "authoritative": true,
+      "rcode": 0,
+      "serial": 32,
+      "ttl": 60,
+      "answer_bytes": 110
+    }
+  },
+  "compose_available": false,
+  "compose_version": "",
+  "docker_version": "29.1.3"
+}

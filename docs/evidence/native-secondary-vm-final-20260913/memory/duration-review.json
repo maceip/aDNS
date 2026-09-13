@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "only_change": "maximum allowed duration1250 to1380 and matching CLI error message",
+  "previous_source_sha256": "ed3356bf84446da95aac728481797f31fecd755b9ac427e2c5ea3f009ab25daa",
+  "current_source_sha256": "6bb1803905af34968bd3c5cd489ba2275dda1ac575649bc5dc15790037fa461e",
+  "real_30_second_smoke_attributed_to_previous_source": true
+}

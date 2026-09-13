@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "cases": {
+    "disabled": {
+      "passed": true,
+      "records": 0
+    },
+    "unsampled": {
+      "passed": true,
+      "records": 0
+    },
+    "rejected": {
+      "passed": true,
+      "records": 1
+    },
+    "invalid": {
+      "passed": true,
+      "records": 1
+    },
+    "abandoned": {
+      "passed": true,
+      "records": 1
+    },
+    "receipt-error": {
+      "passed": true,
+      "records": 5
+    },
+    "committed-error": {
+      "passed": true,
+      "records": 4
+    },
+    "bad-parent": {
+      "passed": true,
+      "records": 2
+    },
+    "overflow": {
+      "passed": true,
+      "records": 2
+    },
+    "malformed": {
+      "passed": true,
+      "records": 4
+    },
+    "valid": {
+      "passed": true,
+      "records": 6
+    },
+    "pressure": {
+      "passed": true,
+      "records": 66
+    },
+    "dead-consumer": {
+      "passed": true,
+      "requests": 10000,
+      "concurrent_producers": 4,
+      "request_loop_seconds": 0.015879,
+      "reported_dropped_batches": 9872,
+      "total_seconds": 0.03454241399958846
+    },
+    "stalled-consumer": {
+      "passed": true,
+      "requests": 10000,
+      "request_loop_seconds": 0.0115496,
+      "reported_dropped_batches": 9872,
+      "total_seconds": 6.306980581999596
+    }
+  }
+}
+[0/2] Re-checking globbed directories...
+[1/2] Building CXX object CMakeFiles/agentdns.dir/telemetry.cpp.o
+[2/2] Linking CXX executable agentdns
+6ba239f1dba3bc7f027b0857501c834b8049e5f6cf34f70844bbf2425299032f  /build/agentdns

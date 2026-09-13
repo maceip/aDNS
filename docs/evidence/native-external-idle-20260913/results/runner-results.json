@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "started_unix_seconds": 1789288403.557139,
+  "ended_unix_seconds": 1789289671.521415,
+  "status_observation": {
+    "samples": 115,
+    "failures": 0,
+    "elapsed_seconds": 1250.9010947039997,
+    "observed_serials": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "all_samples_committed_unexpired": true
+  },
+  "dnssec_observation": {
+    "source": "independent-public-BIND-DNSSEC-probes",
+    "server": "20.166.33.141",
+    "port": 53,
+    "elapsed_seconds": 1267.4548004130002,
+    "observed_serials": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "external_validations": 84,
+    "crossed_initial_signature_expiration": true,
+    "all_samples_passed": true,
+    "proof_limit": "CCF transaction provenance, leases and hardware require separate evidence; this verifier sends no mutations."
+  },
+  "fixed_load": {
+    "server": "20.166.33.141",
+    "port": 53,
+    "dnssec_ok_bit": true,
+    "offered_load_qps": 1000,
+    "offered_sample_qps": 10,
+    "started_unix_seconds": 1789288403.8701122,
+    "ended_unix_seconds": 1789289604.3706431,
+    "elapsed_seconds": 1200.5005318719996,
+    "samples": 11985,
+    "failed_samples": 15,
+    "p50_ms": 152.115665,
+    "p99_ms": 220.194206,
+    "maximum_ms": 230.841123,
+    "dnsperf": {
+      "queries_sent": 1199461,
+      "queries_completed": 1192214,
+      "queries_lost": 7247,
+      "completed_qps": 993.38948
+    },
+    "sampling": {
+      "planned_samples": 12000,
+      "maximum_inflight_samples": 22,
+      "started_unix_seconds": 1789288403.870945,
+      "ended_unix_seconds": 1789289603.9258883,
+      "sampling_window_seconds": 1200,
+      "attempted_samples": 12000,
+      "missed_samples": 0,
+      "achieved_sample_qps": 10.0
+    },
+    "load_maximum_outstanding_queries": 2000,
+    "query_timeout_seconds": 2,
+    "boundary": "Public DNS only; no registration or governance mutations. External idle delv validates signatures separately. This is a fixed offered load, not maximum capacity."
+  },
+  "metrics_boundary": "Frontend WAN timing includes network and client overhead. Azure resource memory and signing spans are collected separately; no RSS or signing duration is inferred here.",
+  "cleanup_failures": [],
+  "public_input_integrity": {
+    "status": "passed",
+    "checked_unix_seconds": 1789289671.580533,
+    "expected_source_files": 2,
+    "verified_source_files": 2,
+    "post_execution_sha256": {
+      "service_cert.pem": "50cb7ff11a90b5f317f9bcac82d37219bab33749ad780d66f4904ec75a12ee4e",
+      "trust-anchor.conf": "0523b9491e4caab4ff75282894746bb733fe78891e734f3cfb6ae8b2f2691566"
+    },
+    "failures": []
+  },
+  "source_integrity": {
+    "status": "passed",
+    "checked_unix_seconds": 1789289671.5819352,
+    "expected_source_files": 6,
+    "verified_source_files": 6,
+    "post_execution_sha256": {
+      "tests/rust-integration/run_native_idle.py": "fb465523ba1e7801344b052540c7a3d82393e752f966fcd83ec47111241a2ae6",
+      "tests/rust-integration/run_ccf.py": "e36bb7afe331e1a02cd7c75be5d8a4d1f06d354e92600b67a6be0165361db5c2",
+      "tests/rust-integration/monitor_remote.py": "50e43df191a6a2b578940be52189e1708691cc9a14788b02532a87897518759f",
+      "tests/rust-integration/benchmark_remote.py": "a91f7e173ec7f658e7b24856a2370c3c00c28aebd44b78e6513ab7690a16f201",
+      "ccf/tests/observe_status.py": "0b703a8dd2812e749770932f73abecdaf5c793cbe708b10044644fcc1dba5498",
+      "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+    },
+    "failures": []
+  }
+}

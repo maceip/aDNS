@@ -1,0 +1,18 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "deregister",
+    "parameters": {
+      "reason": "validation_lifecycle",
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "selected_ports": [],
+      "withdraw_all": true
+    },
+    "request_id": "native-withdraw-a-all-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhzpngg2y3jPR3tZxWoD5dfqUHhqKNBRfCMYQei_ZhCqyUTl7pfT4NWSkxhVORYTpCLJ7OPlP595nHS0aQmSEg",
+    "zone": "example.test."
+  },
+  "action_id": "a8e2d8fd98d74847fda785380a48bc9a8dc7636d95ddf1b0e2fbae0957fd1073",
+  "intent_hash": "a8e2d8fd98d74847fda785380a48bc9a8dc7636d95ddf1b0e2fbae0957fd1073"
+}

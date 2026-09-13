@@ -1,0 +1,46 @@
+[
+  {
+    "owner": "mail.example.test.",
+    "type": "A",
+    "rdata": [
+      "192.0.2.1"
+    ]
+  },
+  {
+    "owner": "mail.example.test.",
+    "type": "AAAA",
+    "rdata": [
+      "2001:db8::1"
+    ]
+  },
+  {
+    "owner": "example.test.",
+    "type": "MX",
+    "rdata": [
+      "10 mail.example.test."
+    ]
+  },
+  {
+    "owner": "_25._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  },
+  {
+    "owner": "_465._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  },
+  {
+    "owner": "_993._tcp.mail.example.test.",
+    "type": "TLSA",
+    "rdata": [
+      "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed"
+    ]
+  }
+]

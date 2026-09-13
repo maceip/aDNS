@@ -1,0 +1,226 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "agentdns-otel-smoke"
+            }
+          },
+          {
+            "key": "deployment.environment",
+            "value": {
+              "stringValue": "local-validation"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "agentdns"
+            }
+          },
+          {
+            "key": "service.instance.id",
+            "value": {
+              "stringValue": "collector-smoke"
+            }
+          },
+          {
+            "key": "password",
+            "value": {
+              "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee",
+            "version": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee",
+            "attributes": [
+              {
+                "key": "secret",
+                "value": {
+                  "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                }
+              }
+            ]
+          },
+          "spans": [
+            {
+              "traceId": "b35c088c9c94f37127cb9d492aad3dec",
+              "spanId": "6b9e18dd3d69223e",
+              "name": "agentdns.otel.smoke",
+              "kind": 1,
+              "startTimeUnixNano": "1789292856000000000",
+              "endTimeUnixNano": "1789292857000000000",
+              "attributes": [
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                },
+                {
+                  "key": "evidence",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "nonce",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "authorization",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "http.route",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.queue.depth",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.work.kind",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "ccf.transaction_id",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.transfer.frames",
+                  "value": {
+                    "intValue": "10"
+                  }
+                },
+                {
+                  "key": "agentdns.committed",
+                  "value": {
+                    "boolValue": true
+                  }
+                }
+              ],
+              "status": {
+                "code": 1,
+                "message": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+              },
+              "traceState": "private=ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee",
+              "events": [
+                {
+                  "timeUnixNano": "1789292856000000000",
+                  "name": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                }
+              ]
+            },
+            {
+              "traceId": "908cc687fe642f32253b358b4061ffe9",
+              "spanId": "1e242f6ea42b0f26",
+              "name": "agentdns.otel.followup",
+              "kind": 1,
+              "startTimeUnixNano": "1789292856000000000",
+              "endTimeUnixNano": "1789292857000000000",
+              "attributes": [
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                },
+                {
+                  "key": "evidence",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "nonce",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "authorization",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "http.route",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.queue.depth",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.work.kind",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "ccf.transaction_id",
+                  "value": {
+                    "stringValue": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                  }
+                },
+                {
+                  "key": "agentdns.transfer.frames",
+                  "value": {
+                    "intValue": "10"
+                  }
+                },
+                {
+                  "key": "agentdns.committed",
+                  "value": {
+                    "boolValue": true
+                  }
+                }
+              ],
+              "status": {
+                "code": 1,
+                "message": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+              },
+              "traceState": "private=ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee",
+              "events": [
+                {
+                  "timeUnixNano": "1789292856000000000",
+                  "name": "ADNS_SCRUB_TEST_b872e35225ab2e7ee6b28eee"
+                }
+              ],
+              "links": [
+                {
+                  "traceId": "b35c088c9c94f37127cb9d492aad3dec",
+                  "spanId": "6b9e18dd3d69223e"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

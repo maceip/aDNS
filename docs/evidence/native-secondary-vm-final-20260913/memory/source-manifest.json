@@ -1,0 +1,12 @@
+{
+  "recorded_utc": "2026-09-13T08:33:15.441193+00:00",
+  "files": {
+    "management/start-memory.sh": "d403753d771d3bf99487eeb39bcda3811c2f98ea0ff9e4b22d26f50278aac56f",
+    "management/package-memory.sh": "7f9444c8dedf3321fd7b8ffd3d283bc1fc8dbf749e1c05f77f2753dfdfe3d820",
+    "management/collect-memory.py": "9c1751cab1df58e0e0258b393892630a404441761ab9a778bf11a006b95cba56",
+    "management/stage-observer-1380.sh": "286d0b10da8141321fa9e886f190755abcbdffd4db143837eca4369431fd7432",
+    "source/observe_native_bind.py": "6bb1803905af34968bd3c5cd489ba2275dda1ac575649bc5dc15790037fa461e",
+    "source/observe_native_bind-smoke.py": "ed3356bf84446da95aac728481797f31fecd755b9ac427e2c5ea3f009ab25daa"
+  },
+  "scope": "Local collector and management source bytes after accepted launch; actual in-container SHA independently returned in launch/staging results."
+}

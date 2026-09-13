@@ -1,0 +1,20 @@
+id 38218
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+example.test. IN MX
+;ANSWER
+example.test. 3600 IN MX 10 mail.example.test.
+example.test. 3600 IN RRSIG MX 14 2 3600 20260913090736 20260913085236 20222 example.test. rbSvCSzP5wD+zvyeriZFrWJePr9oJTJL gSJDNpQX/C2y3El0099qP4D74ZV5fgHq Ij1pZSPtI/4t+nEeNcUSgvuTe9tFgb5A afBo5wK8R+rPhXZhWAomdobVmEIGmZH6
+;AUTHORITY
+;ADDITIONAL
+mail.example.test. 300 IN A 192.0.2.1
+mail.example.test. 300 IN AAAA 2001:db8::1
+mail.example.test. 300 IN RRSIG A 14 3 300 20260913090736 20260913085236 20222 example.test. WLIf7aZ4c439qjTe9vWinsbgvcuu+dlU 4HYQb0UCzSi+nLTlUaipAm1kegPvv8Gy GbgRg9+hvGtTKA80maqJgQ3iQGB7niDY jMCqASAUVYMJdqntLWGgKwLTVxtcjFzb
+mail.example.test. 300 IN RRSIG AAAA 14 3 300 20260913090736 20260913085236 20222 example.test. Ag7kaW7rGIuvItM9Adp3W9OjCAfrbeJG 4faRh/rJ2NGkhXQEmrVJu2bwfNXLYQ5s s516hEmLeW2os0hDqhN2DbjreWcqqKoh 4HUwGS2dGX1yy6UYBOsw4Q5FUfOKri+p
+_25._tcp.mail.example.test. 300 IN RRSIG TLSA 14 5 300 20260913090736 20260913085236 20222 example.test. AnYssFBuRxv79ZZLh/DxU9ReGjk7yr9n G492HXvObzjQEW3RFxgYPHo0AUse6yun YHySfp7mb4E/gJe2SZ4TBf8NvLg6kfQh Z49VSR+ypfmmVmRKGKo594oZXQb9fTlU
+_25._tcp.mail.example.test. 300 IN TLSA 3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed

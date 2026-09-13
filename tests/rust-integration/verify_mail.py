@@ -16,6 +16,7 @@ for flavour in ['good','bad']:
     else:assert 'Untrusted TLS connection established' in output or 'Server certificate not trusted' in output,output
     results['postfix'][flavour]={'exit_code':p.returncode,'authenticated':flavour=='good','log':f'postfix-dane-{flavour}.log'}
 context=ssl.create_default_context(cafile=str(root/'ca.pem'))
+context.minimum_version=ssl.TLSVersion.TLSv1_2
 results['pkix']={}
 for port in [465,993]:
     with socket.create_connection(('127.0.0.1',port),5) as raw:

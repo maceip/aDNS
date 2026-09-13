@@ -1,0 +1,7 @@
+test_actual_distinct_public_keys_and_every_report_digest_byte (test_legacy_tls_binding.LegacyBindingTests.test_actual_distinct_public_keys_and_every_report_digest_byte) ... ok
+test_main_checks_actual_tls_value_against_authenticated_report (test_legacy_tls_binding.LegacyBindingTests.test_main_checks_actual_tls_value_against_authenticated_report) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+OK

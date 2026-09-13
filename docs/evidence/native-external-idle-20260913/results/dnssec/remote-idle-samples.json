@@ -1,0 +1,296 @@
+[
+  {
+    "unix_seconds": 1789288403,
+    "elapsed_seconds": 0.8277086120006061,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288434,
+    "elapsed_seconds": 31.645557278000524,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288465,
+    "elapsed_seconds": 62.54356645799999,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288496,
+    "elapsed_seconds": 93.35168084700035,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288527,
+    "elapsed_seconds": 124.21795344700058,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288558,
+    "elapsed_seconds": 155.14166291900074,
+    "serial": 14,
+    "soa_signature_expiration": 1789288838,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288588,
+    "elapsed_seconds": 186.07567838500017,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288619,
+    "elapsed_seconds": 217.01767762200052,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288650,
+    "elapsed_seconds": 247.9451864120001,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288681,
+    "elapsed_seconds": 278.87451125700045,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288712,
+    "elapsed_seconds": 309.78172437100056,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288743,
+    "elapsed_seconds": 340.59465314800036,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288774,
+    "elapsed_seconds": 371.5012488749999,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288805,
+    "elapsed_seconds": 402.2986824870004,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288836,
+    "elapsed_seconds": 433.2175571030002,
+    "serial": 15,
+    "soa_signature_expiration": 1789289139,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288867,
+    "elapsed_seconds": 464.1516024170005,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288898,
+    "elapsed_seconds": 495.099692883,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288928,
+    "elapsed_seconds": 526.0151521320004,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288959,
+    "elapsed_seconds": 556.9505664140006,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789288990,
+    "elapsed_seconds": 587.7657046220002,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289021,
+    "elapsed_seconds": 618.6177048730005,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289052,
+    "elapsed_seconds": 649.5526971990002,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289083,
+    "elapsed_seconds": 680.4847117520003,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289114,
+    "elapsed_seconds": 711.4161873930007,
+    "serial": 16,
+    "soa_signature_expiration": 1789289439,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289145,
+    "elapsed_seconds": 742.3266819959999,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289176,
+    "elapsed_seconds": 773.1294650780001,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289206,
+    "elapsed_seconds": 804.0427109940001,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289237,
+    "elapsed_seconds": 834.8495531480003,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289268,
+    "elapsed_seconds": 865.7561586170004,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289299,
+    "elapsed_seconds": 896.5625336660005,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289330,
+    "elapsed_seconds": 927.4280018500003,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289361,
+    "elapsed_seconds": 958.3549251459999,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289392,
+    "elapsed_seconds": 989.2911841980003,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289423,
+    "elapsed_seconds": 1020.232726745,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289454,
+    "elapsed_seconds": 1051.1531541920003,
+    "serial": 17,
+    "soa_signature_expiration": 1789289739,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289485,
+    "elapsed_seconds": 1082.0606909860007,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289515,
+    "elapsed_seconds": 1112.880044566,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289546,
+    "elapsed_seconds": 1143.7746535840006,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289577,
+    "elapsed_seconds": 1174.5805739610005,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289608,
+    "elapsed_seconds": 1205.4927656870004,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289639,
+    "elapsed_seconds": 1236.4277582550003,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  },
+  {
+    "unix_seconds": 1789289670,
+    "elapsed_seconds": 1267.4548004130002,
+    "serial": 18,
+    "soa_signature_expiration": 1789290039,
+    "external_positive_and_negative_dnssec_validations": true
+  }
+]

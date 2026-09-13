@@ -1,0 +1,87 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "agentdns-otel-smoke"
+            }
+          },
+          {
+            "key": "deployment.environment",
+            "value": {
+              "stringValue": "native-backend-validation"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "agentdns"
+            }
+          },
+          {
+            "key": "service.instance.id",
+            "value": {
+              "stringValue": "vm-backend-smoke"
+            }
+          },
+          {
+            "key": "password",
+            "value": {
+              "stringValue": "private-canary-6f00f011cecbcaa6a661"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "private-canary-6f00f011cecbcaa6a661"
+          },
+          "spans": [
+            {
+              "traceId": "9c11667c743d450cd4abed734436dc3a",
+              "spanId": "9843e8e4fc3afe53",
+              "name": "agentdns.otel.smoke",
+              "kind": 1,
+              "startTimeUnixNano": "1789294148248026355",
+              "endTimeUnixNano": "1789294148249026355",
+              "attributes": [
+                {
+                  "key": "evidence",
+                  "value": {
+                    "stringValue": "private-canary-6f00f011cecbcaa6a661"
+                  }
+                },
+                {
+                  "key": "authorization",
+                  "value": {
+                    "stringValue": "private-canary-6f00f011cecbcaa6a661"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {
+                "code": 1,
+                "message": "private-canary-6f00f011cecbcaa6a661"
+              },
+              "events": [
+                {
+                  "timeUnixNano": "1789294148248026355",
+                  "name": "private-canary-6f00f011cecbcaa6a661"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

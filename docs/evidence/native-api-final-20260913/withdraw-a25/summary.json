@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "operation": "deregister",
+  "result": {
+    "active_ports": [
+      465,
+      993
+    ],
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+    "registration_status": "active",
+    "status": "committed",
+    "tx_id": "2.2587",
+    "zone_serial": 20
+  }
+}

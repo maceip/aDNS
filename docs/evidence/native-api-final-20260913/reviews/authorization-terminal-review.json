@@ -1,0 +1,93 @@
+{
+  "status": "passed",
+  "scope": "Independent offline fixed-P256/JCS/native-evidence/key/nonce binding, committed historical identity, contribution withdrawal, real-time expiry and authenticated fresh-key conflict. No live calls or mutations.",
+  "image_index_sha256": "c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "phases": {
+    "withdraw-a25": {
+      "transaction_id": "2.2587",
+      "zone_serial": 20,
+      "signed_message_digest": "91b98896e1c53ae73b2f3d4809d57e4e49ea684ca3e930a94e64ec29659dc9fc",
+      "request_id": "native-withdraw-a25-20260913",
+      "exact_historical_retry": true,
+      "source_guard": {
+        "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+        "started_unix_seconds": 1789289852.5074098,
+        "ended_unix_seconds": 1789289860.504798
+      }
+    },
+    "withdraw-a-all": {
+      "transaction_id": "2.2696",
+      "zone_serial": 21,
+      "signed_message_digest": "bb3519cd83cf45ba8f1388af91ace0295690fed3b970f622bb21a070de2000fd",
+      "request_id": "native-withdraw-a-all-20260913",
+      "exact_historical_retry": true,
+      "source_guard": {
+        "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+        "started_unix_seconds": 1789289938.733611,
+        "ended_unix_seconds": 1789289946.822009
+      }
+    },
+    "shorten-b": {
+      "transaction_id": "2.2886",
+      "zone_serial": 21,
+      "signed_message_digest": "ee113e1abf758eeca4974deb9d01d94d6269b50b73b665dea3c8c6e40900940d",
+      "request_id": "native-shorten-b-20260913",
+      "exact_historical_retry": true,
+      "source_guard": {
+        "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+        "started_unix_seconds": 1789290095.329518,
+        "ended_unix_seconds": 1789290104.2754838
+      }
+    }
+  },
+  "external_withdrawal": {
+    "a-port25-withdrawn-attempt1": {
+      "serial": 20,
+      "matched_unix_seconds": 1789289896.1805449,
+      "all_six_rrsets_exact_and_dnssec_validated": true
+    },
+    "a-withdrawn-attempt1": {
+      "serial": 21,
+      "matched_unix_seconds": 1789290013.3295698,
+      "all_six_rrsets_exact_and_dnssec_validated": true
+    },
+    "all-withdrawn-attempt1": {
+      "serial": 22,
+      "matched_unix_seconds": 1789290354.490018,
+      "all_six_rrsets_exact_and_dnssec_validated": true
+    }
+  },
+  "natural_expiry": {
+    "requested_total_duration_seconds": 2425,
+    "admitted_at": 1789287817,
+    "lease_expires_at": 1789290242,
+    "expired_registration_read_transaction_id": "2.3151",
+    "observed_unix_seconds": 1789290319.8919911,
+    "zone_serial": 22,
+    "real_wall_clock_expiry": true,
+    "committed_contributions_empty": true
+  },
+  "native_request_id_conflict": {
+    "http_status": 409,
+    "error": "REQUEST_ID_CONFLICT",
+    "new_spki_sha256": "5433484ea015af0033d25a63399000d460e4e38921498a3971a0d3886ed8f811",
+    "signed_message_digest": "879f29a19f3edf3a962d22a970283fc9239653f536da514b618ad35668f6e968",
+    "original_transaction_id": "2.143",
+    "governance_transaction_id": "2.3589",
+    "same_grant_request_and_fixed_action_except_key_evidence": true,
+    "fresh_native_appraisal_before_governance_and_signature": true,
+    "unchanged_original_result": true,
+    "unchanged_zone_serial": 23,
+    "source_guard": {
+      "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+      "started_unix_seconds": 1789290713.873708,
+      "ended_unix_seconds": 1789290725.884982
+    }
+  },
+  "limitations": [
+    "Read-only independent verification of saved actual API/DNS observations; no new native signatures, cloud writes or synthetic hardware evidence.",
+    "DNS proof is authoritative stock-frontend state, not forced recursive-cache eviction before prior TTL expiry.",
+    "Earlier registration/lifecycle review files remain unchanged; this is a distinct terminal review."
+  ]
+}

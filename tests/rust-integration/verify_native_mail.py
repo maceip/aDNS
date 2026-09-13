@@ -191,6 +191,9 @@ def main():
         raise ValueError('controlled trust certificate does not contain the independently appraised key')
     digest = hashlib.sha256(spki).digest()
     context = ssl.create_default_context(cafile=str(args.certificate))
+    context.minimum_version = ssl.TLSVersion.TLSv1_2
+    untrusted_context = ssl.create_default_context()
+    untrusted_context.minimum_version = ssl.TLSVersion.TLSv1_2
     results = {'recorded_at': int(time.time()), 'dns_server': args.dns_server, 'dns_port': args.dns_port,
         'service_host': args.service_host, 'mailbox_domain': args.mailbox_domain, 'expected_spki_sha256': digest.hex(),
         'input_certificate_der_sha256': hashlib.sha256(certificate.public_bytes(serialization.Encoding.DER)).hexdigest(),
@@ -266,7 +269,7 @@ zone "{args.zone}" {{ type forward; forward only; forwarders {{ {args.dns_server
                                 raise AssertionError('implicit TLS peer presents a different key')
                             results['pkix'][str(port)] = {'controlled_trust_verified': True, 'peer_spki_matches_native_input_and_dnssec_tlsa': True, 'tls_version': peer.version()}
                     for label, trust, name in [('wrong_hostname', context, 'wrong.invalid'),
-                            ('untrusted', ssl.create_default_context(), args.service_host.rstrip('.'))]:
+                            ('untrusted', untrusted_context, args.service_host.rstrip('.'))]:
                         try:
                             with socket.create_connection((args.connection_address, port), 5) as raw:
                                 with trust.wrap_socket(raw, server_hostname=name):

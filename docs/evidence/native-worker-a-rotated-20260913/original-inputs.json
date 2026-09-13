@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-09-13T08:45:48.547947+00:00",
+  "purpose": "unchanged original A evidence, grant, joint policy and deployment inputs; hashes only for runtime private parameters",
+  "files": {
+    ".validation/azure/native-final-20260913/workers/a/capture.json": "0b7998aff50dd43bda617983878cafe08b02a9dcf82472ebdb41003187f1fef5",
+    ".validation/azure/native-final-20260913/workers/a/spki.der": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+    ".validation/azure/native-final-20260913/workers/a/evidence.cose": "d830de4a2c3af8da9f48e8c2e77083582191b24fe64cb09dd4849edc939f6222",
+    ".validation/azure/native-final-20260913/workers/a/peer.der": "88fd081fbdae51fd1ee459afd7de7d976c14990d3448b33084946bd216de906f",
+    ".validation/azure/native-final-20260913/workers/a/action.json": "ef5efd181b0e33f649ea9446207be939e53797f8cd1d18bf6d72409c5edfa4cf",
+    ".validation/azure/native-final-20260913/workers/joint-workload-policy.json": "cfecf50c64addfb5432d7f9c73bb31a920997a8bdab224737010120030b33824",
+    ".validation/azure/native-final-20260913/primary/grant-a.json": "3e88630f64c85bf70c40c0c4039cf8661617798a8712a5c208cbf4bf85aa7f44",
+    ".validation/azure/capture-deadline.template.json": "b62c1d938ec648f76eea0057aab19fce627200402c4ff4c65d85f5de21225d68",
+    ".validation/azure/capture.parameters.json": "ade5b2fa71b6a5939a75213833c458e304b7e444a4f0107fbbc4a58ec18ccf71"
+  }
+}
