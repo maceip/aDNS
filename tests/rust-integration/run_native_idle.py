@@ -19,8 +19,31 @@ import uuid
 REPOSITORY = Path(__file__).resolve().parents[2]
 VALIDATOR = 'sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615'
 FILES = ('tests/rust-integration/run_native_idle.py','tests/rust-integration/run_ccf.py',
+    'tests/rust-integration/export_ccf_results.py',
     'tests/rust-integration/monitor_remote.py','tests/rust-integration/benchmark_remote.py',
     'ccf/tests/observe_status.py','tools/http_limits.py')
+
+
+def load_frozen_guard(source):
+    """Resolve the guard's direct dependency from this snapshot, even if cached."""
+    missing = object()
+    previous = sys.modules.get('export_ccf_results', missing)
+    try:
+        exporter_spec = importlib.util.spec_from_file_location('export_ccf_results',
+            source/'tests/rust-integration/export_ccf_results.py')
+        exporter = importlib.util.module_from_spec(exporter_spec)
+        exporter_spec.loader.exec_module(exporter)
+        sys.modules['export_ccf_results'] = exporter
+        spec = importlib.util.spec_from_file_location('frozen_runner',
+            source/'tests/rust-integration/run_ccf.py')
+        guard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(guard)
+        return guard
+    finally:
+        if previous is missing:
+            sys.modules.pop('export_ccf_results', None)
+        else:
+            sys.modules['export_ccf_results'] = previous
 
 
 def main():
@@ -51,8 +74,7 @@ def main():
         public_hashes[name] = hashlib.sha256(data).hexdigest()
     # Disable host bytecode creation before importing the frozen inventory guard.
     sys.dont_write_bytecode = True
-    spec = importlib.util.spec_from_file_location('frozen_runner',source/'tests/rust-integration/run_ccf.py')
-    guard = importlib.util.module_from_spec(spec);spec.loader.exec_module(guard)
+    guard = load_frozen_guard(source)
     stem = 'agentdns-native-observer-'+uuid.uuid4().hex[:12]
     started, started_unix = time.monotonic(),time.time()
     provenance = {'kind':'external native deployment observation; hardware evidence supplied separately',

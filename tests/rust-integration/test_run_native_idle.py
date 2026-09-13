@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -21,6 +22,26 @@ class Process:
 
 
 class NativeIdleGuards(unittest.TestCase):
+    def test_guard_import_uses_complete_frozen_snapshot_despite_cached_exporter(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root/'source'
+            for name in runner.FILES:
+                destination = source/name
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((runner.REPOSITORY/name).read_bytes())
+            poisoned = types.ModuleType('export_ccf_results')
+            poisoned.read_public_artifact = mock.Mock(side_effect=AssertionError('live exporter used'))
+            public = root/'public';public.mkdir();(public/'example.json').write_bytes(b'{"frozen":true}')
+            with mock.patch.dict(sys.modules, {'export_ccf_results': poisoned}):
+                guard = runner.load_frozen_guard(source)
+                self.assertIs(sys.modules['export_ccf_results'], poisoned)
+                self.assertEqual(guard.read_public_artifact(public,'example.json'), b'{"frozen":true}')
+                self.assertEqual(Path(guard.read_public_artifact.__code__.co_filename),
+                    source/'tests/rust-integration/export_ccf_results.py')
+                poisoned.read_public_artifact.assert_not_called()
+            self.assertIn('tests/rust-integration/export_ccf_results.py', runner.FILES)
+
     def test_result_waits_for_cleanup_and_source_integrity(self):
         for outcome in ('success','relative-output','observer-failure','source-tamper','public-tamper','public-extra'):
             with self.subTest(outcome=outcome),tempfile.TemporaryDirectory() as directory:
