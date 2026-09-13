@@ -1,0 +1,10 @@
+{
+  "named": {
+    "pid": 6,
+    "returncode": 1
+  },
+  "smtp": {
+    "pid": 7,
+    "returncode": null
+  }
+}

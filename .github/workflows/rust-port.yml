@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  merge_group:
+  schedule:
+    - cron: "0 0 * * 0"
 
 permissions:
   contents: read
@@ -19,13 +22,15 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: Install tested compiler and Python test dependencies
         run: |
           rustup toolchain install 1.95.0 --profile minimal --component rustfmt,clippy
           rustup toolchain install 1.85.1 --profile minimal
           rustup override set 1.95.0
           sudo apt-get update
-          sudo apt-get install -y python3-cbor2 python3-cryptography python3-dnspython libssl-dev pkg-config bind9-utils
+          sudo apt-get install -y python3-cbor2 python3-cryptography python3-dnspython python3-yaml libssl-dev pkg-config bind9-utils
       - name: Safe Rust and cryptographic checks
         run: |
           cargo +1.85.1 check --locked --workspace --all-targets
@@ -51,6 +56,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: Build the pinned CCF SDK and Rust application
         run: |
           docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
@@ -68,13 +75,16 @@ jobs:
         with:
           name: ccf-consensus-public-log
           path: .validation/ci-public/ccf-*.log
-          if-no-files-found: ignore
+          include-hidden-files: false
+          if-no-files-found: error
 
   secondary-and-mail:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: Install tested compiler
         run: |
           rustup toolchain install 1.95.0 --profile minimal
@@ -101,13 +111,23 @@ jobs:
             .validation/integration/run-*/delv-*.log
             .validation/integration/run-*/ldns-verify-zone.log
             .validation/integration/run-*/postfix-dane-*.log
-          if-no-files-found: ignore
+            .validation/integration/run-*/failure.json
+            .validation/integration/run-*/container-state.json
+            .validation/integration/run-*/container-children.json
+            .validation/integration/run-*/diagnostics-error.json
+            .validation/integration/run-*/cleanup-error.json
+            .validation/integration/run-*/bind-secondary.log
+            .validation/integration/run-*/bind-resolver.log
+          include-hidden-files: false
+          if-no-files-found: error
 
   ccf-secondary:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: Build CCF primary, stock secondary and independent validators
         run: |
           docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
@@ -137,4 +157,5 @@ jobs:
         with:
           name: ccf-secondary-public-results
           path: .validation/ci-ccf-public/
-          if-no-files-found: ignore
+          include-hidden-files: false
+          if-no-files-found: error

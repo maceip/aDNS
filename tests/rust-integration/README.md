@@ -12,6 +12,18 @@ The runner builds the local validation images and debug runtime, creates a fresh
 
 The runner stops its runtime and removes its own container on completion or failure. The output directory is retained for diagnosis and contains private test keys. Do not publish it wholesale.
 
+BIND uses container-local mode-0700 working/configuration directories. This is
+necessary on Linux: named drops filesystem capabilities and cannot traverse a
+GitHub runner's uid-1001-owned mode-0700 bind mount. Only its test TSIG include is
+copied into that private workspace; the host directory and key permissions stay
+unchanged. The wrapper waits for actual listeners, reports child exits as failures,
+and the runner captures selected container state plus private raw logs before
+cleanup. Creation attempts are tracked before calling Docker and cleanup checks
+the run's ownership label before removal. All monitors and the host runtime are
+stopped even if another cleanup step fails. A cleanup failure prevents a passing
+result; an existing validation error keeps its original exception. Exit 137 from
+a `docker exec` alone does not establish an OOM.
+
 ## What the suite verifies
 
 - A 250+ base-record zone produces multiple AXFR messages. `dnspython` independently validates the request/response TSIG chain for every message, and unauthenticated/wrong-key requests must fail.
@@ -30,7 +42,8 @@ Only publish these explicit result files and logs after inspection:
 
 - `initial-results.json`, `ixfr-results.json`, `mail-results.json`, `performance-results.json`, `performance-under-load.json`, `idle-results.json`, `frontend-idle-results.json`, and `acceptance-results.json`.
 - `idle-samples.json`, `frontend-idle-samples.json`, `fixture-summary.json`.
+- `failure.json`, `container-state.json`, `container-children.json`, `diagnostics-error.json`, `cleanup-error.json` contain only selected status/error metadata.
 - `ldns-verify-zone.log`, `delv-*.log`, `postfix-dane-*.log`, `dnsperf*.log`, and the BIND logs.
 - `transferred.zone` and `trusted.key` contain DNS public material; their signatures naturally expire and are retained only as evidence of the recorded run.
 
-Do not publish `*.key` (except the public `trusted.key`), `bind-key.conf`, `config.json`, `state.sealed`, certificate-signing artifacts, or directories through a wildcard copy.
+Do not publish `*.key` (except the public `trusted.key`), `bind-key.conf`, `config.json`, `state.sealed`, `*.private.log`, certificate-signing artifacts, or directories through a wildcard copy.

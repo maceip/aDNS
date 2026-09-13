@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "scope": "actual stock BIND/validators/mail in Linux private uid1001-owned0700 volume; host runtime development MemoryStorage",
+  "checks": [
+    {
+      "script": "verify_initial.py",
+      "returncode": 0
+    },
+    {
+      "script": "verify_mail.py",
+      "returncode": 0
+    },
+    {
+      "script": "verify_ixfr.py",
+      "returncode": 0
+    }
+  ],
+  "container_image": "d8d7bf05b414854e04b0e6a3353aa89ee34bd234c021c7025f25f0013c01ecd0"
+}

@@ -1,0 +1,32 @@
+{
+  "status": "focused_checks_passed",
+  "original_commit": "24aa271518106e66c864287022032e3fa9c753c4",
+  "original_ci_job": "https://github.com/maceip/agentdns/actions/runs/34748423716/job/103700546631",
+  "original_job_log_sha256": "8ef092db3be3dd9c63a22cba5d0daec4978bf7de6813266df323b3d303f7d9af",
+  "root_cause": "named drops filesystem capabilities and cannot traverse uid1001-owned0700 Linux /work; supervisor formerly exited0 after named exit1, killing concurrent dockerexec with137. OOMKilled=false in reproduction.",
+  "reproduction": "Stock local Docker BIND image, fresh Linux volume copied from prepared fixture; chown-R1001:1001 and chmod0700 /work. Original startup fails within1second. Fixed startup keeps host permissions and uses private container-local BIND files.",
+  "tests": [
+    "8 private-workspace/readiness/diagnostic/ownership/creation/cleanup unit tests",
+    "3 workflow trust/artifact/language policy tests",
+    "actionlint1.7.12 all workflows passed",
+    "Actual fixed Linux-volume multi-message TSIG/ldns/delv/mail DANE/PKIX/IXFR passed",
+    "Deliberately invalid named config yields named exit1 and PID1exit1, OOMKilledfalse, recordedchildstate"
+  ],
+  "actionlint_archive_sha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+  "source_sha256": {
+    ".github/workflows/rust-port.yml": "3bfe5625873d57f20523b355e0a7b2c15d6ca786245c45457f823fdace1df779",
+    ".github/workflows/codeql-analysis.yml": "830b554a363c3c5315f26af86c84eb8ad8aa667305b19a84fd754d7529eba4f0",
+    "tests/rust-integration/bind_workspace.py": "8ae5017cd8a8197dfce55317683203c1b4c536427cf27c5319a729b8ac7d3ee1",
+    "tests/rust-integration/inside-start.py": "785d17a69dca9fab552287bf340ac1ec98e62d483e3c926a8f75bdc3daae9468",
+    "tests/rust-integration/run.py": "4ff227836d5572e00c974ec5eaec799116bbf9685218ee1ac7aaf023140703a4",
+    "tests/rust-integration/verify_initial.py": "5badceb8ea8b60adae8f5daf71f9841f77ebd85e8cc76726ca930fcec961fc52",
+    "tests/rust-integration/test_bind_workspace.py": "0b54ae36497f4c5d43ddf846df4fe2752b29ae1d76fbab0782c72d77b5bfd722",
+    "tools/tests/test_ci_workflows.py": "229754276a0024c8b70655b568591cb58a4936da4e97e5bdd9113908d0fcdaf7"
+  },
+  "limitations": [
+    "Local Linux Docker volume reproduces GitHub UID/mode semantics; this focused check does not claim the replacement GitHub1250second job completed.",
+    "The old consensus job successfully uploaded3 explicit .validation logpaths with hidden exclusion; hidden directories were not the cause of the failed secondary job.",
+    "CodeQL configuration and official query-suite support verified; its remote analysis must run after push.",
+    "No production runtime image or live native acceptance inputs were changed."
+  ]
+}

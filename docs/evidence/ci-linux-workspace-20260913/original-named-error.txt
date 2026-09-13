@@ -1,0 +1,3 @@
+13-Sep-2026 08:58:21.173 open: /work/named-secondary.conf: permission denied
+13-Sep-2026 08:58:21.173 loading configuration: permission denied
+13-Sep-2026 08:58:21.173 exiting (due to fatal error)

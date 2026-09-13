@@ -2,6 +2,7 @@
 """Independent dnspython AXFR and BIND-delv/ldns validation, then DANE setup."""
 import base64,json,pathlib,socket,subprocess,time
 import dns.dnssec,dns.flags,dns.message,dns.query,dns.rdatatype,dns.tsigkeyring,dns.zone
+from bind_workspace import workspace,launch
 root=pathlib.Path('/work');master=(root/'container-ready').read_text().strip() if (root/'container-ready').exists() else socket.gethostbyname('host.docker.internal');origin='example.test.'
 keyname='agentdns-transfer.';keyring=dns.tsigkeyring.from_text({keyname:base64.b64encode((root/'tsig.key').read_bytes()).decode()})
 messages=list(dns.query.xfr(master,origin,port=18535,keyring=keyring,keyname=keyname,keyalgorithm='hmac-sha256',timeout=10,lifetime=30,relativize=False))
@@ -42,15 +43,14 @@ for name,kind in [('example.test.','SOA'),('mail-good.example.test.','A'),('abse
     assert check.returncode==0 and ('fully validated' in check.stdout or 'negative response, fully validated' in check.stdout),check.stdout+check.stderr
 result['external_dnssec_validated']=True
 # Local validating recursive resolver allows Postfix to enforce DNSSEC DANE.
-(root/'bind-resolver').mkdir(exist_ok=True)
-(root/'named-resolver.conf').write_text(f'''
+resolver=workspace('resolver')
+configuration=f'''
 {anchor}
-options {{ directory "/work/bind-resolver"; listen-on port 53 {{ 127.0.0.1; }}; listen-on-v6 {{ none; }}; recursion yes; allow-recursion {{ 127.0.0.1; }}; dnssec-validation yes; empty-zones-enable no; pid-file "/work/named-resolver.pid"; session-keyfile "/work/bind-resolver/session.key"; }};
+options {{ directory "{resolver}"; listen-on port 53 {{ 127.0.0.1; }}; listen-on-v6 {{ none; }}; recursion yes; allow-recursion {{ 127.0.0.1; }}; dnssec-validation yes; empty-zones-enable no; pid-file "{resolver}/named.pid"; session-keyfile "{resolver}/session.key"; }};
 controls {{ }};
 zone "example.test" {{ type forward; forward only; forwarders {{ 127.0.0.1 port 1053; }}; }};
-''')
-log=open(root/'bind-resolver.log','ab',buffering=0)
-subprocess.Popen(['named','-g','-n','1','-c',str(root/'named-resolver.conf')],stdout=log,stderr=log,start_new_session=True)
+'''
+launch(root,resolver,'resolver',configuration,detached=True)
 for _ in range(50):
     try:
         response=dns.query.udp(dns.message.make_query(origin,'SOA',want_dnssec=True),'127.0.0.1',timeout=1)
