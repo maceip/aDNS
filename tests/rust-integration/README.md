@@ -24,6 +24,18 @@ stopped even if another cleanup step fails. A cleanup failure prevents a passing
 result; an existing validation error keeps its original exception. Exit 137 from
 a `docker exec` alone does not establish an OOM.
 
+The separate `run_ccf.py` runner also preserves numeric Linux ownership. Its
+transient Python helpers and monitors run as the invoking UID/GID, so private
+mode-0700 result directories remain readable by the host summary and public
+exporter. The CCF node, secondary, driver and private state volume retain their
+existing identities. Summary/export reads are bounded and reject symlinks and
+unusual files; unreadable evidence fails the run instead of being skipped. CI
+exercises the former root-output/UID1001 permission failure and the corrected
+export path in an isolated Linux container before the long CCF/BIND window.
+State-volume creation is tracked before calling Docker, including a client
+timeout after creation. Cleanup inspects the unique run ownership label and
+never removes an existing or differently owned volume.
+
 ## What the suite verifies
 
 - A 250+ base-record zone produces multiple AXFR messages. `dnspython` independently validates the request/response TSIG chain for every message, and unauthenticated/wrong-key requests must fail.

@@ -17,6 +17,8 @@ import tempfile
 import time
 import uuid
 
+from export_ccf_results import read_public_artifact
+
 REPOSITORY = Path(__file__).resolve().parents[2]
 SOURCES = (
     'tests/rust-integration/run_ccf.py',
@@ -47,6 +49,60 @@ def output(arguments, *, timeout=60):
 
 def image_id(reference):
     return json.loads(output(['docker', 'image', 'inspect', reference]))[0]['Id']
+
+
+def helper_identity():
+    # Linux bind mounts retain numeric ownership. A root helper's private 0700
+    # output is unreadable to the hosted runner; do not widen its permissions.
+    return ['--user', f'{os.getuid()}:{os.getgid()}']
+
+
+def result_json(results, name, *, expected_type=dict):
+    value = json.loads(read_public_artifact(results, name, max_bytes=8*1024*1024))
+    if not isinstance(value, expected_type):
+        raise ValueError('result has an unexpected JSON shape: '+name)
+    return value
+
+
+class OwnedVolume:
+    """Track even uncertain Docker creation without removing another run's data."""
+    label = 'agentdns.acceptance.run'
+
+    def __init__(self, name, owner):
+        self.name, self.owner, self.attempted = name, owner, False
+
+    def labels(self):
+        response = execute(['docker', 'volume', 'inspect', '--format', '{{json .Labels}}', self.name],
+                           check=False, capture_output=True, text=True)
+        if response.returncode:
+            if 'no such volume' in response.stderr.lower():
+                return None
+            raise RuntimeError('owned volume inspection failed')
+        value = json.loads(response.stdout)
+        if value is not None and not isinstance(value, dict):
+            raise ValueError('unexpected volume ownership metadata')
+        return value or {}
+
+    def create(self):
+        if self.labels() is not None:
+            raise RuntimeError('refusing to reuse an existing state volume')
+        self.attempted = True
+        execute(['docker', 'volume', 'create', '--label', self.label+'='+self.owner, self.name],
+                stdout=subprocess.DEVNULL)
+        if (self.labels() or {}).get(self.label) != self.owner:
+            raise RuntimeError('state volume ownership was not established')
+
+    def remove(self):
+        if not self.attempted:
+            return
+        labels = self.labels()
+        if labels is None:
+            return
+        if labels.get(self.label) != self.owner:
+            raise RuntimeError('refusing to remove a state volume owned by another run')
+        response = execute(['docker', 'volume', 'rm', self.name], check=False, capture_output=True)
+        if response.returncode:
+            raise RuntimeError('owned state volume removal failed')
 
 
 def snapshot_sources(destination):
@@ -170,8 +226,9 @@ def main():
     stem = 'agentdns-ccf-runner-'+uuid.uuid4().hex[:12]
     node, secondary, driver = stem+'-node', stem+'-bind', stem+'-driver'
     volume = stem+'-state'
+    owned_volume = OwnedVolume(volume, stem)
     containers, monitors = [], []
-    volume_created, succeeded = False, False
+    succeeded = False
     provenance = None
     started = time.time()
 
@@ -180,7 +237,7 @@ def main():
         # out; cleanup can remove them rather than leaving a detached operation.
         name = stem+'-helper-'+uuid.uuid4().hex[:8]
         containers.append(name)
-        options = ['docker', 'run', '--rm', '--name', name]
+        options = ['docker', 'run', '--rm', '--name', name, *helper_identity()]
         if image in (images['ccf'], images['toolchain']):
             options += ['--platform', 'linux/amd64']
         if network:
@@ -234,12 +291,12 @@ def main():
             'started_unix_seconds':started, 'requested_observation_seconds':args.seconds, 'public_host_ports':[],
             'ccf_and_bind_shared_network_namespace':True, 'driver_private_keys_or_tsig_access':False,
             'stock_validator_separate_bridge_container':True,
+            'helper_numeric_identity':f'{os.getuid()}:{os.getgid()}',
             'service_identity_source':'public certificate copied from controlled immutable local image; no SNP identity claim'}
         (results/'provenance.json').write_text(json.dumps(provenance, indent=2)+'\n')
         invoke(images['toolchain'], ['/src/tools/prepare_aci_control.py', '/work/control',
             '--constitution-sha256', constitution_digest], access='control')
-        execute(['docker', 'volume', 'create', volume], stdout=subprocess.DEVNULL)
-        volume_created = True
+        owned_volume.create()
         containers.append(node)
         execute(['docker', 'run', '-d', '--platform', 'linux/amd64', '--name', node,
             '-e', 'CCF_PLATFORM_OVERRIDE=Virtual', '-v', str(work/'control/public')+':/config:ro',
@@ -282,7 +339,7 @@ def main():
                 '--anchor', '/work/results/trust-anchor.conf', '--trusted-key', '/work/results/trusted-dnskey.txt',
                 '--output', '/work/results/'+label], access='transfer')
             (results/(label+'-phase.log')).write_text(result.stdout+result.stderr)
-            report = json.loads((results/label/'results.json').read_text())
+            report = result_json(results, label+'/results.json')
             if report['transfer_messages'] < 2:
                 raise AssertionError('multi-message TSIG transfer was not exercised')
         verify('initial-transfer')
@@ -290,7 +347,7 @@ def main():
         def monitor(label, command, network=None, pid_container=None):
             name = stem+'-'+label
             containers.append(name)
-            arguments = ['docker', 'run', '--rm', '--name', name]
+            arguments = ['docker', 'run', '--rm', '--name', name, *helper_identity()]
             if network:
                 arguments += ['--network', network]
             if pid_container:
@@ -375,17 +432,17 @@ def main():
             'platform':'Virtual; no native appraisal or service registration', 'observation_seconds':args.seconds,
             'total_elapsed_seconds':time.time()-started, 'images':images,
             'independent_receipt_and_multimessage_tsig_dnssec_verified':True,
-            'committed_status':json.loads((results/'status/status-results.json').read_text()),
-            'operator':json.loads((results/'operator/summary.json').read_text()),
-            'operator_frontend':json.loads((results/'operator-frontend/results.json').read_text()),
-            'reconciliation':json.loads((results/'reconciliation/summary.json').read_text()),
-            'reconciliation_frontend':json.loads((results/'reconciliation-frontend/results.json').read_text()),
-            'tsig_rotation':{stage:json.loads((results/f'rotation/{stage}/results.json').read_text()) for stage in ('before', 'after')},
+            'committed_status':result_json(results, 'status/status-results.json'),
+            'operator':result_json(results, 'operator/summary.json'),
+            'operator_frontend':result_json(results, 'operator-frontend/results.json', expected_type=list),
+            'reconciliation':result_json(results, 'reconciliation/summary.json'),
+            'reconciliation_frontend':result_json(results, 'reconciliation-frontend/results.json'),
+            'tsig_rotation':{stage:result_json(results, f'rotation/{stage}/results.json') for stage in ('before', 'after')},
             'output':str(results)}
         if args.seconds >= 1200:
-            summary['frontend'] = json.loads((results/'frontend/remote-idle-results.json').read_text())
-            summary['performance'] = json.loads((results/'load/results.json').read_text())
-            summary['process_memory'] = {label:json.loads((results/f'memory/{label}-results.json').read_text())
+            summary['frontend'] = result_json(results, 'frontend/remote-idle-results.json')
+            summary['performance'] = result_json(results, 'load/results.json')
+            summary['process_memory'] = {label:result_json(results, f'memory/{label}-results.json')
                 for label in ('ccf-rss', 'bind-rss')}
         succeeded = True
     finally:
@@ -422,11 +479,9 @@ def main():
                     failures.append({'container':name, 'returncode':removed.returncode})
             except Exception as error:
                 failures.append({'container':name, 'error':type(error).__name__})
-        if volume_created:
+        if owned_volume.attempted:
             try:
-                removed = execute(['docker', 'volume', 'rm', volume], check=False, capture_output=True)
-                if removed.returncode != 0:
-                    failures.append({'volume':volume, 'returncode':removed.returncode})
+                owned_volume.remove()
             except Exception as error:
                 failures.append({'volume':volume, 'error':type(error).__name__})
         cleanup = {'owned_containers_and_state_volume_removed':not failures, 'failures':failures,

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Export only explicitly named public CCF-runner evidence; never private work."""
 import argparse
+import errno
 import hashlib
 import json
+import os
 from pathlib import Path
+import stat
 
 PUBLIC_FILES = (
     'runner-results.json', 'cleanup.json', 'provenance.json', 'source-integrity.json', 'service_cert.pem',
@@ -56,6 +59,45 @@ TRANSFER_FILES = ('results.json', 'transferred.zone', 'ldns-verify-zone.log',
                   'delv-example.test.TXT.log', 'delv-definitely-absent-agentdns.example.test.A.log')
 
 
+def read_public_artifact(root, name, *, max_bytes=64*1024*1024):
+    """Read a bounded ordinary file without following any result-path symlink.
+
+    Missing optional artifacts remain distinguishable from unreadable artifacts.
+    The latter must fail the run/export rather than conceal missing evidence.
+    """
+    relative = Path(name)
+    if relative.is_absolute() or not relative.parts or any(part in ('.', '..') for part in relative.parts):
+        raise ValueError('invalid public artifact path')
+    directories = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    descriptors = []
+    try:
+        descriptors.append(os.open(root, directories))
+        for part in relative.parts[:-1]:
+            descriptors.append(os.open(part, directories, dir_fd=descriptors[-1]))
+        descriptor = os.open(relative.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                             dir_fd=descriptors[-1])
+        with os.fdopen(descriptor, 'rb') as stream:
+            metadata = os.fstat(stream.fileno())
+            if not stat.S_ISREG(metadata.st_mode):
+                raise ValueError('result is not an ordinary public artifact: '+name)
+            if metadata.st_size > max_bytes:
+                raise ValueError('public artifact exceeds byte bound: '+name)
+            data = stream.read(max_bytes+1)
+            if len(data) > max_bytes:
+                raise ValueError('public artifact exceeds byte bound: '+name)
+    except OSError as error:
+        if error.errno in (errno.ELOOP, errno.ENOTDIR):
+            raise ValueError('result is not an ordinary public artifact: '+name) from error
+        raise
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+    if any(marker in data for marker in (b'-----BEGIN PRIVATE KEY-----',
+            b'-----BEGIN EC PRIVATE KEY-----', b'-----BEGIN RSA PRIVATE KEY-----')):
+        raise ValueError('private key marker in purported public artifact: '+name)
+    return data
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('results',type=Path)
@@ -70,22 +112,13 @@ def main():
     names.extend(f'{prefix}/{name}' for prefix in ('initial-transfer','final-idle-transfer') for name in TRANSFER_FILES)
     names.extend(f'operator/attempt-{attempt}-{kind}-response.json' for attempt in range(1,4) for kind in ('der','operator'))
     copied={}
-    root=args.results.resolve()
     for name in names:
-        source=args.results/name
-        if not source.exists():
+        try:
+            data=read_public_artifact(args.results,name)
+        except FileNotFoundError:
             continue
-        # Reject symlink escapes and unusual files; a public allowlist entry
-        # must be the actual ordinary result file under this exact directory.
-        if source.is_symlink() or source.resolve()!=root/name or not source.is_file():
-            raise ValueError('result is not an ordinary public artifact: '+name)
         destination=args.destination/name
         destination.parent.mkdir(parents=True,exist_ok=True)
-        if source.stat().st_size>64*1024*1024:
-            raise ValueError("public artifact exceeds64 MiB bound: "+name)
-        data=source.read_bytes()
-        if b'-----BEGIN PRIVATE KEY-----' in data or b'-----BEGIN EC PRIVATE KEY-----' in data or b'-----BEGIN RSA PRIVATE KEY-----' in data:
-            raise ValueError('private key marker in purported public artifact: '+name)
         destination.write_bytes(data)
         copied[name]=hashlib.sha256(data).hexdigest()
     if not copied:

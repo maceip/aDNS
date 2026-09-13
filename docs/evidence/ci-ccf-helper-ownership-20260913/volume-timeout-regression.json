@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "scenario": "actual Docker creates labeled volume; simulated client timeout after reply; tracked cleanup removes exact owned volume",
+  "volume": "agentdns-ci-volume-f0d7f17d0e4f",
+  "state_volume_removed": true
+}

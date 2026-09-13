@@ -30,7 +30,7 @@ jobs:
       matrix:
         language: [rust, cpp, python, javascript-typescript, actions]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Initialize current source analysis
@@ -43,3 +43,13 @@ jobs:
         uses: github/codeql-action/analyze@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4
         with:
           category: /language:${{ matrix.language }}
+          output: .validation/codeql-results
+      - name: Preserve analysis results when upload fails
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: codeql-${{ matrix.language }}-sarif
+          path: .validation/codeql-results/*.sarif
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 7

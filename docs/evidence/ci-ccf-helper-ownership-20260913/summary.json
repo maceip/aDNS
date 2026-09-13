@@ -1,0 +1,51 @@
+{
+  "status": "focused_and_short_checks_passed",
+  "original_commit": "24aa271518106e66c864287022032e3fa9c753c4",
+  "original_job": "https://github.com/maceip/agentdns/actions/runs/34748423716/job/103700546812",
+  "root_cause": "Container-root Python helpers created mode0700 output directories that Linux host UID1001 could not read during summary/export. Helpers now use the invoking numeric UID/GID; private permissions and input mounts are preserved.",
+  "linux_regression": {
+    "tests_passed": 13,
+    "kernel_boundary": "Actual Linux child UID1001 receives PermissionError from the exporter for root-owned0700 directory; same-UID producer exports only explicit public file while0700/0600 remain unchanged.",
+    "command": "docker run --rm --network none --platform linux/amd64 --user 0:0 --mount type=bind,src=$PWD,dst=/src,readonly --entrypoint python3 agentdns-ccf-toolchain:7.0.15 -m unittest discover -s /src/tests/rust-integration -p test_run_ccf.py -v",
+    "actual_ccf_pid1_rss_readable_by_uid1001": true
+  },
+  "additional_checks": [
+    "4 bounded public export tests",
+    "3 workflow policy tests",
+    "actionlint1.7.12",
+    "actual Docker volume create with simulated client timeout then label-checked cleanup"
+  ],
+  "short_run": {
+    "directory": ".validation/ccf-runs/run-m37hoh44",
+    "status": "passed",
+    "primary_image": "sha256:c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+    "platform": "Virtual local protocol test only",
+    "seconds_requested": 30,
+    "actual_elapsed_seconds": 395.7124421596527,
+    "public_exported_artifacts": 108,
+    "passed_phases": [
+      "authenticated BIND readiness",
+      "CCF status observation",
+      "receipt and full DNSSEC",
+      "multi-message TSIG transfer",
+      "signed operator mail policy",
+      "durable pending/failed/committed reconciliation",
+      "TSIG replacement and revocation",
+      "source integrity",
+      "cleanup"
+    ]
+  },
+  "source_sha256": {
+    ".github/workflows/rust-port.yml": "67c23858dba2bc30763586ef1499a1b338b13811384c30af3d92dafb9a220c94",
+    "tests/rust-integration/run_ccf.py": "6a766b4f0a99519a1ecc5a4405c741a86b7c4f0364c629e39d97bd7ba89daa16",
+    "tests/rust-integration/export_ccf_results.py": "dcdf4456c8a1650ccf2ec62d63f485665969ee43413eabfb5732c7cdf5a3f302",
+    "tests/rust-integration/test_run_ccf.py": "1783b5ce481db6605206d4b5b227b9427a0965bec3891ceee1b27ba3f4fde693",
+    "tests/rust-integration/test_export_ccf_results.py": "bde60ee07205e4b216c5fd3dfa4c63a295584ef61295237c931075d683b9ecaa",
+    "tests/rust-integration/README.md": "1135655d6ba05bbe2f5466c7f3caaff9cf7329bad8200193dfe56ecdcb6ecc76"
+  },
+  "limitations": [
+    "The short run froze before the subsequent OwnedVolume cleanup addition, which has separate focused and real Docker regression coverage. Frozen source hashes are included; this is not a claim that the final long GitHub job completed.",
+    "A first local run completed inner checks but failed an overly strict JSON object assertion on the operator frontend array. It remains unchanged in .validation/ccf-runs/run-rfwguvp1; the corrected array regression and fresh complete run passed.",
+    "No production image or native deployment changed. The existing image was exercised explicitly as Virtual."
+  ]
+}

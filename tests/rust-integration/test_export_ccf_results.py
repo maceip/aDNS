@@ -1,6 +1,7 @@
 """Ensure artifact export cannot copy private fixtures or follow path escapes."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -12,6 +13,22 @@ exporter=importlib.util.module_from_spec(spec);spec.loader.exec_module(exporter)
 
 
 class ExportTests(unittest.TestCase):
+    def test_reader_bounds_and_unusual_paths_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'small.json').write_bytes(b'{}')
+            self.assertEqual(exporter.read_public_artifact(root,'small.json',max_bytes=2),b'{}')
+            with self.assertRaisesRegex(ValueError,'byte bound'):
+                exporter.read_public_artifact(root,'small.json',max_bytes=1)
+            os.mkfifo(root/'pipe')
+            with self.assertRaisesRegex(ValueError,'ordinary'):
+                exporter.read_public_artifact(root,'pipe')
+            (root/'actual').mkdir();(root/'actual/result').write_bytes(b'{}')
+            (root/'alias').symlink_to(root/'actual',target_is_directory=True)
+            for name in ('alias/result','../outside','/absolute'):
+                with self.subTest(name=name),self.assertRaises(ValueError):
+                    exporter.read_public_artifact(root,name)
+            with self.assertRaises(FileNotFoundError):exporter.read_public_artifact(root,'missing')
+
     def test_only_public_allowlist_is_copied_and_hashed(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);source=root/'results';source.mkdir()

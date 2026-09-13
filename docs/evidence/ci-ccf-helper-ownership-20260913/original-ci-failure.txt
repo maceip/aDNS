@@ -1,0 +1,27 @@
+2026-09-13T09:17:01.1553297Z {"cleanup": {"owned_containers_and_state_volume_removed": true, "failures": [], "private_run_directory": "/home/runner/work/agentdns/agentdns/.validation/ccf-runs/run-g9pvhunc"}}
+2026-09-13T09:17:01.3480688Z Traceback (most recent call last):
+2026-09-13T09:17:01.3481814Z   File "/home/runner/work/agentdns/agentdns/tests/rust-integration/run_ccf.py", line 450, in <module>
+2026-09-13T09:17:01.3482421Z     main()
+2026-09-13T09:17:01.3484840Z   File "/home/runner/work/agentdns/agentdns/tests/rust-integration/run_ccf.py", line 379, in main
+2026-09-13T09:17:01.3485595Z     'operator':json.loads((results/'operator/summary.json').read_text()),
+2026-09-13T09:17:01.3486047Z                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T09:17:01.3486459Z   File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+2026-09-13T09:17:01.3491379Z     with self.open(mode='r', encoding=encoding, errors=errors) as f:
+2026-09-13T09:17:01.3491981Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T09:17:01.3492372Z   File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+2026-09-13T09:17:01.3494023Z     return io.open(self, mode, buffering, encoding, errors, newline)
+2026-09-13T09:17:01.3494570Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T09:17:01.3495356Z PermissionError: [Errno 13] Permission denied: '/home/runner/work/agentdns/agentdns/.validation/ccf-runs/run-g9pvhunc/results/operator/summary.json'
+2026-09-13T09:17:01.3665288Z ##[error]Process completed with exit code 1.
+2026-09-13T09:17:01.5154121Z Traceback (most recent call last):
+2026-09-13T09:17:01.5155384Z   File "/home/runner/work/agentdns/agentdns/.validation/ccf-runs/run-g9pvhunc/source/tests/rust-integration/export_ccf_results.py", line 98, in <module>
+2026-09-13T09:17:01.5156177Z     main()
+2026-09-13T09:17:01.5156838Z   File "/home/runner/work/agentdns/agentdns/.validation/ccf-runs/run-g9pvhunc/source/tests/rust-integration/export_ccf_results.py", line 76, in main
+2026-09-13T09:17:01.5157613Z     if not source.exists():
+2026-09-13T09:17:01.5161924Z            ^^^^^^^^^^^^^^^
+2026-09-13T09:17:01.5162456Z   File "/usr/lib/python3.12/pathlib.py", line 862, in exists
+2026-09-13T09:17:01.5163069Z     self.stat(follow_symlinks=follow_symlinks)
+2026-09-13T09:17:01.5163650Z   File "/usr/lib/python3.12/pathlib.py", line 842, in stat
+2026-09-13T09:17:01.5164288Z     return os.stat(self, follow_symlinks=follow_symlinks)
+2026-09-13T09:17:01.5164863Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-09-13T09:17:01.5165727Z PermissionError: [Errno 13] Permission denied: '.validation/ccf-runs/run-g9pvhunc/results/operator/summary.json'

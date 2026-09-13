@@ -4,7 +4,9 @@ import importlib.util
 import io
 import json
 import copy
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -17,6 +19,58 @@ reconciliation=importlib.util.module_from_spec(spec);spec.loader.exec_module(rec
 
 
 class RunnerGuardTests(unittest.TestCase):
+    def test_volume_creation_timeout_still_removes_only_the_owned_volume(self):
+        volume=runner.OwnedVolume('isolated-volume','run-identity')
+        labels=None
+        def docker(arguments,**kwargs):
+            nonlocal labels
+            if arguments[2]=='inspect':
+                return subprocess.CompletedProcess(arguments,0 if labels is not None else 1,
+                    stdout=json.dumps(labels),stderr='' if labels is not None else 'no such volume')
+            if arguments[2]=='create':
+                labels={volume.label:volume.owner}
+                raise subprocess.TimeoutExpired(arguments,60)
+            self.assertEqual(arguments,['docker','volume','rm','isolated-volume'])
+            labels=None
+            return subprocess.CompletedProcess(arguments,0)
+        with mock.patch.object(runner,'execute',side_effect=docker) as command:
+            with self.assertRaises(subprocess.TimeoutExpired):volume.create()
+            self.assertTrue(volume.attempted)
+            volume.remove()
+            self.assertIsNone(labels)
+            self.assertIn('--label',command.call_args_list[1].args[0])
+            volume.remove()  # A missing attempted volume is harmless.
+
+    def test_volume_existing_or_changed_ownership_is_never_removed(self):
+        volume=runner.OwnedVolume('isolated-volume','run-identity')
+        with mock.patch.object(volume,'labels',return_value={volume.label:'different-run'}),mock.patch.object(runner,'execute') as command:
+            with self.assertRaisesRegex(RuntimeError,'existing'):volume.create()
+            self.assertFalse(volume.attempted)
+            volume.remove()
+            volume.attempted=True
+            with self.assertRaisesRegex(RuntimeError,'another run'):volume.remove()
+            command.assert_not_called()
+
+    def test_helpers_use_numeric_runner_identity_without_widening_mounts(self):
+        with mock.patch.object(runner.os,'getuid',return_value=1001),mock.patch.object(runner.os,'getgid',return_value=1001):
+            self.assertEqual(runner.helper_identity(),['--user','1001:1001'])
+        work=Path('/fixture/work')
+        options=runner.helper_mounts(work,work/'source',work/'results','provision')
+        self.assertIn('/fixture/work/control/private/transfer-key.json:/work/control/private/transfer-key.json:ro',options)
+        self.assertNotIn('/fixture/work:/work',options)
+
+    def test_result_summary_requires_bounded_object(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);path=root/'summary.json';path.write_text('{"status":"passed"}')
+            self.assertEqual(runner.result_json(root,'summary.json'),{'status':'passed'})
+            path.write_text('[]')
+            with self.assertRaisesRegex(ValueError,'JSON shape'):runner.result_json(root,'summary.json')
+            path.write_text('[{"type":"TXT","validated":true}]')
+            self.assertEqual(runner.result_json(root,'summary.json',expected_type=list),[{'type':'TXT','validated':True}])
+            with mock.patch.object(runner,'read_public_artifact',return_value=b'{}') as read:
+                runner.result_json(root,'summary.json')
+                self.assertEqual(read.call_args.kwargs['max_bytes'],8*1024*1024)
+
     def test_rejects_mutable_image_and_unsupported_duration_before_docker(self):
         cases=[['--ccf-image','agentdns-ccf:latest'],
                ['--ccf-image','sha256:'+'ab'*32,'--seconds','31'],
@@ -121,6 +175,51 @@ class ObservationIdentityTests(unittest.TestCase):
         for response in variants:
             with self.subTest(response=response),self.assertRaises(ValueError):
                 reconciliation.validate_observation_identity(response)
+
+
+@unittest.skipUnless(sys.platform=='linux' and os.geteuid()==0,
+                     'requires an isolated Linux root container to exercise UID1001')
+class LinuxOwnershipTests(unittest.TestCase):
+    def test_private_helper_results_are_readable_only_by_the_same_uid_and_export_stays_public(self):
+        def as_runner(code, *arguments):
+            def demote():
+                os.setgroups([]);os.setgid(1001);os.setuid(1001)
+            return subprocess.run([sys.executable,'-c',code,*map(str,arguments)],
+                preexec_fn=demote,capture_output=True,text=True,timeout=15)
+        export_code='''import sys
+sys.path.insert(0,sys.argv.pop(1))
+import export_ccf_results
+export_ccf_results.main()
+'''
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);root.chmod(0o700);os.chown(root,1001,1001)
+            results=root/'results';results.mkdir(mode=0o700);os.chown(results,1001,1001)
+            operator=results/'operator';operator.mkdir(mode=0o700)
+            (operator/'summary.json').write_text('{"status":"passed"}')
+            (operator/'summary.json').chmod(0o600)
+            # Exact prior failure: the container-root producer owns a private
+            # child of the host-runner-owned bind mount. Do not chmod it open.
+            rejected=as_runner(export_code,Path(__file__).parent,results,root/'denied-export')
+            self.assertNotEqual(rejected.returncode,0)
+            self.assertIn('PermissionError',rejected.stderr)
+            (operator/'summary.json').unlink();operator.rmdir()
+            producer=as_runner('''import json,os,sys
+from pathlib import Path
+os.umask(0o077)
+root=Path(sys.argv[1]); output=root/'operator'; output.mkdir(mode=0o700)
+(output/'summary.json').write_text(json.dumps({'status':'passed','uid':os.getuid()}))
+(root/'member0_privk.pem').write_text('-----BEGIN PRIVATE KEY-----\\nnot-public')
+''',results)
+            self.assertEqual(producer.returncode,0,producer.stderr)
+            exported=as_runner(export_code,Path(__file__).parent,results,root/'public')
+            self.assertEqual(exported.returncode,0,exported.stderr)
+            self.assertEqual(json.loads((root/'public/operator/summary.json').read_text()),{'status':'passed','uid':1001})
+            self.assertEqual(set(json.loads((root/'public/sha256.json').read_text())),{'operator/summary.json'})
+            self.assertEqual(operator.stat().st_mode & 0o777,0o700)
+            self.assertEqual((operator/'summary.json').stat().st_mode & 0o777,0o600)
+            self.assertEqual((operator/'summary.json').stat().st_uid,1001)
+            self.assertEqual((results/'member0_privk.pem').stat().st_mode & 0o777,0o600)
+            self.assertFalse((root/'public/member0_privk.pem').exists())
 
 
 if __name__=='__main__':unittest.main()
