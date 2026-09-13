@@ -1,3 +1,6 @@
+<img width="627" height="291" alt="noflex" src="https://github.com/user-attachments/assets/773c7ee3-3f88-407f-8370-c903c0f54fa2" />
+
+
 # agentdns
 
 agentdns is a DNS service. It stores a DNS zone, signs the zone with DNSSEC,
