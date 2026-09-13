@@ -1,0 +1,7 @@
+{
+  "helper": "/src/ccf/tests/operator_mail.py",
+  "container": "agentdns-ccf-runner-c633c17a8864-helper-d17af5ff",
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/src/ccf/tests/operator_mail.py\", line 136, in <module>\n    main()\n  File \"/src/ccf/tests/operator_mail.py\", line 105, in main\n    raise ValueError(f\"operator mutation failed: HTTP {response['http_status']}; response retained in {response_path}\")\nValueError: operator mutation failed: HTTP 503; response retained in /work/results/operator/attempt-1-operator-response.json\n"
+}

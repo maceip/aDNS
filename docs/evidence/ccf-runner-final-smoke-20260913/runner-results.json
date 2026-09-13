@@ -1,0 +1,140 @@
+{
+  "status": "passed",
+  "kind": "short-smoke-only",
+  "platform": "Virtual; no native appraisal or service registration",
+  "observation_seconds": 30,
+  "total_elapsed_seconds": 392.1692740917206,
+  "images": {
+    "ccf": "sha256:f4f4d4331461c3b9b3283b18db60a35de6c021ce776b576092b30250edf58ab7",
+    "secondary": "sha256:597dabfca422bdac5b51efb3d7a40c3a9727c1401946be61783664886fbf8105",
+    "toolchain": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+    "validator": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615"
+  },
+  "independent_receipt_and_multimessage_tsig_dnssec_verified": true,
+  "committed_status": {
+    "samples": 4,
+    "failures": 0,
+    "elapsed_seconds": 30.09619367599953,
+    "observed_serials": [
+      8
+    ],
+    "all_samples_committed_unexpired": true
+  },
+  "operator": {
+    "scope": "real governed operator mutation, not attested registration or email delivery",
+    "transaction_id": "2.317",
+    "zone_serial": 9,
+    "governance_transaction_id": "2.313",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "dkim_txt_exceeds_255_bytes": true,
+    "der_rejected_without_consuming_nonce": true,
+    "exact_retry_preserves_original_result": true,
+    "changed_signed_action_returns_conflict": true,
+    "operator_commit_latency_ms_including_tls": 934.441528
+  },
+  "operator_frontend": [
+    {
+      "name": "example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "selector1._domainkey.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 2
+    },
+    {
+      "name": "_dmarc.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "_smtp._tls.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "example.test.",
+      "type": "CAA",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": null
+    }
+  ],
+  "reconciliation": {
+    "status": "passed",
+    "scope": "real signed operator request; no native registration claim",
+    "request_id": "fb06e137b0cd46669c8bc65e9b557b50",
+    "grant_id": "reconcile-06477e0446bc4d9b",
+    "pending_observation_committed": true,
+    "authenticated_failure_durable": true,
+    "failure_http_status": 403,
+    "same_nonce_and_envelope_retry_succeeded": true,
+    "historical_result_precedes_observation": true,
+    "identical_retry_preserves_original_result": true,
+    "zone_serial_increment": 1,
+    "committed_transaction_id": "2.345",
+    "zone_serial": 10
+  },
+  "reconciliation_frontend": {
+    "name": "reconcile.example.test.",
+    "type": "TXT",
+    "ttl": 60,
+    "exact_rdata_matches": true,
+    "dnssec_validated": true,
+    "txt_chunks": 1
+  },
+  "tsig_rotation": {
+    "before": {
+      "status": "passed",
+      "phase": "before",
+      "unix_seconds": 1789269900.8360364,
+      "server": "192.168.215.3",
+      "replacement_key_name": "agentdns-transfer-replacement.",
+      "transfer_messages": 10,
+      "transfer_records": 1001,
+      "every_message_authenticated_with_replacement": true,
+      "full_zone_dnssec_validated": true,
+      "ksk_matches_verified_receipt": true,
+      "authenticated_replacement_udp_soa": true,
+      "serial": 10,
+      "post_revocation_returned_work_packets": null,
+      "scope": "independent replacement AXFR/SOA; replacement BIND propagation is not claimed"
+    },
+    "after": {
+      "status": "passed",
+      "phase": "after",
+      "unix_seconds": 1789269910.4195032,
+      "server": "192.168.215.3",
+      "replacement_key_name": "agentdns-transfer-replacement.",
+      "transfer_messages": 10,
+      "transfer_records": 1001,
+      "every_message_authenticated_with_replacement": true,
+      "full_zone_dnssec_validated": true,
+      "ksk_matches_verified_receipt": true,
+      "authenticated_replacement_udp_soa": true,
+      "serial": 10,
+      "post_revocation_returned_work_packets": 0,
+      "scope": "independent replacement AXFR/SOA; replacement BIND propagation is not claimed",
+      "revoked_axfr_rejected": true,
+      "revoked_axfr_observed_error": "EOFError",
+      "revoked_udp_soa_rejected": true,
+      "revoked_udp_observed_error": "Timeout"
+    }
+  },
+  "output": "/Users/mac/agentdns/.validation/ccf-runs/run-l344jkdb/results"
+}

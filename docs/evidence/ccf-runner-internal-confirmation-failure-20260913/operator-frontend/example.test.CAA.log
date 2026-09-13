@@ -1,0 +1,3 @@
+; fully validated
+example.test.		300	IN	CAA	0 issue "letsencrypt.org"
+example.test.		300	IN	RRSIG	CAA 14 2 300 20260913032618 20260913031118 47765 example.test. ziu1YWMjG3/x4kchFWQTvBMq7O6pqZ4i7DRUxRstIE4OLlzK0mYsihSp Y91uLEFiCGttRUXTZvrccQdcxr6/PDLguc5ltf08+EpcbwDhY6w2Kiop +Wo5BjtrkUHFechG

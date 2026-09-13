@@ -1,0 +1,7 @@
+{
+  "stock_secondary_tsig_loopback_transfer": true,
+  "authoritative_serial": 1234567,
+  "secondary_port": 53,
+  "primary_port": 5353,
+  "synthetic_dns_fixture_not_ccf_or_hardware_evidence": true
+}

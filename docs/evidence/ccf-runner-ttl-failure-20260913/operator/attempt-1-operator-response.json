@@ -1,0 +1,10 @@
+{
+  "http_status": 503,
+  "headers": {
+    "content-length": "129",
+    "content-type": "application/json"
+  },
+  "body": {
+    "error": "DNSSEC: zone requires exactly one apex SOA, apex NS, consistent TTLs, no CNAME conflicts, and only in-zone IN records"
+  }
+}

@@ -1,0 +1,171 @@
+[
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "at_unix_seconds": 1789288184.167111,
+    "elapsed_ms": 1012.804417,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "220",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.570",
+        "x-ms-ccf-transaction-id": "2.570"
+      },
+      "body": {
+        "expires_at": 1789288483,
+        "intent_hash": "fd50ccd883560dba635931f5745dba96014ff84fc2be1f2e4cb189e6a0422a4a",
+        "issued_at": 1789288183,
+        "nonce": "63e94c079f977d9fc43c1526f3e30da634f4d0de814f88c2240ed9a740da4406",
+        "tx_id": "2.570"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.570",
+    "at_unix_seconds": 1789288184.831593,
+    "elapsed_ms": 663.16425,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.570"
+      }
+    }
+  },
+  {
+    "method": "DELETE",
+    "path": "/app/zone/acme-challenge",
+    "at_unix_seconds": 1789288187.18502,
+    "elapsed_ms": 1615.048541,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "169",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.577",
+        "x-ms-ccf-transaction-id": "2.577"
+      },
+      "body": {
+        "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+        "deleted": true,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.577",
+        "zone_serial": 13
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.577",
+    "at_unix_seconds": 1789288187.8093991,
+    "elapsed_ms": 623.961791,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.577"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=native-acme-delete-1-20260913",
+    "at_unix_seconds": 1789288188.503556,
+    "elapsed_ms": 693.720958,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "169",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.577",
+        "x-ms-ccf-transaction-id": "2.578"
+      },
+      "body": {
+        "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+        "deleted": true,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.577",
+        "zone_serial": 13
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.577",
+    "at_unix_seconds": 1789288189.181288,
+    "elapsed_ms": 676.029167,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.577"
+      }
+    }
+  },
+  {
+    "method": "DELETE",
+    "path": "/app/zone/acme-challenge",
+    "at_unix_seconds": 1789288190.2045,
+    "elapsed_ms": 1022.61225,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "169",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.577",
+        "x-ms-ccf-transaction-id": "2.581"
+      },
+      "body": {
+        "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+        "deleted": true,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.577",
+        "zone_serial": 13
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.577",
+    "at_unix_seconds": 1789288190.822025,
+    "elapsed_ms": 616.996042,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.577"
+      }
+    }
+  }
+]

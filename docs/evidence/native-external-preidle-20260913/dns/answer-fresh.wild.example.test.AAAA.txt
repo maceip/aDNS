@@ -1,0 +1,20 @@
+id 30444
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+fresh.wild.example.test. IN AAAA
+;ANSWER
+;AUTHORITY
+9k02nrapkj4vhqtn3ubcfqnqk4m95muu.example.test. 60 IN NSEC3 1 0 0 - 9o9c0q114o82vrugumq24aluuc67aaa1
+9k02nrapkj4vhqtn3ubcfqnqk4m95muu.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. LncVZpWjPvJQ6zCHxhcUtU6qX2BOUPO1 JwZLiJ5kGDuPTrAph4npdZBpyxNAhNAy XjeKkjmgc/P3/a0CblPFVdh3dWB4qyMJ 1oeaITuti5LvbIuuW8qJSjix9T9AeZCD
+epo5gp2s2rls9dv88u7gve2t7g63s1m8.example.test. 60 IN NSEC3 1 0 0 - f1q3ponf5bi6b598pld7f2rli2o4va2h TXT RRSIG
+epo5gp2s2rls9dv88u7gve2t7g63s1m8.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. VTF7ulvk8SO7glghsgql/mR0mwJ6Ad+g iBZeGY0+nJmyr1Y+w1IoO2g5Le96ocbC nJ20KK8bsDDT0LqIfTs++Br+Zi/0lZnT BHiJfHx9tlroVer6ZqyxlmQyjiqUz3SO
+714511ir7jks1q014jvse0i3i50kbnqi.example.test. 60 IN NSEC3 1 0 0 - 71noraetg06s6649q1g8f0e38666vb6j A RRSIG
+714511ir7jks1q014jvse0i3i50kbnqi.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. /decw/R8pxZepXRwXea1g1pInQDAddwt Qa/gjaViLsuTsLLd72kflkPe+D+f8MOc FibOOxg6NqwdpH1bciFZWzyXmtjuiPY5 vadUKzEqd+Hb2bPtXakeS9hlCqW+vFuU
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 9 60 30 600 60
+example.test. 60 IN RRSIG SOA 14 2 60 20260913083337 20260913081837 20222 example.test. Z+SsiPaJHLYhkaDWOA1B1T+T8wBnXXbh m7Kn3LoM9oQkwqFx/2vma/fRFqdTOn+t Sy6vraErCHC2roTnom92Mhee3aGU/Lx6 AIKQBsN2Eo+rgoVwmTCzgmtTWOEeUgxy
+;ADDITIONAL

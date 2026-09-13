@@ -1,0 +1,45 @@
+{
+  "input_sha256": {
+    "frontend/remote-idle-samples.json": "c928071bfa4cb37c5cc1de16180ead35d45beca6daedba17b78cc3027b6aa66c",
+    "status/status-samples.json": "0dedffe01adb643b6b6b82483aba6865791f6f7cd0ae457851f4b5702684fb0b",
+    "bind-container.log": "c8d651588a3dbc3e3796b2efccb6227a4f2bfe0126b276b1e4bdf77b43dfbe54",
+    "node-container.log": "736a14b0bfb9638b3524346202ff705a27de3a4397432c93a37b3a0a34c4e1c5",
+    "provenance.json": "83ff62d7f91eae052b74cc28aa972b15d76e22467f0f39f28a1d12cb5c0c638a"
+  },
+  "first_external_utc": "2026-09-13T03:31:02+00:00",
+  "last_external_utc": "2026-09-13T03:52:04+00:00",
+  "external_wall_span_seconds": 1262,
+  "external_positive_negative_validations": 86,
+  "maximum_status_sample_gap_seconds": 10.710171461105347,
+  "secondary_observations": 126,
+  "secondary_in_sync": 123,
+  "secondary_lag_observations": 3,
+  "automatic_transfers": [
+    {
+      "serial": 9,
+      "transfer_unix_seconds": 1789270555.66,
+      "previous_soa_signature_expiration": 1789270852,
+      "seconds_before_previous_expiration": 296.3399999141693
+    },
+    {
+      "serial": 10,
+      "transfer_unix_seconds": 1789270855.293,
+      "previous_soa_signature_expiration": 1789271152,
+      "seconds_before_previous_expiration": 296.70700001716614
+    },
+    {
+      "serial": 11,
+      "transfer_unix_seconds": 1789271155.846,
+      "previous_soa_signature_expiration": 1789271453,
+      "seconds_before_previous_expiration": 297.154000043869
+    },
+    {
+      "serial": 12,
+      "transfer_unix_seconds": 1789271456.332,
+      "previous_soa_signature_expiration": 1789271753,
+      "seconds_before_previous_expiration": 296.66799998283386
+    }
+  ],
+  "minimum_transfer_margin_seconds": 296.3399999141693,
+  "method": "For each authenticated transfer during the external window, subtract its BIND UTC timestamp from the preceding serial SOA signature expiration. Status synchronization is counted separately from external DNSSEC validity."
+}

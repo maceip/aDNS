@@ -1,0 +1,14 @@
+{
+  "elapsed_seconds": 1295,
+  "observed_secondary_serials": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "external_validations": 88,
+  "all_passed": true,
+  "first_observed_expiration": 1789263689,
+  "last_observed_expiration": 1789264889
+}

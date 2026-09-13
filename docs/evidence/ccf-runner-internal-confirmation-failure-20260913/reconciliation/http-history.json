@@ -1,0 +1,804 @@
+[
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.335"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "30ba996f485b818e0463ac61255d746724287d9c11f12a39eb8b99d554e9db7f",
+        "proposalState": "Accepted",
+        "proposerId": "86df7cca4d44e316104cd703121f6506f9c75c38a5744f1593ae8530c057f406",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.335",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.335"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/zone/status?zone=example.test.",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "349",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.336",
+        "x-ms-ccf-transaction-id": "2.336"
+      },
+      "body": {
+        "committed_state": {
+          "ccf_tx_id": "2.336",
+          "earliest_rrsig_expiration": 1789269978,
+          "maintenance_health": "ok",
+          "rrsig_inception": 1789269078,
+          "serial": 9
+        },
+        "frontend_propagation": {
+          "secondaries": [
+            {
+              "endpoint": "127.0.0.1:53",
+              "in_sync": true,
+              "last_notified_serial": 9,
+              "last_observed_at": 1789269389,
+              "last_observed_serial": 9
+            }
+          ]
+        },
+        "tx_id": "2.336",
+        "zone": "example.test."
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.336",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.336"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "220",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.337",
+        "x-ms-ccf-transaction-id": "2.337"
+      },
+      "body": {
+        "expires_at": 1789269692,
+        "intent_hash": "2f0b6063dfc996ae6bb8f58f4ae24c6ebb030e02e8847e8dc7522a59916c728e",
+        "issued_at": 1789269392,
+        "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330",
+        "tx_id": "2.337"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.337",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.337"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=reconcile-e2f5cfbb83924426&request_id=1718f57f55974475b6e1930719d375c3",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "545",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.340",
+        "x-ms-ccf-transaction-id": "2.340"
+      },
+      "body": {
+        "execution_state": "pending",
+        "grant_id": "reconcile-e2f5cfbb83924426",
+        "latest_observation": {
+          "expires_at": 1789269692,
+          "intent_hash": "2f0b6063dfc996ae6bb8f58f4ae24c6ebb030e02e8847e8dc7522a59916c728e",
+          "issued_at": 1789269392,
+          "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330"
+        },
+        "matching_nonces": 1,
+        "multiple_nonce_ambiguity": false,
+        "observation_status": "committed",
+        "observation_tx_id": "2.340",
+        "phase": "awaiting_committed_result",
+        "request_id": "1718f57f55974475b6e1930719d375c3",
+        "retryable": true,
+        "status": "pending",
+        "tx_id": "2.340"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.340",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.340"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.343"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "476176be3cf4320d48ac85f3d6a8d7f4a93ae643439f6b73305ac5b7e1f02982",
+        "proposalState": "Accepted",
+        "proposerId": "86df7cca4d44e316104cd703121f6506f9c75c38a5744f1593ae8530c057f406",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.343",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.343"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/zone/operator/records",
+    "response": {
+      "http_status": 403,
+      "headers": {
+        "content-length": "536",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.345",
+        "x-ms-ccf-transaction-id": "2.345"
+      },
+      "body": {
+        "error": "GRANT_DENIED: expired, future or revoked grant",
+        "execution_state": "failed",
+        "grant_id": "reconcile-e2f5cfbb83924426",
+        "http_status": 403,
+        "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330",
+        "nonce_expires_at": 1789269692,
+        "observation_status": "committed",
+        "observation_tx_id": "2.345",
+        "phase": "last_authenticated_attempt",
+        "request_id": "1718f57f55974475b6e1930719d375c3",
+        "retryable": true,
+        "signed_message_digest": "b63dd21840bd5957010bda9cb3736f20ca4961bdf423a481df94da57afa8b675",
+        "status": "failed",
+        "tx_id": "2.345"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.345",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.345"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=reconcile-e2f5cfbb83924426&request_id=1718f57f55974475b6e1930719d375c3",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "733",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.346",
+        "x-ms-ccf-transaction-id": "2.346"
+      },
+      "body": {
+        "execution_state": "failed",
+        "grant_id": "reconcile-e2f5cfbb83924426",
+        "latest_observation": {
+          "error": "GRANT_DENIED: expired, future or revoked grant",
+          "expires_at": 1789269692,
+          "failed_at": 1789269395,
+          "http_status": 403,
+          "intent_hash": "2f0b6063dfc996ae6bb8f58f4ae24c6ebb030e02e8847e8dc7522a59916c728e",
+          "issued_at": 1789269392,
+          "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330",
+          "signed_message_digest": "b63dd21840bd5957010bda9cb3736f20ca4961bdf423a481df94da57afa8b675"
+        },
+        "matching_nonces": 1,
+        "multiple_nonce_ambiguity": false,
+        "observation_status": "committed",
+        "observation_tx_id": "2.346",
+        "phase": "last_authenticated_attempt",
+        "request_id": "1718f57f55974475b6e1930719d375c3",
+        "retryable": true,
+        "status": "failed",
+        "tx_id": "2.346"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.346",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.346"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/zone/status?zone=example.test.",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "349",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.346",
+        "x-ms-ccf-transaction-id": "2.346"
+      },
+      "body": {
+        "committed_state": {
+          "ccf_tx_id": "2.346",
+          "earliest_rrsig_expiration": 1789269978,
+          "maintenance_health": "ok",
+          "rrsig_inception": 1789269078,
+          "serial": 9
+        },
+        "frontend_propagation": {
+          "secondaries": [
+            {
+              "endpoint": "127.0.0.1:53",
+              "in_sync": true,
+              "last_notified_serial": 9,
+              "last_observed_at": 1789269394,
+              "last_observed_serial": 9
+            }
+          ]
+        },
+        "tx_id": "2.346",
+        "zone": "example.test."
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.346",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.346"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.347"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "7aadcec27a096c7324e53a6ac049cb02c2caf6d3085a048cd196e7a2b05270c2",
+        "proposalState": "Accepted",
+        "proposerId": "86df7cca4d44e316104cd703121f6506f9c75c38a5744f1593ae8530c057f406",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.347",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.347"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/zone/operator/records",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "99",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.349",
+        "x-ms-ccf-transaction-id": "2.349"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.349",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.349",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.349"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=reconcile-e2f5cfbb83924426&request_id=1718f57f55974475b6e1930719d375c3",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "99",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.349",
+        "x-ms-ccf-transaction-id": "2.352"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.349",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.349",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.349"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/zone/operator/records",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "99",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.349",
+        "x-ms-ccf-transaction-id": "2.355"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.349",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.349",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.349"
+      }
+    }
+  }
+]

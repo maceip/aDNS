@@ -1,0 +1,56 @@
+{
+  "status": "native bootstrap and receipt verified",
+  "primary_ip": "4.208.82.123",
+  "secondary_ip": "20.166.33.141",
+  "primary_image_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "primary_elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "cce_policy_sha256": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "bootstrap_manifest_sha256": "f4d501a1521ef98ea87135ce955fba638a733d7acd2236f52cf7cc475278838a",
+  "actual_report_version": 3,
+  "node_audit": {
+    "purpose": "ccf-node-tls-bootstrap-only",
+    "node_spki_sha256": "35db9f1e658e79159a42a36fb2d851a895c970c5c42460530b83bb22d356e6ed",
+    "quote_sha256": "1b1554e8b5170f46aef18b8cb8bb5b8e3be172c3b9320c91aa89c0247900d706",
+    "measurement": "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866",
+    "host_data": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+    "product": "Genoa",
+    "policy_id": "c2d82e217eff29621df71c10983fcc5a2512fc199b83c799c78cf1d29de2db20",
+    "uvm_did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+    "uvm_feed": "ContainerPlat-AMD-UVM",
+    "uvm_svn": 104,
+    "valid_until": 1789294746,
+    "actual_tls_peer_certificate_sha256": "8248eb6c5fce180197ce2801427e24bb6c32e2d6d57946ad32a793ae483bf2b9",
+    "authenticated_service_certificate_sha256": "5cfc547bace8c2d2b0ec5887400e9655917ddcee63e608f8424d590dba88a921",
+    "audited_at": 1789287546
+  },
+  "governance": {
+    "member_ack": "2.5",
+    "service_open": "2.7",
+    "bootstrap": "2.11"
+  },
+  "autonomous_zone_initialization": {
+    "serial": 7,
+    "source_records": 246,
+    "read_tx": "2.32",
+    "maintenance_health": "ok"
+  },
+  "ksk_receipt": {
+    "zone": "example.test.",
+    "key_tag": 9055,
+    "ds_sha256": "b83d40933194855aec2e0da371bd4b93d0bde35548b60d14d999c92026d62540",
+    "claims_digest": "eeb3254efbd0a64e5c78efaa8d9dce34346e340732fc83b3445c2a0d34bccef0",
+    "tx_id": "2.48"
+  },
+  "private_tsig_provisioning": "automatic supervisor installation after governance pin; authenticated NOTIFY succeeded, stock BIND independently served serial7 over TCP and UDP at08:22:16UTC",
+  "initial_authenticated_soa_observation": "initial race with AXFR produced one rejected empty-zone SOA response; diagnostic work retries after its bounded300-second expiry",
+  "no_worker_registration_claim_from_this_bundle": true,
+  "recorded_at": "2026-09-13T08:28:08.627296+00:00",
+  "authenticated_secondary_observation": {
+    "transaction_id": "2.509",
+    "serial": 12,
+    "secondary": "20.166.33.141:53",
+    "last_observed_at": 1789288130,
+    "in_sync": true,
+    "timing": "later snapshot after root registration and ACME operations; not the initial zone-only state"
+  }
+}

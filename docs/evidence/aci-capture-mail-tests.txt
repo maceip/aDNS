@@ -1,0 +1,32 @@
+test_config_cannot_change_zone_operation_or_destination (test_capture_aci.CaptureTests.test_config_cannot_change_zone_operation_or_destination) ... ok
+test_https_api_exposes_public_capture_and_only_fixed_signing (test_capture_aci.CaptureTests.test_https_api_exposes_public_capture_and_only_fixed_signing) ... capture-http "GET /capture HTTP/1.1" 200 -
+capture-http "GET /cert.pem HTTP/1.1" 200 -
+capture-http "GET /cert.der HTTP/1.1" 200 -
+capture-http "POST /signed-request HTTP/1.1" 401 -
+capture-http "POST /signed-request HTTP/1.1" 400 -
+capture-http "POST /signed-request HTTP/1.1" 200 -
+capture-http "POST /lifecycle/action HTTP/1.1" 401 -
+capture-http "POST /lifecycle/action HTTP/1.1" 200 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 401 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 400 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 200 -
+ok
+test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox (test_capture_aci.CaptureTests.test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox) ... ok
+test_json_rejects_duplicate_keys_and_noncanonical_types (test_capture_aci.CaptureTests.test_json_rejects_duplicate_keys_and_noncanonical_types) ... ok
+test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration (test_capture_aci.CaptureTests.test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration) ... ok
+test_lifecycle_scope_overrides_and_unknown_fields_are_rejected (test_capture_aci.CaptureTests.test_lifecycle_scope_overrides_and_unknown_fields_are_rejected) ... ok
+test_mail_fixture_rejects_oversized_protocol_lines (test_capture_aci.CaptureTests.test_mail_fixture_rejects_oversized_protocol_lines) ... ok
+test_native_collector_rejects_wrong_binding_or_diagnostics (test_capture_aci.CaptureTests.test_native_collector_rejects_wrong_binding_or_diagnostics) ... ok
+test_outer_cose_signature_and_exact_key_binding (test_capture_aci.CaptureTests.test_outer_cose_signature_and_exact_key_binding) ... ok
+test_prepared_lifecycle_action_memory_is_bounded (test_capture_aci.CaptureTests.test_prepared_lifecycle_action_memory_is_bounded) ... ok
+test_signed_request_fixed_scope_and_signature (test_capture_aci.CaptureTests.test_signed_request_fixed_scope_and_signature) ... ok
+test_starttls_smtp_uses_attested_key_and_refuses_mail (test_capture_aci.CaptureTests.test_starttls_smtp_uses_attested_key_and_refuses_mail) ... ok
+test_tls_anonymous_descriptors_close_after_success_and_failure (test_capture_aci.CaptureTests.test_tls_anonymous_descriptors_close_after_success_and_failure) ... ok
+test_tls_certificate_uses_exact_attested_key_and_bounded_validity (test_capture_aci.CaptureTests.test_tls_certificate_uses_exact_attested_key_and_bounded_validity) ... ok
+test_two_acme_orders_and_only_issued_challenge_deletion (test_capture_aci.CaptureTests.test_two_acme_orders_and_only_issued_challenge_deletion) ... ok
+test_uncertain_submission_retries_identical_request (test_capture_aci.CaptureTests.test_uncertain_submission_retries_identical_request) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 3.326s
+
+OK

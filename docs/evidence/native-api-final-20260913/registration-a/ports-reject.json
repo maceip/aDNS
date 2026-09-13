@@ -1,0 +1,27 @@
+{
+  "http_status": 403,
+  "headers": {
+    "content-length": "487",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.110",
+    "x-ms-ccf-transaction-id": "2.110"
+  },
+  "body": {
+    "error": "GRANT_DENIED: port",
+    "execution_state": "failed",
+    "grant_id": "aci-test-owner",
+    "http_status": 403,
+    "nonce": "d84a879db96e74ca1493d00f783f1a80fc0f889631b314d1ce8249a67e3a1f7e",
+    "nonce_expires_at": 1789288019,
+    "observation_status": "committed",
+    "observation_tx_id": "2.110",
+    "phase": "last_authenticated_attempt",
+    "request_id": "aci-capture-20260913-01",
+    "retryable": true,
+    "signed_message_digest": "be3840a84201959e7aa5080ba2173a65c08a284d7b3563b8fd766e6f8ee5628a",
+    "status": "failed",
+    "tx_id": "2.110"
+  },
+  "confirmed_ccf_transaction_id": "2.110"
+}

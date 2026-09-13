@@ -1,0 +1,9 @@
+{
+  "operation": "acme_challenge_create",
+  "samples": 1,
+  "submission_to_globally_committed_response_ms_including_tls": 861.997708,
+  "signed_message_digest": "46973f5a49ef1191c9ebc129bd4a18931b79c8503af8918b3b41829ad6d8cfb3",
+  "transaction_id": "2.389",
+  "historical_result_exactly_matches": true,
+  "exact_retry_matches": true
+}

@@ -1,0 +1,8 @@
+{
+  "key_name": "agentdns-transfer-replacement.",
+  "endpoint": "127.0.0.1:1053",
+  "zones": [
+    "example.test."
+  ],
+  "secret_sha256": "63475579b213f44d09b2e1ba718100e175fc85b19f01cf4a201f632052ee751e"
+}

@@ -1,0 +1,8 @@
+test_every_synchronous_docker_command_has_a_bounded_default (test_run_ccf.RunnerGuardTests.test_every_synchronous_docker_command_has_a_bounded_default) ... ok
+test_rejects_mutable_image_and_unsupported_duration_before_docker (test_run_ccf.RunnerGuardTests.test_rejects_mutable_image_and_unsupported_duration_before_docker) ... ok
+test_snapshot_is_exact_allowlist_and_survives_source_mutation (test_run_ccf.RunnerGuardTests.test_snapshot_is_exact_allowlist_and_survives_source_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+OK

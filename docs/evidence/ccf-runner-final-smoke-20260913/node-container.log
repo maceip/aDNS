@@ -1,0 +1,242 @@
+2026-09-13T03:18:40.188204Z 0   [info ] CCF/src/host/run.cpp:1011            | CCF version: ccf-7.0.15
+2026-09-13T03:18:40.190770Z 0   [info ] CCF/src/host/run.cpp:1013            | CLI args: "/usr/local/bin/agentdns" "--config" "/config/node.json"
+2026-09-13T03:18:40.190939Z 0   [info ] CCF/src/host/run.cpp:1039            | Configuration file /config/node.json:
+{
+  "command": {
+    "service_certificate_file": "service_cert.pem",
+    "start": {
+      "constitution_files": [
+        "/opt/agentdns/governance/constitution.js"
+      ],
+      "cose_signatures": {
+        "issuer": "agentdns",
+        "subject": "ledger.signature"
+      },
+      "initial_service_certificate_validity_days": 7,
+      "members": [
+        {
+          "certificate_file": "/config/member0_cert.pem",
+          "encryption_public_key_file": "/config/member0_enc_pubk.pem"
+        }
+      ],
+      "service_configuration": {
+        "recovery_threshold": 1
+      },
+      "service_subject_name": "CN=agentdns Service"
+    },
+    "type": "Start"
+  },
+  "ledger": {
+    "chunk_size": "5MB",
+    "directory": "ledger"
+  },
+  "ledger_signatures": {
+    "delay": "1s",
+    "tx_count": 1000
+  },
+  "logging": {
+    "format": "Text"
+  },
+  "network": {
+    "node_to_node_interface": {
+      "bind_address": "0.0.0.0:8002"
+    },
+    "rpc_interfaces": {
+      "agentdns-internal": {
+        "accepted_endpoints": [
+          "/app/internal/.*"
+        ],
+        "app_protocol": "HTTP1",
+        "bind_address": "127.0.0.1:8001",
+        "max_open_sessions_hard": 128,
+        "max_open_sessions_soft": 64
+      },
+      "primary_rpc_interface": {
+        "app_protocol": "HTTP1",
+        "bind_address": "0.0.0.0:8000",
+        "max_open_sessions_hard": 512,
+        "max_open_sessions_soft": 256,
+        "published_address": "agentdns.test:8000"
+      }
+    }
+  },
+  "node_certificate": {
+    "curve_id": "Secp384R1",
+    "initial_validity_days": 7,
+    "subject_alt_names": [
+      "iPAddress:127.0.0.1",
+      "dNSName:agentdns.test"
+    ],
+    "subject_name": "CN=agentdns"
+  },
+  "output_files": {
+    "node_certificate_file": "node.pem",
+    "node_to_node_address_file": "node.node_address",
+    "pid_file": "node.pid",
+    "rpc_addresses_file": "node.rpc_addresses"
+  },
+  "snapshots": {
+    "directory": "snapshots",
+    "tx_count": 10000
+  },
+  "tick_interval": "10ms",
+  "worker_threads": 0
+}
+
+2026-09-13T03:18:40.191885Z 0   [info ] CCF/src/host/run.cpp:1054            | Environment: {
+  "CCF_PLATFORM_OVERRIDE": "Virtual",
+  "HOME": "/root",
+  "HOSTNAME": "f3a3c1c18b18",
+  "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  "UV_USE_IO_URING": "0"
+}
+
+2026-09-13T03:18:40.201293Z 0   [info ] CCF/src/host/ledger.h:1314           | Recovered ledger entries up to 0, committed to 0
+2026-09-13T03:18:40.204722Z 0   [info ] CCF/src/host/socket.h:50             | TCP Node Server listening on 0.0.0.0:8002
+2026-09-13T03:18:40.227627Z 0   [info ] CCF/src/host/run.cpp:250             | Registering RPC interface agentdns-internal, on  127.0.0.1:8001
+2026-09-13T03:18:40.227918Z 0   [info ] CCF/src/host/socket.h:50             | TCP RPC Client listening on 127.0.0.1:8001
+2026-09-13T03:18:40.228061Z 0   [info ] CCF/src/host/run.cpp:266             | Registered RPC interface agentdns-internal, on  127.0.0.1:8001
+2026-09-13T03:18:40.228378Z 0   [info ] CCF/src/host/run.cpp:250             | Registering RPC interface primary_rpc_interface, on  0.0.0.0:8000
+2026-09-13T03:18:40.228409Z 0   [info ] CCF/src/host/socket.h:50             | TCP RPC Client listening on 0.0.0.0:8000
+2026-09-13T03:18:40.228419Z 0   [info ] CCF/src/host/run.cpp:266             | Registered RPC interface primary_rpc_interface, on  0.0.0.0:8000
+2026-09-13T03:18:40.282908Z 0   [info ] CCF/src/host/run.cpp:785             | Startup host time: 2026-09-13 03:18:40.282405071
+2026-09-13T03:18:40.284164Z 0   [info ] CCF/src/host/run.cpp:447             | Creating new node: new network (with 1 initial member(s) and 1 member(s) required for recovery)
+2026-09-13T03:18:40.284339Z 0   [info ] CCF/src/host/run.cpp:508             | Initialising enclave: enclave_create_node
+2026-09-13T03:18:40.376093Z 0   [info ] CCF/src/enclave/rpc_sessions.h:212   | Setting max open sessions on interface "agentdns-internal" (127.0.0.1:8001) to [64, 128] and endorsement authority to Service
+2026-09-13T03:18:40.376164Z 0   [info ] CCF/src/enclave/rpc_sessions.h:212   | Setting max open sessions on interface "primary_rpc_interface" (0.0.0.0:8000) to [256, 512] and endorsement authority to Service
+2026-09-13T03:18:40.376400Z 0   [info ] rpc/network_identity_subsystem.h:269 | Retry fetching network identity as node is not part of the network yet
+2026-09-13T03:18:40.394044Z 0   [info ] CCF/src/node/node_state.h:2947       | Node TLS connections now accepted
+2026-09-13T03:18:40.394704Z 0   [info ] CCF/src/node/rpc/frontend.h:1093     | Opening frontend
+2026-09-13T03:18:40.407731Z 0   [info ] CCF/src/node/history.h:631           | Setting service signing identity to iss: agentdns sub: ledger.signature. Ledger signature mode: "Dual"
+2026-09-13T03:18:40.410518Z 0   [info ] CCF/src/consensus/aft/raft.h:2230    | Becoming leader n[4ea28ccc749b746b67643a834e190f5ca616b4cfe7554415365345ed1c64e466]: 2
+2026-09-13T03:18:40.412782Z 0   [info ] CCF/src/node/node_state.h:1015       | Initial node attestation ("Insecure_Virtual"): eyJob3N0X2RhdGEiOiI3YjQxYTNhOWMxNDdhOTIzNTQyYmRkYTQyNGQ5YzY2OWYwZDE2NmQ1YzVjODYwMTkzNGIxNjQ5MjgyMThlODg4IiwibWVhc3VyZW1lbnQiOiJJbnNlY3VyZSBoYXJkLWNvZGVkIHZpcnR1YWwgbWVhc3VyZW1lbnQgdjEiLCJyZXBvcnRfZGF0YSI6IlRxS016SFNiZEd0blpEcURUaGtQWEtZV3RNL25WVVFWTmxORjdSeGs1R1k9In0=
+2026-09-13T03:18:40.414064Z 0   [info ] CCF/src/node/node_state.h:893        | Security policy not set, skipping check against attestation host data
+2026-09-13T03:18:40.414301Z 0   [info ] CCF/src/node/node_state.h:1207       | Created new node n[4ea28ccc749b746b67643a834e190f5ca616b4cfe7554415365345ed1c64e466]
+2026-09-13T03:18:40.494028Z 0   [info ] CCF/src/host/run.cpp:554             | Created new node
+2026-09-13T03:18:40.494236Z 0   [info ] CCF/src/host/run.cpp:565             | Output self-signed node certificate to node.pem
+2026-09-13T03:18:40.494268Z 0   [info ] CCF/src/host/run.cpp:574             | Output service certificate to service_cert.pem
+2026-09-13T03:18:40.494409Z 0   [info ] CCF/src/host/run.cpp:606             | Starting enclave thread(s)
+2026-09-13T03:18:40.494606Z 0   [info ] CCF/src/host/run.cpp:614             | Entering event loop
+2026-09-13T03:18:40.495083Z 0   [info ] CCF/src/enclave/main.cpp:169         | Starting thread: 0
+2026-09-13T03:18:40.495102Z 0   [info ] CCF/src/enclave/main.cpp:176         | All threads are ready!
+2026-09-13T03:18:40.515385Z 0   [info ] CF/src/node/rpc/node_frontend.h:1519 | Processing create RPC
+2026-09-13T03:18:40.522526Z 0   [info ] CCF/src/node/node_state.h:3814       | Skipping shuffling of sealed shares during recovery as ledger secrets are not yet available
+2026-09-13T03:18:40.523739Z 0   [info ] de/recovery_decision_protocol.cpp:59 | Recovery-decision-protocol not configured, skipping
+2026-09-13T03:18:40.523868Z 0   [info ] CF/src/node/rpc/node_frontend.h:1688 | Created service
+2026-09-13T03:18:40.526249Z 0   [info ] CCF/src/node/node_state.h:3296       | [local] node_endorsed_certificates local hook at version 1, with 1 writes
+2026-09-13T03:18:40.526351Z 0   [info ] CCF/src/node/node_state.h:3334       | [local] Setting endorsed node cert to:
+-----BEGIN CERTIFICATE-----
+MIIB2jCCAV+gAwIBAgIQYIULso69R3sIXSINoyKX3zAKBggqhkjOPQQDAzAbMRkw
+FwYDVQQDDBBhZ2VudGRucyBTZXJ2aWNlMB4XDTI2MDkxMzAzMTg0MFoXDTI2MDky
+MDAzMTgzOVowEzERMA8GA1UEAwwIYWdlbnRkbnMwdjAQBgcqhkjOPQIBBgUrgQQA
+IgNiAAQ8e5Bwf3eHNoTC94IQgh+u406TyLKnbLtC7aNVSMHtrhZToDia14ufPRKi
+Si08m2a7W48Jc3It1kNCaG3ELPj1i5mnnTFOd1AWqpj4CA7tbf+32YAUgPlNLc/k
+hsSDT3ejcDBuMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFFb8bhFveET8Pd/D1fYY
+tV7vv0d5MB8GA1UdIwQYMBaAFJTjYAve6pMQlDfPb+EUsZk9ybXcMB4GA1UdEQQX
+MBWHBH8AAAGCDWFnZW50ZG5zLnRlc3QwCgYIKoZIzj0EAwMDaQAwZgIxAIhpPXMe
+i5lFlRGSwviLW0OVRqrhsawbPP35hqnMnTLyubMY0KiccxnFDvjJytex+gIxANKP
+inG2IeVLgYM96s+Lz8n90OOhmg0gs0nCPj+AaLhoGlZZfUGAgHLe+gXY54+OJA==
+-----END CERTIFICATE-----
+
+2026-09-13T03:18:40.601228Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:40.702886Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:40.808334Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:40.917652Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.019530Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.131820Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.238628Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.349159Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.456085Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.517570Z 0   [info ] CCF/src/consensus/aft/raft.h:572     | Election timer has become active
+2026-09-13T03:18:41.519147Z 0   [info ] CCF/src/node/node_state.h:3350       | [global] node_endorsed_certificates global hook at version 1, with 1 writes
+2026-09-13T03:18:41.519346Z 0   [info ] CCF/src/node/node_state.h:3376       | [global] Accepting network connections
+2026-09-13T03:18:41.520426Z 0   [info ] CCF/src/node/node_state.h:2956       | Network TLS connections now accepted
+2026-09-13T03:18:41.520523Z 0   [info ] CCF/src/node/node_state.h:3420       | [global] Member frontend is NOT open
+2026-09-13T03:18:41.520541Z 0   [info ] CCF/src/node/node_state.h:3421       | [global] Self-signed node cert remains:
+-----BEGIN CERTIFICATE-----
+MIIB6jCCAXCgAwIBAgIRALs4jKJ4lmFNsiT0TR1XtGYwCgYIKoZIzj0EAwMwEzER
+MA8GA1UEAwwIYWdlbnRkbnMwHhcNMjYwOTEzMDMxODQwWhcNMjYwOTIwMDMxODM5
+WjATMREwDwYDVQQDDAhhZ2VudGRuczB2MBAGByqGSM49AgEGBSuBBAAiA2IABDx7
+kHB/d4c2hML3ghCCH67jTpPIsqdsu0Lto1VIwe2uFlOgOJrXi589EqJKLTybZrtb
+jwlzci3WQ0JobcQs+PWLmaedMU53UBaqmPgIDu1t/7fZgBSA+U0tz+SGxINPd6OB
+hzCBhDASBgNVHRMBAf8ECDAGAQH/AgEBMA4GA1UdDwEB/wQEAwIChDAdBgNVHQ4E
+FgQUVvxuEW94RPw938PV9hi1Xu+/R3kwHwYDVR0jBBgwFoAUVvxuEW94RPw938PV
+9hi1Xu+/R3kwHgYDVR0RBBcwFYcEfwAAAYINYWdlbnRkbnMudGVzdDAKBggqhkjO
+PQQDAwNoADBlAjEA83BrQDqHaRa71UJc5U6BJctbJjrXycgCtHFKKwO+aVYB0Nrr
+zR8opxvuQVUfvo9iAjB+rSwhPlVaUqBaX23NHJ0bjCZmJiodYySsYVR1Qtuszv8e
+dxcD0EGUSkCz5BE3LgE=
+-----END CERTIFICATE-----
+
+2026-09-13T03:18:41.520609Z 0   [info ] CCF/src/node/node_state.h:3426       | [global] Opening members frontend
+2026-09-13T03:18:41.522280Z 0   [info ] CCF/src/node/node_state.h:3455       | Executing global hook for service table at 1, to service status 1. Cert is:
+-----BEGIN CERTIFICATE-----
+MIIB2DCCAV2gAwIBAgIQO1MfpC1EsIf5+dZbNNtY/TAKBggqhkjOPQQDAzAbMRkw
+FwYDVQQDDBBhZ2VudGRucyBTZXJ2aWNlMB4XDTI2MDkxMzAzMTg0MFoXDTI2MDky
+MDAzMTgzOVowGzEZMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTB2MBAGByqGSM49
+AgEGBSuBBAAiA2IABCEW+vLBaKnqRReLVACbgUuVNkNCmCdnnz8u3K0/6zNaCWpw
+hozco0Uk9n+YbUk9/x+N6TElNSOC8lhFBZoKsRbK4W5mTZohjoyaNCBChKD3gkVj
+uc2fqeKg2t6GcDWBKKNmMGQwEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8E
+BAMCAoQwHQYDVR0OBBYEFJTjYAve6pMQlDfPb+EUsZk9ybXcMB8GA1UdIwQYMBaA
+FJTjYAve6pMQlDfPb+EUsZk9ybXcMAoGCCqGSM49BAMDA2kAMGYCMQDOaqM//orj
+Rxj27RHXTXR4V9c/6aETuLBzzPUAlC+PDWL6zOv0gNrtihyq9JZwNnsCMQDUipd+
+j/jjveNrNJfwb7W/wChGaY8CE5OtQttVEs4M4yCS+XcJpyzY6gQ8y0MEuqI=
+-----END CERTIFICATE-----
+
+2026-09-13T03:18:41.524419Z 0   [info ] CCF/src/node/rpc/frontend.h:1093     | Opening frontend
+2026-09-13T03:18:41.573619Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.673276Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.714433Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/state-digests/{memberId}:update 200 4ms 1 attempt(s)
+2026-09-13T03:18:41.781402Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.884516Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:41.986512Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.095447Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.202597Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.311830Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.421105Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.529909Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.579859Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/state-digests/{memberId}:ack 204 3ms 1 attempt(s)
+2026-09-13T03:18:42.636214Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.737658Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.848629Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:42.950099Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.051001Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.159127Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.269337Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.376714Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.476680Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.579704Z 0   [info ] rpc/network_identity_subsystem.h:281 | Retrying fetching network identity as current service create txid is not yet available or service is not yet open
+2026-09-13T03:18:43.678860Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 55ms 1 attempt(s)
+2026-09-13T03:18:43.694279Z 0   [info ] rpc/network_identity_subsystem.h:340 | The very first service endorsement is self-signed at 1, no endorsement chain will be preloaded
+2026-09-13T03:18:43.694856Z 0   [info ] rpc/network_identity_subsystem.h:504 | Adding trusted seq 1 key MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEIRb68sFoqepFF4tUAJuBS5U2Q0KYJ2efPy7crT/rM1oJanCGjNyjRST2f5htST3/H43pMSU1I4LyWEUFmgqxFsrhbmZNmiGOjJo0IEKEoPeCRWO5zZ+p4qDa3oZwNYEo
+2026-09-13T03:18:43.695238Z 0   [info ] rpc/network_identity_subsystem.h:257 | Network identity fetching settled at Done
+2026-09-13T03:18:44.521249Z 0   [info ] CCF/src/node/node_state.h:3455       | Executing global hook for service table at 7, to service status 2. Cert is:
+-----BEGIN CERTIFICATE-----
+MIIB2DCCAV2gAwIBAgIQO1MfpC1EsIf5+dZbNNtY/TAKBggqhkjOPQQDAzAbMRkw
+FwYDVQQDDBBhZ2VudGRucyBTZXJ2aWNlMB4XDTI2MDkxMzAzMTg0MFoXDTI2MDky
+MDAzMTgzOVowGzEZMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTB2MBAGByqGSM49
+AgEGBSuBBAAiA2IABCEW+vLBaKnqRReLVACbgUuVNkNCmCdnnz8u3K0/6zNaCWpw
+hozco0Uk9n+YbUk9/x+N6TElNSOC8lhFBZoKsRbK4W5mTZohjoyaNCBChKD3gkVj
+uc2fqeKg2t6GcDWBKKNmMGQwEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8E
+BAMCAoQwHQYDVR0OBBYEFJTjYAve6pMQlDfPb+EUsZk9ybXcMB8GA1UdIwQYMBaA
+FJTjYAve6pMQlDfPb+EUsZk9ybXcMAoGCCqGSM49BAMDA2kAMGYCMQDOaqM//orj
+Rxj27RHXTXR4V9c/6aETuLBzzPUAlC+PDWL6zOv0gNrtihyq9JZwNnsCMQDUipd+
+j/jjveNrNJfwb7W/wChGaY8CE5OtQttVEs4M4yCS+XcJpyzY6gQ8y0MEuqI=
+-----END CERTIFICATE-----
+
+2026-09-13T03:18:44.521434Z 0   [info ] CCF/src/node/node_state.h:3468       | Service open at seqno 7
+2026-09-13T03:18:44.523851Z 0   [info ] CCF/src/host/ledger.h:1409           | Ledger complete recovery
+2026-09-13T03:18:44.528361Z 0   [info ] CCF/src/node/rpc/frontend.h:1093     | Opening frontend
+2026-09-13T03:18:44.715943Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 32ms 1 attempt(s)
+2026-09-13T03:18:45.527817Z 0   [info ] /src/snapshots/snapshot_writer.h:118 | New snapshot file written to snapshot_8_9 [87664 bytes] (unsynced)
+2026-09-13T03:18:45.536153Z 0   [info ] /src/snapshots/snapshot_writer.h:151 | Renamed snapshot snapshot_8_9 to snapshot_8_9.committed
+{"elapsed_micros":155593,"event":"agentdns.dnssec.signing","record_count":244,"serial":7,"zone":"example.test."}
+{"elapsed_micros":141199,"event":"agentdns.dnssec.signing","record_count":244,"serial":8,"zone":"example.test."}
+2026-09-13T03:24:31.052959Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 9ms 1 attempt(s)
+{"elapsed_micros":143241,"event":"agentdns.dnssec.signing","record_count":249,"serial":9,"zone":"example.test."}
+2026-09-13T03:24:41.494404Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 9ms 1 attempt(s)
+2026-09-13T03:24:44.542169Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 8ms 1 attempt(s)
+2026-09-13T03:24:46.669183Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 10ms 1 attempt(s)
+{"elapsed_micros":142754,"event":"agentdns.dnssec.signing","record_count":250,"serial":10,"zone":"example.test."}
+2026-09-13T03:24:56.610649Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 9ms 1 attempt(s)
+2026-09-13T03:25:01.435214Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 7ms 1 attempt(s)
+2026-09-13T03:25:01.622949Z 0   [info ][gov] gov/gov_endpoint_registry.h:125 | RequestCompletedEvent: POST /members/proposals:create 200 11ms 1 attempt(s)

@@ -1,0 +1,11 @@
+{
+  "runtime_image": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "network": "none",
+  "runtime_root_filesystem": "read-only",
+  "inputs": "individual public quote, actual captured peer certificate, supplied preapproved policy and pinned AMD public key; read-only mounts",
+  "verification_command": "python3 -B verify_native_ccf.py --quote node-quote.json --peer node-peer.der --policy node-policy.json --ark amd_genoa_ark.pem --now 1789285928 --output NEW_OUTPUT_DIRECTORY",
+  "guard_command": "python3 -B -m unittest discover -s . -p test_native_ccf_quote.py -v",
+  "guard_count": 6,
+  "negative_checks_on_actual_capture": 16,
+  "source_boundary": "New independent Python verifier reuses the frozen shared certificate and UVM signature primitives included here; it does not call the Rust verifier."
+}

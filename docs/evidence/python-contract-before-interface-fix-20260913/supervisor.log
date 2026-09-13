@@ -1,0 +1,14 @@
+test_child_environment_does_not_inherit_secret_values (test_supervisor.SupervisorTest.test_child_environment_does_not_inherit_secret_values) ... ok
+test_confidential_readonly_secret_volume_and_write_permissions (test_supervisor.SupervisorTest.test_confidential_readonly_secret_volume_and_write_permissions) ... ok
+test_duplicate_manifest_key_rejected (test_supervisor.SupervisorTest.test_duplicate_manifest_key_rejected) ... ok
+test_provisioning_requires_object_and_matching_committed_transaction (test_supervisor.SupervisorTest.test_provisioning_requires_object_and_matching_committed_transaction) ... ok
+test_tampered_file_manifest_and_missing_member_rejected (test_supervisor.SupervisorTest.test_tampered_file_manifest_and_missing_member_rejected) ... ok
+test_verified_bootstrap_is_frozen_before_input_can_change (test_supervisor.SupervisorTest.test_verified_bootstrap_is_frozen_before_input_can_change) ... ok
+test_real_tls_response_size_duplicate_header_and_success (test_supervisor.SupervisorTlsBoundsTests.test_real_tls_response_size_duplicate_header_and_success) ... ok
+test_real_tls_trickling_headers_and_body_have_one_absolute_deadline (test_supervisor.SupervisorTlsBoundsTests.test_real_tls_trickling_headers_and_body_have_one_absolute_deadline) ... ok
+test_unresponsive_tls_handshake_consumes_the_same_deadline (test_supervisor.SupervisorTlsBoundsTests.test_unresponsive_tls_handshake_consumes_the_same_deadline) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.644s
+
+OK

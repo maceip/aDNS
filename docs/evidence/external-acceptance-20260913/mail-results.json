@@ -1,0 +1,31 @@
+{
+  "dnssec_validated_tlsa": true,
+  "postfix": {
+    "good": {
+      "exit_code": 0,
+      "authenticated": true,
+      "log": "postfix-dane-good.log"
+    },
+    "bad": {
+      "exit_code": 0,
+      "authenticated": false,
+      "log": "postfix-dane-bad.log"
+    }
+  },
+  "pkix": {
+    "465": {
+      "verified": true,
+      "protocol": "TLSv1.3",
+      "cipher": "TLS_AES_256_GCM_SHA384",
+      "dnssec_tlsa_matches_peer_spki": true,
+      "wrong_hostname_rejected": true
+    },
+    "993": {
+      "verified": true,
+      "protocol": "TLSv1.3",
+      "cipher": "TLS_AES_256_GCM_SHA384",
+      "dnssec_tlsa_matches_peer_spki": true,
+      "wrong_hostname_rejected": true
+    }
+  }
+}

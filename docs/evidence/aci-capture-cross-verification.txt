@@ -1,0 +1,25 @@
+2026-09-13 UTC
+
+A test-only Python capture state (synthetic report; no hardware appraisal claim)
+created a real ES256 signed request. A temporary Rust binary called the actual
+adns_auth::parse_signed_request and adns_auth::verify_request_signature APIs.
+
+Result:
+Rust parsed Python JCS, validated fixed P256 signature and evidence digest:
+35d3bfa8e91f87ffa8c7240f5102a83e6fbadcab064677710e4b791a4deb9fd4
+
+The test validates cross-language action schema/canonicalization, P1363 request
+signature encoding, key encoding, and evidence digest binding. It does not
+validate a synthetic SNP report, endorse a workload measurement, consume a CCF
+nonce, or establish a globally committed registration. The temporary fixture
+and verifier reside outside the repository at
+/private/tmp/agentdns-capture-cross-check.
+
+The shipped native collector was independently executed in agentdns-capture:local
+on the local non-SNP host and failed closed:
+exit status 255; stderr: No supported SNP device found
+
+Final image local identity:
+sha256:c794524d2503f143b333e50eb810a520a1c360e636cde6c4fab670dfc4a5e8f9
+linux/amd64 manifest:
+sha256:cc9bad5871bb30bd4cb8e854535dbd3f781820c26980aa86b82589d16de2bee7

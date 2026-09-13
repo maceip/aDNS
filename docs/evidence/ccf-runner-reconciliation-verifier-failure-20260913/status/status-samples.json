@@ -1,0 +1,118 @@
+[
+  {
+    "unix_seconds": 1789268814.882045,
+    "elapsed_seconds": 1.8333998013986275e-05,
+    "http_status": 200,
+    "body": {
+      "committed_state": {
+        "ccf_tx_id": "2.272",
+        "earliest_rrsig_expiration": 1789269404,
+        "maintenance_health": "ok",
+        "rrsig_inception": 1789268504,
+        "serial": 8
+      },
+      "frontend_propagation": {
+        "secondaries": [
+          {
+            "endpoint": "127.0.0.1:53",
+            "in_sync": true,
+            "last_notified_serial": 8,
+            "last_observed_at": 1789268810,
+            "last_observed_serial": 8
+          }
+        ]
+      },
+      "tx_id": "2.272",
+      "zone": "example.test."
+    },
+    "commit_status": "committed",
+    "transaction_id": "2.272"
+  },
+  {
+    "unix_seconds": 1789268825.7421284,
+    "elapsed_seconds": 10.860114802999306,
+    "http_status": 200,
+    "body": {
+      "committed_state": {
+        "ccf_tx_id": "2.284",
+        "earliest_rrsig_expiration": 1789269404,
+        "maintenance_health": "ok",
+        "rrsig_inception": 1789268504,
+        "serial": 8
+      },
+      "frontend_propagation": {
+        "secondaries": [
+          {
+            "endpoint": "127.0.0.1:53",
+            "in_sync": true,
+            "last_notified_serial": 8,
+            "last_observed_at": 1789268820,
+            "last_observed_serial": 8
+          }
+        ]
+      },
+      "tx_id": "2.284",
+      "zone": "example.test."
+    },
+    "commit_status": "committed",
+    "transaction_id": "2.284"
+  },
+  {
+    "unix_seconds": 1789268835.809038,
+    "elapsed_seconds": 20.92701251499966,
+    "http_status": 200,
+    "body": {
+      "committed_state": {
+        "ccf_tx_id": "2.296",
+        "earliest_rrsig_expiration": 1789269404,
+        "maintenance_health": "ok",
+        "rrsig_inception": 1789268504,
+        "serial": 8
+      },
+      "frontend_propagation": {
+        "secondaries": [
+          {
+            "endpoint": "127.0.0.1:53",
+            "in_sync": true,
+            "last_notified_serial": 8,
+            "last_observed_at": 1789268830,
+            "last_observed_serial": 8
+          }
+        ]
+      },
+      "tx_id": "2.296",
+      "zone": "example.test."
+    },
+    "commit_status": "committed",
+    "transaction_id": "2.296"
+  },
+  {
+    "unix_seconds": 1789268844.882983,
+    "elapsed_seconds": 30.00095723800041,
+    "http_status": 200,
+    "body": {
+      "committed_state": {
+        "ccf_tx_id": "2.307",
+        "earliest_rrsig_expiration": 1789269404,
+        "maintenance_health": "ok",
+        "rrsig_inception": 1789268504,
+        "serial": 8
+      },
+      "frontend_propagation": {
+        "secondaries": [
+          {
+            "endpoint": "127.0.0.1:53",
+            "in_sync": true,
+            "last_notified_serial": 8,
+            "last_observed_at": 1789268840,
+            "last_observed_serial": 8
+          }
+        ]
+      },
+      "tx_id": "2.307",
+      "zone": "example.test."
+    },
+    "commit_status": "committed",
+    "transaction_id": "2.307"
+  }
+]

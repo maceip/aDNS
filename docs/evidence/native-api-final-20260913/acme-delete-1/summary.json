@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "operation": "acme_challenge_delete",
+  "result": {
+    "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+    "deleted": true,
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "status": "committed",
+    "tx_id": "2.577",
+    "zone_serial": 13
+  }
+}

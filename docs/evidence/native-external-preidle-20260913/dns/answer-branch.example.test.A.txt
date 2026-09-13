@@ -1,0 +1,16 @@
+id 46171
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+branch.example.test. IN A
+;ANSWER
+;AUTHORITY
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 9 60 30 600 60
+example.test. 60 IN RRSIG SOA 14 2 60 20260913083337 20260913081837 20222 example.test. Z+SsiPaJHLYhkaDWOA1B1T+T8wBnXXbh m7Kn3LoM9oQkwqFx/2vma/fRFqdTOn+t Sy6vraErCHC2roTnom92Mhee3aGU/Lx6 AIKQBsN2Eo+rgoVwmTCzgmtTWOEeUgxy
+8klcjlgo154rkpmicj4kph5jrke7bn0n.example.test. 60 IN NSEC3 1 0 0 - 8prv4qo8nukknkmae551r1f1ugiksibb
+8klcjlgo154rkpmicj4kph5jrke7bn0n.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. mHRZfbFRvjMaz8Fzd5x5n0X2QJ/cKOhW h3p87SUFPJwWBUUGgTpQ5wgEnG4nql1N 3lut1QgfaL3xJtn7TnnlR7dkGs49BqcV lTtvOQkcQuLCMYvWxOcWAGS8MwCyPngl
+;ADDITIONAL

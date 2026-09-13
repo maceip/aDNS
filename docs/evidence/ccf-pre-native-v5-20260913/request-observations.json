@@ -1,0 +1,61 @@
+{
+  "pending": {
+    "execution_state": "pending",
+    "grant_id": "smoke-operator",
+    "latest_observation": {
+      "expires_at": 1789268824,
+      "intent_hash": "5df5ee7890f0b6d8aa58c1565c156b3cbc8407a463d2b666e15da4be36c1d4cf",
+      "issued_at": 1789268524,
+      "nonce": "f8647fc9eafde18a3a09dc5d1eb67cb055e6861690527bda8f15a7c575986b54"
+    },
+    "matching_nonces": 1,
+    "multiple_nonce_ambiguity": false,
+    "observation_status": "committed",
+    "observation_tx_id": "2.12",
+    "phase": "awaiting_committed_result",
+    "request_id": "5d93bc3e-e3e4-484a-9fe4-9ed2cd277e66",
+    "retryable": true,
+    "status": "pending",
+    "tx_id": "2.12"
+  },
+  "failed_submit": {
+    "error": "GRANT_DENIED: expired, future or revoked grant",
+    "execution_state": "failed",
+    "grant_id": "smoke-operator",
+    "http_status": 403,
+    "nonce": "f8647fc9eafde18a3a09dc5d1eb67cb055e6861690527bda8f15a7c575986b54",
+    "nonce_expires_at": 1789268824,
+    "observation_status": "committed",
+    "observation_tx_id": "2.14",
+    "phase": "last_authenticated_attempt",
+    "request_id": "5d93bc3e-e3e4-484a-9fe4-9ed2cd277e66",
+    "retryable": true,
+    "signed_message_digest": "d95f44772a391ae35ac2e4a1a5f496950407941a3d8755078ba20ee317557476",
+    "status": "failed",
+    "tx_id": "2.14"
+  },
+  "failed_query": {
+    "execution_state": "failed",
+    "grant_id": "smoke-operator",
+    "latest_observation": {
+      "error": "GRANT_DENIED: expired, future or revoked grant",
+      "expires_at": 1789268824,
+      "failed_at": 1789268525,
+      "http_status": 403,
+      "intent_hash": "5df5ee7890f0b6d8aa58c1565c156b3cbc8407a463d2b666e15da4be36c1d4cf",
+      "issued_at": 1789268524,
+      "nonce": "f8647fc9eafde18a3a09dc5d1eb67cb055e6861690527bda8f15a7c575986b54",
+      "signed_message_digest": "d95f44772a391ae35ac2e4a1a5f496950407941a3d8755078ba20ee317557476"
+    },
+    "matching_nonces": 1,
+    "multiple_nonce_ambiguity": false,
+    "observation_status": "committed",
+    "observation_tx_id": "2.15",
+    "phase": "last_authenticated_attempt",
+    "request_id": "5d93bc3e-e3e4-484a-9fe4-9ed2cd277e66",
+    "retryable": true,
+    "status": "failed",
+    "tx_id": "2.15"
+  },
+  "unchanged_serial": 7
+}

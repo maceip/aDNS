@@ -1,0 +1,9 @@
+; negative response, fully validated
+; definitely-absent-agentdns.example.test. 60 IN \-ANY ;-$NXDOMAIN
+; example.test. SOA ns.example.test. hostmaster.example.test. 10 60 30 600 60
+; example.test. RRSIG SOA ...
+; gspqm39nh1aj967t5rb35mbb97hb60bg.example.test. RRSIG NSEC3 ...
+; gspqm39nh1aj967t5rb35mbb97hb60bg.example.test. NSEC3 1 0 0 - JBAS736CHUNG3BB701JKJDHQKQLHVUG7 A RRSIG
+; jbas736chung3bb701jkjdhqkqlhvug7.example.test. RRSIG NSEC3 ...
+; jbas736chung3bb701jkjdhqkqlhvug7.example.test. NSEC3 1 0 0 - GSPQM39NH1AJ967T5RB35MBB97HB60BG NS SOA RRSIG DNSKEY NSEC3PARAM
+;; resolution failed: ncache nxdomain

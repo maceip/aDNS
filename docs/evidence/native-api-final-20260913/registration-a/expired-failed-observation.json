@@ -1,0 +1,34 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "712",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.124",
+    "x-ms-ccf-transaction-id": "2.124"
+  },
+  "body": {
+    "execution_state": "failed",
+    "grant_id": "aci-test-owner",
+    "latest_observation": {
+      "error": "GRANT_DENIED: expired, future or revoked grant",
+      "expires_at": 1789288019,
+      "failed_at": 1789287770,
+      "http_status": 403,
+      "intent_hash": "ecd4c9a44668161851d20c70fb82f2e8b796cb5ec9d55211d5a4f1e8312cdf2b",
+      "issued_at": 1789287719,
+      "nonce": "d84a879db96e74ca1493d00f783f1a80fc0f889631b314d1ce8249a67e3a1f7e",
+      "signed_message_digest": "be3840a84201959e7aa5080ba2173a65c08a284d7b3563b8fd766e6f8ee5628a"
+    },
+    "matching_nonces": 1,
+    "multiple_nonce_ambiguity": false,
+    "observation_status": "committed",
+    "observation_tx_id": "2.124",
+    "phase": "last_authenticated_attempt",
+    "request_id": "aci-capture-20260913-01",
+    "retryable": true,
+    "status": "failed",
+    "tx_id": "2.124"
+  },
+  "confirmed_ccf_transaction_id": "2.124"
+}

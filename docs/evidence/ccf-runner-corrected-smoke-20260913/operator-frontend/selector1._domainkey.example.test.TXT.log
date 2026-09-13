@@ -1,0 +1,3 @@
+; fully validated
+selector1._domainkey.example.test. 300 IN TXT	"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6efkC+3lwnGLs6V1dJk10iXmKy9XCaO0T5HHtTn2l0wekFTKPkJXdwmQKc2SBNrJyxDBuEVSD+VpetiqvhwxHkrLj2kmZHEQlLSlUYOSMyD0Iltg4ZKgjzQwT25woFjcMMhEYFqbIXBSpNFBXkxwf8hFiDnkl+shTBRvODMpjUpaZyzoWXIimyhm9bIai+Fcl" "JYJfhUsNFsK0BZOmFILO9Mmgq6RxIwJ9jm3kqRueWpWCzcrQ9+x/GksD75+o3rbKdZJFj7AJE9R9J+vThy/hpTsU00nKrZqxxr5ivQ7XeL/8J7f6uwLw+hDLL1/rgXiG8ZBEh/zlrG9hHBFcYIpCQIDAQAB"
+selector1._domainkey.example.test. 300 IN RRSIG	TXT 14 4 300 20260913024131 20260913022631 4179 example.test. Mb0yb+H9T3O5J83q7k2rHR/u1ZgOmp6iv+mOyhulKdwOu3pcukywsyKw +AVjZPXwYfIxjKQ7ZaUOHb5THiw00F8jeB+TmK09E5oC7G2tfwGFyV9Z 9t1aA0mWOQeEWM0S

@@ -1,0 +1,51 @@
+{
+  "cce_sha256": "038d5fea1d9f295d1636a4161da4d2126fe10fcf2e7b42eb48ba12cf331ce5f1",
+  "primary_amd64_manifest": "sha256:e19e89d475f2176fe729071151657719b618b1eeced20eb2a907467b35d5f415",
+  "primary_binary_sha256": "6506a1aaf9acee7edad970fbd1d6cf9ab55c1c97a6db85bb35baf13c2793766a",
+  "containers": [
+    {
+      "name": "primary",
+      "layer_hashes": [
+        "6c553f19cf80dd98a5d90486c57e8eaa093f3e085b12a892da9561e91f5cf6b3",
+        "6b0b5c4b7a0ab95c74bcc8211dd5b81cde97ba131f79b4f667854a36d3cc9cef",
+        "66fcf213ce1a42669ebe0cf51bc7ab52c94ec342346123ba56047eec8c45e320",
+        "d305e1020d4ac598a200f966be64f60ecc8f9b86dfcdb49c3b91019462a004d0",
+        "c9b99421b19f5ef5d3223fdd764e66259e4526beb2324c3090aa488d0ef53b93",
+        "77d2db29ac59f311e8ac18da4f77ef8f2a36b89a8f207461304586f5c4864e71"
+      ],
+      "command": [
+        "python3",
+        "/opt/agentdns/run.py",
+        "--config",
+        "/config/node.json",
+        "--config-manifest",
+        "/config/manifest.json",
+        "--config-manifest-sha256",
+        "304fc60aa7584c3ce9e28c3abb8f8753df856b5c9cee8b62595c5cfa48d402d4",
+        "--provision-tsig-file",
+        "/secrets/transfer-key.json"
+      ]
+    },
+    {
+      "name": "secondary",
+      "layer_hashes": [
+        "ad7e8b43183eb7d3e25ebe7a49c2b5bdc10d8f0b070f0ca9d3ff1c07365d43e7",
+        "2994c1d662fc414d284aaa5c93da58133a704d691dd83d5e3e7d38a75ffc5823",
+        "e7909cbfde1bba404c2158e91ccae98a89cd47a59878b16ff4afdc5af3158ca3"
+      ],
+      "command": [
+        "python3",
+        "/app/secondary_aci.py"
+      ]
+    },
+    {
+      "name": "pause-container",
+      "layer_hashes": [
+        "16b514057a06ad665f92c02863aca074fd5976c755d26bff16365299169e8415"
+      ],
+      "command": [
+        "/pause"
+      ]
+    }
+  ]
+}

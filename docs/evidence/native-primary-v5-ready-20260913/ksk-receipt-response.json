@@ -1,0 +1,43 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "2597",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.48",
+    "x-ms-ccf-transaction-id": "2.48"
+  },
+  "body": {
+    "algorithm": 14,
+    "ccf_service_identity": "-----BEGIN CERTIFICATE-----\nMIIB1jCCAV2gAwIBAgIQWDynkPV0bzX1tdmK5YhRrDAKBggqhkjOPQQDAzAbMRkw\nFwYDVQQDDBBhZ2VudGRucyBTZXJ2aWNlMB4XDTI2MDkxMzA4MTc0NloXDTI2MDky\nMDA4MTc0NVowGzEZMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTB2MBAGByqGSM49\nAgEGBSuBBAAiA2IABD6T8lKas0d8oq31cn56MeO4p7a6exQ/QuY4xn6TMshcow3b\nBVF8lhYNt6yxNbMy86O7F9J1nG0chh+9vmnEVi0es9n0kHvY34MKrl9gH7E9zqQJ\nMVpZrIiL8MjJrq0tJaNmMGQwEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8E\nBAMCAoQwHQYDVR0OBBYEFKq+X4WdtGs9SXIGh6tBhDNr2fCUMB8GA1UdIwQYMBaA\nFKq+X4WdtGs9SXIGh6tBhDNr2fCUMAoGCCqGSM49BAMDA2cAMGQCMGr1d7tdKAjG\nKwDZrpZtFKjDy4q1pGjJLRRYuueH24bm8ORXD5SURLURczuSz4r8AwIwS/rZfCC6\nq6C38XspPvKB2FfPHBHnk5TaWJ3ahlcEpgIDJ1764142Q3EYuRDOCF4i\n-----END CERTIFICATE-----\n",
+    "dnskey_rdata_hex": "0101030e96d48698434592e8a254fa19289438519282105dfed3b28400cc8497875fcc6fd6f318500cf4c4ddc586035370ae4b2c7005ffee12e7a17b22e38dd81ce5eaa0fa69f0f03f0ea3806b8ab2992904d6ec0452142f3fce303399c534cc4dbf4dc0",
+    "ds_digest": {
+      "digest_hex": "b83d40933194855aec2e0da371bd4b93d0bde35548b60d14d999c92026d62540",
+      "digest_type": 2
+    },
+    "key_tag": 9055,
+    "owner_name": "example.test.",
+    "proof": {
+      "cert": "-----BEGIN CERTIFICATE-----\nMIIB2jCCAWCgAwIBAgIRANMQsdS7xxpTc4qZyUsufP8wCgYIKoZIzj0EAwMwGzEZ\nMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTAeFw0yNjA5MTMwODE3NDZaFw0yNjA5\nMjAwODE3NDVaMBMxETAPBgNVBAMMCGFnZW50ZG5zMHYwEAYHKoZIzj0CAQYFK4EE\nACIDYgAEFEUsPAEPAqcGTSCaJbHquSTiAtdfb4QalMw8vvyFhhfD1mXxdACkn6Sj\nRN5DHSgirxNnFwcWIKakasrE/OiMJapnMBb1TqvJvpo8X+U7X3T836jm7KuMgyud\narb9WMXBo3AwbjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBS1HSn4qw5O8AtlyBRr\neF8YnXK+zzAfBgNVHSMEGDAWgBSqvl+FnbRrPUlyBoerQYQza9nwlDAeBgNVHREE\nFzAVhwR/AAABgg1hZ2VudGRucy50ZXN0MAoGCCqGSM49BAMDA2gAMGUCMQCc5ij0\n57pnt0koNXIQ+GbFXg1JL/isUqu1NtDmieiJgbESl9YF1rGAeE3qEJ6ZaGUCMA6+\nUmytbxwdSVP+Ugzx31lYqT30olAM3+j+thMMZ1CiQJ7M2x1V4iEMgZrA5TnTZA==\n-----END CERTIFICATE-----\n",
+      "leaf_components": {
+        "claims_digest": "eeb3254efbd0a64e5c78efaa8d9dce34346e340732fc83b3445c2a0d34bccef0",
+        "commit_evidence": "ce:2.48:d5b5c8931d8c47a236c7e6e0250233e84b3a5f211e515ffddb5244b7df52008c",
+        "write_set_digest": "da3523c834a56c33ccaaec02c6f41c5ca0124b5bd38018db7af9066bfed54c88"
+      },
+      "node_id": "35db9f1e658e79159a42a36fb2d851a895c970c5c42460530b83bb22d356e6ed",
+      "proof": [
+        {
+          "left": "fd3a4733c26195b5301bde0d4bf5f3d1958d9844660671dd3f24f98128d2e3fa"
+        },
+        {
+          "left": "4ec04281719c3fe8ca2f008f5c2e30c2a9f77251178e5262c4d5aceabc94c9fb"
+        }
+      ],
+      "signature": "MGUCMQCGNsGgBRDIBej8VULX0JS0YFrYjWudR6S5/TLs2rdBLDkUpvQYZOjnrj7/uBf1r+0CMDseh3S5gRlU4DniiZwiy8TzaWNXp2JtXUiuA4MXvhSLMgDwl4Wj7hpwZ+WAckYMhw=="
+    },
+    "status": "committed",
+    "tx_id": "2.48",
+    "zone": "example.test."
+  },
+  "confirmed_ccf_transaction_id": "2.48"
+}

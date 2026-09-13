@@ -1,0 +1,4 @@
+{
+  "agentdnsport20260913.azurecr.io/primary:20260913-contract": "/primary.tar",
+  "agentdnsport20260913.azurecr.io/secondary:20260913": "/secondary.tar"
+}

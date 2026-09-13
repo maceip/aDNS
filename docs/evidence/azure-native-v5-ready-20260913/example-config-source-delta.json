@@ -1,0 +1,9 @@
+{
+  "path": "ccf/node.example.json",
+  "frozen_build_input_sha256": "a5f1f3cf9b5f092edbc66f449b6bcfb95ad43189292c388d39f8396d54df0749",
+  "current_source_sha256": "ac5cafbd31a319dee46a39bd65250671ebb21abdc892bc8a7dc31e8c0c676a14",
+  "change": "add exact /node/state to internal ACL for direct supervisor compatibility",
+  "not_packaged_in_runtime_image": true,
+  "native_deployment_uses_separate_manifest_bound_configuration": true,
+  "image_and_elf_unchanged": true
+}

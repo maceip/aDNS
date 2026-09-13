@@ -1,0 +1,7 @@
+{
+  "tlsa_sha256": "f37385d9202c5cd243d752ac62ce6b5da00b2a0bf981e6a46a8ee2118e451f49",
+  "records": 257,
+  "zone": "example.test.",
+  "signature_validity": 600,
+  "refresh_before": 300
+}

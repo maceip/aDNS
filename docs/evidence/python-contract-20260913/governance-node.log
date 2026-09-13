@@ -1,0 +1,14 @@
+✔ revocation writes permanent mirrored tombstone and preserves replacement (1.771042ms)
+✔ revoked identities retain capacity and active replacement remains editable (4.7475ms)
+✔ policy ID is stable across object ordering and exact repeats (1.239291ms)
+✔ every trust change requires a new policy ID, including historical reuse (1.451792ms)
+✔ policy history has bounded capacity without evicting identities (38.80575ms)
+✔ policy identity rejects ambiguous numbers, Unicode and excessive structure (1.658583ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.634625

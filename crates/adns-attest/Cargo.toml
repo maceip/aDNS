@@ -1,0 +1,20 @@
+[package]
+name = "adns-attest"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+base64.workspace = true
+coset = "0.4"
+ciborium = "0.2"
+hex.workspace = true
+openssl = "0.10"
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+x509-parser = "0.18"
+# x509-parser permits newer time releases whose MSRV exceeds workspace Rust 1.85.
+time = "=0.3.44"

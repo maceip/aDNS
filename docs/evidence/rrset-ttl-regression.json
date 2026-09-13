@@ -1,0 +1,19 @@
+{
+  "status": "reproduced_then_fixed",
+  "trigger": "governed apex TXT TTL60 plus signed operator TXT TTL300",
+  "pre_fix_failure": "AppError::Dnssec: zone requires exactly one apex SOA, apex NS, consistent TTLs, no CNAME conflicts, and only in-zone IN records",
+  "correction": "Complete base+dynamic snapshot minimum TTL per owner/type/class, canonical-wire dedup after normalization; source records and ownership preserved",
+  "regressions": [
+    "Both TTL directions; duplicates and actual TXT RRSIG original_ttl",
+    "Signed operator deletion restores base record and original TTL",
+    "Canonical duplicate base NS and CNAME records normalize before dedup",
+    "Distinct base CNAME target or CNAME/other-data conflicts roll back nonce/result/records/serial"
+  ],
+  "verification": {
+    "server_tests": 23,
+    "ccf_adapter_tests": 9,
+    "transfer_tests": 8,
+    "strict_clippy": "passed"
+  },
+  "boundary": "Local transactional and crypto regressions; replacement image and assembled CCF/BIND proof recorded separately"
+}

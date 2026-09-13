@@ -1,0 +1,7 @@
+{
+  "operation": "acme_challenge_delete",
+  "request_id": "native-acme-delete-1-20260913",
+  "parameters": {
+    "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "action": {
+    "operation": "operator_records",
+    "request_id": "d2ef9eaff02048acb695a4e3cad7cf22",
+    "audience": "ccf://agentdns.test",
+    "grant_id": "mail-policy-e8dd6bb96e524848",
+    "zone": "example.test.",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE_v-8-SXaFTnUsFUDmU-Y3aiXebYh4WA60VA_5RtNLynSyjrfRA3dy-neAYnGn41ROMwx9EIEj8HQhfxE9qEYow",
+    "parameters": {
+      "expected_serial": 9,
+      "mutations": [
+        {
+          "action": "replace",
+          "name": "example.test.",
+          "type": "TXT",
+          "ttl": 300,
+          "rdata_strings": [
+            "v=spf1 -all"
+          ]
+        },
+        {
+          "action": "replace",
+          "name": "selector1._domainkey.example.test.",
+          "type": "TXT",
+          "ttl": 300,
+          "rdata_strings": [
+            "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkJaQHLlApaADsrAeyIz79UXSkkb4xYWchArGLSVjgMmo/UdTjYle46S7yeg4ygXMmucX8imPITNKSMkmkYicq9SrfSXWkk9NcoIH6kBijViL3QSvJQECBReao0gthz9te3L3X4ynw4plFroczgvf4aF3WwMoyTSjpPo/yqHNBfnKIkWsjESrlbZnMH1K+DOOSl2BWIck1tcyWKcGrwPNsaN3ZuIaXDcrU+QBzfp3wWAcXraNe84F9qHPm34s5HG9CD1GMMa9yB2YvqCX9LHMoAo76qMypHc0NPBcEVYLO3/+iW3dV6i+k4nV21hkntkGfbRZjqq/8kemO+zUXiF9kQIDAQAB"
+          ]
+        },
+        {
+          "action": "replace",
+          "name": "_dmarc.example.test.",
+          "type": "TXT",
+          "ttl": 300,
+          "rdata_strings": [
+            "v=DMARC1; p=reject; rua=mailto:dmarc@example.test"
+          ]
+        },
+        {
+          "action": "replace",
+          "name": "_smtp._tls.example.test.",
+          "type": "TXT",
+          "ttl": 300,
+          "rdata_strings": [
+            "v=TLSRPTv1; rua=mailto:tlsrpt@example.test"
+          ]
+        },
+        {
+          "action": "replace",
+          "name": "example.test.",
+          "type": "CAA",
+          "ttl": 300,
+          "rdata_strings": [
+            "0 issue \"letsencrypt.org\""
+          ]
+        }
+      ]
+    }
+  },
+  "nonce": "654d94c69988a2d1f33298d7ef0ad27f143025140479bd5e350db1033dc98fbd",
+  "nonce_expires_at": 1789288276,
+  "intent_hash": "2dd5a4b1e1fdc4d25215891b5aa92254d0262b1f783e765e09f8f74dc83ab29d",
+  "client_signature": "_709-R7MMqUkNEaL0fIxX41znNoLdde6EiXXcOnpsDkBocA0qySIiQekEuhEU9kcs4QK-CxgeEuUuxr4pmoM7g"
+}

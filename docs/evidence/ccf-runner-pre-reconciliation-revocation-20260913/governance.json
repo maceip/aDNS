@@ -1,0 +1,13 @@
+{
+  "platform": "Virtual; local CCF protocol test only",
+  "member_ack_tx_id": "2.5",
+  "service_open_tx_id": "2.7",
+  "configuration_tx_id": "2.10",
+  "zone": "example.test.",
+  "initial_serial": 7,
+  "base_records": 244,
+  "signature_validity_seconds": 600,
+  "refresh_before_seconds": 300,
+  "service_registration_created": false,
+  "hardware_appraisal_claimed": false
+}

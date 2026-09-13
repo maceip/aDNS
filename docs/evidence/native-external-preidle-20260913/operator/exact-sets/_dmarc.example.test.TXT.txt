@@ -1,0 +1,14 @@
+id 10336
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_dmarc.example.test. IN TXT
+;ANSWER
+_dmarc.example.test. 300 IN TXT "v=DMARC1; p=reject; rua=mailto:dmarc@example.test"
+_dmarc.example.test. 300 IN RRSIG TXT 14 3 300 20260913083735 20260913082235 20222 example.test. MK3I+ZLyLdbIsSA8g0IfiYRs2M9hrzpb b1qAFw0v6kwiNUZW3wanJHOn9tb8dEPv iCJfRkkkNVLkqmKJf6QrkxA0E3JmEcbs 5nQp4lWWGofWpkmCu1QpqFlMUUHRRRda
+;AUTHORITY
+;ADDITIONAL

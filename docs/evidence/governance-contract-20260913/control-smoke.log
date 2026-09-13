@@ -1,0 +1,8 @@
+{
+  "member_id": "03000d6afa78da6e7b47a58a2819546d2cc71fc787b4ab5e55f14d0c5e09aea7",
+  "config_manifest_sha256": "889e9570de30a35707859e972f873dcca3f0290e6a4f42f6331a7b5173f11d29",
+  "transfer_secret_sha256": "030de6670558a64cdcba2f7cbede374dcf25024b0d35cc4027f32156a4f16066",
+  "transfer_key_name": "agentdns-transfer.",
+  "secondary_endpoint": "127.0.0.1:53"
+}
+{"status": "passed", "platform": "Virtual; control protocol only", "member_ack_tx_id": "2.5", "service_open_tx_id": "2.7", "configuration_tx_id": "2.10", "transfer_governance_tx_id": "2.12", "transfer_revocation_tx_id": "2.16", "replacement_transfer_tx_id": "2.20", "policy_initial_tx_id": "2.24", "policy_exact_repeat_tx_id": "2.26", "policy_new_id_tx_id": "2.28", "supervisor_provisioned_and_repeated_with_global_commit": true, "ungoverned_transfer_secret_rejected": true, "revoked_transfer_reprovision_and_reactivation_rejected": true, "replacement_transfer_provisioned": true, "policy_same_id_trust_change_and_unsafe_number_rejected": true, "dns_sni_with_numeric_connect_ip": true}

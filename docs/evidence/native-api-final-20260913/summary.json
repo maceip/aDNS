@@ -1,0 +1,103 @@
+{
+  "status": "completed phases verified; final native acceptance remains in progress",
+  "primary": "4.208.82.123",
+  "canonical_secondary": "20.166.33.141",
+  "image_amd64_manifest": "sha256:4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "cce_sha256": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "phases": {
+    "registration-a": {
+      "status": "passed",
+      "operation": "registration",
+      "owner_scope_negatives": 6,
+      "invalid_signature_and_evidence_negatives": 3,
+      "consumed_nonce_negative": true,
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "transaction_id": "2.143"
+    },
+    "registration-b": {
+      "status": "passed",
+      "operation": "registration",
+      "owner_scope_negatives": 0,
+      "invalid_signature_and_evidence_negatives": 0,
+      "consumed_nonce_negative": false,
+      "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+      "transaction_id": "2.173"
+    },
+    "renew-a": {
+      "status": "passed",
+      "operation": "renew",
+      "result": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.341",
+        "zone_serial": 10
+      }
+    },
+    "acme-create-1": {
+      "status": "passed",
+      "operation": "acme_challenge_create",
+      "result": {
+        "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+        "expires_at": 1789288215,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.389",
+        "zone_serial": 11
+      }
+    },
+    "acme-create-2": {
+      "status": "passed",
+      "operation": "acme_challenge_create",
+      "result": {
+        "challenge_id": "chal-f9b32975bd7083986131ba5c8e66dcc4",
+        "expires_at": 1789288235,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.416",
+        "zone_serial": 12
+      }
+    },
+    "acme-delete-1": {
+      "status": "passed",
+      "operation": "acme_challenge_delete",
+      "result": {
+        "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+        "deleted": true,
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "status": "committed",
+        "tx_id": "2.577",
+        "zone_serial": 13
+      }
+    }
+  },
+  "operator": {
+    "scope": "real governed operator mutation, not attested registration or email delivery",
+    "transaction_id": "2.314",
+    "zone_serial": 10,
+    "governance_transaction_id": "2.303",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "dkim_txt_exceeds_255_bytes": true,
+    "der_rejected_without_consuming_nonce": true,
+    "exact_retry_preserves_original_result": true,
+    "changed_signed_action_returns_conflict": true,
+    "operator_commit_latency_ms_including_tls": 781.590292
+  },
+  "boundary": "Actual native CCF requests and confirmations, independently appraised fixture keys. External DNS/mail/lifecycle observations and sustained measurements are separate artifacts."
+}

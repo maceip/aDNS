@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "scope": "offline independent signatures, action/result/transaction binding, guarded source and saved external ACME proofs",
+  "phases": {
+    "renew-a": {
+      "transaction_id": "2.341",
+      "zone_serial": 10,
+      "signed_message_digest": "7df3bba77db4b3997e1007704341270f5005b1d434f39b1a69e020bc0ad40a78",
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+      "original_admission_total_duration_semantics": true
+    },
+    "acme-create-1": {
+      "transaction_id": "2.389",
+      "zone_serial": 11,
+      "signed_message_digest": "46973f5a49ef1191c9ebc129bd4a18931b79c8503af8918b3b41829ad6d8cfb3",
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+      "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+      "expires_at": 1789288215,
+      "txt_value": "NfcHu1ycEEt0xMRumoQcuPf9NdlXUCluEpxKKY1d46A"
+    },
+    "acme-create-2": {
+      "transaction_id": "2.416",
+      "zone_serial": 12,
+      "signed_message_digest": "f9b32975bd7083986131ba5c8e66dcc41fe568b3dc24fd2d6713892ffcef15de",
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+      "challenge_id": "chal-f9b32975bd7083986131ba5c8e66dcc4",
+      "expires_at": 1789288235,
+      "txt_value": "qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044"
+    },
+    "acme-delete-1": {
+      "transaction_id": "2.577",
+      "zone_serial": 13,
+      "signed_message_digest": "de1c91a1cd4a01bbb06f5dad5280aa249639a4094efe01c3a46b7fdc0686b707",
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363"
+    }
+  },
+  "operator": {
+    "transaction_id": "2.314",
+    "governance_transaction_id": "2.303",
+    "zone_serial": 10,
+    "public_key_hash": "7b5b5896a40c679f4a5ff8fd40ac09ea654d51024af321a245561b459e9acbbf",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "long_dkim_text": true,
+    "base_apex_TTL60_and_operator_TTL300_signed_successfully": true,
+    "recorded_valid_fixed_signature": true,
+    "signed_conflict_response": 409,
+    "limitation": "changed conflict signature bytes were not separately exported by this fixture; source uses the same operator key, and native conflict has its own later full envelope proof"
+  },
+  "external_acme_saved_proofs": {
+    "external/acme-both-attempt1/verification/results.json": {
+      "serial": 12,
+      "checks": [
+        {
+          "owner": "_acme-challenge.mail.example.test.",
+          "type": "TXT",
+          "expected_rdata": [
+            "\"NfcHu1ycEEt0xMRumoQcuPf9NdlXUCluEpxKKY1d46A\"",
+            "\"qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044\""
+          ],
+          "dnssec_validated": true
+        }
+      ],
+      "matched_unix_seconds": 1789288148.7269952
+    },
+    "external/acme-expired-attempt1/verification/results.json": {
+      "serial": 14,
+      "checks": [
+        {
+          "owner": "_acme-challenge.mail.example.test.",
+          "type": "TXT",
+          "expected_rdata": [],
+          "dnssec_validated": true
+        }
+      ],
+      "matched_unix_seconds": 1789288276.9861574
+    },
+    "external/acme-second-only-attempt1/verification/results.json": {
+      "serial": 13,
+      "checks": [
+        {
+          "owner": "_acme-challenge.mail.example.test.",
+          "type": "TXT",
+          "expected_rdata": [
+            "\"qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044\""
+          ],
+          "dnssec_validated": true
+        }
+      ],
+      "matched_unix_seconds": 1789288232.172738
+    }
+  }
+}

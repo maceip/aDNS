@@ -1,0 +1,35 @@
+{
+  "algorithm": 14,
+  "ccf_service_identity": "-----BEGIN CERTIFICATE-----\nMIIB1zCCAV6gAwIBAgIRAJ9GOw0djeKk1uZPXNyhft0wCgYIKoZIzj0EAwMwGzEZ\nMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTAeFw0yNjA5MTMwMzAxMzZaFw0yNjA5\nMjAwMzAxMzVaMBsxGTAXBgNVBAMMEGFnZW50ZG5zIFNlcnZpY2UwdjAQBgcqhkjO\nPQIBBgUrgQQAIgNiAASKZ818iSaAPGDwMFcUQpCTDlnggxcSAPqTrx4WGr5HIQKy\natvp0BVEzY5IFk5wx0vjJygnXPMUhbL87FR5EeIuHBElRAKP/MrWzweQm9tXAQ4f\nsF5TJlu2XoYJ9YZlHUejZjBkMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/\nBAQDAgKEMB0GA1UdDgQWBBSfstdNrF4paRBEZeN1X77vXg3hbzAfBgNVHSMEGDAW\ngBSfstdNrF4paRBEZeN1X77vXg3hbzAKBggqhkjOPQQDAwNnADBkAjAplJwX10QN\n1coxO/VIZIeVPyDT1aG/VAo3nhAe2R6FKaa1iAoEFwWeL4c6AiArS+YCMGukZ71g\nThpsK1Uq6gj4uy+xyfIJhU+x6wfb6ZiftXDWZ73tySOHheLnor1UeGztyA==\n-----END CERTIFICATE-----\n",
+  "dnskey_rdata_hex": "0101030e15b29e7570c8501eee6c048770ed72d02308cee3ab0f7cd24ce2aacffd05c7567d90050e8314c23d8424d56026f2304587b2d3b4921446b8d4c80bbbbfe2f5ab97f98117ece93857a31e4f8fa7bb046b1529ad7d34596e51766f26d05e2d2b35",
+  "ds_digest": {
+    "digest_hex": "b0de7655662ed7ce60d1d0e1e4ac50eb74ca7aea38ca113018c594711b202a37",
+    "digest_type": 2
+  },
+  "key_tag": 53690,
+  "owner_name": "example.test.",
+  "proof": {
+    "cert": "-----BEGIN CERTIFICATE-----\nMIIB2zCCAWCgAwIBAgIRAODLcYi2EAzFvX7lh9jWXjUwCgYIKoZIzj0EAwMwGzEZ\nMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTAeFw0yNjA5MTMwMzAxMzZaFw0yNjA5\nMjAwMzAxMzVaMBMxETAPBgNVBAMMCGFnZW50ZG5zMHYwEAYHKoZIzj0CAQYFK4EE\nACIDYgAE5SHHRedwL5bFhiZXF9t+Rx2a+gzV8lp+m+jVIxHhxnDsieMjG+r9YdOk\noPTxIv3GaVkBhLkMbTWJqQG4LKtJ1B5jBgFoqXu4ky+FrH2V0BI9fSHAyicDQwPb\nqeZfdS7Ro3AwbjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBTlcIOH6D3BieiirEox\ntKE5kotxYTAfBgNVHSMEGDAWgBSfstdNrF4paRBEZeN1X77vXg3hbzAeBgNVHREE\nFzAVhwR/AAABgg1hZ2VudGRucy50ZXN0MAoGCCqGSM49BAMDA2kAMGYCMQCpTWoV\n66R2HweAHp9Mq+3f7VTnIGUDiNlT9BBYnsk4/gCAXl/3cGXpx1sRgrheBugCMQD1\nmHlwZLuoXsh4LZX4aFsvhNLqtR75EH+elQYDEJuPIosMqqP0VAmhEgD2fVVSc2I=\n-----END CERTIFICATE-----\n",
+    "leaf_components": {
+      "claims_digest": "58f33511984147aba495d2ebb4340430bda8f192a7362af6debd0d5be7230c02",
+      "commit_evidence": "ce:2.268:df30d7d530f4a05b0ea31b8a6976e5eeb8ab2a9a241108d5d4fd326dd5669e98",
+      "write_set_digest": "84e30d930eafd1c70434c2e0b7b2bda5e1e92c59fffddaf562d65954c871e11e"
+    },
+    "node_id": "3c7d25cd0d658b2b8bf438ded0c3f84a2ee0240fe6cb96bfd127df64d7b36100",
+    "proof": [
+      {
+        "left": "cc97e70698f63d181575de858600004f9d46ab7b07c7765e404c5b2e3de569b4"
+      },
+      {
+        "left": "451eec2670a8800835ebffacfb4f9426b486e8a5027af80918b0436377e7debc"
+      },
+      {
+        "left": "36bfcc516c01a171499eb1734746b5bb94987df39dfc990dc457c5faaf116f64"
+      }
+    ],
+    "signature": "MGUCMDPIOmEpXHSdiwX6WEwWJiCwmkH85fWLM3rzAnihXryZsu9AOxpvarwLmj+XMcM44wIxAIEBXkbKnF9Edgrn95Y8qrwVRr5l6eOvA2euQroeL3nkRzryBVMIouPzG7zI3A1ztA=="
+  },
+  "status": "committed",
+  "tx_id": "2.268",
+  "zone": "example.test."
+}

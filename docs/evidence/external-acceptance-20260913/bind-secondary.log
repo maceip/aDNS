@@ -1,0 +1,100 @@
+13-Sep-2026 00:29:15.246 starting BIND 9.18.39-0ubuntu0.24.04.7-Ubuntu (Extended Support Version) <id:>
+13-Sep-2026 00:29:15.246 running on Linux aarch64 7.0.14-orbstack-00380-ga7e0a2dc9535 #1 SMP PREEMPT Fri Aug  7 03:48:40 UTC 2026
+13-Sep-2026 00:29:15.246 built with  '--build=aarch64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/aarch64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/aarch64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=aarch64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-qMcUJy/bind9-9.18.39=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -mbranch-protection=standard -fdebug-prefix-map=/build/bind9-qMcUJy/bind9-9.18.39=/usr/src/bind9-1:9.18.39-0ubuntu0.24.04.7 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -ledit' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+13-Sep-2026 00:29:15.246 running as: named -g -n 1 -c /work/named-secondary.conf
+13-Sep-2026 00:29:15.246 compiled by GCC 13.3.0
+13-Sep-2026 00:29:15.246 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 00:29:15.246 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 00:29:15.246 compiled with libuv version: 1.48.0
+13-Sep-2026 00:29:15.246 linked to libuv version: 1.48.0
+13-Sep-2026 00:29:15.246 compiled with libxml2 version: 2.9.14
+13-Sep-2026 00:29:15.246 linked to libxml2 version: 20914
+13-Sep-2026 00:29:15.246 compiled with json-c version: 0.17
+13-Sep-2026 00:29:15.246 linked to json-c version: 0.17
+13-Sep-2026 00:29:15.246 compiled with zlib version: 1.3
+13-Sep-2026 00:29:15.246 linked to zlib version: 1.3
+13-Sep-2026 00:29:15.246 ----------------------------------------------------
+13-Sep-2026 00:29:15.246 BIND 9 is maintained by Internet Systems Consortium,
+13-Sep-2026 00:29:15.246 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+13-Sep-2026 00:29:15.246 corporation.  Support and training for BIND 9 are 
+13-Sep-2026 00:29:15.246 available at https://www.isc.org/support
+13-Sep-2026 00:29:15.246 ----------------------------------------------------
+13-Sep-2026 00:29:15.246 found 18 CPUs, using 1 worker thread
+13-Sep-2026 00:29:15.246 using 1 UDP listener per interface
+13-Sep-2026 00:29:15.250 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+13-Sep-2026 00:29:15.250 DS algorithms: SHA-1 SHA-256 SHA-384
+13-Sep-2026 00:29:15.250 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+13-Sep-2026 00:29:15.250 TKEY mode 2 support (Diffie-Hellman): yes
+13-Sep-2026 00:29:15.250 TKEY mode 3 support (GSS-API): yes
+13-Sep-2026 00:29:15.250 the initial working directory is '/work'
+13-Sep-2026 00:29:15.250 loading configuration from '/work/named-secondary.conf'
+13-Sep-2026 00:29:15.250 the working directory is now '/work/bind-secondary'
+13-Sep-2026 00:29:15.250 reading built-in trust anchors from file '/etc/bind/bind.keys'
+13-Sep-2026 00:29:15.252 looking for GeoIP2 databases in '/usr/share/GeoIP'
+13-Sep-2026 00:29:15.252 using default UDP/IPv4 port range: [32768, 60999]
+13-Sep-2026 00:29:15.252 using default UDP/IPv6 port range: [32768, 60999]
+13-Sep-2026 00:29:15.252 listening on IPv4 interface lo, 127.0.0.1#1053
+13-Sep-2026 00:29:15.252 listening on IPv4 interface eth0, 192.168.215.2#1053
+13-Sep-2026 00:29:15.252 generating session key for dynamic DNS
+13-Sep-2026 00:29:15.252 sizing zone task pool based on 1 zones
+13-Sep-2026 00:29:15.252 set up managed keys zone for view _default, file 'managed-keys.bind'
+13-Sep-2026 00:29:15.259 not using config file logging statement for logging due to -g option
+13-Sep-2026 00:29:15.260 managed-keys-zone: loaded serial 0
+13-Sep-2026 00:29:15.261 all zones loaded
+13-Sep-2026 00:29:15.261 running
+13-Sep-2026 00:29:45.298 zone example.test/IN: refresh: retry limit for primary 0.250.250.254#18535 exceeded (source 0.0.0.0#0)
+13-Sep-2026 00:29:45.298 zone example.test/IN: Transfer started.
+13-Sep-2026 00:29:45.300 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:29:45.397 zone example.test/IN: transferred serial 1: TSIG 'agentdns-transfer'
+13-Sep-2026 00:29:45.398 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:29:45.398 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.097 secs (1569711 bytes/sec) (serial 1)
+13-Sep-2026 00:34:03.586 client @0xffffa4058768 192.168.215.1#48128/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:34:03.587 zone example.test/IN: notify from 192.168.215.1#48128: no serial
+13-Sep-2026 00:34:33.598 zone example.test/IN: refresh: retry limit for primary 0.250.250.254#18535 exceeded (source 0.0.0.0#0)
+13-Sep-2026 00:34:33.598 zone example.test/IN: Transfer started.
+13-Sep-2026 00:34:33.599 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:34:33.599 transfer of 'example.test/IN' from 0.250.250.254#18535: failed while receiving responses: end of file
+13-Sep-2026 00:34:33.600 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: end of file
+13-Sep-2026 00:34:33.600 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 0 messages, 0 records, 0 bytes, 0.001 secs (0 bytes/sec) (serial 0)
+13-Sep-2026 00:39:03.040 client @0xffffa535d078 127.0.0.1#33516/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:39:03.040 zone example.test/IN: notify from 127.0.0.1#33516: no serial
+13-Sep-2026 00:39:03.042 zone example.test/IN: Transfer started.
+13-Sep-2026 00:39:03.043 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:39:03.139 zone example.test/IN: transferred serial 2: TSIG 'agentdns-transfer'
+13-Sep-2026 00:39:03.139 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:39:03.139 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.096 secs (1586062 bytes/sec) (serial 2)
+13-Sep-2026 00:39:03.761 client @0xffffa4058768 192.168.215.1#52777/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:39:03.761 zone example.test/IN: notify from 192.168.215.1#52777: no serial
+13-Sep-2026 00:39:03.761 zone example.test/IN: Transfer started.
+13-Sep-2026 00:39:03.763 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:39:03.851 zone example.test/IN: transferred serial 3: TSIG 'agentdns-transfer'
+13-Sep-2026 00:39:03.852 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:39:03.852 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.089 secs (1710808 bytes/sec) (serial 3)
+13-Sep-2026 00:44:03.784 client @0xffffa4058768 192.168.215.1#50492/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:44:03.785 zone example.test/IN: notify from 192.168.215.1#50492: no serial
+13-Sep-2026 00:44:03.786 zone example.test/IN: Transfer started.
+13-Sep-2026 00:44:03.787 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:44:03.877 zone example.test/IN: transferred serial 4: TSIG 'agentdns-transfer'
+13-Sep-2026 00:44:03.877 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:44:03.877 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.090 secs (1691800 bytes/sec) (serial 4)
+13-Sep-2026 00:49:03.787 client @0xffffa4058768 192.168.215.1#47738/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:49:03.787 zone example.test/IN: notify from 192.168.215.1#47738: no serial
+13-Sep-2026 00:49:03.789 zone example.test/IN: Transfer started.
+13-Sep-2026 00:49:03.789 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:49:03.877 zone example.test/IN: transferred serial 5: TSIG 'agentdns-transfer'
+13-Sep-2026 00:49:03.877 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:49:03.877 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.088 secs (1730250 bytes/sec) (serial 5)
+13-Sep-2026 00:54:03.784 client @0xffffa4058768 192.168.215.1#49764/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:54:03.785 zone example.test/IN: notify from 192.168.215.1#49764: no serial
+13-Sep-2026 00:54:03.788 zone example.test/IN: Transfer started.
+13-Sep-2026 00:54:03.788 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:54:03.875 zone example.test/IN: transferred serial 6: TSIG 'agentdns-transfer'
+13-Sep-2026 00:54:03.876 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:54:03.876 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.087 secs (1750137 bytes/sec) (serial 6)
+13-Sep-2026 00:59:03.771 client @0xffffa4058768 192.168.215.1#45898/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 00:59:03.771 zone example.test/IN: notify from 192.168.215.1#45898: no serial
+13-Sep-2026 00:59:03.772 zone example.test/IN: Transfer started.
+13-Sep-2026 00:59:03.773 transfer of 'example.test/IN' from 0.250.250.254#18535: connected using 0.250.250.254#18535 TSIG agentdns-transfer
+13-Sep-2026 00:59:03.867 zone example.test/IN: transferred serial 7: TSIG 'agentdns-transfer'
+13-Sep-2026 00:59:03.867 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer status: success
+13-Sep-2026 00:59:03.867 transfer of 'example.test/IN' from 0.250.250.254#18535: Transfer completed: 10 messages, 1036 records, 152262 bytes, 0.094 secs (1619808 bytes/sec) (serial 7)

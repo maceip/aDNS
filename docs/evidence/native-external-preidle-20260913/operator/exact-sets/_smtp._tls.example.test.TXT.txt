@@ -1,0 +1,14 @@
+id 64191
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_smtp._tls.example.test. IN TXT
+;ANSWER
+_smtp._tls.example.test. 300 IN TXT "v=TLSRPTv1; rua=mailto:tlsrpt@example.test"
+_smtp._tls.example.test. 300 IN RRSIG TXT 14 4 300 20260913083735 20260913082235 20222 example.test. B76dcpeeHxoKAYOuS6Rqc+8+SjhGnVG3 I6IJQACjprsdxcZuE0AP78UL5Y4MXFkD QPPo164tr7SIp52vzSRWM83m3aJ9uAZX a5NmUBOVTizGsTpf1SzjaF6gKhNb5HLk
+;AUTHORITY
+;ADDITIONAL

@@ -1,0 +1,11 @@
+{
+  "native-mail-results.json": "71eb46fad2bb66b23d6b732f38c94ce2a9c82e352f7bcace6aa801f498152299",
+  "postfix-native-positive.log": "a908fde7c53887d8cf965ca23f2d8ebf78cd531c351f6115dee25b50216748c0",
+  "postfix-native-wrong-key.log": "a38f642f4595aced1e35373eccbcde8eacf1bfd8e0f363669eb85d78c6465a59",
+  "validating-resolver.log": "90038a18a07539b78afa6d765fb8d39320fdc7957cea270485b6ed6bd73f8a65",
+  "anchor.conf": "ae00e08d50265a31f3fa798582a5265bc4b6d9280cb2cb4cad3aab37739d560c",
+  "mail.pem": "fbe3935c5d67c07388ac945b87501c10d75807d35f336253a3e017f2cc4a362c",
+  "spki.der": "e2343d44b665063e94a7e4eeb25b98668bac3636f5f6ffe4b8e291c922cfd4f4",
+  "signed.zone": "a8ec39c2c66098a612c96e0eeb3b598b7e24f4ea3291eca779da8479a6a9864d",
+  "provenance.json": "ce8fb6131cfadcda132bda0e66d8a58acb354886bff3916118a437d7d2e74c39"
+}

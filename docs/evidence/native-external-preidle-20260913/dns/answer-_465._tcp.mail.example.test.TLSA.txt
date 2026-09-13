@@ -1,0 +1,15 @@
+id 44719
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_465._tcp.mail.example.test. IN TLSA
+;ANSWER
+_465._tcp.mail.example.test. 300 IN TLSA 3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed
+_465._tcp.mail.example.test. 300 IN TLSA 3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c
+_465._tcp.mail.example.test. 300 IN RRSIG TLSA 14 5 300 20260913083337 20260913081837 20222 example.test. XIDlZb/D6/GZMlYeEFUEnuc5Vpoemfai 80+xhTI54NSgWvftvQw68SoPUk0nVuIk HgNWUh5eIJqV9Yr28a8lypopOQ5co1My /pmwy0Vj2YEeCyGQQZzSZl4p/stX3qQV
+;AUTHORITY
+;ADDITIONAL

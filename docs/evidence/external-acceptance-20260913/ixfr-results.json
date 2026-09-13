@@ -1,0 +1,8 @@
+{
+  "unix_seconds": 1789260328,
+  "serial": 4,
+  "authenticated_udp_soa": true,
+  "ixfr_older_serial_full_axfr_fallback_messages": 10,
+  "all_fallback_messages_tsig_verified": true,
+  "equal_serial_single_authenticated_soa": true
+}

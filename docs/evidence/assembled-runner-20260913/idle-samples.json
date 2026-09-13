@@ -1,0 +1,2252 @@
+[
+  {
+    "unix_seconds": 1789263092,
+    "elapsed_seconds": 3,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 33872,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263091,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263102,
+    "elapsed_seconds": 13,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 34240,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263101,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263112,
+    "elapsed_seconds": 23,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 34288,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263112,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263122,
+    "elapsed_seconds": 33,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 34304,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263122,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263132,
+    "elapsed_seconds": 43,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 34304,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263132,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263142,
+    "elapsed_seconds": 53,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 36592,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263142,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263152,
+    "elapsed_seconds": 63,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 36608,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263152,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263162,
+    "elapsed_seconds": 73,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 36640,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263162,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263172,
+    "elapsed_seconds": 83,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 36672,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263172,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263183,
+    "elapsed_seconds": 94,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 38272,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263182,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263193,
+    "elapsed_seconds": 104,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263192,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263203,
+    "elapsed_seconds": 114,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263203,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263213,
+    "elapsed_seconds": 124,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263213,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263223,
+    "elapsed_seconds": 134,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263223,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263233,
+    "elapsed_seconds": 144,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263233,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263243,
+    "elapsed_seconds": 154,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39040,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263243,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263253,
+    "elapsed_seconds": 164,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263253,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263263,
+    "elapsed_seconds": 174,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263263,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263274,
+    "elapsed_seconds": 185,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263273,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263284,
+    "elapsed_seconds": 195,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263283,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263294,
+    "elapsed_seconds": 205,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263294,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263304,
+    "elapsed_seconds": 215,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263304,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263314,
+    "elapsed_seconds": 225,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263314,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263324,
+    "elapsed_seconds": 235,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263324,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263334,
+    "elapsed_seconds": 245,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263334,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263344,
+    "elapsed_seconds": 255,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263344,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263355,
+    "elapsed_seconds": 266,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263354,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263365,
+    "elapsed_seconds": 276,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263364,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263375,
+    "elapsed_seconds": 286,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263374,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263385,
+    "elapsed_seconds": 296,
+    "serial": 1,
+    "earliest_rrsig_expiration": 1789263689,
+    "health": "ok",
+    "rss_kib": 39280,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": null,
+        "last_observed_at": 1789263385,
+        "last_observed_serial": 1
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263395,
+    "elapsed_seconds": 306,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263395,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263405,
+    "elapsed_seconds": 316,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263405,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263415,
+    "elapsed_seconds": 326,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263415,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263425,
+    "elapsed_seconds": 336,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263425,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263435,
+    "elapsed_seconds": 346,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263435,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263445,
+    "elapsed_seconds": 356,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263445,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263456,
+    "elapsed_seconds": 367,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263455,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263466,
+    "elapsed_seconds": 377,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263465,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263476,
+    "elapsed_seconds": 387,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263476,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263486,
+    "elapsed_seconds": 397,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263486,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263496,
+    "elapsed_seconds": 407,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263496,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263506,
+    "elapsed_seconds": 417,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263506,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263516,
+    "elapsed_seconds": 427,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263516,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263526,
+    "elapsed_seconds": 437,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263526,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263537,
+    "elapsed_seconds": 448,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39648,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263536,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263547,
+    "elapsed_seconds": 458,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39680,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263546,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263557,
+    "elapsed_seconds": 468,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39680,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263556,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263567,
+    "elapsed_seconds": 478,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39680,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263567,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263577,
+    "elapsed_seconds": 488,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39680,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263577,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263587,
+    "elapsed_seconds": 498,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39696,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263587,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263597,
+    "elapsed_seconds": 508,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39696,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263597,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263607,
+    "elapsed_seconds": 518,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39696,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263607,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263617,
+    "elapsed_seconds": 528,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39696,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263617,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263628,
+    "elapsed_seconds": 539,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263627,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263638,
+    "elapsed_seconds": 549,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263637,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263648,
+    "elapsed_seconds": 559,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263647,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263658,
+    "elapsed_seconds": 569,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263658,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263668,
+    "elapsed_seconds": 579,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263668,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263678,
+    "elapsed_seconds": 589,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263678,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263688,
+    "elapsed_seconds": 599,
+    "serial": 2,
+    "earliest_rrsig_expiration": 1789263989,
+    "health": "ok",
+    "rss_kib": 39728,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 2,
+        "last_observed_at": 1789263688,
+        "last_observed_serial": 2
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263698,
+    "elapsed_seconds": 609,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263698,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263708,
+    "elapsed_seconds": 619,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263708,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263718,
+    "elapsed_seconds": 629,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263718,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263729,
+    "elapsed_seconds": 640,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263728,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263739,
+    "elapsed_seconds": 650,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263738,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263749,
+    "elapsed_seconds": 660,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263749,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263759,
+    "elapsed_seconds": 670,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263759,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263769,
+    "elapsed_seconds": 680,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263769,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263779,
+    "elapsed_seconds": 690,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263779,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263789,
+    "elapsed_seconds": 700,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263789,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263799,
+    "elapsed_seconds": 710,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263799,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263810,
+    "elapsed_seconds": 721,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263809,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263820,
+    "elapsed_seconds": 731,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263819,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263830,
+    "elapsed_seconds": 741,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263829,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263840,
+    "elapsed_seconds": 751,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263840,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263850,
+    "elapsed_seconds": 761,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263850,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263860,
+    "elapsed_seconds": 771,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263860,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263870,
+    "elapsed_seconds": 781,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263870,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263880,
+    "elapsed_seconds": 791,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263880,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263890,
+    "elapsed_seconds": 801,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263890,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263901,
+    "elapsed_seconds": 812,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263900,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263911,
+    "elapsed_seconds": 822,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263910,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263921,
+    "elapsed_seconds": 832,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263920,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263931,
+    "elapsed_seconds": 842,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263931,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263941,
+    "elapsed_seconds": 852,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263941,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263951,
+    "elapsed_seconds": 862,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263951,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263961,
+    "elapsed_seconds": 872,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263961,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263971,
+    "elapsed_seconds": 882,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263971,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263981,
+    "elapsed_seconds": 892,
+    "serial": 3,
+    "earliest_rrsig_expiration": 1789264289,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 3,
+        "last_observed_at": 1789263981,
+        "last_observed_serial": 3
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789263992,
+    "elapsed_seconds": 903,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789263991,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264002,
+    "elapsed_seconds": 913,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264001,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264012,
+    "elapsed_seconds": 923,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264011,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264022,
+    "elapsed_seconds": 933,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264022,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264032,
+    "elapsed_seconds": 943,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264032,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264042,
+    "elapsed_seconds": 953,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264042,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264052,
+    "elapsed_seconds": 963,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264052,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264062,
+    "elapsed_seconds": 973,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264062,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264072,
+    "elapsed_seconds": 983,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264072,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264083,
+    "elapsed_seconds": 994,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264082,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264093,
+    "elapsed_seconds": 1004,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264092,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264103,
+    "elapsed_seconds": 1014,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264102,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264113,
+    "elapsed_seconds": 1024,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264113,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264123,
+    "elapsed_seconds": 1034,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264123,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264133,
+    "elapsed_seconds": 1044,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264133,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264143,
+    "elapsed_seconds": 1054,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264143,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264153,
+    "elapsed_seconds": 1064,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264153,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264163,
+    "elapsed_seconds": 1074,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264163,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264174,
+    "elapsed_seconds": 1085,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264173,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264184,
+    "elapsed_seconds": 1095,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264183,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264194,
+    "elapsed_seconds": 1105,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264193,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264204,
+    "elapsed_seconds": 1115,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264204,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264214,
+    "elapsed_seconds": 1125,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264214,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264224,
+    "elapsed_seconds": 1135,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264224,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264234,
+    "elapsed_seconds": 1145,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264234,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264244,
+    "elapsed_seconds": 1155,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264244,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264254,
+    "elapsed_seconds": 1165,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264254,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264265,
+    "elapsed_seconds": 1176,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264264,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264275,
+    "elapsed_seconds": 1186,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264274,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264285,
+    "elapsed_seconds": 1196,
+    "serial": 4,
+    "earliest_rrsig_expiration": 1789264589,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 4,
+        "last_observed_at": 1789264285,
+        "last_observed_serial": 4
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264295,
+    "elapsed_seconds": 1206,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264295,
+        "last_observed_serial": 5
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264305,
+    "elapsed_seconds": 1216,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264305,
+        "last_observed_serial": 5
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264315,
+    "elapsed_seconds": 1226,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264315,
+        "last_observed_serial": 5
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264325,
+    "elapsed_seconds": 1236,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264325,
+        "last_observed_serial": 5
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264335,
+    "elapsed_seconds": 1246,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264335,
+        "last_observed_serial": 5
+      }
+    ]
+  },
+  {
+    "unix_seconds": 1789264346,
+    "elapsed_seconds": 1257,
+    "serial": 5,
+    "earliest_rrsig_expiration": 1789264889,
+    "health": "ok",
+    "rss_kib": 39776,
+    "runtime_pid": 13909,
+    "secondaries": [
+      {
+        "endpoint": "127.0.0.1:1053",
+        "in_sync": true,
+        "last_notified_serial": 5,
+        "last_observed_at": 1789264345,
+        "last_observed_serial": 5
+      }
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "zone": "example.test.",
+  "key_tag": 34762,
+  "ds_sha256": "5aa33fff94697431e7d37d09dea54122694998f820459671f8c4bd684199efd5",
+  "claims_digest": "656d830b142acc75c847b086a6a856575c29225c6f939421503f4e6adfcb3da6",
+  "tx_id": "2.69"
+}

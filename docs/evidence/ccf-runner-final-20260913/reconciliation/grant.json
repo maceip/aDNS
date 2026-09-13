@@ -1,0 +1,27 @@
+{
+  "grant_id": "reconcile-b6894853bbc94af0",
+  "subject_spki_sha256": "04c0f68aca5c2c6913834d03437887ea2feffdfa8c96428fb597ded6454824a2",
+  "zones": [
+    "example.test."
+  ],
+  "mailbox_domains": [],
+  "service_hosts": [],
+  "roles": [],
+  "address_cidrs": [],
+  "ports": [],
+  "allowed_operations": [
+    "operator_records"
+  ],
+  "acme_names": [],
+  "operator_names": [
+    "reconcile.example.test."
+  ],
+  "operator_record_types": [
+    "TXT"
+  ],
+  "max_lease_seconds": 3600,
+  "max_challenge_lifetime_seconds": 3600,
+  "valid_from": 1789271481,
+  "valid_until": 1789275141,
+  "revoked": false
+}

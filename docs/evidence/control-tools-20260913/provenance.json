@@ -1,0 +1,27 @@
+{
+  "scope": "Final local Linux tests and independent read-only tool review; Azure template preflight identifies the earlier exact immutable image digests in aci-preflight.json. Regenerate after any image/template change.",
+  "helper_tests": 45,
+  "host_driver_tests": 12,
+  "supervisor_tests": 9,
+  "native_fixture_positive": 1,
+  "native_fixture_negative": 16,
+  "ccf_control_smoke": "real local CCF7.0.15 Virtual; signed governance plus committed TSIG provisioning and retry",
+  "source_sha256": {
+    "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+    "tools/fetch_capture.py": "a093ebec456c3af41817c561675f76efc2ef148d9da19bdf89e783bcc2d8b9a5",
+    "tools/prepare_aci_control.py": "8f6a1430d5bb21219c2f681cb1564e06b39d158f144961703593791f807cc155",
+    "tools/build_aci_template.py": "31a31fadf6bb2cc76ab1246e305b8780f69b2cec31c4651988c4916bb15d5ba4",
+    "tools/check_aci_template.py": "91fcbe2856152f893945ab7e7f4d3fd4e2bc5b94d78efe1bfa43710c0be1616a",
+    "tools/sign_capture_request.py": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+    "tools/capture_aci.py": "66b6426b49331c09a252239ff8718b945e998d9adb035271fc9e2cf27e47391c",
+    "tools/tests/test_control_tools.py": "0579582ff70ec4637172b5916d02e1791c4ef144f3d714e9b7987c79daa855a1",
+    "tools/tests/test_aci_preflight.py": "46415534e30954fff79aa0eaef61c7ccda73212f4f64ba6c9f274ad9f9ac1e07",
+    "tools/tests/test_sign_capture_client.py": "dab47715edd217eb6e5c2205bad91f688c82e0d71dc0b8dbe0cf86d34da1b38e",
+    "tools/tests/ccf_control_smoke.py": "045e44359ced66c4d1dc3890e130e1fb85dcdd0d30bf00bd83a9f55cc9e55f12",
+    "ccf/run.py": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9",
+    "ccf/tests/test_supervisor.py": "753b1a54bb98b0b8be6aac49d1b4da0faab486454b7fc8a7b59192c1180ed043",
+    "ccf/test_host_driver.py": "a6b47c22a4847f956607588d05877fe1cfcaf542be79422549677651030bfc35",
+    ".github/workflows/rust-port.yml": "e3bb666b4e95e19cba3d9a8d4d30b50d4d186a5e8aad170fc65003d7ea4849e0"
+  }
+}

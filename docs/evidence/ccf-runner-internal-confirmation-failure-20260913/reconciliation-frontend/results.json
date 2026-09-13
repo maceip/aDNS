@@ -1,0 +1,8 @@
+{
+  "name": "reconcile.example.test.",
+  "type": "TXT",
+  "ttl": 60,
+  "exact_rdata_matches": true,
+  "dnssec_validated": true,
+  "txt_chunks": 1
+}

@@ -1,0 +1,31 @@
+{
+  "verification_time": 1789283202,
+  "outer_es256_verified": true,
+  "tls_peer_certificate_self_signature_verified": true,
+  "tls_peer_spki_matches_attested_spki": true,
+  "report_data_exact_sha256_spki_and_zero_padding": true,
+  "amd_pinned_ark_chain_currently_valid": true,
+  "native_snp_p384_sha384_signature_verified": true,
+  "vcek_chip_id_and_reported_tcb_match": true,
+  "all_four_tcb_states_meet_policy": true,
+  "product": "Genoa",
+  "reported_tcb": {
+    "bootloader": 10,
+    "tee": 0,
+    "snp": 23,
+    "microcode": 84
+  },
+  "uvm_ps384_signature_verified": true,
+  "uvm_pinned_did_eku_and_feed_match": true,
+  "uvm_chain_verified_at_common_past_validity": 1747335423,
+  "uvm_svn": 104,
+  "uvm_publisher_certificate_expires_at": 1778871423,
+  "uvm_release_time_policy": "approved_release",
+  "exact_governed_measurement": "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866",
+  "exact_governed_host_data": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+  "evidence_sha256": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+  "spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+  "policy_source": "explicit supplied governed policy; no observed-field auto-approval",
+  "amd_certificate_parser_note": "Native AMD explicit RSA-PSS default trailerField is rejected by cryptography41; AMD chain verified with OpenSSL CLI and VCEK P384 report signature with cryptography",
+  "tamper_tests": "modified captured bytes; unchanged original outer and AMD signatures both rejected; no freshly signed malformed hardware report"
+}

@@ -1,0 +1,14 @@
+id 51056
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+selector1._domainkey.example.test. IN TXT
+;ANSWER
+selector1._domainkey.example.test. 300 IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkJaQHLlApaADsrAeyIz79UXSkkb4xYWchArGLSVjgMmo/UdTjYle46S7yeg4ygXMmucX8imPITNKSMkmkYicq9SrfSXWkk9NcoIH6kBijViL3QSvJQECBReao0gthz9te3L3X4ynw4plFroczgvf4aF3WwMoyTSjpPo/yqHNBfnKIkWsjESrlbZnMH1K+DOOS" "l2BWIck1tcyWKcGrwPNsaN3ZuIaXDcrU+QBzfp3wWAcXraNe84F9qHPm34s5HG9CD1GMMa9yB2YvqCX9LHMoAo76qMypHc0NPBcEVYLO3/+iW3dV6i+k4nV21hkntkGfbRZjqq/8kemO+zUXiF9kQIDAQAB"
+selector1._domainkey.example.test. 300 IN RRSIG TXT 14 4 300 20260913083735 20260913082235 20222 example.test. QhJNnkC8Tq5onrw2qtjIAW0MPJGoe20c iuMrK8QRBm/QNRLIy6KmyhGpYclAnGBY UoeXTO19gX4r3by8Gi1exsIAYKcncXo0 1/Yz6EfKo+7XtOgV2LRbrMR8RS3eLofv
+;AUTHORITY
+;ADDITIONAL

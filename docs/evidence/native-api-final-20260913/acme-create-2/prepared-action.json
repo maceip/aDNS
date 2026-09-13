@@ -1,0 +1,20 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "acme_challenge_create",
+    "parameters": {
+      "lifetime_seconds": 180,
+      "name": "mail.example.test.",
+      "order_id": "native-order-2-20260913",
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "ttl": 30,
+      "txt_value": "qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044"
+    },
+    "request_id": "native-acme-create-2-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhzpngg2y3jPR3tZxWoD5dfqUHhqKNBRfCMYQei_ZhCqyUTl7pfT4NWSkxhVORYTpCLJ7OPlP595nHS0aQmSEg",
+    "zone": "example.test."
+  },
+  "action_id": "ee204c71c93a8f527baa41add26fce60ffd13e8dea03396bb43cc7a768a91080",
+  "intent_hash": "ee204c71c93a8f527baa41add26fce60ffd13e8dea03396bb43cc7a768a91080"
+}

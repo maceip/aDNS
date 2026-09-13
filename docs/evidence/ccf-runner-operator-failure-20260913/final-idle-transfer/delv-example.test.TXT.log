@@ -1,0 +1,3 @@
+; fully validated
+example.test.		60	IN	TXT	"Virtual CCF governed initial test zone; no attested registration"
+example.test.		60	IN	RRSIG	TXT 14 2 60 20260913022252 20260913020752 43166 example.test. NBb18e3vBODBuwhBRdodcKgp4Fha+/+kC8PtTf1H0ExlDNOx/uO7hEE/ NhvSEeYVmCg6k3MVAqXGnkyyFjxKSx/fUpO6moL1yyQ5hY8TYctuwSvB bQTa7IbpRjxH7g3l

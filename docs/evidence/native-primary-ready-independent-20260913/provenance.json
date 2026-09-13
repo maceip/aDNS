@@ -1,0 +1,14 @@
+{
+  "runtime_image": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "network": "none",
+  "runtime_root_filesystem": "read-only",
+  "verification_command": "python3 -B verify_native_ccf.py --quote node-quote.json --peer node-peer.der --policy node-policy.json --ark amd_genoa_ark.pem --now 1789287725 --output NEW_OUTPUT_DIRECTORY",
+  "guard_command": "python3 -B -m unittest discover -s . -p test_native_ccf_quote.py -v",
+  "guard_count": 7,
+  "input_origin": "primary/native-v5-ready public captured quote/peer and independently supplied node-policy.json",
+  "live_primary_ip": "4.208.82.123",
+  "actual_report_version": 3,
+  "negative_checks_on_this_capture": 16,
+  "first_attempt": "Prior helper deliberately required v5 and rejected this actual v3 version before cryptographic claims; failure retained separately. Offline helper now explicitly checks3/5 reserved ranges, no production or policy change.",
+  "source_boundary": "Independent Python/OpenSSL verifier; no Rust verifier invocation."
+}

@@ -1,0 +1,55 @@
+{
+  "started_unix_seconds": 1789287972.061329,
+  "source_sha256": {
+    "ccf/tests/operator_mail.py": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a",
+    "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+  },
+  "status": "passed",
+  "command": [
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/venv/bin/python",
+    "/Users/mac/agentdns/ccf/tests/operator_mail.py",
+    "--url",
+    "https://agentdns.test:8000",
+    "--connect-ip",
+    "4.208.82.123",
+    "--service-cert",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/primary/native-v5-ready/audit/service_cert.pem",
+    "--member-key",
+    "/Users/mac/agentdns/.validation/azure/ccf-control-contract/private/member0_privk.pem",
+    "--member-cert",
+    "/Users/mac/agentdns/.validation/azure/ccf-control-contract/public/member0_cert.pem",
+    "--output",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/operator-mail"
+  ],
+  "returncode": 0,
+  "summary": {
+    "scope": "real governed operator mutation, not attested registration or email delivery",
+    "transaction_id": "2.314",
+    "zone_serial": 10,
+    "governance_transaction_id": "2.303",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "dkim_txt_exceeds_255_bytes": true,
+    "der_rejected_without_consuming_nonce": true,
+    "exact_retry_preserves_original_result": true,
+    "changed_signed_action_returns_conflict": true,
+    "operator_commit_latency_ms_including_tls": 781.590292
+  },
+  "source_after_sha256": {
+    "ccf/tests/operator_mail.py": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a",
+    "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+  },
+  "frozen_copy_sha256": {
+    "ccf/tests/operator_mail.py": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a",
+    "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+  },
+  "ended_unix_seconds": 1789287982.8460999
+}

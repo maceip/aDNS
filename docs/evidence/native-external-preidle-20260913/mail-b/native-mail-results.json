@@ -1,0 +1,102 @@
+{
+  "recorded_at": 1789287994,
+  "dns_server": "20.166.33.141",
+  "dns_port": 53,
+  "service_host": "mail.example.test.",
+  "mailbox_domain": "example.test.",
+  "expected_spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+  "input_certificate_der_sha256": "bc160294bb2f0194ab65ba6d5b4e9f2a25efc59cbdcddb737e66c12a0f5987b3",
+  "input_anchor_file_sha256": "0523b9491e4caab4ff75282894746bb733fe78891e734f3cfb6ae8b2f2691566",
+  "connection_override": {
+    "kind": "container OUTPUT DNAT",
+    "signed_address": "192.0.2.1",
+    "actual_positive_peer": "20.13.225.113",
+    "port": 25,
+    "dns_answers_changed": false,
+    "tls_terminated_by_override": false
+  },
+  "limits": [
+    "controlled routing; advertised reserved addresses are not proved publicly routable",
+    "controlled certificate trust; not public ACME issuance",
+    "SMTP TLS probe; no email delivery",
+    "this tool consumes appraised public artifacts and cannot itself prove hardware or CCF commitment"
+  ],
+  "dnssec_validated_a_mx_and_all_tlsa": true,
+  "dane_positive": {
+    "exit_code": 0,
+    "verified": true,
+    "key_mismatch_rejected": false,
+    "actual_peer_spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+    "command": [
+      "posttls-finger",
+      "-l",
+      "dane-only",
+      "-L",
+      "summary,verbose",
+      "-t",
+      "5",
+      "-T",
+      "5",
+      "-o",
+      "inet_protocols=ipv4",
+      "-o",
+      "smtp_dns_support_level=dnssec",
+      "example.test"
+    ],
+    "log": "postfix-native-positive.log"
+  },
+  "dane_wrong_key": {
+    "exit_code": 0,
+    "verified": false,
+    "key_mismatch_rejected": true,
+    "actual_peer_spki_sha256": "c38d205d52bb675bfc8920e4a965cb948488f9e35d4947dbb26a083a108a49d1",
+    "command": [
+      "posttls-finger",
+      "-l",
+      "dane-only",
+      "-L",
+      "summary,verbose",
+      "-t",
+      "5",
+      "-T",
+      "5",
+      "-o",
+      "inet_protocols=ipv4",
+      "-o",
+      "smtp_dns_support_level=dnssec",
+      "example.test"
+    ],
+    "log": "postfix-native-wrong-key.log",
+    "peer_spki_sha256": "c38d205d52bb675bfc8920e4a965cb948488f9e35d4947dbb26a083a108a49d1"
+  },
+  "authenticated_tlsa_unchanged": {
+    "25": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+    ],
+    "465": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+    ],
+    "993": [
+      "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+    ]
+  },
+  "pkix": {
+    "465": {
+      "controlled_trust_verified": true,
+      "peer_spki_matches_native_input_and_dnssec_tlsa": true,
+      "tls_version": "TLSv1.3",
+      "wrong_hostname_rejected": true,
+      "untrusted_rejected": true
+    },
+    "993": {
+      "controlled_trust_verified": true,
+      "peer_spki_matches_native_input_and_dnssec_tlsa": true,
+      "tls_version": "TLSv1.3",
+      "wrong_hostname_rejected": true,
+      "untrusted_rejected": true
+    }
+  }
+}

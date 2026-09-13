@@ -1,0 +1,44 @@
+==74== Memcheck, a memory error detector
+==74== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==74== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==74== Command: /build/release/agentdns-leakcheck
+==74== Parent PID: 1
+==74== 
+==74== 
+==74== HEAP SUMMARY:
+==74==     in use at exit: 544 bytes in 1 blocks
+==74==   total heap usage: 201,405 allocs, 201,404 frees, 177,176,127 bytes allocated
+==74== 
+==74== 544 bytes in 1 blocks are still reachable in loss record 1 of 1
+==74==    at 0x4885250: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==74==    by 0x1E29AB: alloc (alloc.rs:95)
+==74==    by 0x1E29AB: alloc_impl_runtime (alloc.rs:190)
+==74==    by 0x1E29AB: alloc_impl (alloc.rs:312)
+==74==    by 0x1E29AB: allocate (alloc.rs:429)
+==74==    by 0x1E29AB: try_new_uninit_in<alloc::collections::btree::node::LeafNode<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo>, alloc::alloc::Global> (boxed.rs:614)
+==74==    by 0x1E29AB: new_uninit_in<alloc::collections::btree::node::LeafNode<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo>, alloc::alloc::Global> (boxed.rs:581)
+==74==    by 0x1E29AB: new<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo, alloc::alloc::Global> (node.rs:87)
+==74==    by 0x1E29AB: new_leaf<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo, alloc::alloc::Global> (node.rs:225)
+==74==    by 0x1E29AB: insert_entry<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo, alloc::alloc::Global> (entry.rs:403)
+==74==    by 0x1E29AB: insert<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo, alloc::alloc::Global> (entry.rs:377)
+==74==    by 0x1E29AB: insert<usize, std::sys::pal::unix::stack_overflow::thread_info::ThreadInfo, alloc::alloc::Global> (map.rs:1053)
+==74==    by 0x1E29AB: std::sys::pal::unix::stack_overflow::thread_info::set_current_info (thread_info.rs:122)
+==74==    by 0x1DFCB7: init (stack_overflow.rs:179)
+==74==    by 0x1DFCB7: init (mod.rs:41)
+==74==    by 0x1DFCB7: init (rt.rs:118)
+==74==    by 0x1DFCB7: {closure#0} (rt.rs:173)
+==74==    by 0x1DFCB7: do_call<std::rt::lang_start_internal::{closure_env#0}, isize> (panicking.rs:581)
+==74==    by 0x1DFCB7: catch_unwind<isize, std::rt::lang_start_internal::{closure_env#0}> (panicking.rs:544)
+==74==    by 0x1DFCB7: catch_unwind<std::rt::lang_start_internal::{closure_env#0}, isize> (panic.rs:359)
+==74==    by 0x1DFCB7: std::rt::lang_start_internal (rt.rs:171)
+==74==    by 0x156F57: main (in /build/release/agentdns-leakcheck)
+==74== 
+==74== LEAK SUMMARY:
+==74==    definitely lost: 0 bytes in 0 blocks
+==74==    indirectly lost: 0 bytes in 0 blocks
+==74==      possibly lost: 0 bytes in 0 blocks
+==74==    still reachable: 544 bytes in 1 blocks
+==74==         suppressed: 0 bytes in 0 blocks
+==74== 
+==74== For lists of detected and suppressed errors, rerun with: -s
+==74== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

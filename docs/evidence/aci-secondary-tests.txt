@@ -1,0 +1,7 @@
+test_fixed_authoritative_scope_and_no_zone_signer (test_secondary_aci.SecondaryTests.test_fixed_authoritative_scope_and_no_zone_signer) ... ok
+test_secret_rejects_malformed_noncanonical_or_injected_values (test_secondary_aci.SecondaryTests.test_secret_rejects_malformed_noncanonical_or_injected_values) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.045s
+
+OK

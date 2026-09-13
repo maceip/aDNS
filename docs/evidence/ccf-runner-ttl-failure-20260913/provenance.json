@@ -1,0 +1,41 @@
+{
+  "platform": "Virtual; local CCF protocol test only",
+  "ccf_version": "7.0.15",
+  "requested_images": {
+    "ccf": "sha256:d0c9ffdf7a37b4d12deb09d929eb817574160970e1f7218d8b7b70a51b940e18",
+    "secondary": "agentdns-secondary:local",
+    "toolchain": "agentdns-ccf-toolchain:7.0.15",
+    "validator": "agentdns-validation:local"
+  },
+  "resolved_immutable_images": {
+    "ccf": "sha256:d0c9ffdf7a37b4d12deb09d929eb817574160970e1f7218d8b7b70a51b940e18",
+    "secondary": "sha256:597dabfca422bdac5b51efb3d7a40c3a9727c1401946be61783664886fbf8105",
+    "toolchain": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+    "validator": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615"
+  },
+  "primary_binary_sha256": "6506a1aaf9acee7edad970fbd1d6cf9ab55c1c97a6db85bb35baf13c2793766a",
+  "packaged_constitution_sha256": "97bf47b3800c109f665c92f0c188300be3d5a6fc7955a368f9205e7db34055cb",
+  "frozen_source_files_sha256": {
+    "tests/rust-integration/run_ccf.py": "a329336ab9080d6729aade0a13a841122a7ade7d3b32d163f4d0b994f7edbd7f",
+    "tests/rust-integration/ccf_runner_inside.py": "f66aca2df500baadeea080a327266fd1eaf254e25a53274e1c96412e35e04ba1",
+    "tests/rust-integration/monitor_remote.py": "50e43df191a6a2b578940be52189e1708691cc9a14788b02532a87897518759f",
+    "tests/rust-integration/benchmark_remote.py": "3516001d5f3660a6b1554be92bee2cc2d2523fd5bf6b6b88f68158c7f035307b",
+    "ccf/tests/observe_process.py": "ea348a8b3462e44e204767d2a3c883742fd5eac441c3dd415affd1c26ea62fad",
+    "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+    "tools/prepare_aci_control.py": "8f6a1430d5bb21219c2f681cb1564e06b39d158f144961703593791f807cc155",
+    "tools/verify_ksk_receipt.py": "e7cbc38cc2d7f3ebda33f2c1e7273581284354c2e2fa555790097055f5c265ea",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+    "ccf/node.example.json": "a5f1f3cf9b5f092edbc66f449b6bcfb95ad43189292c388d39f8396d54df0749",
+    "ccf/tests/verify_live_transfer.py": "06c179b2a8c9b038d5d45ef6c10ce77d85a2d58c6d78fa8d72dfddf5fa3daffa",
+    "ccf/tests/observe_status.py": "0b703a8dd2812e749770932f73abecdaf5c793cbe708b10044644fcc1dba5498",
+    "ccf/tests/operator_mail.py": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a",
+    "ccf/tests/verify_operator_mail.py": "8b1002a36d2f8fa682692e1a85f52e5b868e9998e7f9b4f25fae2c8bc3ebbc81"
+  },
+  "started_unix_seconds": 1789265957.0691268,
+  "requested_observation_seconds": 30,
+  "public_host_ports": [],
+  "ccf_and_bind_shared_network_namespace": true,
+  "driver_private_keys_or_tsig_access": false,
+  "stock_validator_separate_bridge_container": true,
+  "service_identity_source": "public certificate copied from controlled immutable local image; no SNP identity claim"
+}

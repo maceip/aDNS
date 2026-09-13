@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "only_node_change": {
+    "old_internal_acl": [
+      "/app/internal/.*"
+    ],
+    "new_internal_acl": [
+      "/app/internal/.*",
+      "/node/state"
+    ]
+  },
+  "unchanged_public_files_sha256": {
+    "member0_enc_pubk.pem": "af3f326cb909c73239d981fbd095fa5e5a01340e9a961fad765ff8491cd06cd5",
+    "member0_cert.pem": "76f90fb8d4481c6f87d31abf4e5d042638ce546db895afcc45aba3c9de51e1c4"
+  },
+  "manifest_sha256": "f4d501a1521ef98ea87135ce955fba638a733d7acd2236f52cf7cc475278838a",
+  "all_manifest_config_inputs_verified": true
+}

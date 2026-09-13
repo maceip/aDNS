@@ -1,0 +1,3 @@
+; fully validated
+mail-good.example.test.	60	IN	A	127.0.0.1
+mail-good.example.test.	60	IN	RRSIG	A 14 3 60 20260913014129 20260913012629 21109 example.test. 6tkVv8pGajIkba8CovjJHVAQvwiG5kyM+b4RC9tYSxokeoDrrM+IyVdc NuVCH1wITpHubO3kP67cFlqUJGkMUWO/xh7Zb5EvMkMQpSOP/OIh4gkz zsegatF0gDt6Jlfu

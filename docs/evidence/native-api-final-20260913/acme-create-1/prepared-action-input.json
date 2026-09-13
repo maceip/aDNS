@@ -1,0 +1,10 @@
+{
+  "operation": "acme_challenge_create",
+  "request_id": "native-acme-create-1-20260913",
+  "parameters": {
+    "order_id": "native-order-1-20260913",
+    "txt_value": "NfcHu1ycEEt0xMRumoQcuPf9NdlXUCluEpxKKY1d46A",
+    "ttl": 30,
+    "lifetime_seconds": 180
+  }
+}

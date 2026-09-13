@@ -1,0 +1,4 @@
+; fully validated
+example.test.		60	IN	TXT	"v=spf1 -all"
+example.test.		60	IN	TXT	"Virtual CCF governed initial test zone; no attested registration"
+example.test.		60	IN	RRSIG	TXT 14 2 60 20260913031730 20260913030230 42388 example.test. toF8sQFvP10Bi39iM4xVO4tD5bH1dJKpfIRlRaT0KVtnPxaAw/+wfHN4 yD95vRK48s9BfzGfFvQ2UelLCbNUFcagNXHPLOGcopFJyl7Byjq5imsf /rxq/yD7lu9AklyB

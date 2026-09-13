@@ -1,0 +1,8 @@
+{"elapsed_micros":379330,"event":"agentdns.dnssec.signing","record_count":257,"serial":1,"zone":"example.test."}
+DEVELOPMENT MEMORY BACKEND: HTTP 127.0.0.1:18080, TSIG transfer 0.0.0.0:18535
+transfer rejected: invalid transfer authenticator
+transfer rejected: invalid transfer authenticator
+{"elapsed_micros":438295,"event":"agentdns.dnssec.signing","record_count":257,"serial":2,"zone":"example.test."}
+{"elapsed_micros":428333,"event":"agentdns.dnssec.signing","record_count":257,"serial":3,"zone":"example.test."}
+{"elapsed_micros":455128,"event":"agentdns.dnssec.signing","record_count":257,"serial":4,"zone":"example.test."}
+{"elapsed_micros":437921,"event":"agentdns.dnssec.signing","record_count":257,"serial":5,"zone":"example.test."}

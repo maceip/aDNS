@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "ccf_version": "7.0.15",
+  "platform": "Virtual (consensus test only)",
+  "operator_tx_id": "2.13",
+  "receipt_tx_id": "2.15",
+  "artifacts": "/build/live-smoke-29fc369c9a03",
+  "quorum": {
+    "nodes": 3,
+    "stalled_output_paths": 8,
+    "transport_partition": "relay links closed before peer pause; no buffered tentative replication",
+    "quorum_restore": "committed",
+    "primary_loss": "uncommitted result absent; nonce consumption rolled back",
+    "replicated_private_keys": "same KSK receipt verified; authenticated AXFR with original TSIG key",
+    "retry_tx_id": "3.37"
+  }
+}

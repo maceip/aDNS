@@ -1,0 +1,9 @@
+{
+  "operation": "acme_challenge_delete",
+  "samples": 1,
+  "submission_to_globally_committed_response_ms_including_tls": 1615.048541,
+  "signed_message_digest": "de1c91a1cd4a01bbb06f5dad5280aa249639a4094efe01c3a46b7fdc0686b707",
+  "transaction_id": "2.577",
+  "historical_result_exactly_matches": true,
+  "exact_retry_matches": true
+}

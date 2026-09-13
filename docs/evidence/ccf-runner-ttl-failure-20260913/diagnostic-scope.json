@@ -1,0 +1,12 @@
+{
+  "kind": "superseded-image diagnostic only; not acceptance",
+  "purpose": "capture the actual CCF error for an operator TXT TTL300 combined with governed base TXT TTL60",
+  "runtime_changed": false,
+  "fixture_ttls_or_records_changed": false,
+  "diagnostic_helper_difference": "initial and final readiness checked actual committed signed state but skipped secondary in_sync waiting; no observations were fabricated",
+  "full_operator_response": "operator/attempt-1-operator-response.json",
+  "observed_http_status": 503,
+  "exact_error": "DNSSEC: zone requires exactly one apex SOA, apex NS, consistent TTLs, no CNAME conflicts, and only in-zone IN records",
+  "production_root_cause": "independently reproduced by a real signed server transaction test; composed base/dynamic RRset TTL mismatch",
+  "superseded_ccf_image": "sha256:d0c9ffdf7a37b4d12deb09d929eb817574160970e1f7218d8b7b70a51b940e18"
+}

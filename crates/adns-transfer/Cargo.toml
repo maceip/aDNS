@@ -1,0 +1,11 @@
+[package]
+name = "adns-transfer"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+[dependencies]
+adns-wire = { path = "../adns-wire" }
+ring.workspace = true
+thiserror.workspace = true
+serde.workspace = true

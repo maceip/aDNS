@@ -1,0 +1,7 @@
+{
+  "helper": "/src/tests/rust-integration/rotate_tsig_ccf_inside.py",
+  "container": "agentdns-ccf-runner-a961d6496091-helper-d9dfc8ef",
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/src/tests/rust-integration/rotate_tsig_ccf_inside.py\", line 115, in <module>\n    main()\n  File \"/src/tests/rust-integration/rotate_tsig_ccf_inside.py\", line 74, in main\n    internal.require_committed(response)\n  File \"/src/tools/ccf_control.py\", line 93, in require_committed\n    raise ValueError(\"invalid CCF transaction-status response\")\nValueError: invalid CCF transaction-status response\n"
+}

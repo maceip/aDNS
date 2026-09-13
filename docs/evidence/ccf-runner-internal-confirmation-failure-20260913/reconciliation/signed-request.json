@@ -1,0 +1,28 @@
+{
+  "action": {
+    "operation": "operator_records",
+    "request_id": "1718f57f55974475b6e1930719d375c3",
+    "audience": "ccf://agentdns.test",
+    "grant_id": "reconcile-e2f5cfbb83924426",
+    "zone": "example.test.",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEILr3XSPHde4D024CYhIt8LQcKHxdK2rmg_DEsdewYixLtOQO6s3DTqfVzmOoi-fiMXo3czggd6NVeNf5e1xNuQ",
+    "parameters": {
+      "expected_serial": 9,
+      "mutations": [
+        {
+          "action": "replace",
+          "name": "reconcile.example.test.",
+          "type": "TXT",
+          "ttl": 60,
+          "rdata_strings": [
+            "durable authenticated request reconciliation"
+          ]
+        }
+      ]
+    }
+  },
+  "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330",
+  "nonce_expires_at": 1789269692,
+  "intent_hash": "2f0b6063dfc996ae6bb8f58f4ae24c6ebb030e02e8847e8dc7522a59916c728e",
+  "client_signature": "XqFdlAm3AuSEs7z-o5p1yBz44Xn-Rx6bgJDLCNB1mXveB3a_9QgAKKvvMNyLYchy8sjYh6pHSwVwpLe3QayAHA"
+}

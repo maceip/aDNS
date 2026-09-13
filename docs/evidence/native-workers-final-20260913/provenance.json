@@ -1,0 +1,11 @@
+{
+  "exported_at_utc": "2026-09-13T07:11:32.274094+00:00",
+  "scope": "Fresh native Azure ACI capture, actual TLS SPKI binding and offline cryptographic appraisal; no registration signature or CCF admission was requested by this worker deployment phase.",
+  "appraiser_binary_sha256": "2fb1eb9ed2742a646f84e8b003a710ccd28f63cc489673c46d1fd218133b38a1",
+  "independent_verifier_image": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "runtime_capture_amd64_manifest": "sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "worker_a": "128.251.109.121:8080",
+  "worker_b": "20.13.225.113:8080",
+  "verification_unix_seconds": 1789283202,
+  "policy_commit_boundary": "The joint policy was independently supplied before either appraisal. Global CCF governance and admission require their separately recorded committed transactions."
+}

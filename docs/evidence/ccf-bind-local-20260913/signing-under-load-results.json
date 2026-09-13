@@ -1,0 +1,50 @@
+{
+  "source": "actual-agentdns.dnssec.signing-diagnostics",
+  "samples": 4,
+  "scope": "SignedZone::sign_with_keys including denial/signature generation; excludes preceding storage reads, following writes and CCF consensus",
+  "minimum_ms": 2.034,
+  "p50_ms": 2.1254999999999997,
+  "p99_ms": 2.932,
+  "maximum_ms": 2.932,
+  "observations": [
+    {
+      "elapsed_micros": 2932,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 3,
+      "serial": 9,
+      "zone": "example.test.",
+      "source_log": "signing-events.log",
+      "source_line": 3
+    },
+    {
+      "elapsed_micros": 2078,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 3,
+      "serial": 10,
+      "zone": "example.test.",
+      "source_log": "signing-events.log",
+      "source_line": 4
+    },
+    {
+      "elapsed_micros": 2173,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 3,
+      "serial": 11,
+      "zone": "example.test.",
+      "source_log": "signing-events.log",
+      "source_line": 5
+    },
+    {
+      "elapsed_micros": 2034,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 3,
+      "serial": 12,
+      "zone": "example.test.",
+      "source_log": "signing-events.log",
+      "source_line": 6
+    }
+  ],
+  "proof_limit": "Measured duration only; no commitment or hardware provenance is inferred from a diagnostic line.",
+  "load_start_unix_seconds": 1789263545.599614,
+  "load_end_unix_seconds": 1789264745.946699
+}

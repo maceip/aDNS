@@ -1,0 +1,11 @@
+{
+  "runtime_image": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "network": "none",
+  "runtime_root_filesystem": "read-only",
+  "verification_command": "python3 -B verify_native_ccf.py --quote node-quote.json --peer node-peer.der --policy node-policy.json --ark amd_genoa_ark.pem --now 1789286770 --output NEW_OUTPUT_DIRECTORY",
+  "input_origin": "primary/native-v5/audit public quote and actual TLS peer; primary/native-v5/node-policy.json supplied independently before appraisal",
+  "live_primary_ip": "20.166.239.227",
+  "negative_checks_on_this_final_capture": 16,
+  "guards": "Six existing guards previously passed against these exact unchanged verifier source hashes; not rerun or counted as a new test run. See ../native-primary-v5-independent-20260913/guard-tests.log.",
+  "source_boundary": "Independent Python/OpenSSL verifier and shared primitives; no Rust verifier invocation."
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "images": [
+      "agentdnsport20260913.azurecr.io/capture@sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a"
+    ],
+    "ip": "128.251.109.121",
+    "name": "agentdns-native-capture",
+    "state": "Succeeded"
+  },
+  {
+    "images": [
+      "agentdnsport20260913.azurecr.io/capture@sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a"
+    ],
+    "ip": "20.13.225.113",
+    "name": "agentdns-native-capture-rotation",
+    "state": "Succeeded"
+  }
+]

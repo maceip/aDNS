@@ -1,0 +1,50 @@
+[
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "48",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.372",
+      "x-ms-ccf-transaction-id": "2.372"
+    },
+    "body": {
+      "status": "committed",
+      "tx_id": "2.372",
+      "work": []
+    },
+    "confirmed_ccf_transaction_id": "2.372"
+  },
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "48",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.373",
+      "x-ms-ccf-transaction-id": "2.373"
+    },
+    "body": {
+      "status": "committed",
+      "tx_id": "2.373",
+      "work": []
+    },
+    "confirmed_ccf_transaction_id": "2.373"
+  },
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "48",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.373",
+      "x-ms-ccf-transaction-id": "2.373"
+    },
+    "body": {
+      "status": "committed",
+      "tx_id": "2.373",
+      "work": []
+    },
+    "confirmed_ccf_transaction_id": "2.373"
+  }
+]

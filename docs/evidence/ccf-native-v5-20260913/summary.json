@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "ccf_version": "7.0.15",
+  "platform": "Virtual (consensus test only)",
+  "request_reconciliation": "committed pending observation; globally committed403 after grant revocation; unchanged zone; exact original nonce succeeds after reauthorization; historical success preserved",
+  "operator_tx_id": "2.17",
+  "receipt_tx_id": "2.19",
+  "artifacts": "/build/live-smoke-a7e338ffb5b3",
+  "quorum": {
+    "nodes": 3,
+    "stalled_output_paths": 10,
+    "transport_partition": "relay links closed before peer pause; no buffered tentative replication",
+    "quorum_restore": "committed",
+    "primary_loss": "uncommitted success and failed-attempt metadata absent; both committed nonces reconcile pending; consumed nonce rolled back",
+    "failed_observations": "HTTP409 metadata and its GET blocked without quorum; committed failure preserves execution_state; rolled-back diagnostic absent on replacement",
+    "replicated_private_keys": "same KSK receipt verified; authenticated AXFR with original TSIG key",
+    "retry_tx_id": "3.46"
+  }
+}

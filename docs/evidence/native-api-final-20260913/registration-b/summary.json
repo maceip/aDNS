@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "operation": "registration",
+  "owner_scope_negatives": 0,
+  "invalid_signature_and_evidence_negatives": 0,
+  "consumed_nonce_negative": false,
+  "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+  "transaction_id": "2.173"
+}

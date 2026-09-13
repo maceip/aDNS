@@ -1,0 +1,54 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from capture.Dockerfile
+#1 transferring dockerfile: 1.44kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61
+#2 DONE 0.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 137B done
+#3 DONE 0.0s
+
+#4 [collector 1/6] FROM docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61
+#4 resolve docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 39.74kB 0.1s done
+#5 DONE 0.1s
+
+#6 [collector 6/6] RUN gcc -O2 -Wall -static -o /get-snp-report get-snp-report.c get-snp-report5.c get-snp-report6.c helpers.c
+#6 CACHED
+
+#7 [collector 2/6] RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gcc libc6-dev make && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [collector 3/6] WORKDIR /src
+#8 CACHED
+
+#9 [collector 4/6] COPY 3rdparty/get-snp-report/get-snp-report.c 3rdparty/get-snp-report/get-snp-report5.c 3rdparty/get-snp-report/get-snp-report6.c 3rdparty/get-snp-report/helpers.c ./
+#9 CACHED
+
+#10 [stage-1 2/4] RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 python3-cbor2 python3-cryptography ca-certificates && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [collector 5/6] COPY 3rdparty/get-snp-report/*.h ./
+#11 CACHED
+
+#12 [stage-1 3/4] COPY --from=collector /get-snp-report /usr/local/bin/get-snp-report
+#12 CACHED
+
+#13 [stage-1 4/4] COPY tools/capture_aci.py /app/capture_aci.py
+#13 DONE 0.1s
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 exporting manifest sha256:a185bba1f3d46487088823a17c1c6cb542036b988e039e1d24f93d720b763f74
+#14 exporting manifest sha256:a185bba1f3d46487088823a17c1c6cb542036b988e039e1d24f93d720b763f74 done
+#14 exporting config sha256:49b8edae743fe295fdbdb31f79da34e4758d1f8447b188c282dd651db4d7dcf3 done
+#14 exporting attestation manifest sha256:8b20370db03e30009ffc94845093328dbb455f71bfb0b6fef68a919d8013c836 0.0s done
+#14 exporting manifest list sha256:17f9782f253998c1e87082532ab2f168f7d5adedee003530ccd8c1cf83d28f06 done
+#14 naming to docker.io/library/agentdns-capture:local done
+#14 DONE 0.2s

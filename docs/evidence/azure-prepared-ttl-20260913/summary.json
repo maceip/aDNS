@@ -1,0 +1,18 @@
+{
+  "status": "superseded prepared candidate; not deployed; retained pre-reconciliation/revocation/policy-identity baseline",
+  "primary_index_digest": "sha256:cc749ceddf064ae31d4c571849d81f8d0a457ff135486b9020daa861f764b457",
+  "primary_amd64_manifest_digest": "sha256:3d8c7de697060afa98a204da138af0d05e725a704b6ddd73175cb067c7c6ffc8",
+  "primary_binary_sha256": "eb62c06083bdb7fe446f4d8cacd9629545e14ea049f1ebeaaf1c20ac59ef6d8e",
+  "capture_index_digest": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "capture_amd64_manifest_digest": "sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "secondary_amd64_manifest_digest": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+  "primary_cce_sha256": "bd43386ec3095deecd89f199cc4e6b0c9be79529d45f07f7bfb7ebd136de001c",
+  "capture_cce_sha256": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+  "rotation_cce_sha256": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+  "config_manifest_sha256": "304fc60aa7584c3ce9e28c3abb8f8753df856b5c9cee8b62595c5cfa48d402d4",
+  "source_of_verity_layers": "pinned Linux confcom2.1.0 over distinct single-image Docker archives",
+  "approval": "The user has been asked to approve the complete isolated deployment, generated test-only secret provisioning, and pinned-TLS signing/lifecycle run after automatic approval review rejected deployment and token-bearing signing.",
+  "supersedes": "azure-prepared-20260913 primary, after mixed base/dynamic TTL failure; workload and secondary unchanged",
+  "candidate_validation": "96 Rust tests, MSRV1.85.1, exact-image CCF quorum/rollback/disk recovery, and complete corrected assembled smoke passed;1250s final idle/load/memory run in progress",
+  "superseded_reason": "Final contract audit requires committed pending/failed request reconciliation, permanent governed TSIG revocation, and immutable appraisal-policy identities. A replacement image and CCE policy will be generated after those changes pass review."
+}

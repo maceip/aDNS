@@ -1,0 +1,22 @@
+posttls-finger: initializing the client-side TLS engine
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail.example.test: 3 1 1 AEC3B0F1C46C6B0D0C5A6E365D06F9EDD4DF9F9443207477793A9552FD05183C
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail.example.test: 3 1 1 632A0F390A030838F11124A26F41EE1F99565F88A8552F5C6465F4E167C147ED
+posttls-finger: Connected to mail.example.test[192.0.2.1]:25
+posttls-finger: < 220 mail.example.test ESMTP isolated validation fixture
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 HELP
+posttls-finger: > STARTTLS
+posttls-finger: < 220 2.0.0 Ready to start TLS
+posttls-finger: setting up TLS connection to mail.example.test[192.0.2.1]:25
+posttls-finger: mail.example.test[192.0.2.1]:25: TLS cipher list "aNULL:-aNULL:HIGH:MEDIUM:!SEED:!IDEA:!3DES:!RC2:!RC4:!RC5:!kDH:!kECDH:!aDSS:!MD5:+RC4:@STRENGTH:!aNULL"
+posttls-finger: mail.example.test[192.0.2.1]:25: depth=0 verify=1 subject=/CN=agentdns-capture.test
+posttls-finger: mail.example.test[192.0.2.1]:25: Matched DANE EE certificate at depth 0: 3 1 1 AEC3B0F1C46C6B0D0C5A6E365D06F9EDD4DF9F9443207477793A9552FD05183C
+posttls-finger: mail.example.test[192.0.2.1]:25: subject_CN=agentdns-capture.test, issuer_CN=agentdns-capture.test, fingerprint=88:FD:08:1F:BD:AE:51:FD:1E:E4:59:AF:D7:DE:7D:97:6C:14:99:0D:34:48:B3:30:84:94:6B:D2:16:DE:90:6F, pkey_fingerprint=AE:C3:B0:F1:C4:6C:6B:0D:0C:5A:6E:36:5D:06:F9:ED:D4:DF:9F:94:43:20:74:77:79:3A:95:52:FD:05:18:3C
+posttls-finger: Verified TLS connection established to mail.example.test[192.0.2.1]:25: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits) key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail.example.test
+posttls-finger: < 250 HELP
+posttls-finger: > QUIT
+posttls-finger: < 221 2.0.0 Validation session closed

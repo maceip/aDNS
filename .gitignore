@@ -38,9 +38,17 @@ tests.sh
 __pycache__
 build
 build_*
+!tools/build_aci_template.py
 vbuild*
 logs
 node_modules
 env/
 scripts/env
 3rdparty/get-snp-report/bin/
+
+# Rust build, isolated validation state, and local development secrets
+/target/
+/fuzz/target/
+/.validation/
+
+/tests/leakcheck/target/

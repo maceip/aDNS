@@ -1,0 +1,7 @@
+test_http_success_requires_exact_global_commit_identity (test_ccf_measurements.MeasurementTests.test_http_success_requires_exact_global_commit_identity) ... ok
+test_only_exact_signing_diagnostic_events_are_measured (test_ccf_measurements.MeasurementTests.test_only_exact_signing_diagnostic_events_are_measured) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK

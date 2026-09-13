@@ -1,0 +1,145 @@
+{
+  "sampling": "3000 mixed DO=1 requests paced at 100/s during concurrent 1000-qps DO=1 dnsperf load",
+  "duration_seconds": 30.069472670002142,
+  "start_unix_seconds": 1789261070.4652057,
+  "end_unix_seconds": 1789261100.534678,
+  "frontend_memory": {
+    "process": "BIND secondary",
+    "minimum_rss_kib": 25960,
+    "maximum_rss_kib": 25996,
+    "samples": [
+      {
+        "elapsed_seconds": 0.0035853540030075237,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 1.0007770629999868,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 2.0023320890031755,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 3.003349946000526,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 4.000326487002894,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 5.002821727000992,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 6.001779571000952,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 7.0008956660021795,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 8.003782784002397,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 9.00279683700137,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 10.002121850000549,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 11.00171482299993,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 12.000938544002565,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 13.001623815001949,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 14.001161705000413,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 15.003369777001353,
+        "rss_kib": 25960
+      },
+      {
+        "elapsed_seconds": 16.00282754,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 17.001123006000853,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 18.002721282002312,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 19.002027754002484,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 20.00095538900132,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 21.000906946002942,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 22.002678598000784,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 23.00325903400153,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 24.003339884002344,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 25.000329923001118,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 26.001885240002593,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 27.001875590001873,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 28.001954690000275,
+        "rss_kib": 25996
+      },
+      {
+        "elapsed_seconds": 29.002787211000395,
+        "rss_kib": 25996
+      }
+    ]
+  },
+  "samples": 3000,
+  "failed_latency_samples": 0,
+  "p50_ms": 0.3380645,
+  "p99_ms": 1.59176,
+  "max_ms": 2.961851,
+  "concurrent_load": {
+    "queries_sent": 29949,
+    "queries_completed": 29949,
+    "queries_lost": 0,
+    "completed_qps": 998.267623
+  },
+  "dnsperf_log": "dnsperf-dnssec-under-load.log"
+}

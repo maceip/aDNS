@@ -1,0 +1,30 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "547",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.1821",
+    "x-ms-ccf-transaction-id": "2.1821"
+  },
+  "body": {
+    "execution_state": "pending",
+    "grant_id": "reconcile-b6894853bbc94af0",
+    "latest_observation": {
+      "expires_at": 1789271842,
+      "intent_hash": "4fb0ef704604a65cd258e3a4797f451a6190ecaa7d78a47c626505ccfe66fa38",
+      "issued_at": 1789271542,
+      "nonce": "f7a0b7bc7e3ef23e771b2e1942f39fe695746bd70891e1f823bb57b615de6c2c"
+    },
+    "matching_nonces": 1,
+    "multiple_nonce_ambiguity": false,
+    "observation_status": "committed",
+    "observation_tx_id": "2.1821",
+    "phase": "awaiting_committed_result",
+    "request_id": "f554998a31514923ba0351331804d594",
+    "retryable": true,
+    "status": "pending",
+    "tx_id": "2.1821"
+  },
+  "confirmed_ccf_transaction_id": "2.1821"
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Local test only: exact unchanged native ELF in explicit Virtual mode.
+exec env CCF_PLATFORM_OVERRIDE=Virtual /exact/agentdns "$@"

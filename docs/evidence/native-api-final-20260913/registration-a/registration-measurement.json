@@ -1,0 +1,9 @@
+{
+  "operation": "register",
+  "samples": 1,
+  "submission_to_globally_committed_response_ms_including_tls": 1508.392166,
+  "signed_message_digest": "be3840a84201959e7aa5080ba2173a65c08a284d7b3563b8fd766e6f8ee5628a",
+  "transaction_id": "2.143",
+  "historical_result_exactly_matches": true,
+  "exact_retry_matches": true
+}

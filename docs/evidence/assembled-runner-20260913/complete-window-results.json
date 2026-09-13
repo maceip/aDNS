@@ -1,0 +1,61 @@
+{
+  "backend": "development-memory",
+  "first_host_sample": 1789263092,
+  "last_host_sample": 1789264346,
+  "host_observed_span_seconds": 1254,
+  "host_sample_count": 125,
+  "maximum_host_sample_gap_seconds": 11,
+  "runtime_pid_count": 1,
+  "all_host_observations_in_sync": true,
+  "first_frontend_sample": 1789263092,
+  "last_frontend_sample": 1789264384,
+  "frontend_observed_span_seconds": 1292,
+  "frontend_validations": 88,
+  "automatic_transfers": [
+    {
+      "serial": 1,
+      "received_unix_seconds": 1789263090.562,
+      "previous_signature_expiration": null,
+      "previous_expiry_margin_seconds": null
+    },
+    {
+      "serial": 2,
+      "received_unix_seconds": 1789263389.78,
+      "previous_signature_expiration": 1789263689,
+      "previous_expiry_margin_seconds": 299.22
+    },
+    {
+      "serial": 3,
+      "received_unix_seconds": 1789263689.764,
+      "previous_signature_expiration": 1789263989,
+      "previous_expiry_margin_seconds": 299.236
+    },
+    {
+      "serial": 4,
+      "received_unix_seconds": 1789263989.801,
+      "previous_signature_expiration": 1789264289,
+      "previous_expiry_margin_seconds": 299.199
+    },
+    {
+      "serial": 5,
+      "received_unix_seconds": 1789264289.787,
+      "previous_signature_expiration": 1789264589,
+      "previous_expiry_margin_seconds": 299.213
+    }
+  ],
+  "minimum_automatic_expiry_margin_seconds": 299.199,
+  "mutating_requests": 0,
+  "manual_notify": 0,
+  "restarts": 0,
+  "shared_host_other_work": [
+    {
+      "description": "independent ARM64 Valgrind finite workload and compile in shared Docker host, as reported by sibling reviewer",
+      "start_unix_seconds": 1789263884.7,
+      "end_unix_seconds": 1789263898.8
+    },
+    {
+      "description": "capture TLS tests/image build and local routing harness preparation ran concurrently later in idle window; environment is not a dedicated benchmark host"
+    }
+  ],
+  "sampling_limit": "Periodic validation plus timestamped authenticated transfer receipt margins; not every possible DNS query instant was probed."
+}

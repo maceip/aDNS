@@ -1,0 +1,74 @@
+{
+  "input_sha256": "736a14b0bfb9638b3524346202ff705a27de3a4397432c93a37b3a0a34c4e1c5",
+  "samples": 8,
+  "minimum_ms": 143.573,
+  "median_ms": 153.689,
+  "maximum_ms": 163.647,
+  "observations": [
+    {
+      "elapsed_micros": 158799,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 7,
+      "zone": "example.test.",
+      "source_line": 232
+    },
+    {
+      "elapsed_micros": 152426,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 8,
+      "zone": "example.test.",
+      "source_line": 233
+    },
+    {
+      "elapsed_micros": 143573,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 9,
+      "zone": "example.test.",
+      "source_line": 234
+    },
+    {
+      "elapsed_micros": 163647,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 10,
+      "zone": "example.test.",
+      "source_line": 235
+    },
+    {
+      "elapsed_micros": 154952,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 11,
+      "zone": "example.test.",
+      "source_line": 236
+    },
+    {
+      "elapsed_micros": 150504,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 244,
+      "serial": 12,
+      "zone": "example.test.",
+      "source_line": 237
+    },
+    {
+      "elapsed_micros": 145619,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 249,
+      "serial": 13,
+      "zone": "example.test.",
+      "source_line": 239
+    },
+    {
+      "elapsed_micros": 158528,
+      "event": "agentdns.dnssec.signing",
+      "record_count": 250,
+      "serial": 14,
+      "zone": "example.test.",
+      "source_line": 243
+    }
+  ],
+  "scope": "Actual SignedZone::sign_with_keys spans, including denial/signature generation; excludes preceding storage, following writes and consensus. Small sample count is not a stable tail-latency estimate."
+}

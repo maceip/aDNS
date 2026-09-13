@@ -1,0 +1,3 @@
+; fully validated
+mail.example.test.	300	IN	AAAA	2001:db8::1
+mail.example.test.	300	IN	RRSIG	AAAA 14 3 300 20260913083337 20260913081837 20222 example.test. uliPwI01RZxbiiob7TkVB/TkUOBNl+vXvKG2/aU/WBLnz9AHw8f3+/4B 2Pe7Z9gzvH2jSsGf/J/0oLWg86PIPLSe/UPG5MTbqWf97tKrstcSxeKM 5P67p14bpL77cGK1

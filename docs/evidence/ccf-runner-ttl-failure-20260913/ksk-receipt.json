@@ -1,0 +1,32 @@
+{
+  "algorithm": 14,
+  "ccf_service_identity": "-----BEGIN CERTIFICATE-----\nMIIB2TCCAV6gAwIBAgIRAOvMs4aCMeMgzE/6NHSdlRowCgYIKoZIzj0EAwMwGzEZ\nMBcGA1UEAwwQYWdlbnRkbnMgU2VydmljZTAeFw0yNjA5MTMwMjE5MTlaFw0yNjA5\nMjAwMjE5MThaMBsxGTAXBgNVBAMMEGFnZW50ZG5zIFNlcnZpY2UwdjAQBgcqhkjO\nPQIBBgUrgQQAIgNiAAQxPceKT9OeXjKR4hsfQT3jMDdmrcNUxsrlDRtsvwg6K+c2\ntI6WYtp8Cb9/Un1V3EPUIZVesk1IQf5Cmxd3/a0ccjr/xU4z8ULXj+SDpRiLpBKl\nU91n9VYHkRJvqVp52mijZjBkMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/\nBAQDAgKEMB0GA1UdDgQWBBSB9OuguJ+l1eqBanSmmBELnmwM3zAfBgNVHSMEGDAW\ngBSB9OuguJ+l1eqBanSmmBELnmwM3zAKBggqhkjOPQQDAwNpADBmAjEA8NINHF/M\nLhce9SeRlFKWedMLG/E7pKapyQovwHC5AGdvYiC+kPlks5zNps9hkP1IAjEA9spO\nMSjZ6ngm9VKiuJMROe6otgfoNZLYQ2P8oCkXW3tu+MMoiedEcvN+0uzpkVpk\n-----END CERTIFICATE-----\n",
+  "dnskey_rdata_hex": "0101030e6790547fe95ccaf1ebfe1c8fd517ed5a4dd55a0675a8862ced1754c51970a1bfc342db710a41d72c475b6361e99a83f65a1a74a24f6f575319b8d50c40b0f60377af5539cb225636a0f4b0ead5c96b355099e01d248b1959b93d1f561bf4ee0b",
+  "ds_digest": {
+    "digest_hex": "b85341c25a1e40bd2da3a4f3b91341e436cce2695ab9b71c3f91c609b26b8345",
+    "digest_type": 2
+  },
+  "key_tag": 58852,
+  "owner_name": "example.test.",
+  "proof": {
+    "cert": "-----BEGIN CERTIFICATE-----\nMIIB2TCCAV+gAwIBAgIQJawhvH8BeMQ0E1mHwER/iDAKBggqhkjOPQQDAzAbMRkw\nFwYDVQQDDBBhZ2VudGRucyBTZXJ2aWNlMB4XDTI2MDkxMzAyMTkxOVoXDTI2MDky\nMDAyMTkxOFowEzERMA8GA1UEAwwIYWdlbnRkbnMwdjAQBgcqhkjOPQIBBgUrgQQA\nIgNiAATpKDYNzavx1fd/8GokbHpwefcbAKHgujGYx7iVZI7lZ5GCkfotDXXp1hut\n94nrifVLHepuxEubVlhd42pZoVM83i3K6SCuxZNbsTbKJRAKk1nGrJnthws5W7Ii\nConkltajcDBuMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPB8DJQU8I/+ABezEb7g\ncmKqCyOeMB8GA1UdIwQYMBaAFIH066C4n6XV6oFqdKaYEQuebAzfMB4GA1UdEQQX\nMBWHBH8AAAGCDWFnZW50ZG5zLnRlc3QwCgYIKoZIzj0EAwMDaAAwZQIxAKpc4tW1\nMvxiPOr1I38/QgFgHQIQpofCdWCOkkWchPsd3TTjKHZtoV0fa1NuqfXjfQIwZwQm\nMi3IZWCKf+rw56QLvxrMYuj/y5yMbdhJ/mZeB24Q6kQ2mGeopGIb0lcDqbgj\n-----END CERTIFICATE-----\n",
+    "leaf_components": {
+      "claims_digest": "f967040b86d677d3c5134782fca228b96a330581d0b359e634b37e8c245cf3fb",
+      "commit_evidence": "ce:2.20:334433f340a5609e6e259e3c1e09d95721e879ca19b9b276c9c741987cca6b71",
+      "write_set_digest": "5fd9331b3b6046889cd90e11c906dd5013baedb729b9817932a2630b09b2cbc4"
+    },
+    "node_id": "d1ba7b18b52fce29e9fd73168272d2ba4e209e31f79c0649e09b2a73edc1cce8",
+    "proof": [
+      {
+        "left": "0d4839b8edfc50f5adb861d8bbf151d19a848772f919757c6a05d9cab7e31b2e"
+      },
+      {
+        "left": "11948f380b86b49098b830c302bf37ea9cc2c03069f558489ca5e4ca3bd5a779"
+      }
+    ],
+    "signature": "MGUCMFu0QNA0XDtTJ2BI8K2qtnu9VvlbQDhjrrS1gAB5mxCuupg3NlHHC5RuZSRv+IHoFAIxAIX3a+tH1Rwsj900e1IeRXZYd2VxWdDyLnjVaKCgWHgvKVGEHgMqnl7QMK/+ogaS3g=="
+  },
+  "status": "committed",
+  "tx_id": "2.20",
+  "zone": "example.test."
+}

@@ -1,0 +1,18 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "260",
+    "content-type": "application/json",
+    "x-ms-ccf-transaction-id": "2.368"
+  },
+  "body": {
+    "ballotCount": 0,
+    "ballotSubmitters": [],
+    "finalVotes": {},
+    "proposalId": "376dc6fba328db81f2fc00fcf5ae7131eeb0e87c3af8edbc09d4817f796d8c32",
+    "proposalState": "Accepted",
+    "proposerId": "efe09f1d1fee91c2d08eb7e378a92918bd65bc9c40451369825ee4d40563f86e",
+    "voteFailures": {}
+  },
+  "confirmed_ccf_transaction_id": "2.368"
+}

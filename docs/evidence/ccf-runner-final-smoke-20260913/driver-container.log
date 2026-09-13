@@ -1,0 +1,9 @@
+2026-09-13 03:18:53,548 WARNING secondary not confirmed: CCF secondary/response returned HTTP 400
+2026-09-13 03:23:57,903 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 03:23:57,923 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 03:24:29,719 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 03:24:29,740 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 03:25:03,576 WARNING secondary not confirmed: [Errno 111] Connection refused
+2026-09-13 03:25:03,576 WARNING secondary not confirmed: [Errno 111] Connection refused
+2026-09-13 03:25:07,082 WARNING transfer rejected: CCF axfr returned HTTP 403
+2026-09-13 03:25:07,103 WARNING UDP query rejected: CCF udp returned HTTP 403

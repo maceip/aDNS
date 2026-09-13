@@ -1,0 +1,86 @@
+2026-09-13T01:33:41.695950462Z 13-Sep-2026 01:33:41.690 starting BIND 9.18.39-0ubuntu0.24.04.7-Ubuntu (Extended Support Version) <id:>
+2026-09-13T01:33:41.695973880Z 13-Sep-2026 01:33:41.694 running on Linux x86_64 7.0.14-orbstack-00380-ga7e0a2dc9535 #1 SMP PREEMPT Fri Aug  7 03:48:40 UTC 2026
+2026-09-13T01:33:41.695984213Z 13-Sep-2026 01:33:41.694 built with  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/x86_64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=/usr/src/bind9-1:9.18.39-0ubuntu0.24.04.7 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -ledit' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+2026-09-13T01:33:41.695986755Z 13-Sep-2026 01:33:41.694 running as: named -g -n 1 -u bind -c /run/agentdns-secondary/named.conf
+2026-09-13T01:33:41.695987797Z 13-Sep-2026 01:33:41.694 compiled by GCC 13.3.0
+2026-09-13T01:33:41.695988713Z 13-Sep-2026 01:33:41.694 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+2026-09-13T01:33:41.695989630Z 13-Sep-2026 01:33:41.694 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+2026-09-13T01:33:41.695990588Z 13-Sep-2026 01:33:41.694 compiled with libuv version: 1.48.0
+2026-09-13T01:33:41.695992297Z 13-Sep-2026 01:33:41.694 linked to libuv version: 1.48.0
+2026-09-13T01:33:41.695998255Z 13-Sep-2026 01:33:41.694 compiled with libxml2 version: 2.9.14
+2026-09-13T01:33:41.695999339Z 13-Sep-2026 01:33:41.694 linked to libxml2 version: 20914
+2026-09-13T01:33:41.696000214Z 13-Sep-2026 01:33:41.694 compiled with json-c version: 0.17
+2026-09-13T01:33:41.696001130Z 13-Sep-2026 01:33:41.694 linked to json-c version: 0.17
+2026-09-13T01:33:41.696001964Z 13-Sep-2026 01:33:41.694 compiled with zlib version: 1.3
+2026-09-13T01:33:41.696002797Z 13-Sep-2026 01:33:41.694 linked to zlib version: 1.3
+2026-09-13T01:33:41.696003672Z 13-Sep-2026 01:33:41.694 ----------------------------------------------------
+2026-09-13T01:33:41.696004589Z 13-Sep-2026 01:33:41.694 BIND 9 is maintained by Internet Systems Consortium,
+2026-09-13T01:33:41.696005422Z 13-Sep-2026 01:33:41.694 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+2026-09-13T01:33:41.696006297Z 13-Sep-2026 01:33:41.694 corporation.  Support and training for BIND 9 are 
+2026-09-13T01:33:41.696007131Z 13-Sep-2026 01:33:41.694 available at https://www.isc.org/support
+2026-09-13T01:33:41.696011006Z 13-Sep-2026 01:33:41.694 ----------------------------------------------------
+2026-09-13T01:33:41.696013131Z 13-Sep-2026 01:33:41.694 found 18 CPUs, using 1 worker thread
+2026-09-13T01:33:41.696014047Z 13-Sep-2026 01:33:41.694 using 1 UDP listener per interface
+2026-09-13T01:33:41.721895817Z 13-Sep-2026 01:33:41.720 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+2026-09-13T01:33:41.721913818Z 13-Sep-2026 01:33:41.720 DS algorithms: SHA-1 SHA-256 SHA-384
+2026-09-13T01:33:41.721915360Z 13-Sep-2026 01:33:41.720 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+2026-09-13T01:33:41.721916818Z 13-Sep-2026 01:33:41.720 TKEY mode 2 support (Diffie-Hellman): yes
+2026-09-13T01:33:41.721917818Z 13-Sep-2026 01:33:41.720 TKEY mode 3 support (GSS-API): yes
+2026-09-13T01:33:41.730700593Z 13-Sep-2026 01:33:41.729 the initial working directory is '/'
+2026-09-13T01:33:41.730887973Z 13-Sep-2026 01:33:41.729 loading configuration from '/run/agentdns-secondary/named.conf'
+2026-09-13T01:33:41.731450904Z 13-Sep-2026 01:33:41.730 the working directory is now '/var/lib/bind/agentdns'
+2026-09-13T01:33:41.736994593Z 13-Sep-2026 01:33:41.736 reading built-in trust anchors from file '/etc/bind/bind.keys'
+2026-09-13T01:33:41.738053329Z 13-Sep-2026 01:33:41.736 looking for GeoIP2 databases in '/usr/share/GeoIP'
+2026-09-13T01:33:41.740280805Z 13-Sep-2026 01:33:41.739 using default UDP/IPv4 port range: [32768, 60999]
+2026-09-13T01:33:41.740426726Z 13-Sep-2026 01:33:41.739 using default UDP/IPv6 port range: [32768, 60999]
+2026-09-13T01:33:41.743478223Z 13-Sep-2026 01:33:41.741 listening on IPv4 interface lo, 127.0.0.1#53
+2026-09-13T01:33:41.745695407Z 13-Sep-2026 01:33:41.744 listening on IPv4 interface eth0, 192.168.215.2#53
+2026-09-13T01:33:41.745764909Z 13-Sep-2026 01:33:41.744 IPv6 socket API is incomplete; explicitly binding to each IPv6 address separately
+2026-09-13T01:33:41.745975331Z 13-Sep-2026 01:33:41.744 listening on IPv6 interface lo, ::1#53
+2026-09-13T01:33:41.749649095Z 13-Sep-2026 01:33:41.747 generating session key for dynamic DNS
+2026-09-13T01:33:41.755783008Z 13-Sep-2026 01:33:41.753 sizing zone task pool based on 1 zones
+2026-09-13T01:33:41.782318545Z 13-Sep-2026 01:33:41.781 set up managed keys zone for view _default, file 'managed-keys.bind'
+2026-09-13T01:33:41.790694267Z 13-Sep-2026 01:33:41.789 not using config file logging statement for logging due to -g option
+2026-09-13T01:33:41.796534714Z 13-Sep-2026 01:33:41.795 managed-keys-zone: loaded serial 0
+2026-09-13T01:33:41.801552597Z 13-Sep-2026 01:33:41.800 all zones loaded
+2026-09-13T01:33:41.802829089Z 13-Sep-2026 01:33:41.801 running
+2026-09-13T01:33:41.842036629Z 13-Sep-2026 01:33:41.841 zone example.test/IN: Transfer started.
+2026-09-13T01:33:41.844689033Z 13-Sep-2026 01:33:41.844 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:33:41.869459774Z 13-Sep-2026 01:33:41.867 zone example.test/IN: transferred serial 7: TSIG 'agentdns-transfer'
+2026-09-13T01:33:41.869478024Z 13-Sep-2026 01:33:41.868 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:33:41.869479149Z 13-Sep-2026 01:33:41.868 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.024 secs (71041 bytes/sec) (serial 7)
+2026-09-13T01:38:40.424117763Z 13-Sep-2026 01:38:40.422 client @0x7ffff5283b88 127.0.0.1#41532/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+2026-09-13T01:38:40.424146096Z 13-Sep-2026 01:38:40.422 zone example.test/IN: notify from 127.0.0.1#41532: no serial
+2026-09-13T01:38:40.457534269Z 13-Sep-2026 01:38:40.456 zone example.test/IN: Transfer started.
+2026-09-13T01:38:40.457881853Z 13-Sep-2026 01:38:40.456 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:38:41.432821412Z 13-Sep-2026 01:38:41.431 zone example.test/IN: transferred serial 8: TSIG 'agentdns-transfer'
+2026-09-13T01:38:41.432834578Z 13-Sep-2026 01:38:41.431 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:38:41.432836703Z 13-Sep-2026 01:38:41.431 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.973 secs (1752 bytes/sec) (serial 8)
+2026-09-13T01:43:39.950130958Z 13-Sep-2026 01:43:39.947 client @0x7ffff5285708 127.0.0.1#47112/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+2026-09-13T01:43:39.950173666Z 13-Sep-2026 01:43:39.949 zone example.test/IN: notify from 127.0.0.1#47112: no serial
+2026-09-13T01:43:39.975561572Z 13-Sep-2026 01:43:39.974 zone example.test/IN: Transfer started.
+2026-09-13T01:43:39.975723238Z 13-Sep-2026 01:43:39.974 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:43:40.957602189Z 13-Sep-2026 01:43:40.956 zone example.test/IN: transferred serial 9: TSIG 'agentdns-transfer'
+2026-09-13T01:43:40.957631314Z 13-Sep-2026 01:43:40.956 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:43:40.957633231Z 13-Sep-2026 01:43:40.956 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.981 secs (1738 bytes/sec) (serial 9)
+2026-09-13T01:48:40.531371506Z 13-Sep-2026 01:48:40.528 client @0x7ffff5283b88 127.0.0.1#36956/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+2026-09-13T01:48:40.531395923Z 13-Sep-2026 01:48:40.529 zone example.test/IN: notify from 127.0.0.1#36956: no serial
+2026-09-13T01:48:41.529452256Z 13-Sep-2026 01:48:41.527 zone example.test/IN: Transfer started.
+2026-09-13T01:48:41.529978382Z 13-Sep-2026 01:48:41.528 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:48:41.557063348Z 13-Sep-2026 01:48:41.555 zone example.test/IN: transferred serial 10: TSIG 'agentdns-transfer'
+2026-09-13T01:48:41.557100807Z 13-Sep-2026 01:48:41.555 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:48:41.557113515Z 13-Sep-2026 01:48:41.555 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.027 secs (63148 bytes/sec) (serial 10)
+2026-09-13T01:53:40.063615402Z 13-Sep-2026 01:53:40.061 client @0x7ffff5283b88 127.0.0.1#40938/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+2026-09-13T01:53:40.063689153Z 13-Sep-2026 01:53:40.062 zone example.test/IN: notify from 127.0.0.1#40938: no serial
+2026-09-13T01:53:41.065354615Z 13-Sep-2026 01:53:41.064 zone example.test/IN: Transfer started.
+2026-09-13T01:53:41.065430407Z 13-Sep-2026 01:53:41.064 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:53:41.086583571Z 13-Sep-2026 01:53:41.085 zone example.test/IN: transferred serial 11: TSIG 'agentdns-transfer'
+2026-09-13T01:53:41.086601654Z 13-Sep-2026 01:53:41.085 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:53:41.086603321Z 13-Sep-2026 01:53:41.085 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.021 secs (81190 bytes/sec) (serial 11)
+2026-09-13T01:58:40.619625686Z 13-Sep-2026 01:58:40.617 client @0x7ffff5283b88 127.0.0.1#40813/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+2026-09-13T01:58:40.619679728Z 13-Sep-2026 01:58:40.617 zone example.test/IN: notify from 127.0.0.1#40813: no serial
+2026-09-13T01:58:41.629028623Z 13-Sep-2026 01:58:41.627 zone example.test/IN: Transfer started.
+2026-09-13T01:58:41.629048664Z 13-Sep-2026 01:58:41.627 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+2026-09-13T01:58:41.649366535Z 13-Sep-2026 01:58:41.647 zone example.test/IN: transferred serial 12: TSIG 'agentdns-transfer'
+2026-09-13T01:58:41.649383952Z 13-Sep-2026 01:58:41.647 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+2026-09-13T01:58:41.649385535Z 13-Sep-2026 01:58:41.647 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 1 messages, 16 records, 1705 bytes, 0.020 secs (85250 bytes/sec) (serial 12)

@@ -1,0 +1,16 @@
+{
+  "status": "prepared and reviewed locally; neither primary nor revised workers deployed",
+  "primary_index_digest": "sha256:d0c9ffdf7a37b4d12deb09d929eb817574160970e1f7218d8b7b70a51b940e18",
+  "primary_amd64_manifest_digest": "sha256:e19e89d475f2176fe729071151657719b618b1eeced20eb2a907467b35d5f415",
+  "primary_binary_sha256": "6506a1aaf9acee7edad970fbd1d6cf9ab55c1c97a6db85bb35baf13c2793766a",
+  "capture_index_digest": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "capture_amd64_manifest_digest": "sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "secondary_amd64_manifest_digest": "sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+  "primary_cce_sha256": "038d5fea1d9f295d1636a4161da4d2126fe10fcf2e7b42eb48ba12cf331ce5f1",
+  "capture_cce_sha256": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+  "rotation_cce_sha256": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+  "config_manifest_sha256": "304fc60aa7584c3ce9e28c3abb8f8753df856b5c9cee8b62595c5cfa48d402d4",
+  "source_of_verity_layers": "pinned Linux confcom2.1.0 over distinct single-image Docker archives",
+  "approval": "The user has been asked to approve the complete isolated deployment, generated test-only secret provisioning, and pinned-TLS signing/lifecycle run after automatic approval review rejected deployment and token-bearing signing.",
+  "candidate_status": "superseded before deployment after assembled operator test exposed mixed base/dynamic RRset TTL failure"
+}

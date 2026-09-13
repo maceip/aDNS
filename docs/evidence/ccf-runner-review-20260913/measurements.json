@@ -1,0 +1,39 @@
+{
+  "public_export_files_equal_private_result_bytes": 122,
+  "public_hashes_verified": 122,
+  "status_samples": 126,
+  "committed_unexpired_samples": 126,
+  "in_sync_samples": 123,
+  "transient_not_in_sync_samples": 3,
+  "maximum_status_sample_gap_seconds": 10.710171461105347,
+  "external_validations": 86,
+  "crossed_initial_expiration": true,
+  "observed_refreshes": [
+    {
+      "serial": 9,
+      "external_observed_elapsed_seconds": 300.6181462700006,
+      "seconds_before_preceding_expiration": 290
+    },
+    {
+      "serial": 10,
+      "external_observed_elapsed_seconds": 601.1823295370014,
+      "seconds_before_preceding_expiration": 289
+    },
+    {
+      "serial": 11,
+      "external_observed_elapsed_seconds": 901.7676290140007,
+      "seconds_before_preceding_expiration": 289
+    },
+    {
+      "serial": 12,
+      "external_observed_elapsed_seconds": 1202.3688476850002,
+      "seconds_before_preceding_expiration": 289
+    }
+  ],
+  "receipt_independently_verified": {
+    "zone": "example.test.",
+    "key_tag": 55800,
+    "transaction_id": "2.269",
+    "ds_sha256": "c106d1eef32a67226cd757dfd832b3caa9b9297f52c78df44e95478f480bf331"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "renew",
+    "parameters": {
+      "evidence_digest": "d830de4a2c3af8da9f48e8c2e77083582191b24fe64cb09dd4849edc939f6222",
+      "evidence_profile": "azure-aci-snp",
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "requested_lease_seconds": 3600
+    },
+    "request_id": "native-renew-a-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhzpngg2y3jPR3tZxWoD5dfqUHhqKNBRfCMYQei_ZhCqyUTl7pfT4NWSkxhVORYTpCLJ7OPlP595nHS0aQmSEg",
+    "zone": "example.test."
+  },
+  "action_id": "c757f65b63f5fa802d98f80ce12ce838774148acc88ae03a9e1f7449bd4f0c21",
+  "intent_hash": "c757f65b63f5fa802d98f80ce12ce838774148acc88ae03a9e1f7449bd4f0c21"
+}

@@ -1,0 +1,224 @@
+[
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.1851"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "79d33f5a9e9475ea1620c742889c1d6c223720d8d471998b8c7ad2e535ae99bb",
+        "proposalState": "Accepted",
+        "proposerId": "9fec0cdb79cdcad6258adbb0d3c6549a48a7107012406a04f21c4453f8f8b80a",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1851",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1851"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1851",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1851"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1851",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1851"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1851",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1851"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.1853"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "8d6461b80f819f2d6484fdfb2b10cb373cf027d78e14a6d62f86c685ceeb3aa4",
+        "proposalState": "Accepted",
+        "proposerId": "9fec0cdb79cdcad6258adbb0d3c6549a48a7107012406a04f21c4453f8f8b80a",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1853"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1853",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1853"
+      }
+    }
+  }
+]

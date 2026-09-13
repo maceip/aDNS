@@ -1,0 +1,157 @@
+{
+  "status": "passed",
+  "case": "old",
+  "platform": "Virtual via test-only launcher shim; no hardware claim",
+  "exact_elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "packaged_supervisor_sha256": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9",
+  "accepted_endpoints": [
+    "/app/internal/.*"
+  ],
+  "public_node_state": {
+    "status": 200,
+    "body": {
+      "last_signed_seqno": 2,
+      "node_id": "263f7ffab0ebefecf5e65a1a2155e04a27b8650ab4f9e4910f0ed8b07f354936",
+      "startup_seqno": 0,
+      "state": "PartOfNetwork",
+      "stop_notice": false
+    }
+  },
+  "internal_node_state": {
+    "status": 503,
+    "raw_body_utf8": ""
+  },
+  "internal_node_network_remains_denied": {
+    "status": 503,
+    "raw_body_utf8": ""
+  },
+  "driver_observations": [
+    {
+      "unix_seconds": 1789287358.4533274,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287358.5563548,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287358.6618133,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287358.7632954,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287358.865384,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287358.9669025,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.067571,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.170933,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.2748978,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.376125,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.4795458,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.580846,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.6867666,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.789168,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.8946872,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287359.995783,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.0991518,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.19967,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.3011103,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.402943,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.5084684,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.6126604,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.7156916,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.8211834,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287360.9266303,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287361.0321019,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287361.1336133,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287361.2349086,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287361.3376465,
+      "driver_present": false
+    },
+    {
+      "unix_seconds": 1789287361.4431555,
+      "driver_present": false
+    }
+  ],
+  "driver_present": false,
+  "started_unix_seconds": 1789287356.631807,
+  "test_shim_sha256": "85effb05e4300f468654a7c63b1ea0039360b30e96248add8a26b00d1600f9db",
+  "config_manifest_sha256": "729df0929877a6727c47443e4c4555445c8afc8d3395601b37043650ad49857e",
+  "test_source_sha256": "134fb9edafbd7b22249e3cdd823070d03cfc1c3721ed80ad9481027b23669d9a",
+  "wrapper_terminated": true,
+  "ended_unix_seconds": 1789287361.5865912
+}

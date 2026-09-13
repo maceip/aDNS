@@ -1,0 +1,23 @@
+{
+  "execution_state": "failed",
+  "grant_id": "smoke-operator",
+  "latest_observation": {
+    "error": "CONFLICT: expected_serial",
+    "expires_at": 1789286143,
+    "failed_at": 1789285844,
+    "http_status": 409,
+    "intent_hash": "99e9abd5d29f408912c0e606a65c057788acd4640bc2aa7cd2b2b973f9d4104a",
+    "issued_at": 1789285843,
+    "nonce": "fa2eacb90dc817a126172476b3ddb331862b3fa53f423bbec9260033794f91e0",
+    "signed_message_digest": "71b126d3da82d80318e79d83625ee9800e9a6e503765600aac2d7374030b8cdb"
+  },
+  "matching_nonces": 1,
+  "multiple_nonce_ambiguity": false,
+  "observation_status": "committed",
+  "observation_tx_id": "4.42",
+  "phase": "last_authenticated_attempt",
+  "request_id": "d68d9a71-00e8-4401-9152-3a954397001c",
+  "retryable": true,
+  "status": "failed",
+  "tx_id": "4.42"
+}

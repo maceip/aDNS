@@ -1,0 +1,48 @@
+{
+  "template_sha256": "35618ba5c8010bfb26fbb9fbd6df76a0e04bca36916adac21545b8a558ddc3ad",
+  "cce_policy_sha256": "bedd45152acd73fb21a885fb28556d2f78abf5d938eb72e802b3dd1793b6b852",
+  "bootstrap_manifest_sha256": "304fc60aa7584c3ce9e28c3abb8f8753df856b5c9cee8b62595c5cfa48d402d4",
+  "containers": {
+    "primary": {
+      "image": "agentdnsport20260913.azurecr.io/primary@sha256:ebb2f0ae114744cc59255945088b7fb87189de467cbed98036ed445d107b9c7c",
+      "archive_tag": "agentdnsport20260913.azurecr.io/primary:20260913",
+      "config_sha256": "fd5d7b8957a5898aaca44c2f9e52e466c5ebc52dca109502c71568ea5e654d97",
+      "layer_count": 6,
+      "oci_layer_sha256": [
+        "4f650cfe0ed9260faecb6d99a64a1b3dc31f9319a0c234d2d514ab5d80eae231",
+        "76726e328314bb2efea3f4ac6d33c2c250034913fbc67a8d5eb1cd446e13d72d",
+        "a556e3cfbfde79f7582112f59c21e51ce6b6d7cdf6df74b8107932e695ceef64",
+        "4ed45024010c523491cabe9b859e319583488cdcc0ba3dd3473c4a0676101208",
+        "c2b6247cf5ca6992580e74a7f8ed1789bea93bb18848ef595431148a671b6178",
+        "7e141ca9be04c9ab85ad22b65d215477138cd2a583a53c2de36a2c5ff7a4079f"
+      ],
+      "verity_layer_sha256": [
+        "6c553f19cf80dd98a5d90486c57e8eaa093f3e085b12a892da9561e91f5cf6b3",
+        "6b0b5c4b7a0ab95c74bcc8211dd5b81cde97ba131f79b4f667854a36d3cc9cef",
+        "78d37432619f0ba3db10aee5e3a03d6d934bbfc789ff192a9c310f53b591f89c",
+        "2ecd80733afad44bb6c91b5c285d22c375b3d33a80ee7770aee8e49e601f8281",
+        "ed5539c0c79aaccb70d6656bb6ce8345237cd6c2b4074c5da91466bfc2e7d0de",
+        "1258610750163b11d5c907da1856b25a3ca7207712984a72d2d6d21fd34d7358"
+      ]
+    },
+    "secondary": {
+      "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+      "archive_tag": "agentdnsport20260913.azurecr.io/secondary:20260913",
+      "config_sha256": "71afc3746bf8353dda4f8ea362266f6adc0a3a6d22b565fcafb4069e23c0f17d",
+      "layer_count": 3,
+      "oci_layer_sha256": [
+        "e51aee9c82ec5dd5ba2add49c45c6d85d460512757e2615b69bcdf9469c7cb58",
+        "6f0d74a4bd219be1a952ca63531a1401607de85d547c0a05f07c9abd475b2d53",
+        "1fa68d1c56d8c2509e493af68f6f5f0b0f3327f70311f9cb91578794b9f74e9f"
+      ],
+      "verity_layer_sha256": [
+        "ad7e8b43183eb7d3e25ebe7a49c2b5bdc10d8f0b070f0ca9d3ff1c07365d43e7",
+        "2994c1d662fc414d284aaa5c93da58133a704d691dd83d5e3e7d38a75ffc5823",
+        "e7909cbfde1bba404c2158e91ccae98a89cd47a59878b16ff4afdc5af3158ca3"
+      ]
+    }
+  },
+  "pause_layer_count": 1,
+  "checks": "distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
+  "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight"
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "suite": "tools",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 8.244024753570557
+  },
+  {
+    "suite": "host-driver",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "ccf",
+      "-p",
+      "test_host_driver.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.05994701385498047
+  },
+  {
+    "suite": "supervisor",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "ccf/tests",
+      "-p",
+      "test_supervisor.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.7258734703063965
+  },
+  {
+    "suite": "runner-guards",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/rust-integration",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.05020284652709961
+  }
+]

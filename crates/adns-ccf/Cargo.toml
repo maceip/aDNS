@@ -1,0 +1,29 @@
+[package]
+name = "adns-ccf"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+build = "build.rs"
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[features]
+default = []
+ccf = ["dep:cxx", "dep:cxx-build"]
+
+[dependencies]
+adns-auth = { path = "../adns-auth" }
+adns-storage = { path = "../adns-storage" }
+adns-server = { path = "../adns-server" }
+adns-wire = { path = "../adns-wire" }
+adns-dnssec = { path = "../adns-dnssec" }
+adns-transfer = { path = "../adns-transfer" }
+serde.workspace = true
+serde_json.workspace = true
+hex.workspace = true
+ring.workspace = true
+cxx = { version = "1", optional = true }
+
+[build-dependencies]
+cxx-build = { version = "1", optional = true }

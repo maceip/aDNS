@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "kind": "real-idle-window",
+  "platform": "Virtual; no native appraisal or service registration",
+  "observation_seconds": 1250,
+  "total_elapsed_seconds": 1598.8570551872253,
+  "images": {
+    "ccf": "sha256:cc749ceddf064ae31d4c571849d81f8d0a457ff135486b9020daa861f764b457",
+    "secondary": "sha256:597dabfca422bdac5b51efb3d7a40c3a9727c1401946be61783664886fbf8105",
+    "toolchain": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+    "validator": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615"
+  },
+  "independent_receipt_and_multimessage_tsig_dnssec_verified": true,
+  "committed_status": {
+    "samples": 126,
+    "failures": 0,
+    "elapsed_seconds": 1250.336444689001,
+    "observed_serials": [
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "all_samples_committed_unexpired": true
+  },
+  "operator": {
+    "scope": "real governed operator mutation, not attested registration or email delivery",
+    "transaction_id": "2.1800",
+    "zone_serial": 13,
+    "governance_transaction_id": "2.1792",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "dkim_txt_exceeds_255_bytes": true,
+    "der_rejected_without_consuming_nonce": true,
+    "exact_retry_preserves_original_result": true,
+    "changed_signed_action_returns_conflict": true,
+    "operator_commit_latency_ms_including_tls": 921.501845
+  },
+  "operator_frontend": [
+    {
+      "name": "example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "selector1._domainkey.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 2
+    },
+    {
+      "name": "_dmarc.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "_smtp._tls.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "example.test.",
+      "type": "CAA",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": null
+    }
+  ],
+  "output": "/Users/mac/agentdns/.validation/ccf-runs/run-qgt_55l2/results",
+  "frontend": {
+    "source": "independent-public-BIND-DNSSEC-probes",
+    "server": "192.168.215.3",
+    "port": 53,
+    "elapsed_seconds": 1262.5713910329978,
+    "observed_serials": [
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "external_validations": 86,
+    "crossed_initial_signature_expiration": true,
+    "all_samples_passed": true,
+    "proof_limit": "CCF transaction provenance, leases and hardware require separate evidence; this verifier sends no mutations."
+  },
+  "performance": {
+    "server": "192.168.215.3",
+    "port": 53,
+    "dnssec_ok_bit": true,
+    "offered_load_qps": 1000,
+    "offered_sample_qps": 10,
+    "started_unix_seconds": 1789267052.984248,
+    "ended_unix_seconds": 1789268253.2124388,
+    "elapsed_seconds": 1200.228192597002,
+    "samples": 12001,
+    "failed_samples": 0,
+    "p50_ms": 0.566127,
+    "p99_ms": 1.926433,
+    "maximum_ms": 22.137841,
+    "dnsperf": {
+      "queries_sent": 1199997,
+      "queries_completed": 1199997,
+      "queries_lost": 0,
+      "completed_qps": 999.997312
+    },
+    "boundary": "Public DNS only; no registration or governance mutations. External idle delv validates signatures separately. This is a fixed offered load, not maximum capacity."
+  },
+  "process_memory": {
+    "ccf-rss": {
+      "process": "ccf-rss",
+      "pid_in_target_container": 1,
+      "started_unix_seconds": 1789267053.006496,
+      "ended_unix_seconds": 1789268253.008965,
+      "elapsed_seconds": 1200.002469605999,
+      "samples": 121,
+      "minimum_rss_kib": 77256,
+      "maximum_rss_kib": 83872,
+      "first_rss_kib": 80584,
+      "last_rss_kib": 78800,
+      "scope": "Linux /proc RSS for one actual process; excludes other processes and does not establish absence of leaks."
+    },
+    "bind-rss": {
+      "process": "bind-rss",
+      "pid_in_target_container": 1,
+      "started_unix_seconds": 1789267053.0143137,
+      "ended_unix_seconds": 1789268253.0170524,
+      "elapsed_seconds": 1200.002739604999,
+      "samples": 121,
+      "minimum_rss_kib": 38344,
+      "maximum_rss_kib": 40492,
+      "first_rss_kib": 40332,
+      "last_rss_kib": 39588,
+      "scope": "Linux /proc RSS for one actual process; excludes other processes and does not establish absence of leaks."
+    }
+  }
+}

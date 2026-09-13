@@ -1,0 +1,21 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "178",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.389",
+    "x-ms-ccf-transaction-id": "2.391"
+  },
+  "body": {
+    "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893",
+    "expires_at": 1789288215,
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "status": "committed",
+    "tx_id": "2.389",
+    "zone_serial": 11
+  },
+  "confirmed_ccf_transaction_id": "2.389"
+}

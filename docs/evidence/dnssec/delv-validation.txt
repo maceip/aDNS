@@ -1,0 +1,164 @@
+nsec child.example. TYPE43: PASS
+; negative response, fully validated
+; child.example.		60	IN	\-DS	;-$NXRRSET
+; child.example. RRSIG NSEC ...
+; child.example. NSEC ent.example. NS RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxrrset
+
+nsec ent.example. TYPE1: PASS
+; negative response, fully validated
+; ent.example.		60	IN	\-A	;-$NXRRSET
+; ent.example. RRSIG NSEC ...
+; ent.example. NSEC leaf.ent.example. RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxrrset
+
+nsec ent.example. TYPE43: PASS
+; negative response, fully validated
+; ent.example.		60	IN	\-DS	;-$NXRRSET
+; ent.example. RRSIG NSEC ...
+; ent.example. NSEC leaf.ent.example. RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxrrset
+
+nsec foo.bar.wild.example. TYPE1: PASS
+; fully validated
+foo.bar.wild.example.	60	IN	A	192.0.2.2
+foo.bar.wild.example.	60	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 1389 example. [omitted]
+
+nsec foo.wild.example. TYPE16: PASS
+; negative response, fully validated
+; foo.wild.example.	60	IN	\-TXT	;-$NXRRSET
+; *.wild.example. RRSIG NSEC ...
+; *.wild.example. NSEC example. A RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxrrset
+
+nsec foo.wild.example. TYPE255: PASS
+; fully validated
+foo.wild.example.	60	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 1389 example. [omitted]
+foo.wild.example.	60	IN	A	192.0.2.2
+
+nsec mail.example. TYPE16: PASS
+; negative response, fully validated
+; mail.example.		60	IN	\-TXT	;-$NXRRSET
+; mail.example. RRSIG NSEC ...
+; mail.example. NSEC ns.example. A AAAA RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxrrset
+
+nsec mail.example. TYPE255: PASS
+; fully validated
+mail.example.		300	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 1389 example. [omitted]
+mail.example.		300	IN	A	192.0.2.1
+
+nsec x.y.ent.example. TYPE1: PASS
+; negative response, fully validated
+; x.y.ent.example.	60	IN	\-ANY	;-$NXDOMAIN
+; ent.example. RRSIG NSEC ...
+; ent.example. NSEC leaf.ent.example. RRSIG NSEC
+; leaf.ent.example. RRSIG NSEC ...
+; leaf.ent.example. NSEC mail.example. TXT RRSIG NSEC
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+;; resolution failed: ncache nxdomain
+
+nsec missing denial proof: PASS (rejected)
+;; broken trust chain resolving 'x.y.ent.example/A/IN': 127.0.0.1#50037
+;; resolution failed: broken trust chain
+
+nsec altered signature: PASS (rejected)
+;; validating foo.bar.wild.example/A: no valid signature found
+;; RRSIG failed to verify resolving 'foo.bar.wild.example/A/IN': 127.0.0.1#50037
+;; resolution failed: RRSIG failed to verify
+
+nsec3 child.example. TYPE43: PASS
+; negative response, fully validated
+; child.example.		60	IN	\-DS	;-$NXRRSET
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; 9btq22oi7fgu6v6rmm87hriutrt6ervd.example. RRSIG NSEC3 ...
+; 9btq22oi7fgu6v6rmm87hriutrt6ervd.example. NSEC3 1 0 0 - EIA0UK17KL0NPFEKSS29T0P47115JJJK NS
+;; resolution failed: ncache nxrrset
+
+nsec3 ent.example. TYPE1: PASS
+; negative response, fully validated
+; ent.example.		60	IN	\-A	;-$NXRRSET
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. RRSIG NSEC3 ...
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. NSEC3 1 0 0 - O133JC5MTD9PMVPDIOBHJEM12KE3SC6M
+;; resolution failed: ncache nxrrset
+
+nsec3 ent.example. TYPE43: PASS
+; negative response, fully validated
+; ent.example.		60	IN	\-DS	;-$NXRRSET
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. RRSIG NSEC3 ...
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. NSEC3 1 0 0 - O133JC5MTD9PMVPDIOBHJEM12KE3SC6M
+;; resolution failed: ncache nxrrset
+
+nsec3 foo.bar.wild.example. TYPE1: PASS
+; fully validated
+foo.bar.wild.example.	60	IN	A	192.0.2.2
+foo.bar.wild.example.	60	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 30265 example. [omitted]
+
+nsec3 foo.wild.example. TYPE16: PASS
+; negative response, fully validated
+; foo.wild.example.	60	IN	\-TXT	;-$NXRRSET
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; 8agm2crj5dm2hpi9emkk214ccj3738k9.example. RRSIG NSEC3 ...
+; 8agm2crj5dm2hpi9emkk214ccj3738k9.example. NSEC3 1 0 0 - 9BTQ22OI7FGU6V6RMM87HRIUTRT6ERVD
+; q4900c1cjmipnhp5mnbgmlte8et5nhog.example. RRSIG NSEC3 ...
+; q4900c1cjmipnhp5mnbgmlte8et5nhog.example. NSEC3 1 0 0 - 3MSEV9USMD4BR9S97V51R2TDVMR9IQO1 A RRSIG
+;; resolution failed: ncache nxrrset
+
+nsec3 foo.wild.example. TYPE255: PASS
+; fully validated
+foo.wild.example.	60	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 30265 example. [omitted]
+foo.wild.example.	60	IN	A	192.0.2.2
+
+nsec3 mail.example. TYPE16: PASS
+; negative response, fully validated
+; mail.example.		60	IN	\-TXT	;-$NXRRSET
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; o133jc5mtd9pmvpdiobhjem12ke3sc6m.example. RRSIG NSEC3 ...
+; o133jc5mtd9pmvpdiobhjem12ke3sc6m.example. NSEC3 1 0 0 - Q4900C1CJMIPNHP5MNBGMLTE8ET5NHOG A AAAA RRSIG
+;; resolution failed: ncache nxrrset
+
+nsec3 mail.example. TYPE255: PASS
+; fully validated
+mail.example.		300	IN	RRSIG	A 14 2 300 20260914003411 20260913002911 30265 example. [omitted]
+mail.example.		300	IN	A	192.0.2.1
+
+nsec3 x.y.ent.example. TYPE1: PASS
+; negative response, fully validated
+; x.y.ent.example.	60	IN	\-ANY	;-$NXDOMAIN
+; example. SOA ns.example. hostmaster.example. 42 300 60 86400 60
+; example. RRSIG SOA ...
+; kncb8asp44gj31sjvi5s29d8q49gb30r.example. RRSIG NSEC3 ...
+; kncb8asp44gj31sjvi5s29d8q49gb30r.example. NSEC3 1 0 0 - N3MIVJM8DKLOBH7R7F4RD46CG6F4STOM A RRSIG
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. RRSIG NSEC3 ...
+; n3mivjm8dklobh7r7f4rd46cg6f4stom.example. NSEC3 1 0 0 - O133JC5MTD9PMVPDIOBHJEM12KE3SC6M
+; q4900c1cjmipnhp5mnbgmlte8et5nhog.example. RRSIG NSEC3 ...
+; q4900c1cjmipnhp5mnbgmlte8et5nhog.example. NSEC3 1 0 0 - 3MSEV9USMD4BR9S97V51R2TDVMR9IQO1 A RRSIG
+;; resolution failed: ncache nxdomain
+
+nsec3 missing denial proof: PASS (rejected)
+;; broken trust chain resolving 'x.y.ent.example/A/IN': 127.0.0.1#47413
+;; resolution failed: broken trust chain
+
+nsec3 altered signature: PASS (rejected)
+;; validating foo.bar.wild.example/A: no valid signature found
+;; RRSIG failed to verify resolving 'foo.bar.wild.example/A/IN': 127.0.0.1#47413
+;; resolution failed: RRSIG failed to verify
+

@@ -1,0 +1,15 @@
+{
+  "README.md": "2872516fe8e68653c6da4a9be2f8bbfb10279b828b2d16d2d3d06f3ea1a95366",
+  "build.json": "d95128321efd8b75071e8dd788448ef35ae1c3c14493d894841960b7a2123c9a",
+  "ksk-receipt.json": "5952cb4d0a9e2eeced20f7139a4558fa98e4f0ca48c045ab187a2cd7c800ca8c",
+  "production-inputs.json": "2b2967646f35694532d7e1788d10d9d2f733d14b8e4b2454fde18ca3621b292c",
+  "recovery/original-ksk-receipt.json": "fec5628545292e899e5a385053e09fd4f27db74ecb82442836f700b98c69b430",
+  "recovery/original-service-cert.pem": "114edbcf9829e7d89bb57ca2de40f243ba18a8289b8142ac6751ab2d8cd3885c",
+  "recovery/recovered-ksk-receipt.json": "e1c98b8f907d96220015b550477057e15ccf889144b0fbc0df63b6691b03aeda",
+  "recovery/recovered-request-observation.json": "68cee13b8ba2088797e8c0a3a898a3aeb118f84838de3dffc83a651191d472b5",
+  "recovery/recovered-service-cert.pem": "0838b490bcf7cbdf16d26c67989c8d9eae49bb2bfbba9adabe43a47deec4efb3",
+  "recovery/summary.json": "d74b555858ecc9fb6bfc803c255c37bc552a60fb65027eadd80666e4c03a5897",
+  "request-observations.json": "2c9fcb4d476c9112ad5b3612d30a7583cc242f65cd1e39233c2fd5e000f12917",
+  "service_cert.pem": "11b584c99cd438bc20e873427d52b48220f9fbf0f0ee09c563db6ed8ba049e22",
+  "summary.json": "a551c11453623dc8de9af73c9b118389f9de6c84c6ba280d18687fe12c809036"
+}

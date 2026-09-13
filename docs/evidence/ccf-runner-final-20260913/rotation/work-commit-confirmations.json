@@ -1,0 +1,47 @@
+[
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1855",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1855"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1856",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1856"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1858",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1858"
+      }
+    }
+  }
+]

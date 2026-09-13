@@ -1,0 +1,58 @@
+{
+  "cce_sha256": "844c94305e5e55edabc3d92894f177f4bf2c04deed48f2ccc6de5c9dabbbf4d3",
+  "primary_amd64_manifest": "sha256:34bb5ecc0fad0d2a37552b4161d3b3fc366ec7992ce82de10b83c06f202b9e65",
+  "primary_binary_sha256": "7b41a3a9c147a923542bdda424d9c669f0d166d5c5c8601934b164928218e888",
+  "constitution_sha256": "bc18a726e061fcb0b45c64fb4e67e774355c5c0abcfb772966bb9704ee129346",
+  "policy_generator_image": "sha256:622fa4768633385f71bb01876e88dcf1c648067a579f4f5922f2789bc3cbff20",
+  "generation_isolation": "--network none; public policy-input directory plus distinct read-only primary and secondary image archives; no Azure credentials, deployment parameters, private control files or Docker socket mounted",
+  "post_generation_changes": [
+    "Primary permits the same bounded optional UVM_SECURITY_CONTEXT_DIR environment path as prior reviewed policy.",
+    "Secondary transfer key environment rule is required and constrained to canonical32-byte standard base64; no literal key is present."
+  ],
+  "containers": [
+    {
+      "name": "primary",
+      "layer_hashes": [
+        "6c553f19cf80dd98a5d90486c57e8eaa093f3e085b12a892da9561e91f5cf6b3",
+        "6b0b5c4b7a0ab95c74bcc8211dd5b81cde97ba131f79b4f667854a36d3cc9cef",
+        "14e03acaaeaff4a2f0371be01c986085e0b6018dc61766c4c6578d93e6263f3e",
+        "7eb4c03b2ef54dac9fd8e9322603ab82932f6f51587a425f682184fc4a9b3817",
+        "72f823325cf3f09077567e3678c11b809ba8854ee3501020c4febfce54e52613",
+        "9f26c346b600cb71c52caf10448ef4d9c2d51491dfe874350b938236e81952d9"
+      ],
+      "command": [
+        "python3",
+        "/opt/agentdns/run.py",
+        "--config",
+        "/config/node.json",
+        "--config-manifest",
+        "/config/manifest.json",
+        "--config-manifest-sha256",
+        "d80a23a9fbf2042f0a62ede46a64c4d22861ed1f3439648cd1affa3d1f89dcfb",
+        "--provision-tsig-file",
+        "/secrets/transfer-key.json"
+      ]
+    },
+    {
+      "name": "secondary",
+      "layer_hashes": [
+        "ad7e8b43183eb7d3e25ebe7a49c2b5bdc10d8f0b070f0ca9d3ff1c07365d43e7",
+        "2994c1d662fc414d284aaa5c93da58133a704d691dd83d5e3e7d38a75ffc5823",
+        "e7909cbfde1bba404c2158e91ccae98a89cd47a59878b16ff4afdc5af3158ca3"
+      ],
+      "command": [
+        "python3",
+        "/app/secondary_aci.py"
+      ]
+    },
+    {
+      "name": "pause-container",
+      "layer_hashes": [
+        "16b514057a06ad665f92c02863aca074fd5976c755d26bff16365299169e8415"
+      ],
+      "command": [
+        "/pause"
+      ]
+    }
+  ]
+}

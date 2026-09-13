@@ -1,0 +1,50 @@
+{
+  "scope": "native appraised key and evidence digest retained; rejection occurs at nonce authorization before quote submission/signing",
+  "time": 1789263579,
+  "results": [
+    {
+      "case": "ungranted-address",
+      "http_status": 403,
+      "headers": {
+        "content-length": "38",
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "GRANT_DENIED: address CIDR"
+      }
+    },
+    {
+      "case": "ungranted-host",
+      "http_status": 403,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "GRANT_DENIED: exact names or role"
+      }
+    },
+    {
+      "case": "ungranted-port",
+      "http_status": 403,
+      "headers": {
+        "content-length": "30",
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "GRANT_DENIED: port"
+      }
+    },
+    {
+      "case": "ungranted-role",
+      "http_status": 403,
+      "headers": {
+        "content-length": "45",
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "GRANT_DENIED: exact names or role"
+      }
+    }
+  ]
+}

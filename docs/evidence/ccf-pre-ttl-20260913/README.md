@@ -1,0 +1,3 @@
+# Superseded pre-TTL binary proof
+
+These public receipts, service certificates and summaries describe executable `6506a1aaf9acee7edad970fbd1d6cf9ab55c1c97a6db85bb35baf13c2793766a`, image manifest `sha256:e19e89d475f2176fe729071151657719b618b1eeced20eb2a907467b35d5f415`. Its quorum and recovery tests passed, but the assembled CCF/BIND operator test subsequently exposed failure when governed base TXT TTL60 and operator TXT TTL300 share an RRset. The binary is superseded by complete-RRset TTL normalization; these earlier proofs must not be attributed to its replacement. No private ledger, key, share or secret configuration is included.

@@ -1,0 +1,99 @@
+{
+  "attestation": {
+    "snp_endorsements_file": "$UVM_SECURITY_CONTEXT_DIR/host-amd-cert-base64",
+    "snp_endorsements_servers": [
+      {
+        "max_retries_count": 3,
+        "type": "Azure",
+        "url": "global.acccache.azure.net:443"
+      },
+      {
+        "max_retries_count": 3,
+        "type": "AMD",
+        "url": "kdsintf.amd.com:443"
+      }
+    ],
+    "snp_security_policy_file": "$UVM_SECURITY_CONTEXT_DIR/security-policy-base64",
+    "snp_uvm_endorsements_file": "$UVM_SECURITY_CONTEXT_DIR/reference-info-base64"
+  },
+  "command": {
+    "service_certificate_file": "service_cert.pem",
+    "start": {
+      "constitution_files": [
+        "/opt/agentdns/governance/constitution.js"
+      ],
+      "cose_signatures": {
+        "issuer": "agentdns",
+        "subject": "ledger.signature"
+      },
+      "initial_service_certificate_validity_days": 7,
+      "members": [
+        {
+          "certificate_file": "/config/member0_cert.pem",
+          "encryption_public_key_file": "/config/member0_enc_pubk.pem"
+        }
+      ],
+      "service_configuration": {
+        "recovery_threshold": 1
+      },
+      "service_subject_name": "CN=agentdns Service"
+    },
+    "type": "Start"
+  },
+  "ledger": {
+    "chunk_size": "5MB",
+    "directory": "ledger"
+  },
+  "ledger_signatures": {
+    "delay": "1s",
+    "tx_count": 1000
+  },
+  "logging": {
+    "format": "Text"
+  },
+  "network": {
+    "node_to_node_interface": {
+      "bind_address": "0.0.0.0:8002"
+    },
+    "rpc_interfaces": {
+      "agentdns-internal": {
+        "accepted_endpoints": [
+          "/app/internal/.*",
+          "/node/state"
+        ],
+        "app_protocol": "HTTP1",
+        "bind_address": "127.0.0.1:8001",
+        "max_open_sessions_hard": 128,
+        "max_open_sessions_soft": 64
+      },
+      "primary_rpc_interface": {
+        "app_protocol": "HTTP1",
+        "bind_address": "0.0.0.0:8000",
+        "max_open_sessions_hard": 512,
+        "max_open_sessions_soft": 256,
+        "published_address": "agentdns.test:8000"
+      }
+    }
+  },
+  "node_certificate": {
+    "curve_id": "Secp384R1",
+    "initial_validity_days": 7,
+    "subject_alt_names": [
+      "iPAddress:127.0.0.1",
+      "dNSName:agentdns.test"
+    ],
+    "subject_name": "CN=agentdns"
+  },
+  "output_files": {
+    "node_certificate_file": "node.pem",
+    "node_to_node_address_file": "node.node_address",
+    "pid_file": "node.pid",
+    "rpc_addresses_file": "node.rpc_addresses"
+  },
+  "snapshots": {
+    "directory": "snapshots",
+    "tx_count": 10000
+  },
+  "tick_interval": "10ms",
+  "worker_threads": 0
+}

@@ -1,0 +1,16 @@
+id 52465
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+mail.example.test. IN HINFO
+;ANSWER
+;AUTHORITY
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 9 60 30 600 60
+example.test. 60 IN RRSIG SOA 14 2 60 20260913083337 20260913081837 20222 example.test. Z+SsiPaJHLYhkaDWOA1B1T+T8wBnXXbh m7Kn3LoM9oQkwqFx/2vma/fRFqdTOn+t Sy6vraErCHC2roTnom92Mhee3aGU/Lx6 AIKQBsN2Eo+rgoVwmTCzgmtTWOEeUgxy
+r01tvlkdfkaoshi4nmio4qj4i8vo78v4.example.test. 60 IN NSEC3 1 0 0 - r21ft2k91qu9nqin05kvslsdgdd9hod0 A AAAA RRSIG
+r01tvlkdfkaoshi4nmio4qj4i8vo78v4.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. oFp+DUecUJAfyfcSB1J3Zx6eSdEtGAbO Mnb6lpci68LY7F3ZDOUCRDsaXQq1ngq+ 8Ud1VwM7Lua7+fDM1kXIaytiR7qNhYlT wTxh1Pjz6/fprWdNz2Ypy0f3QPwCE+WQ
+;ADDITIONAL

@@ -1,0 +1,3 @@
+; fully validated
+_smtp._tls.example.test. 300	IN	TXT	"v=TLSRPTv1; rua=mailto:tlsrpt@example.test"
+_smtp._tls.example.test. 300	IN	RRSIG	TXT 14 4 300 20260913083735 20260913082235 20222 example.test. B76dcpeeHxoKAYOuS6Rqc+8+SjhGnVG3I6IJQACjprsdxcZuE0AP78UL 5Y4MXFkDQPPo164tr7SIp52vzSRWM83m3aJ9uAZXa5NmUBOVTizGsTpf 1SzjaF6gKhNb5HLk

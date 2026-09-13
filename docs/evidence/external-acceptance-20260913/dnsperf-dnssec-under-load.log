@@ -1,0 +1,23 @@
+DNS Performance Testing Tool
+Version 2.14.0
+
+[Status] Command line: dnsperf -s 127.0.0.1 -p 1053 -d /work/dnsperf-queries.txt -l 30 -Q 1000 -q 100 -D
+[Status] Sending queries (to 127.0.0.1:1053)
+[Status] Started at: Sun Sep 13 00:57:50 2026
+[Status] Stopping after 30.000000 seconds
+[Status] Testing complete (time limit)
+
+Statistics:
+
+  Queries sent:         29949
+  Queries completed:    29949 (100.00%)
+  Queries lost:         0 (0.00%)
+
+  Response codes:       NOERROR 22462 (75.00%), NXDOMAIN 7487 (25.00%)
+  Average packet size:  request 54, response 447
+  Run time (s):         30.000973
+  Queries per second:   998.267623
+
+  Average Latency (s):  0.000104 (min 0.000004, max 0.004905)
+  Latency StdDev (s):   0.000196
+

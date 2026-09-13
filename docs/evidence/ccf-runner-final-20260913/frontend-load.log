@@ -1,0 +1,62 @@
+{"elapsed_seconds": 29.900777140999708, "samples": 300, "failures": 0}
+{"elapsed_seconds": 59.90084591100094, "samples": 600, "failures": 0}
+{"elapsed_seconds": 89.90084456000113, "samples": 900, "failures": 0}
+{"elapsed_seconds": 119.90571296000053, "samples": 1200, "failures": 0}
+{"elapsed_seconds": 149.90076160800163, "samples": 1500, "failures": 0}
+{"elapsed_seconds": 179.90258662799897, "samples": 1800, "failures": 0}
+{"elapsed_seconds": 209.9007531569987, "samples": 2100, "failures": 0}
+{"elapsed_seconds": 239.90079768500073, "samples": 2400, "failures": 0}
+{"elapsed_seconds": 269.90202950599996, "samples": 2700, "failures": 0}
+{"elapsed_seconds": 299.9023633270008, "samples": 3000, "failures": 0}
+{"elapsed_seconds": 329.90227782999864, "samples": 3300, "failures": 0}
+{"elapsed_seconds": 359.90137575300105, "samples": 3600, "failures": 0}
+{"elapsed_seconds": 389.9008609679986, "samples": 3900, "failures": 0}
+{"elapsed_seconds": 419.9014906000011, "samples": 4200, "failures": 0}
+{"elapsed_seconds": 449.90101642599984, "samples": 4500, "failures": 0}
+{"elapsed_seconds": 479.9044874499996, "samples": 4800, "failures": 0}
+{"elapsed_seconds": 509.90079676499954, "samples": 5100, "failures": 0}
+{"elapsed_seconds": 539.9037327879996, "samples": 5400, "failures": 0}
+{"elapsed_seconds": 569.9053856899991, "samples": 5700, "failures": 0}
+{"elapsed_seconds": 599.9013604319989, "samples": 6000, "failures": 0}
+{"elapsed_seconds": 629.9007748410004, "samples": 6300, "failures": 0}
+{"elapsed_seconds": 659.9021492920001, "samples": 6600, "failures": 0}
+{"elapsed_seconds": 689.9009093259992, "samples": 6900, "failures": 0}
+{"elapsed_seconds": 719.9012341429989, "samples": 7200, "failures": 0}
+{"elapsed_seconds": 749.9011009589995, "samples": 7500, "failures": 0}
+{"elapsed_seconds": 779.902139400001, "samples": 7800, "failures": 0}
+{"elapsed_seconds": 809.9023690920003, "samples": 8100, "failures": 0}
+{"elapsed_seconds": 839.9009479589986, "samples": 8400, "failures": 0}
+{"elapsed_seconds": 869.9066882890002, "samples": 8700, "failures": 0}
+{"elapsed_seconds": 899.9018628670019, "samples": 9000, "failures": 0}
+{"elapsed_seconds": 929.9007731550009, "samples": 9300, "failures": 0}
+{"elapsed_seconds": 959.9011730679995, "samples": 9600, "failures": 0}
+{"elapsed_seconds": 989.9012020240007, "samples": 9900, "failures": 0}
+{"elapsed_seconds": 1019.9041204810019, "samples": 10200, "failures": 0}
+{"elapsed_seconds": 1049.901925061, "samples": 10500, "failures": 0}
+{"elapsed_seconds": 1079.9007805910005, "samples": 10800, "failures": 0}
+{"elapsed_seconds": 1109.9008868080018, "samples": 11100, "failures": 0}
+{"elapsed_seconds": 1139.901941406999, "samples": 11400, "failures": 0}
+{"elapsed_seconds": 1169.9008176940006, "samples": 11700, "failures": 0}
+{"elapsed_seconds": 1199.9016723130007, "samples": 12000, "failures": 0}
+{
+  "server": "192.168.215.2",
+  "port": 53,
+  "dnssec_ok_bit": true,
+  "offered_load_qps": 1000,
+  "offered_sample_qps": 10,
+  "started_unix_seconds": 1789270262.3473272,
+  "ended_unix_seconds": 1789271462.4233692,
+  "elapsed_seconds": 1200.0760435580014,
+  "samples": 12001,
+  "failed_samples": 0,
+  "p50_ms": 0.497709,
+  "p99_ms": 1.362292,
+  "maximum_ms": 17.388378,
+  "dnsperf": {
+    "queries_sent": 1200000,
+    "queries_completed": 1200000,
+    "queries_lost": 0,
+    "completed_qps": 999.999875
+  },
+  "boundary": "Public DNS only; no registration or governance mutations. External idle delv validates signatures separately. This is a fixed offered load, not maximum capacity."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "verification_time": 1789286770,
+  "check": "OpenSSL current-time peer certificate chain and service CA self-signature",
+  "tls_node_peer_sha256": "57b1375586c820bbef4ff499ba0e881a1a6bae268b6d20544f289e92e2fda672",
+  "service_ca_pem_sha256": "74174ec2c7da01ba315e11eda1bdae88ab287093d95e5c457067625ef7752c1e",
+  "service_ca_der_sha256": "ec71c96673a71cd6145f2d4f565919d38c83858ba6b4073758cf9391e3c89add",
+  "openssl": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+  "scope": "Offline relationship of supplied captured node certificate to supplied authenticated service CA; live pinned retrieval was performed separately by audit_ccf_node."
+}

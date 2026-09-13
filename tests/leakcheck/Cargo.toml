@@ -1,0 +1,16 @@
+[package]
+name = "agentdns-leakcheck"
+version = "0.1.0"
+edition = "2024"
+[workspace]
+[dependencies]
+adns-auth = { path = "../../crates/adns-auth" }
+adns-server = { path = "../../crates/adns-server" }
+adns-dnssec = { path = "../../crates/adns-dnssec" }
+adns-storage = { path = "../../crates/adns-storage" }
+adns-transfer = { path = "../../crates/adns-transfer" }
+adns-wire = { path = "../../crates/adns-wire" }
+ring = "0.17"
+serde_json = "1"
+[profile.release]
+debug = 1

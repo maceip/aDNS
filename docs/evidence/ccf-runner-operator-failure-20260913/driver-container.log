@@ -1,0 +1,5 @@
+2026-09-13 02:07:58,033 WARNING secondary not confirmed: CCF secondary/response returned HTTP 400
+2026-09-13 02:13:02,533 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 02:13:02,556 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 02:13:35,288 WARNING transfer rejected: CCF axfr returned HTTP 400
+2026-09-13 02:13:35,310 WARNING transfer rejected: CCF axfr returned HTTP 400

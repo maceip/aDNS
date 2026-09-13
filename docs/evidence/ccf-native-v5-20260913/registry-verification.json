@@ -1,0 +1,9 @@
+{
+  "registry_tag": "agentdnsport20260913.azurecr.io/primary:20260913-native-v5",
+  "remote_index_sha256": "c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "remote_amd64_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "config_sha256": "04cd4253b4bdab244c7d33dda571b2f1b966bd314d6574b058f608b2993f81b9",
+  "ordinary_gzip_layers": 6,
+  "estargz_annotations": false,
+  "verified_at": "2026-09-13T08:01:26.151855+00:00"
+}

@@ -1,0 +1,18 @@
+{
+  "reviewed_at": "2026-09-13T07:03:11.524206+00:00",
+  "image_manifest": "61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "workers": [
+    {
+      "name": "agentdns-native-capture",
+      "template": ".validation/azure/capture-deadline.template.json",
+      "template_sha256": "b62c1d938ec648f76eea0057aab19fce627200402c4ff4c65d85f5de21225d68",
+      "approved_cce_sha256": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a"
+    },
+    {
+      "name": "agentdns-native-capture-rotation",
+      "template": ".validation/azure/capture-rotation.template.json",
+      "template_sha256": "cc75bd2f6bde328b61568f449f2a02333d66c05dfe17421d70dccaa3b0f132e0",
+      "approved_cce_sha256": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29"
+    }
+  ]
+}

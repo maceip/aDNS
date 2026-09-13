@@ -1,0 +1,13 @@
+{
+  "process": "bind-rss",
+  "pid_in_target_container": 1,
+  "started_unix_seconds": 1789267053.0143137,
+  "ended_unix_seconds": 1789268253.0170524,
+  "elapsed_seconds": 1200.002739604999,
+  "samples": 121,
+  "minimum_rss_kib": 38344,
+  "maximum_rss_kib": 40492,
+  "first_rss_kib": 40332,
+  "last_rss_kib": 39588,
+  "scope": "Linux /proc RSS for one actual process; excludes other processes and does not establish absence of leaks."
+}

@@ -1,0 +1,138 @@
+test_combined_archive_and_wrong_platform_manifest_rejected (test_aci_preflight.ArchivePreflightTests.test_combined_archive_and_wrong_platform_manifest_rejected) ... ok
+test_distinct_single_image_archive_and_actual_layer_digest (test_aci_preflight.ArchivePreflightTests.test_distinct_single_image_archive_and_actual_layer_digest) ... ok
+test_two_names_cannot_alias_one_archive_even_via_hardlink (test_aci_preflight.ArchivePreflightTests.test_two_names_cannot_alias_one_archive_even_via_hardlink) ... ok
+test_changed_peer_rejected_before_any_http_request (test_audit_ccf_node.BootstrapTests.test_changed_peer_rejected_before_any_http_request) ... ok
+test_failed_native_audit_never_fetches_or_trusts_service_certificate (test_audit_ccf_node.BootstrapTests.test_failed_native_audit_never_fetches_or_trusts_service_certificate) ... ok
+test_matching_peer_allows_only_public_get_and_bounded_response (test_audit_ccf_node.BootstrapTests.test_matching_peer_allows_only_public_get_and_bounded_response) ... ok
+test_tls_handshake_shares_the_absolute_bootstrap_deadline (test_audit_ccf_node.BootstrapTests.test_tls_handshake_shares_the_absolute_bootstrap_deadline) ... ok
+test_trickled_headers_and_body_cannot_hold_bootstrap_open (test_audit_ccf_node.BootstrapTests.test_trickled_headers_and_body_cannot_hold_bootstrap_open) ... ok
+test_ccf_trickled_response_headers_and_body_hit_absolute_deadline (test_capture_aci.CaptureTests.test_ccf_trickled_response_headers_and_body_hit_absolute_deadline) ... ok
+test_config_cannot_change_zone_operation_or_destination (test_capture_aci.CaptureTests.test_config_cannot_change_zone_operation_or_destination) ... ok
+test_https_api_exposes_public_capture_and_only_fixed_signing (test_capture_aci.CaptureTests.test_https_api_exposes_public_capture_and_only_fixed_signing) ... capture-http "GET /capture HTTP/1.1" 200 -
+capture-http "GET /cert.pem HTTP/1.1" 200 -
+capture-http "GET /cert.der HTTP/1.1" 200 -
+capture-http "POST /signed-request HTTP/1.1" 401 -
+capture-http "POST /signed-request HTTP/1.1" 400 -
+capture-http "POST /signed-request HTTP/1.1" 200 -
+capture-http "POST /lifecycle/action HTTP/1.1" 401 -
+capture-http "POST /lifecycle/action HTTP/1.1" 200 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 401 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 400 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 200 -
+ok
+test_https_trickled_headers_and_body_hit_absolute_deadline (test_capture_aci.CaptureTests.test_https_trickled_headers_and_body_hit_absolute_deadline) ... capture-http "GET /health HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 44498)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/src/tools/capture_aci.py", line 740, in do_GET
+    self.send(200, {"status": "captured_not_appraised", "profile": PROFILE})
+  File "/src/tools/capture_aci.py", line 734, in send
+    self.end_headers()
+  File "/usr/lib/python3.12/http/server.py", line 538, in end_headers
+    self.flush_headers()
+  File "/usr/lib/python3.12/http/server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+  File "/usr/lib/python3.12/ssl.py", line 1214, in sendall
+    return super().sendall(data, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+capture-http "GET /health HTTP/1.1" 200 -
+capture-http "POST /signed-request HTTP/1.1" 400 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 44514)
+Traceback (most recent call last):
+  File "/src/tools/capture_aci.py", line 773, in do_POST
+    raise ValueError("truncated request")
+ValueError: truncated request
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/src/tools/capture_aci.py", line 785, in do_POST
+    self.send(400, {"error": "INVALID_REQUEST", "detail": str(error)})
+  File "/src/tools/capture_aci.py", line 734, in send
+    self.end_headers()
+  File "/usr/lib/python3.12/http/server.py", line 538, in end_headers
+    self.flush_headers()
+  File "/usr/lib/python3.12/http/server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+  File "/usr/lib/python3.12/ssl.py", line 1214, in sendall
+    return super().sendall(data, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+capture-http "GET /health HTTP/1.1" 200 -
+ok
+test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox (test_capture_aci.CaptureTests.test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox) ... ok
+test_json_rejects_duplicate_keys_and_noncanonical_types (test_capture_aci.CaptureTests.test_json_rejects_duplicate_keys_and_noncanonical_types) ... ok
+test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration (test_capture_aci.CaptureTests.test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration) ... ok
+test_lifecycle_scope_overrides_and_unknown_fields_are_rejected (test_capture_aci.CaptureTests.test_lifecycle_scope_overrides_and_unknown_fields_are_rejected) ... ok
+test_mail_fixture_rejects_oversized_protocol_lines (test_capture_aci.CaptureTests.test_mail_fixture_rejects_oversized_protocol_lines) ... ok
+test_native_collector_rejects_wrong_binding_or_diagnostics (test_capture_aci.CaptureTests.test_native_collector_rejects_wrong_binding_or_diagnostics) ... ok
+test_outer_cose_signature_and_exact_key_binding (test_capture_aci.CaptureTests.test_outer_cose_signature_and_exact_key_binding) ... ok
+test_prepared_lifecycle_action_memory_is_bounded (test_capture_aci.CaptureTests.test_prepared_lifecycle_action_memory_is_bounded) ... ok
+test_signed_request_fixed_scope_and_signature (test_capture_aci.CaptureTests.test_signed_request_fixed_scope_and_signature) ... ok
+test_starttls_smtp_uses_attested_key_and_refuses_mail (test_capture_aci.CaptureTests.test_starttls_smtp_uses_attested_key_and_refuses_mail) ... ok
+test_tls_anonymous_descriptors_close_after_success_and_failure (test_capture_aci.CaptureTests.test_tls_anonymous_descriptors_close_after_success_and_failure) ... ok
+test_tls_certificate_uses_exact_attested_key_and_bounded_validity (test_capture_aci.CaptureTests.test_tls_certificate_uses_exact_attested_key_and_bounded_validity) ... ok
+test_two_acme_orders_and_only_issued_challenge_deletion (test_capture_aci.CaptureTests.test_two_acme_orders_and_only_issued_challenge_deletion) ... ok
+test_uncertain_submission_retries_identical_request (test_capture_aci.CaptureTests.test_uncertain_submission_retries_identical_request) ... ok
+test_actual_result_preserved_only_after_exact_reconciliation (test_ccf_measurements.MeasurementTests.test_actual_result_preserved_only_after_exact_reconciliation) ... ok
+test_duplicate_nonfinite_and_nonobject_json_rejected (test_ccf_measurements.MeasurementTests.test_duplicate_nonfinite_and_nonobject_json_rejected) ... ok
+test_http_success_requires_exact_global_commit_identity (test_ccf_measurements.MeasurementTests.test_http_success_requires_exact_global_commit_identity) ... ok
+test_only_exact_signing_diagnostic_events_are_measured (test_ccf_measurements.MeasurementTests.test_only_exact_signing_diagnostic_events_are_measured) ... ok
+test_duplicate_commitment_headers_and_oversized_body_rejected (test_ccf_measurements.MeasurementTlsTests.test_duplicate_commitment_headers_and_oversized_body_rejected) ... ok
+test_numeric_override_preserves_dns_sni_host_and_certificate_checks (test_ccf_measurements.MeasurementTlsTests.test_numeric_override_preserves_dns_sni_host_and_certificate_checks) ... ok
+test_real_tls_header_and_body_trickle_hit_absolute_deadline (test_ccf_measurements.MeasurementTlsTests.test_real_tls_header_and_body_trickle_hit_absolute_deadline) ... ok
+test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected (test_control_tools.BootstrapTemplateTests.test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected) ... ok
+test_prepared_files_are_pinned_and_private_files_are_owner_only (test_control_tools.BootstrapTemplateTests.test_prepared_files_are_pinned_and_private_files_are_owner_only) ... ok
+test_public_template_contains_only_secure_parameter_references (test_control_tools.BootstrapTemplateTests.test_public_template_contains_only_secure_parameter_references) ... ok
+test_invalid_mismatched_and_malformed_status_are_not_commitment (test_control_tools.CommitmentTests.test_invalid_mismatched_and_malformed_status_are_not_commitment) ... ok
+test_noncanonical_txids_and_conflicting_application_identity_are_rejected (test_control_tools.CommitmentTests.test_noncanonical_txids_and_conflicting_application_identity_are_rejected) ... ok
+test_pending_status_cannot_extend_polling_deadline (test_control_tools.CommitmentTests.test_pending_status_cannot_extend_polling_deadline) ... ok
+test_preopen_node_endpoint_and_original_application_tx_id (test_control_tools.CommitmentTests.test_preopen_node_endpoint_and_original_application_tx_id) ... ok
+test_absolute_deadline_interrupts_trickling_headers_and_body (test_control_tools.HttpBoundaryTests.test_absolute_deadline_interrupts_trickling_headers_and_body) ... ok
+test_byte_limit_and_total_read_deadline (test_control_tools.HttpBoundaryTests.test_byte_limit_and_total_read_deadline) ... ok
+test_untrusted_capture_decoding_is_bounded_and_canonical (test_control_tools.HttpBoundaryTests.test_untrusted_capture_decoding_is_bounded_and_canonical) ... ok
+test_numeric_connection_preserves_authenticated_dns_sni (test_control_tools.PinnedTlsTests.test_numeric_connection_preserves_authenticated_dns_sni) ... ok
+test_wrong_tls_name_fails_before_http_bytes (test_control_tools.PinnedTlsTests.test_wrong_tls_name_fails_before_http_bytes) ... ok
+test_altered_claim_path_signature_and_untrusted_identity_fail (test_ksk_receipt.ReceiptChecks.test_altered_claim_path_signature_and_untrusted_identity_fail) ... ok
+test_verifies_valid_crypto_chain (test_ksk_receipt.ReceiptChecks.test_verifies_valid_crypto_chain) ... ok
+test_alias_target_with_matching_bytes_does_not_prove_governed_owner (test_operator_mail_verifier.OperatorOwnerTests.test_alias_target_with_matching_bytes_does_not_prove_governed_owner) ... ok
+test_exact_fixed_fixture_passes (test_reconciliation_verifier.ReconciliationVerifierTests.test_exact_fixed_fixture_passes) ... ok
+test_matching_alias_target_does_not_prove_owner (test_reconciliation_verifier.ReconciliationVerifierTests.test_matching_alias_target_does_not_prove_owner) ... ok
+test_wrong_ttl_extra_record_and_wrong_bytes_fail (test_reconciliation_verifier.ReconciliationVerifierTests.test_wrong_ttl_extra_record_and_wrong_bytes_fail) ... ok
+test_fixed_authoritative_scope_and_no_zone_signer (test_secondary_aci.SecondaryTests.test_fixed_authoritative_scope_and_no_zone_signer) ... ok
+test_secret_rejects_malformed_noncanonical_or_injected_values (test_secondary_aci.SecondaryTests.test_secret_rejects_malformed_noncanonical_or_injected_values) ... ok
+test_changed_actual_peer_is_closed_without_posting_token (test_sign_capture_client.SigningClientTests.test_changed_actual_peer_is_closed_without_posting_token) ... ok
+test_failed_appraisal_does_not_even_open_token_file (test_sign_capture_client.SigningClientTests.test_failed_appraisal_does_not_even_open_token_file) ... ok
+
+----------------------------------------------------------------------
+Ran 55 tests in 8.117s
+
+OK

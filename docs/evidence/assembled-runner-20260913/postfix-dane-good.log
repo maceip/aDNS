@@ -1,0 +1,22 @@
+posttls-finger: initializing the client-side TLS engine
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail-good.example.test: 3 1 1 C2E9A3881A2F0E8D840EDB68A1225696591BCA033880A4FE4480270C055EAB14
+posttls-finger: Connected to mail-good.example.test[127.0.0.1]:25
+posttls-finger: < 220 mail-good.example.test ESMTP acceptance fixture
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > STARTTLS
+posttls-finger: < 220 Go ahead
+posttls-finger: setting up TLS connection to mail-good.example.test[127.0.0.1]:25
+posttls-finger: mail-good.example.test[127.0.0.1]:25: TLS cipher list "aNULL:-aNULL:HIGH:MEDIUM:!SEED:!IDEA:!3DES:!RC2:!RC4:!RC5:!kDH:!kECDH:!aDSS:!MD5:+RC4:@STRENGTH:!aNULL"
+posttls-finger: mail-good.example.test[127.0.0.1]:25: depth=0 verify=1 subject=/CN=mail-good.example.test
+posttls-finger: mail-good.example.test[127.0.0.1]:25: Matched DANE EE certificate at depth 0: 3 1 1 C2E9A3881A2F0E8D840EDB68A1225696591BCA033880A4FE4480270C055EAB14
+posttls-finger: mail-good.example.test[127.0.0.1]:25: subject_CN=mail-good.example.test, issuer_CN=agentdns isolated acceptance CA, fingerprint=65:C2:7E:53:CF:BF:59:1D:AF:95:06:CD:AD:21:5A:27:96:4B:79:60:7D:3D:33:76:36:69:13:CF:70:F5:B5:EF, pkey_fingerprint=C2:E9:A3:88:1A:2F:0E:8D:84:0E:DB:68:A1:22:56:96:59:1B:CA:03:38:80:A4:FE:44:80:27:0C:05:5E:AB:14
+posttls-finger: Verified TLS connection established to mail-good.example.test[127.0.0.1]:25: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits) key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > QUIT
+posttls-finger: < 221 Bye

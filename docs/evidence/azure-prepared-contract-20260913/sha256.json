@@ -1,0 +1,21 @@
+{
+  "README.md": "2a6b782406572b18e790cc232a511968ab654e3a4d7e89c7d7a26d90c5fc5e13",
+  "bootstrap/bootstrap-summary.json": "17c4579f0f6010905dacdb122605f0f0ab44d87401dca7d388d99dc9a0f8d396",
+  "bootstrap/manifest.json": "d80a23a9fbf2042f0a62ede46a64c4d22861ed1f3439648cd1affa3d1f89dcfb",
+  "bootstrap/member0_cert.pem": "76f90fb8d4481c6f87d31abf4e5d042638ce546db895afcc45aba3c9de51e1c4",
+  "bootstrap/member0_enc_pubk.pem": "af3f326cb909c73239d981fbd095fa5e5a01340e9a961fad765ff8491cd06cd5",
+  "bootstrap/node.json": "d7a7ded7a057b102ff649f10ac83acd48ad66947c3e2d7221f026f6f24f074f3",
+  "capture-deadline-policy-summary.json": "447cb9b143f7b19240c1dff894bf3c494e92b804fcc282fd6d66c1d7d8432138",
+  "capture-deadline-policy.rego": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+  "capture-deadline.template.json": "b62c1d938ec648f76eea0057aab19fce627200402c4ff4c65d85f5de21225d68",
+  "capture-rotation-policy-summary.json": "7585d14a68d03866174c32ecfe63f52e5a8b99f537dad367267d2e870493a1c7",
+  "capture-rotation-policy.rego": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+  "capture-rotation.template.json": "cc75bd2f6bde328b61568f449f2a02333d66c05dfe17421d70dccaa3b0f132e0",
+  "ccf-policy-generation.log": "4f170c4a7898d047c5a051d54ca1120f8b2abf6c358f5199b408dd55321a4953",
+  "ccf-policy-summary.json": "80c82137d848bc8507b6eae3176f443139f75130de5765126d37176a80839d88",
+  "ccf-policy.rego": "844c94305e5e55edabc3d92894f177f4bf2c04deed48f2ccc6de5c9dabbbf4d3",
+  "ccf-preflight.json": "0693e7f39ee5e8d570799d2c9c7493ed1d58a1755516e3b901a55624c3f2a784",
+  "ccf-tars.json": "2666a901bd6831af9ec120278e2496ce2429418eb8be046254bdfbfaa349629a",
+  "ccf.template.json": "501b640bc6fa6cda98c258fd2731538c6e90f0025d1e7249085400c37c66b0bc",
+  "summary.json": "540f8c9c9f7609762a4b695dd16b138fec07920283cee08f31c915f39769cf7c"
+}

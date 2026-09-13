@@ -1,0 +1,63 @@
+{
+  "release_id": "isolated-aci-uvm-svn104-20260913",
+  "active_profiles": [],
+  "valid_from": 1789261299,
+  "valid_until": 1789347999,
+  "max_appraisal_lifetime": 7200,
+  "minimum_tcb": {
+    "Genoa": {
+      "bootloader": 10,
+      "tee": 0,
+      "snp": 23,
+      "microcode": 84
+    }
+  },
+  "approved_measurements": [
+    "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866"
+  ],
+  "approved_host_data": [
+    "e06abd902bd317a057587ca9125f735f8113eb5422df5cc8a9640d4382211bfb"
+  ],
+  "uvm": [
+    {
+      "did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+      "feed": "ContainerPlat-AMD-UVM",
+      "minimum_svn": 104
+    }
+  ],
+  "uvm_endorsement_time_policy": "approved_release",
+  "policy_id": [
+    113,
+    39,
+    237,
+    62,
+    215,
+    103,
+    0,
+    89,
+    247,
+    11,
+    166,
+    120,
+    193,
+    235,
+    20,
+    230,
+    181,
+    49,
+    33,
+    88,
+    98,
+    30,
+    132,
+    4,
+    254,
+    160,
+    245,
+    234,
+    193,
+    188,
+    151,
+    38
+  ]
+}

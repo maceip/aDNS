@@ -1,0 +1,14 @@
+id 55410
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+reconcile.example.test. IN TXT
+;ANSWER
+reconcile.example.test. 60 IN TXT "durable authenticated request reconciliation"
+reconcile.example.test. 60 IN RRSIG TXT 14 3 60 20260913032637 20260913031137 47765 example.test. VFhSBoOlDOTQWqiix1lrnt8weVTQIxCs PP7o6qCBGH7vozC53Loxa7bwRMOdBpus AeFGH17p+yUD/jIKr3K8oHA9c/bEBYop e2vQmxhvw+g3edKvBpniP3qQ31BQnjPE
+;AUTHORITY
+;ADDITIONAL

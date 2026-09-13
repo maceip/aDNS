@@ -1,0 +1,19 @@
+test_base64_is_bounded_and_unique (test_host_driver.BoundaryTests.test_base64_is_bounded_and_unique) ... ok
+test_frame_validation_rejects_partial_and_empty (test_host_driver.BoundaryTests.test_frame_validation_rejects_partial_and_empty) ... ok
+test_peer_is_numeric_and_port_is_valid (test_host_driver.BoundaryTests.test_peer_is_numeric_and_port_is_valid) ... ok
+test_admission_happens_before_thread_creation (test_host_driver.ResourceTests.test_admission_happens_before_thread_creation) ... ok
+test_endpoints_are_canonical (test_host_driver.ResourceTests.test_endpoints_are_canonical) ... ok
+test_http_reads_obey_specific_size_and_wall_time_bounds (test_host_driver.ResourceTests.test_http_reads_obey_specific_size_and_wall_time_bounds) ... ok
+test_invalid_work_does_not_kill_lifecycle (test_host_driver.ResourceTests.test_invalid_work_does_not_kill_lifecycle) ... autonomous maintenance failed: invalid secondary work fields
+autonomous maintenance failed: invalid secondary work fields
+ok
+test_permit_released_when_handler_or_thread_start_fails (test_host_driver.ResourceTests.test_permit_released_when_handler_or_thread_start_fails) ... ok
+test_secondary_work_rows_fail_as_recoverable_value_errors (test_host_driver.ResourceTests.test_secondary_work_rows_fail_as_recoverable_value_errors) ... ok
+test_slow_secondary_work_does_not_block_maintenance (test_host_driver.ResourceTests.test_slow_secondary_work_does_not_block_maintenance) ... ok
+test_slow_trickle_cannot_extend_absolute_deadline (test_host_driver.ResourceTests.test_slow_trickle_cannot_extend_absolute_deadline) ... ok
+test_transfer_frame_count_is_bounded (test_host_driver.ResourceTests.test_transfer_frame_count_is_bounded) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.017s
+
+OK

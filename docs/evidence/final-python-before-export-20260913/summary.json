@@ -1,0 +1,12 @@
+{
+  "scope": "Linux Python regression tests against an immutable copied public-source allowlist; no native CCF deployment or performance proof",
+  "test_counts": {
+    "tools.log": 52,
+    "host-driver.log": 12,
+    "supervisor.log": 9,
+    "runner-guards.log": 3
+  },
+  "total_tests": 76,
+  "all_passed": true,
+  "prior_evidence": "../control-tools-20260913/ contains the earlier 66-test snapshot; it is preserved unchanged."
+}

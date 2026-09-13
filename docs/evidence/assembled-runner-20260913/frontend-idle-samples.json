@@ -1,0 +1,310 @@
+[
+  {
+    "unix_seconds": 1789263092,
+    "elapsed_seconds": 3,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263122,
+    "elapsed_seconds": 33,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263152,
+    "elapsed_seconds": 63,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263182,
+    "elapsed_seconds": 93,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263212,
+    "elapsed_seconds": 123,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263242,
+    "elapsed_seconds": 153,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263272,
+    "elapsed_seconds": 183,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263302,
+    "elapsed_seconds": 213,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263332,
+    "elapsed_seconds": 243,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263362,
+    "elapsed_seconds": 273,
+    "secondary_serial": 1,
+    "soa_signature_expiration": 1789263689,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263393,
+    "elapsed_seconds": 304,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263423,
+    "elapsed_seconds": 334,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263453,
+    "elapsed_seconds": 364,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263483,
+    "elapsed_seconds": 394,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263513,
+    "elapsed_seconds": 424,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263543,
+    "elapsed_seconds": 454,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263573,
+    "elapsed_seconds": 484,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263603,
+    "elapsed_seconds": 514,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263633,
+    "elapsed_seconds": 544,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263663,
+    "elapsed_seconds": 574,
+    "secondary_serial": 2,
+    "soa_signature_expiration": 1789263989,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263693,
+    "elapsed_seconds": 604,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263723,
+    "elapsed_seconds": 634,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263753,
+    "elapsed_seconds": 664,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263783,
+    "elapsed_seconds": 694,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263813,
+    "elapsed_seconds": 724,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263843,
+    "elapsed_seconds": 754,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263873,
+    "elapsed_seconds": 784,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263904,
+    "elapsed_seconds": 815,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263934,
+    "elapsed_seconds": 845,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263964,
+    "elapsed_seconds": 875,
+    "secondary_serial": 3,
+    "soa_signature_expiration": 1789264289,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789263994,
+    "elapsed_seconds": 905,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264024,
+    "elapsed_seconds": 935,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264054,
+    "elapsed_seconds": 965,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264084,
+    "elapsed_seconds": 995,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264114,
+    "elapsed_seconds": 1025,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264144,
+    "elapsed_seconds": 1055,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264174,
+    "elapsed_seconds": 1085,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264204,
+    "elapsed_seconds": 1115,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264234,
+    "elapsed_seconds": 1145,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264264,
+    "elapsed_seconds": 1175,
+    "secondary_serial": 4,
+    "soa_signature_expiration": 1789264589,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264294,
+    "elapsed_seconds": 1205,
+    "secondary_serial": 5,
+    "soa_signature_expiration": 1789264889,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264324,
+    "elapsed_seconds": 1235,
+    "secondary_serial": 5,
+    "soa_signature_expiration": 1789264889,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264354,
+    "elapsed_seconds": 1265,
+    "secondary_serial": 5,
+    "soa_signature_expiration": 1789264889,
+    "external_positive_and_negative_validation": true
+  },
+  {
+    "unix_seconds": 1789264384,
+    "elapsed_seconds": 1295,
+    "secondary_serial": 5,
+    "soa_signature_expiration": 1789264889,
+    "external_positive_and_negative_validation": true
+  }
+]

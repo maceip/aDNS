@@ -1,0 +1,4 @@
+; fully validated
+example.test.		60	IN	TXT	"v=spf1 -all"
+example.test.		60	IN	TXT	"Native CCF governed initial test zone"
+example.test.		60	IN	RRSIG	TXT 14 2 60 20260913083735 20260913082235 20222 example.test. F5EeyWxAf7wBebACYbqmAG/7sck59WOyiv5ySCLqPgIyJsVqMuyHHpmX iSmIyBHoz1p9/uW5uqaHG9HO9H2VA1zfvlxlitUnE4Kv1z7BTGT/N9OH kWLdCKIWHPR1ZZ1y

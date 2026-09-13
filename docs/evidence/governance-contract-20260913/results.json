@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "platform": "Virtual; control protocol only",
+  "member_ack_tx_id": "2.5",
+  "service_open_tx_id": "2.7",
+  "configuration_tx_id": "2.10",
+  "transfer_governance_tx_id": "2.12",
+  "transfer_revocation_tx_id": "2.16",
+  "replacement_transfer_tx_id": "2.20",
+  "policy_initial_tx_id": "2.24",
+  "policy_exact_repeat_tx_id": "2.26",
+  "policy_new_id_tx_id": "2.28",
+  "supervisor_provisioned_and_repeated_with_global_commit": true,
+  "ungoverned_transfer_secret_rejected": true,
+  "revoked_transfer_reprovision_and_reactivation_rejected": true,
+  "replacement_transfer_provisioned": true,
+  "policy_same_id_trust_change_and_unsafe_number_rejected": true,
+  "dns_sni_with_numeric_connect_ip": true
+}

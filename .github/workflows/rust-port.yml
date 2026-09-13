@@ -1,0 +1,140 @@
+name: Rust port validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-port-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  safe-core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install tested compiler and Python test dependencies
+        run: |
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt,clippy
+          rustup toolchain install 1.85.1 --profile minimal
+          rustup override set 1.95.0
+          sudo apt-get update
+          sudo apt-get install -y python3-cbor2 python3-cryptography python3-dnspython libssl-dev pkg-config bind9-utils
+      - name: Safe Rust and cryptographic checks
+        run: |
+          cargo +1.85.1 check --locked --workspace --all-targets
+          cargo fmt --all -- --check
+          cargo test --locked --workspace --all-targets
+          cargo clippy --locked --workspace --all-targets -- -D warnings
+          /usr/bin/python3 -m unittest discover -s tools/tests -v
+          /usr/bin/python3 -m unittest discover -s ccf -p test_host_driver.py -v
+          /usr/bin/python3 -m unittest discover -s ccf/tests -p test_supervisor.py -v
+          /usr/bin/python3 -m unittest discover -s tests/rust-integration -p 'test_*.py' -v
+          node --test ccf/tests/governance_actions_test.js
+
+      - name: Genuine native ACI fixture and rejection regressions at recorded time
+        run: |
+          cargo build --locked -p adns-attest --example appraise
+          mkdir -p .validation
+          cp -R docs/evidence/native-aci-20260913 .validation/ci-native
+          /usr/bin/python3 tools/verify_native_aci.py --capture .validation/ci-native --policy .validation/ci-native/policy.json --repository . --output .validation/ci-native --now 1789261905
+          /usr/bin/python3 tools/check_native_appraisal.py --binary target/debug/examples/appraise --bundle .validation/ci-native
+
+  ccf-consensus:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build the pinned CCF SDK and Rust application
+        run: |
+          docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
+          docker volume create agentdns-ci-build
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'cmake -S /src/ccf -B /build -GNinja -DCMAKE_BUILD_TYPE=Release && cmake --build /build -j4'
+      - name: Real CCF governance, commitment and independent receipt verification
+        run: |
+          mkdir -p .validation/ci-public
+          set -o pipefail
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/tools/tests/ccf_control_smoke.py | tee .validation/ci-public/ccf-control-smoke.log
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --quorum | tee .validation/ci-public/ccf-smoke.log
+          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --recovery | tee .validation/ci-public/ccf-recovery.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: ccf-consensus-public-log
+          path: .validation/ci-public/ccf-*.log
+          if-no-files-found: ignore
+
+  secondary-and-mail:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install tested compiler
+        run: |
+          rustup toolchain install 1.95.0 --profile minimal
+          rustup override set 1.95.0
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev pkg-config lsof
+      - name: Stock BIND, DNSSEC validators, DANE, PKIX and two idle lifetimes
+        run: python3 tests/rust-integration/run.py --seconds 1250
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: secondary-mail-public-results
+          path: |
+            .validation/integration/run-*/acceptance-results.json
+            .validation/integration/run-*/initial-results.json
+            .validation/integration/run-*/ixfr-results.json
+            .validation/integration/run-*/mail-results.json
+            .validation/integration/run-*/performance-results.json
+            .validation/integration/run-*/performance-under-load.json
+            .validation/integration/run-*/idle-results.json
+            .validation/integration/run-*/frontend-idle-results.json
+            .validation/integration/run-*/idle-samples.json
+            .validation/integration/run-*/frontend-idle-samples.json
+            .validation/integration/run-*/delv-*.log
+            .validation/integration/run-*/ldns-verify-zone.log
+            .validation/integration/run-*/postfix-dane-*.log
+          if-no-files-found: ignore
+
+  ccf-secondary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build CCF primary, stock secondary and independent validators
+        run: |
+          docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
+          docker build --platform linux/amd64 -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:7.0.15 .
+          docker build --platform linux/amd64 -f containers/secondary.Dockerfile -t agentdns-secondary:local .
+          docker build --platform linux/amd64 -f containers/validation.Dockerfile -t agentdns-validation:local .
+      - name: Real Virtual CCF to BIND over two signature lifetimes
+        run: |
+          agentdns_ci_image=$(docker image inspect --format '{{.Id}}' agentdns-ccf:7.0.15)
+          python3 tests/rust-integration/run_ccf.py --ccf-image "$agentdns_ci_image" --seconds 1250
+      - name: Export only explicitly public evidence
+        if: always()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import sys
+          destination = Path('.validation/ci-ccf-public')
+          for results in sorted(Path('.validation/ccf-runs').glob('run-*/results')):
+              exporter = results.parent / 'source/tests/rust-integration/export_ccf_results.py'
+              subprocess.run([sys.executable, str(exporter),
+                              str(results), str(destination / results.parent.name)],
+                             check=True, timeout=60)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: ccf-secondary-public-results
+          path: .validation/ci-ccf-public/
+          if-no-files-found: ignore

@@ -1,0 +1,15 @@
+{
+  "status": "diagnosed",
+  "observed_at": "2026-09-13T08:10:08Z",
+  "primary_ip": "20.166.239.227",
+  "bootstrap_tx_id": "2.11",
+  "application_read_http_status": 503,
+  "application_read_error": "storage failure: lifecycle state requires governed migration: missing format marker",
+  "root_cause": "Internal accepted_endpoints excludes /node/state. Pinned CCF returns503 for this ACL denial; supervisor starts driver only for2xx-4xx. Therefore no maintenance/transfer process starts.",
+  "source": "CCF-ccf-7.0.15/src/node/rpc/frontend.h:160-180",
+  "runtime_tls_check": "Exact image Python3.12.14 accepts same native service CA and node SAN; public /node/state returns200.",
+  "image_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "ccf_policy_sha256": "bcda0e39dabca3347887d13902cd550f47e0785b4a969f7bc0981bd56c811d63",
+  "application_state": "Governance only; no autonomous zone initialization, DNSSEC private key generation, worker nonce issuance or registrations.",
+  "raw_private_log_sha256": "1a4016840685ae2983e450df7dda96af1df8af5292bedaee58394e37902d5ad1"
+}

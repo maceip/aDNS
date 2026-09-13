@@ -1,0 +1,15 @@
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 8 60 30 600 60
+example.test. 60 IN NS ns.example.test.
+example.test. 60 IN RRSIG NS 14 2 60 20260913014838 20260913013338 27190 example.test. eRI6ACBJxModthwM8H7MWuu7KOvdAOOV D47HVbO+VHiIPvUiwSMQo59WQ6rCyc/i 4cC9PLse1+9j3O4jkdfteo/DOmIEQMuL OliclTNCd+Fm29T4CBISGCtRRbFu685s
+example.test. 60 IN RRSIG SOA 14 2 60 20260913014838 20260913013338 27190 example.test. jXqO3uaH77+vDbgg3MClZ3TB2kzK5HOC 2R9iy/n4XZGt5qUfLZ5gpcnPlkfQ/oQu kYiJec86BlAs/+RKieuI6nyuz9H8P03z OekEMt2JapYTw+dGr7XjepL5NA3/Iy1K
+example.test. 60 IN DNSKEY 256 3 14 d9b+nhibMd7y2/IeQnxXxbG9gYakLQZk 2nFYz9BGreJonUfJYz/nzRND7ex8rvla 6x5Vn+vaFal4/qIOcq6hdHeYoT2YwNim rT2PytRsUV6R/gtqzNSKY5iHmb37sKL0
+example.test. 60 IN DNSKEY 257 3 14 4Bklg8UeIR0ArgICLVrxjtX8gUZCq3YN Y6tgqyzhpIQMLqGOr2XxGvEw9iMOSOig Ph43hcpDgOzmSVKPBTiV8B9AkJaCJ+Lb VpJubUv3s21Y2G/8ju/MfhdFHxel0zWO
+example.test. 60 IN RRSIG DNSKEY 14 2 60 20260913014838 20260913013338 34762 example.test. 0TxnoOYZ2Ctqz7FPjOugEExLxVOd+UTD k68afJ9GUyhD/43FvNtO/3e0H4slw4CE 6EDrlzWOCsnz7e+F7tnhe3siOHcU7H78 fgMXYe6oowPhNubxdWPvd1t+1BT+3qqA
+example.test. 0 IN NSEC3PARAM 1 0 0 -
+example.test. 0 IN RRSIG NSEC3PARAM 14 2 0 20260913014838 20260913013338 27190 example.test. q2JMP7pI6QEMQWnyzvHopBwW/jNJScR+ g8ULsnH4oBhXyrat5idwQND8Lu3Xl3NS Moj4MmUKUyXt0k7mJodBoe6bGYPc+um2 OcuM10mnTYBHv5uS24G432PIbpmUXUsn
+gspqm39nh1aj967t5rb35mbb97hb60bg.example.test. 60 IN NSEC3 1 0 0 - jbas736chung3bb701jkjdhqkqlhvug7 A RRSIG
+gspqm39nh1aj967t5rb35mbb97hb60bg.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913014838 20260913013338 27190 example.test. wmYFSBIzjXviLpAvgDpVAushhBcEfpAq OeboDN1iWMGNGdF+fkGZ6z/oFmyiO0D6 b2hV/ryO9kMm5cIs8Bb2fX+QreuNl11W /0QHvY1Wlu0ZsrkXARCis3rlUCXL8LnJ
+jbas736chung3bb701jkjdhqkqlhvug7.example.test. 60 IN NSEC3 1 0 0 - gspqm39nh1aj967t5rb35mbb97hb60bg NS SOA RRSIG DNSKEY NSEC3PARAM
+jbas736chung3bb701jkjdhqkqlhvug7.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913014838 20260913013338 27190 example.test. 9xDWOiAkvPKxIBiDCk9eNObsTeVyG6Gm T8gDQz4IXtmI6fCV7q1e862VIkcayLO1 wgz/wenC6Xd41crLVT7BShe9nKl5O32w 7riQzQU4e2CFb9XTy3mtXZ1ukQ3Cj+9q
+ns.example.test. 60 IN A 192.0.2.1
+ns.example.test. 60 IN RRSIG A 14 3 60 20260913014838 20260913013338 27190 example.test. H5fcMU5vtfUrDQuWladsrumnDb+rrDwU Z3FBCMZTwu9ZfTfGCLWkj13WkbFOQFD4 RE92pzaROjSdXrJ4+TgGLGFuJ/+xz2Mv tgD0Cfma6HN47Af1bbB0wpxPaA6iQAUt

@@ -1,0 +1,16 @@
+{
+  "sampling": "sequential 3000 mixed DO=1 queries after 30-second dnsperf fixed offered rate of 10000 qps",
+  "duration_seconds": 0.5285955270010163,
+  "samples": 3000,
+  "p50_ms": 0.144709,
+  "p99_ms": 0.306627,
+  "max_ms": 0.927089,
+  "dnsperf_log": "dnsperf.log",
+  "note": "localhost container BIND frontend, development dataset; not a WAN or peak-capacity benchmark",
+  "dnsperf": {
+    "queries_sent": 299881,
+    "queries_completed": 299033,
+    "queries_lost": 848,
+    "completed_qps": 9967.760686
+  }
+}

@@ -1,0 +1,1 @@
+example.test. IN DNSKEY 257 3 14 hpVkgl9DzCe/XkYW4skvT9ztphGyazKs08xYsTxzCi8v61kzyOL2oXOBjdYs+UZlDN8HgjI158uKedrwl1i3sYfJKX58mqstTJPuQSFyQMA/YfbVallGYhG89+nnrkb0

@@ -1,0 +1,21 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "186",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.341",
+    "x-ms-ccf-transaction-id": "2.346"
+  },
+  "body": {
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "lease_expires_at": 1789291385,
+    "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+    "status": "committed",
+    "tx_id": "2.341",
+    "zone_serial": 10
+  },
+  "confirmed_ccf_transaction_id": "2.341"
+}

@@ -1,0 +1,21 @@
+{
+  "recorded_at_utc": "2026-09-13T01:32:08.139693+00:00",
+  "image": "agentdns-capture:local",
+  "platform": "linux/amd64",
+  "local_image_id": "sha256:17f9782f253998c1e87082532ab2f168f7d5adedee003530ccd8c1cf83d28f06",
+  "embedded_and_reviewed_capture_script_sha256": "40296f30d89051e1b3bfb07e2436a051da8e8a03a9796d1724c907eabe0cfb40",
+  "software_tests_passed": 16,
+  "https_port": 8080,
+  "test_mail_ports": [
+    25,
+    465,
+    993
+  ],
+  "tls_sans": [
+    "agentdns-capture.test",
+    "configured service_host"
+  ],
+  "native_evidence_source": "only the repository native SNP ioctl collector; tests mock it outside the image",
+  "registry_manifest_digest": "record separately after authorized push",
+  "hardware_execution_of_this_image": "not established by local software tests"
+}

@@ -1,0 +1,17 @@
+{
+  "member_id": "84ae75b6514c27f00ebf49107f6b69f8bf7214902fa9bcd52e395d1512515e4e",
+  "config_manifest_sha256": "611b6ed1279a8b30605a24f9b93176d15a66adf47eeea595123e446ca1531b25",
+  "transfer_secret_sha256": "7e0f4f9708369d01066f7104991333371da903209d3fa84e9db8f9162b0eee6b",
+  "transfer_key_name": "agentdns-transfer.",
+  "secondary_endpoint": "127.0.0.1:53"
+}
+Traceback (most recent call last):
+  File "/src/tools/tests/ccf_control_smoke.py", line 111, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/src/tools/tests/ccf_control_smoke.py", line 82, in main
+    assert not supervisor.provision_transfer_secret('127.0.0.1:18001',work/'service_cert.pem',provision)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/ccf/run.py", line 180, in provision_transfer_secret
+    raise RuntimeError(f"TSIG provisioning rejected (HTTP {status})")
+RuntimeError: TSIG provisioning rejected (HTTP 403)

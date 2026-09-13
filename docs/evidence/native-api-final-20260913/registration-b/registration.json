@@ -1,0 +1,194 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "1362",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.173",
+    "x-ms-ccf-transaction-id": "2.173"
+  },
+  "body": {
+    "contributions": [
+      {
+        "name": "example.test.",
+        "rclass": "In",
+        "rdata": {
+          "Mx": {
+            "exchange": "mail.example.test.",
+            "preference": 10
+          }
+        },
+        "rtype": "Mx",
+        "ttl": 3600
+      },
+      {
+        "name": "mail.example.test.",
+        "rclass": "In",
+        "rdata": {
+          "A": "192.0.2.1"
+        },
+        "rtype": "A",
+        "ttl": 300
+      },
+      {
+        "name": "mail.example.test.",
+        "rclass": "In",
+        "rdata": {
+          "Aaaa": "2001:db8::1"
+        },
+        "rtype": "Aaaa",
+        "ttl": 300
+      },
+      {
+        "name": "_25._tcp.mail.example.test.",
+        "rclass": "In",
+        "rdata": {
+          "Tlsa": {
+            "certificate_association_data": [
+              99,
+              42,
+              15,
+              57,
+              10,
+              3,
+              8,
+              56,
+              241,
+              17,
+              36,
+              162,
+              111,
+              65,
+              238,
+              31,
+              153,
+              86,
+              95,
+              136,
+              168,
+              85,
+              47,
+              92,
+              100,
+              101,
+              244,
+              225,
+              103,
+              193,
+              71,
+              237
+            ],
+            "matching_type": 1,
+            "selector": 1,
+            "usage": 3
+          }
+        },
+        "rtype": "Tlsa",
+        "ttl": 300
+      },
+      {
+        "name": "_465._tcp.mail.example.test.",
+        "rclass": "In",
+        "rdata": {
+          "Tlsa": {
+            "certificate_association_data": [
+              99,
+              42,
+              15,
+              57,
+              10,
+              3,
+              8,
+              56,
+              241,
+              17,
+              36,
+              162,
+              111,
+              65,
+              238,
+              31,
+              153,
+              86,
+              95,
+              136,
+              168,
+              85,
+              47,
+              92,
+              100,
+              101,
+              244,
+              225,
+              103,
+              193,
+              71,
+              237
+            ],
+            "matching_type": 1,
+            "selector": 1,
+            "usage": 3
+          }
+        },
+        "rtype": "Tlsa",
+        "ttl": 300
+      },
+      {
+        "name": "_993._tcp.mail.example.test.",
+        "rclass": "In",
+        "rdata": {
+          "Tlsa": {
+            "certificate_association_data": [
+              99,
+              42,
+              15,
+              57,
+              10,
+              3,
+              8,
+              56,
+              241,
+              17,
+              36,
+              162,
+              111,
+              65,
+              238,
+              31,
+              153,
+              86,
+              95,
+              136,
+              168,
+              85,
+              47,
+              92,
+              100,
+              101,
+              244,
+              225,
+              103,
+              193,
+              71,
+              237
+            ],
+            "matching_type": 1,
+            "selector": 1,
+            "usage": 3
+          }
+        },
+        "rtype": "Tlsa",
+        "ttl": 300
+      }
+    ],
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "lease_expires_at": 1789291417,
+    "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+    "status": "committed",
+    "tx_id": "2.173",
+    "zone_serial": 9
+  },
+  "confirmed_ccf_transaction_id": "2.173"
+}

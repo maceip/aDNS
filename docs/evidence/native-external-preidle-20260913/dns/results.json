@@ -1,0 +1,160 @@
+{
+  "status": "passed",
+  "unix_seconds": 1789287920.901367,
+  "primary": "4.208.82.123",
+  "primary_port": 5353,
+  "secondary": "20.166.33.141",
+  "secondary_port": 53,
+  "receipt_transaction": "2.48",
+  "ksk_matches_verified_receipt": true,
+  "independent_ds": "9055 14 2 b83d40933194855aec2e0da371bd4b93d0bde35548b60d14d999c92026d62540",
+  "full_zone_ldns_validated": true,
+  "transfer_messages": 10,
+  "transfer_reserialized_wire_bytes": 137737,
+  "all_frames_tsig_verified": true,
+  "transfer_serial": 9,
+  "secondary_serial": 9,
+  "authenticated_axfr_succeeded_after_negatives": true,
+  "unauthorized_transfers": {
+    "unsigned": {
+      "rejected": true,
+      "error_type": "EOFError"
+    },
+    "wrong_key": {
+      "rejected": true,
+      "error_type": "EOFError"
+    }
+  },
+  "exact_native_record_sets": [
+    {
+      "owner": "mail.example.test.",
+      "type": "A",
+      "exact_rdata": [
+        "192.0.2.1"
+      ]
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "AAAA",
+      "exact_rdata": [
+        "2001:db8::1"
+      ]
+    },
+    {
+      "owner": "example.test.",
+      "type": "MX",
+      "exact_rdata": [
+        "10 mail.example.test."
+      ]
+    },
+    {
+      "owner": "_25._tcp.mail.example.test.",
+      "type": "TLSA",
+      "exact_rdata": [
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+        "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+      ]
+    },
+    {
+      "owner": "_465._tcp.mail.example.test.",
+      "type": "TLSA",
+      "exact_rdata": [
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+        "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+      ]
+    },
+    {
+      "owner": "_993._tcp.mail.example.test.",
+      "type": "TLSA",
+      "exact_rdata": [
+        "3 1 1 632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+        "3 1 1 aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+      ]
+    }
+  ],
+  "external_dnssec_checks": [
+    {
+      "owner": "example.test.",
+      "type": "SOA",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "DNSKEY",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "A",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "AAAA",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "MX",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "_25._tcp.mail.example.test.",
+      "type": "TLSA",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "_465._tcp.mail.example.test.",
+      "type": "TLSA",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "_993._tcp.mail.example.test.",
+      "type": "TLSA",
+      "meaning": "positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "absent.branch.example.test.",
+      "type": "A",
+      "meaning": "nxdomain",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "branch.example.test.",
+      "type": "A",
+      "meaning": "nodata",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "mail.example.test.",
+      "type": "HINFO",
+      "meaning": "nodata",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "fresh.wild.example.test.",
+      "type": "A",
+      "meaning": "wildcard-positive",
+      "stock_delv_validated": true
+    },
+    {
+      "owner": "fresh.wild.example.test.",
+      "type": "AAAA",
+      "meaning": "wildcard-nodata",
+      "stock_delv_validated": true
+    }
+  ],
+  "spki_sha256": [
+    "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+    "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c"
+  ],
+  "boundary": "Actual external DNS/AXFR and receipt cryptography; native appraisal and global admission are separate inputs."
+}

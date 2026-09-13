@@ -1,0 +1,10 @@
+[
+  {
+    "owner": "_acme-challenge.mail.example.test.",
+    "type": "TXT",
+    "rdata": [
+      "\"NfcHu1ycEEt0xMRumoQcuPf9NdlXUCluEpxKKY1d46A\"",
+      "\"qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044\""
+    ]
+  }
+]

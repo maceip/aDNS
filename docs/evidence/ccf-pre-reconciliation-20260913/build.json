@@ -1,0 +1,25 @@
+{
+  "image_tag": "agentdns-ccf:7.0.15",
+  "oci_index_digest": "sha256:cc749ceddf064ae31d4c571849d81f8d0a457ff135486b9020daa861f764b457",
+  "amd64_manifest_digest": "sha256:3d8c7de697060afa98a204da138af0d05e725a704b6ddd73175cb067c7c6ffc8",
+  "constitution_sha256": "97bf47b3800c109f665c92f0c188300be3d5a6fc7955a368f9205e7db34055cb",
+  "binary_sha256": "eb62c06083bdb7fe446f4d8cacd9629545e14ea049f1ebeaaf1c20ac59ef6d8e",
+  "local_consensus_platform": "Virtual; not evidence of confidential hardware execution",
+  "adapter_regression_tests": 9,
+  "supervisor_regression_tests": 9,
+  "image_config_digest": "sha256:f30fe914aa04ca1dae8786433fc23fe7e835c4477e9ef4e7e38ef525da52e6f3",
+  "supervisor_sha256": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9",
+  "host_driver_sha256": "06c9f9162f240ccb9941d57b067bb615a9a0664fe73f796ddcbd99cd9edeb2d9",
+  "verification": "Exact image ELF bind-mounted read-only at /build/agentdns without rebuilding; real CCF smoke, three-node quorum-loss and member-share disk recovery passed",
+  "test_runs": {
+    "quorum": "live-smoke-bc613d209dd5",
+    "recovery": "live-smoke-bfa802947f3b"
+  },
+  "server_regression_tests": 23,
+  "transfer_regression_tests": 8,
+  "supersedes": "docs/evidence/ccf-pre-ttl-20260913: complete snapshot base/dynamic TTL normalization",
+  "source_sha256": {
+    "crates/adns-server/src/state.rs": "abe509daa866573a773d8a909205845a5add8fa9fee84255b52363a7ef208c1e",
+    "crates/adns-server/src/zone.rs": "8dbc68abdbda10fc03df63d739e44d20681c0aad14532beb4bc08294a02e184d"
+  }
+}

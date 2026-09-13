@@ -1,0 +1,20 @@
+{
+  "primary_index_sha256": "c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "primary_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "primary_elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "bootstrap_manifest_sha256": "f4d501a1521ef98ea87135ce955fba638a733d7acd2236f52cf7cc475278838a",
+  "cce_policy_sha256": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "node_policy_id": "c2d82e217eff29621df71c10983fcc5a2512fc199b83c799c78cf1d29de2db20",
+  "template_sha256": "8d4abcd087b894c3c6ee156091dac537e48c1553cb30860495310c0ab61014df",
+  "whole_policy_delta": {
+    "primary": [
+      "command bootstrap manifest digest"
+    ],
+    "secondary": [],
+    "pause-container": []
+  },
+  "runtime_image_changed": false,
+  "policy_prepared_before_native_quote": true,
+  "prepared_at": "2026-09-13T08:14:24.786385+00:00",
+  "whole_policy_equivalence_after_normalizing_bootstrap_manifest": true
+}

@@ -1,0 +1,10 @@
+test_changed_peer_rejected_before_any_http_request (test_audit_ccf_node.BootstrapTests.test_changed_peer_rejected_before_any_http_request) ... ok
+test_failed_native_audit_never_fetches_or_trusts_service_certificate (test_audit_ccf_node.BootstrapTests.test_failed_native_audit_never_fetches_or_trusts_service_certificate) ... ok
+test_matching_peer_allows_only_public_get_and_bounded_response (test_audit_ccf_node.BootstrapTests.test_matching_peer_allows_only_public_get_and_bounded_response) ... ok
+test_tls_handshake_shares_the_absolute_bootstrap_deadline (test_audit_ccf_node.BootstrapTests.test_tls_handshake_shares_the_absolute_bootstrap_deadline) ... ok
+test_trickled_headers_and_body_cannot_hold_bootstrap_open (test_audit_ccf_node.BootstrapTests.test_trickled_headers_and_body_cannot_hold_bootstrap_open) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.231s
+
+OK

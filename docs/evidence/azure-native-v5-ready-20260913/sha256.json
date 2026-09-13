@@ -1,0 +1,18 @@
+{
+  "README.md": "a90dd45c4560721f359263179d277a62c15936c5c6f02e567619621dc4d1e2db",
+  "bootstrap/bootstrap-summary.json": "d28bbdc9d04c2731ee68683c14a4e14d237e3a7ff5bbbe09bb6da7327690abee",
+  "bootstrap/manifest.json": "f4d501a1521ef98ea87135ce955fba638a733d7acd2236f52cf7cc475278838a",
+  "bootstrap/member0_cert.pem": "76f90fb8d4481c6f87d31abf4e5d042638ce546db895afcc45aba3c9de51e1c4",
+  "bootstrap/member0_enc_pubk.pem": "af3f326cb909c73239d981fbd095fa5e5a01340e9a961fad765ff8491cd06cd5",
+  "bootstrap/node.json": "473fa9b43402743dbc40495b8390399fbb4b0836271b40c1715480bc6101d4be",
+  "ccf-policy.rego": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "ccf.template.json": "8d4abcd087b894c3c6ee156091dac537e48c1553cb30860495310c0ab61014df",
+  "helper-change-provenance.json": "8402f40501b53d89c147b0b37980a0760589bf679ab2370bfdf107a848aaec77",
+  "node-policy.json": "df4a434b945c06b2b83f4d0b63673a4c68901e18e30cc48f3a47bf996b7f3a7f",
+  "preflight.json": "144da461c153512a310343ad526da75fab8223cbee828c9591eeee731f9a2d65",
+  "root-bootstrap-review.json": "2514fec6cb52149c3da0311cae619c07324aed11af386cdd2b9be88f39ca7b19",
+  "root-policy-review.json": "e5157b01b3a541538e9f5330501e8507221e59d691a9de7d610e4f30e8aae5c8",
+  "summary.json": "f43072923f26084f622bd26983abdf278164f6a387cc5253b1794b8b7e5ee673",
+  "example-config-source-delta.json": "17f90bc7d05384148f52d496b2e1fa27550b4fa418621e44ce14d23e74f22e1a",
+  "final-config-helper-tests.json": "353fe5d416f6dfe25a01d535e9329cf5cf32908cfcc7224925cd9d298d48bf6e"
+}

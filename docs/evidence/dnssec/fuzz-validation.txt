@@ -1,0 +1,24 @@
+   Compiling adns-wire v0.1.0 (/Users/mac/agentdns/crates/adns-wire)
+   Compiling adns-wire-fuzz v0.0.0 (/Users/mac/agentdns/fuzz)
+    Finished `release` profile [optimized + debuginfo] target(s) in 1.68s
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.01s
+     Running `fuzz/target/aarch64-apple-darwin/release/wire -artifact_prefix=/Users/mac/agentdns/fuzz/artifacts/wire/ -max_total_time=10 -max_len=65535 -rss_limit_mb=1024 -verbosity=0 -print_final_stats=1 fuzz/corpus/wire fuzz/seeds/wire`
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO:     1229 files found in fuzz/corpus/wire
+INFO:       19 files found in fuzz/seeds/wire
+INFO: seed corpus: files: 1248 min: 1b max: 5310b total: 347022b rss: 37Mb
+###### Recommended dictionary. ######
+"\373\377\377\377\377\377\377\377" # Uses: 53857
+"i\000\000\000" # Uses: 29458
+"\000\000\000\000\000\000\002G" # Uses: 17578
+"\021\000\000\000\000\000\000\000" # Uses: 12291
+")\000\000\000\000\000\000\000" # Uses: 4012
+"\377\377\377\377\377\377\377\375" # Uses: 3804
+"\013\000\000\000\000\000\000\000" # Uses: 1720
+"\000\000\000\000\000\000\000\000" # Uses: 199
+###### End of recommended dictionary. ######
+stat::number_of_executed_units: 1452712
+stat::average_exec_per_sec:     132064
+stat::new_units_added:          189
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              429

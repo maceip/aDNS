@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "boundary": "Seven software client-boundary tests, including real local TLS fixtures; these are not native hardware or registration performance samples.",
+  "tests": 7,
+  "runner": "Linux AMD64 agentdns-ccf-toolchain:7.0.15; python3 -m unittest tools.tests.test_ccf_measurements -v",
+  "elapsed_test_seconds": 0.635,
+  "actual_ccf_read": "CA-pinned GET /app/zone/status with numeric127.0.0.1 connection and authenticated agentdns.test SNI returned matching committed transaction header/body; no mutation or worker request",
+  "sha256": {
+    "tools/measure_ccf_request.py": "75e0a2f4558d34b60f1a7fe027853e07773d56f23473a83e391aa38455683f18",
+    "tools/tests/test_ccf_measurements.py": "19dde76a21167def8dfa79dc8e7e39b3f361d3b2d1a81db649e9004c2bbcae00",
+    "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6"
+  }
+}

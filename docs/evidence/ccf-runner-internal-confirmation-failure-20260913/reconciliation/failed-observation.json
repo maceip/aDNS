@@ -1,0 +1,34 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "733",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.346",
+    "x-ms-ccf-transaction-id": "2.346"
+  },
+  "body": {
+    "execution_state": "failed",
+    "grant_id": "reconcile-e2f5cfbb83924426",
+    "latest_observation": {
+      "error": "GRANT_DENIED: expired, future or revoked grant",
+      "expires_at": 1789269692,
+      "failed_at": 1789269395,
+      "http_status": 403,
+      "intent_hash": "2f0b6063dfc996ae6bb8f58f4ae24c6ebb030e02e8847e8dc7522a59916c728e",
+      "issued_at": 1789269392,
+      "nonce": "0f41e901d9ffc46feb11a6043978cb9f2f164232eb82d1da1c44b2df49531330",
+      "signed_message_digest": "b63dd21840bd5957010bda9cb3736f20ca4961bdf423a481df94da57afa8b675"
+    },
+    "matching_nonces": 1,
+    "multiple_nonce_ambiguity": false,
+    "observation_status": "committed",
+    "observation_tx_id": "2.346",
+    "phase": "last_authenticated_attempt",
+    "request_id": "1718f57f55974475b6e1930719d375c3",
+    "retryable": true,
+    "status": "failed",
+    "tx_id": "2.346"
+  },
+  "confirmed_ccf_transaction_id": "2.346"
+}

@@ -1,0 +1,22 @@
+{
+  "README.md": "9e6eab244bb7311b99ab5d33e9e631349d29c590a9cdfd5f2e36de6a02d86e5c",
+  "anchor.conf": "0523b9491e4caab4ff75282894746bb733fe78891e734f3cfb6ae8b2f2691566",
+  "anchor.key": "95d3e2b7e2d206c4c44bae2f0215cbcb55d5edc40b619c2a90541da16aea52fd",
+  "audit/authenticated-network.json": "85205c5d3f67a0ddbe98978b4a013f301a3bea140a72c7b30aace937ea7f5b37",
+  "audit/node-audit.json": "2d4edc2d59af37aedf79680fec42954ff28533a74228fa08ff08c6688d7f0402",
+  "audit/node-peer.der": "8248eb6c5fce180197ce2801427e24bb6c32e2d6d57946ad32a793ae483bf2b9",
+  "audit/node-quote.json": "93d2c0c626f48095ede41a9d69783b01dea245d90a2b0f423eed4d6910a38019",
+  "audit/service_cert.pem": "50cb7ff11a90b5f317f9bcac82d37219bab33749ad780d66f4904ec75a12ee4e",
+  "bootstrap-actions.json": "32c1107c8eaa2e2a518c58afae0b875118957a7a5167d4c3aba7b2704db119ed",
+  "bootstrap-result.json": "0f1501797a9de66982ee60ec53c80b34c6bfba9e45addba03ec4cb583ed2f7af",
+  "bootstrap-signing-metrics.json": "2a1c794fff276abeaca8101e2a33e42acea2656f4b88b3697b8273dbf9f4bbb2",
+  "ksk-receipt-response.json": "ba552ab02040de7cc97a04c0affa106d0a5bae179b9a3439c42581ce6bf6efb5",
+  "ksk-receipt.json": "569c49c0192714ad25cb9dc592be75d4d0fdcbebe20ca8046fbac41d9ddfe80f",
+  "ksk-verification.json": "6fd6adba3bda19851a3648830f8952b4a81136e68d0e28266c3187f013025091",
+  "member-ack.json": "a700ba1676bff54d90fd9470d6ada3cb3be71f883e2f2589e474f63db6c86ffd",
+  "open-result.json": "17c564a08a8ab9b0c032ac84f079c287310117f28ec74575a51f72547d5338b1",
+  "prior-readiness-failure.json": "a867380bb7a3e20382ef9c02737c50cf411bc7f0b09f6a1b68b5d8e35f8c02c2",
+  "summary.json": "d57b84c1a830a32c0e34cdbab1da86f4a92eb2467e8d6265051c7cb96310d34c",
+  "zone-status-initial.json": "a4870cae5336d23a33a6b39036cc25cae48f6e2eeaa2013f02e4c2ca6ac23101",
+  "authenticated-secondary-observation.json": "6232e2107e2d5ea50f07d07ab6412422cd3bdb34e3e2b20e704e28e9f7d1d370"
+}

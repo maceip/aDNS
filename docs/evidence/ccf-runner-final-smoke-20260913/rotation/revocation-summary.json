@@ -1,0 +1,7 @@
+{
+  "key_name": "agentdns-transfer.",
+  "globally_committed": true,
+  "idempotent_repeat_accepted": true,
+  "replacement_key_name": "agentdns-transfer-replacement.",
+  "scope": "replacement authenticated AXFR; no replacement BIND frontend is claimed"
+}

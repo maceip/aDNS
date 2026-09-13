@@ -1,0 +1,14 @@
+id 67
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_acme-challenge.mail.example.test. IN TXT
+;ANSWER
+_acme-challenge.mail.example.test. 30 IN TXT "qHopEgpQrIxVWMXhGOsZrlAp1ujS_CuiN6hIcXKl044"
+_acme-challenge.mail.example.test. 30 IN RRSIG TXT 14 4 30 20260913083946 20260913082446 20222 example.test. Dc8KRIXtEVFHoidTNv5M2xeUYFzioc7o xPyzyA+38tLjpMtoSlRPkGaWEBW1DVCO KwDcL1wQ9xsMcnWejg9ccfol95/WYVkn 9KFNwamex+7W2T7zDHYamo75AT8mIjoz
+;AUTHORITY
+;ADDITIONAL

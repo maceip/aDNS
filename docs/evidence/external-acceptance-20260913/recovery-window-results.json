@@ -1,0 +1,77 @@
+{
+  "backend": "development-memory",
+  "recorded_on": "2026-09-13 UTC",
+  "initial_failed_phase": {
+    "first_signature_expiration": 1789259943,
+    "runtime_restart": 1789259912,
+    "reason": "stock BIND IXFR refresh rejected by original runtime; authenticated UDP SOA refresh missing",
+    "manual_recovery_notify": 1789259943.04,
+    "serial_2_arrived": 1789259943.139,
+    "possible_expiry_gap_seconds": 0.139,
+    "counts_as_uninterrupted_acceptance": false
+  },
+  "successful_recovery_window": {
+    "boundary_unix_seconds": 1789259944,
+    "host_start": 1789259945,
+    "host_end": 1789261246,
+    "host_duration_seconds": 1301,
+    "frontend_start": 1789259952,
+    "frontend_end": 1789261206,
+    "frontend_duration_seconds": 1254,
+    "host_samples": 120,
+    "external_validations": 86,
+    "mutating_requests": 0,
+    "manual_notifications": 0,
+    "restarts": 0,
+    "host_maximum_rss_kib": 40640,
+    "all_sampled_signatures_valid": true,
+    "all_observed_secondaries_in_sync": true,
+    "transfers": [
+      {
+        "serial": 3,
+        "arrival_unix_seconds": 1789259943.851,
+        "signature_expiration": 1789260543
+      },
+      {
+        "serial": 4,
+        "arrival_unix_seconds": 1789260243.877,
+        "signature_expiration": 1789260843,
+        "previous_signature_margin_seconds": 299.123
+      },
+      {
+        "serial": 5,
+        "arrival_unix_seconds": 1789260543.877,
+        "signature_expiration": 1789261143,
+        "previous_signature_margin_seconds": 299.123
+      },
+      {
+        "serial": 6,
+        "arrival_unix_seconds": 1789260843.875,
+        "signature_expiration": 1789261443,
+        "previous_signature_margin_seconds": 299.125
+      },
+      {
+        "serial": 7,
+        "arrival_unix_seconds": 1789261143.867,
+        "signature_expiration": 1789261743,
+        "previous_signature_margin_seconds": 299.133
+      }
+    ]
+  },
+  "host_monitor_interruption": {
+    "last_sample_before_assertion": 1789261132,
+    "assertion": "maintenance unhealthy: original monitor accepted only ok",
+    "exact_failed_status_body_recorded": false,
+    "diagnosis": "Source inspection and timing indicate the legitimate refresh_due boundary; serial 7 transferred automatically at 1789261143.867 and independently validated afterward",
+    "frontend_monitor_continued": true,
+    "fix": "Persist each status before assertion, allow refresh_due for at most 15 seconds, still reject expired signatures or any other unhealthy status",
+    "runtime_restarted": false
+  },
+  "limits": [
+    "Development MemoryStorage runtime, not production CCF global commitment",
+    "Periodic probes plus logged transfer timing; not a probe at every instant",
+    "Controlled CA and local DANE probe, not public ACME or actual mail delivery",
+    "No production registration-latency or signing-duration measurement in this run",
+    "Live executable was rebuilt on disk later; current disk hash does not identify mapped process"
+  ]
+}

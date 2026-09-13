@@ -1,0 +1,849 @@
+[
+  {
+    "unix_seconds": 1789270262.3512752,
+    "elapsed_seconds": 0.00013079199925414287,
+    "rss_kib": 40644,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270272.356825,
+    "elapsed_seconds": 10.005680777001544,
+    "rss_kib": 40868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270282.3579524,
+    "elapsed_seconds": 20.00680805400043,
+    "rss_kib": 40868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270292.3636823,
+    "elapsed_seconds": 30.01253799800179,
+    "rss_kib": 40868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270302.3655183,
+    "elapsed_seconds": 40.014374482001585,
+    "rss_kib": 40852,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270312.367458,
+    "elapsed_seconds": 50.01631397000165,
+    "rss_kib": 40868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270322.3726654,
+    "elapsed_seconds": 60.021521104001295,
+    "rss_kib": 40868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270332.378083,
+    "elapsed_seconds": 70.02693907100183,
+    "rss_kib": 40184,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270342.3797178,
+    "elapsed_seconds": 80.02857353800209,
+    "rss_kib": 40184,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270352.3814027,
+    "elapsed_seconds": 90.03025846200035,
+    "rss_kib": 40184,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270362.382129,
+    "elapsed_seconds": 100.03098476200103,
+    "rss_kib": 40184,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270372.387853,
+    "elapsed_seconds": 110.0367083960009,
+    "rss_kib": 38868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270382.390458,
+    "elapsed_seconds": 120.03931403000024,
+    "rss_kib": 38852,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270392.394463,
+    "elapsed_seconds": 130.04331870500027,
+    "rss_kib": 38868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270402.3960705,
+    "elapsed_seconds": 140.04492625499915,
+    "rss_kib": 38868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270412.4014735,
+    "elapsed_seconds": 150.05032943100014,
+    "rss_kib": 38868,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270422.407243,
+    "elapsed_seconds": 160.05609889799962,
+    "rss_kib": 38916,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270432.4104397,
+    "elapsed_seconds": 170.05929569900036,
+    "rss_kib": 38980,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270442.4162657,
+    "elapsed_seconds": 180.0651214540012,
+    "rss_kib": 38980,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270452.4194973,
+    "elapsed_seconds": 190.06835324200074,
+    "rss_kib": 38964,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270462.4232893,
+    "elapsed_seconds": 200.0721457389991,
+    "rss_kib": 38864,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270472.4270122,
+    "elapsed_seconds": 210.0758679850005,
+    "rss_kib": 38864,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270482.4280674,
+    "elapsed_seconds": 220.07692310600032,
+    "rss_kib": 38864,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270492.4305484,
+    "elapsed_seconds": 230.0794042689995,
+    "rss_kib": 38864,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270502.4360948,
+    "elapsed_seconds": 240.0849505160004,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270512.4419982,
+    "elapsed_seconds": 250.0908539709999,
+    "rss_kib": 38836,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270522.4469376,
+    "elapsed_seconds": 260.0957934680009,
+    "rss_kib": 38836,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270532.4490073,
+    "elapsed_seconds": 270.0978627980003,
+    "rss_kib": 38836,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270542.4504185,
+    "elapsed_seconds": 280.099274127002,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270552.456049,
+    "elapsed_seconds": 290.10490479000146,
+    "rss_kib": 38812,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270562.4602213,
+    "elapsed_seconds": 300.1090769120019,
+    "rss_kib": 39340,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270572.4649813,
+    "elapsed_seconds": 310.1138369950022,
+    "rss_kib": 39340,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270582.4680927,
+    "elapsed_seconds": 320.11694874800014,
+    "rss_kib": 39340,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270592.4730318,
+    "elapsed_seconds": 330.12188754300223,
+    "rss_kib": 39340,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270602.4789584,
+    "elapsed_seconds": 340.12781458800237,
+    "rss_kib": 39208,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270612.4806597,
+    "elapsed_seconds": 350.1295156740016,
+    "rss_kib": 39208,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270622.4869318,
+    "elapsed_seconds": 360.1357873449997,
+    "rss_kib": 39208,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270632.492709,
+    "elapsed_seconds": 370.1415646400019,
+    "rss_kib": 39208,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270642.4943266,
+    "elapsed_seconds": 380.1431826420012,
+    "rss_kib": 38976,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270652.4973712,
+    "elapsed_seconds": 390.14622727000096,
+    "rss_kib": 38976,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270662.503333,
+    "elapsed_seconds": 400.15218898199964,
+    "rss_kib": 38976,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270672.506024,
+    "elapsed_seconds": 410.154879902002,
+    "rss_kib": 38976,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270682.5122373,
+    "elapsed_seconds": 420.16109315500216,
+    "rss_kib": 38976,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270692.5179832,
+    "elapsed_seconds": 430.16683890900094,
+    "rss_kib": 38916,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270702.5210285,
+    "elapsed_seconds": 440.1698843230006,
+    "rss_kib": 38916,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270712.5227582,
+    "elapsed_seconds": 450.1716142330006,
+    "rss_kib": 38916,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270722.5286088,
+    "elapsed_seconds": 460.1774646869999,
+    "rss_kib": 38916,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270732.53107,
+    "elapsed_seconds": 470.1799258480023,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270742.5352974,
+    "elapsed_seconds": 480.18415330100106,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270752.541229,
+    "elapsed_seconds": 490.19008492099965,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270762.5430691,
+    "elapsed_seconds": 500.1919251239997,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270772.5452037,
+    "elapsed_seconds": 510.1940596179993,
+    "rss_kib": 38896,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270782.5466166,
+    "elapsed_seconds": 520.1954724040006,
+    "rss_kib": 38884,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270792.5477715,
+    "elapsed_seconds": 530.1966272310019,
+    "rss_kib": 38884,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270802.5503254,
+    "elapsed_seconds": 540.1991812260021,
+    "rss_kib": 38884,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270812.5524092,
+    "elapsed_seconds": 550.201264845,
+    "rss_kib": 39116,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270822.5533004,
+    "elapsed_seconds": 560.2021559640016,
+    "rss_kib": 39072,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270832.5569546,
+    "elapsed_seconds": 570.2058103790005,
+    "rss_kib": 39072,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270842.5580328,
+    "elapsed_seconds": 580.2068884180007,
+    "rss_kib": 39072,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270852.5590334,
+    "elapsed_seconds": 590.2078895410014,
+    "rss_kib": 39072,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270862.5636654,
+    "elapsed_seconds": 600.2125210390004,
+    "rss_kib": 39244,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270872.5651617,
+    "elapsed_seconds": 610.2140176620014,
+    "rss_kib": 39120,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270882.5709922,
+    "elapsed_seconds": 620.2198479940016,
+    "rss_kib": 39120,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270892.5725248,
+    "elapsed_seconds": 630.2213807840017,
+    "rss_kib": 39120,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270902.5748878,
+    "elapsed_seconds": 640.2237433650007,
+    "rss_kib": 39120,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270912.580013,
+    "elapsed_seconds": 650.2288687389992,
+    "rss_kib": 38988,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270922.5826602,
+    "elapsed_seconds": 660.2315157369994,
+    "rss_kib": 38988,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270932.5862765,
+    "elapsed_seconds": 670.2351324020019,
+    "rss_kib": 38988,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270942.5884175,
+    "elapsed_seconds": 680.2372734830024,
+    "rss_kib": 38988,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270952.5899348,
+    "elapsed_seconds": 690.2387907310003,
+    "rss_kib": 38988,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270962.5913327,
+    "elapsed_seconds": 700.2401882260019,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270972.5972261,
+    "elapsed_seconds": 710.246082054,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270982.6021178,
+    "elapsed_seconds": 720.2509738000008,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789270992.6049068,
+    "elapsed_seconds": 730.2537625860023,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271002.6108139,
+    "elapsed_seconds": 740.2596697070003,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271012.6136513,
+    "elapsed_seconds": 750.262506952,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271022.6194859,
+    "elapsed_seconds": 760.2683417810003,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271032.6251352,
+    "elapsed_seconds": 770.2739908600015,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271042.6278586,
+    "elapsed_seconds": 780.2767146049991,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271052.6320322,
+    "elapsed_seconds": 790.280887975001,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271062.634273,
+    "elapsed_seconds": 800.2831285110005,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271072.6401494,
+    "elapsed_seconds": 810.2890052570001,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271082.6460872,
+    "elapsed_seconds": 820.2949429620021,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271092.6470206,
+    "elapsed_seconds": 830.2958762109993,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271102.6525266,
+    "elapsed_seconds": 840.3013823770016,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271112.6556523,
+    "elapsed_seconds": 850.3045081679993,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271122.6599317,
+    "elapsed_seconds": 860.3087874590019,
+    "rss_kib": 38832,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271132.6607976,
+    "elapsed_seconds": 870.3096538329992,
+    "rss_kib": 38848,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271142.6650343,
+    "elapsed_seconds": 880.3138898739999,
+    "rss_kib": 39080,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271152.666804,
+    "elapsed_seconds": 890.315659873002,
+    "rss_kib": 39128,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271162.670268,
+    "elapsed_seconds": 900.3191239139996,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271172.6716027,
+    "elapsed_seconds": 910.3204584550003,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271182.6725924,
+    "elapsed_seconds": 920.3214482450021,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271192.6750185,
+    "elapsed_seconds": 930.3238741189998,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271202.6809552,
+    "elapsed_seconds": 940.3298108279996,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271212.6825573,
+    "elapsed_seconds": 950.3314130770013,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271222.6835983,
+    "elapsed_seconds": 960.332453867999,
+    "rss_kib": 39300,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271232.6851363,
+    "elapsed_seconds": 970.3339921590014,
+    "rss_kib": 38944,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271242.6880755,
+    "elapsed_seconds": 980.3369314090014,
+    "rss_kib": 38944,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271252.693977,
+    "elapsed_seconds": 990.3428328260015,
+    "rss_kib": 38944,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271262.6965702,
+    "elapsed_seconds": 1000.3454261590014,
+    "rss_kib": 38928,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271272.701012,
+    "elapsed_seconds": 1010.3498677429998,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271282.702229,
+    "elapsed_seconds": 1020.3510847840007,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271292.7049153,
+    "elapsed_seconds": 1030.3537710749988,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271302.7059474,
+    "elapsed_seconds": 1040.3548033250008,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271312.7087512,
+    "elapsed_seconds": 1050.357606824,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271322.713644,
+    "elapsed_seconds": 1060.3624998250016,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271332.7146096,
+    "elapsed_seconds": 1070.363465491002,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271342.7202663,
+    "elapsed_seconds": 1080.3691220709989,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271352.7215912,
+    "elapsed_seconds": 1090.370447016001,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271362.7267203,
+    "elapsed_seconds": 1100.375576159,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271372.728579,
+    "elapsed_seconds": 1110.3774348400002,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271382.7348933,
+    "elapsed_seconds": 1120.3837490450023,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271392.7379236,
+    "elapsed_seconds": 1130.3867794530015,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271402.7389255,
+    "elapsed_seconds": 1140.387781423,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271412.7398958,
+    "elapsed_seconds": 1150.388751724,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271422.7458453,
+    "elapsed_seconds": 1160.3947008270006,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271432.7504878,
+    "elapsed_seconds": 1170.399343508001,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271442.7525332,
+    "elapsed_seconds": 1180.401388882001,
+    "rss_kib": 38856,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271452.7535577,
+    "elapsed_seconds": 1190.4024134210013,
+    "rss_kib": 39088,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  },
+  {
+    "unix_seconds": 1789271462.3563366,
+    "elapsed_seconds": 1200.0051922929997,
+    "rss_kib": 39256,
+    "high_water_rss_kib": 50612,
+    "comm": "named"
+  }
+]

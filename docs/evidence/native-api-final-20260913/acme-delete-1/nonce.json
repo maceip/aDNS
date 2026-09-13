@@ -1,0 +1,18 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "220",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.570",
+    "x-ms-ccf-transaction-id": "2.570"
+  },
+  "body": {
+    "expires_at": 1789288483,
+    "intent_hash": "fd50ccd883560dba635931f5745dba96014ff84fc2be1f2e4cb189e6a0422a4a",
+    "issued_at": 1789288183,
+    "nonce": "63e94c079f977d9fc43c1526f3e30da634f4d0de814f88c2240ed9a740da4406",
+    "tx_id": "2.570"
+  },
+  "confirmed_ccf_transaction_id": "2.570"
+}

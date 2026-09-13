@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "scope": "Completed pre-idle native external acceptance only; subsequent sustained and terminal lifecycle windows separate",
+  "primary": "4.208.82.123:5353",
+  "stock_bind": "20.166.33.141:53",
+  "receipt_transaction": "2.48",
+  "native_admissions": [
+    {
+      "worker": "a",
+      "transaction": "2.143",
+      "serial": 8
+    },
+    {
+      "worker": "b",
+      "transaction": "2.173",
+      "serial": 9
+    }
+  ],
+  "external_axfr_serial": 9,
+  "external_bind_serial": 9,
+  "tsig_frames": 10,
+  "external_stock_delv_checks": 13,
+  "mail_workers_passed": 2,
+  "operator_rrsets": 5,
+  "operator_exact_sets_observed_serial": 12,
+  "acme_both_serial": 12,
+  "acme_delete_one_serial": 13,
+  "acme_expired_serial": 14,
+  "independent_verifier_image": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615",
+  "controlled_mail_image": "sha256:5745eb8dbbf63dee21c23e65cca057586e65d07dfbbffd424260f8e3cc4fd3b8",
+  "export_policy": "Explicit public filename allowlist only; no bearer credentials, TSIG secret values, privatekeys, deployment parameters or ledgers. ACME TXT values are intentionally public DNS authorization values."
+}

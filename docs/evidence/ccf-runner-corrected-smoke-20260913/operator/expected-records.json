@@ -1,0 +1,27 @@
+[
+  [
+    "example.test.",
+    "TXT",
+    "v=spf1 -all"
+  ],
+  [
+    "selector1._domainkey.example.test.",
+    "TXT",
+    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6efkC+3lwnGLs6V1dJk10iXmKy9XCaO0T5HHtTn2l0wekFTKPkJXdwmQKc2SBNrJyxDBuEVSD+VpetiqvhwxHkrLj2kmZHEQlLSlUYOSMyD0Iltg4ZKgjzQwT25woFjcMMhEYFqbIXBSpNFBXkxwf8hFiDnkl+shTBRvODMpjUpaZyzoWXIimyhm9bIai+FclJYJfhUsNFsK0BZOmFILO9Mmgq6RxIwJ9jm3kqRueWpWCzcrQ9+x/GksD75+o3rbKdZJFj7AJE9R9J+vThy/hpTsU00nKrZqxxr5ivQ7XeL/8J7f6uwLw+hDLL1/rgXiG8ZBEh/zlrG9hHBFcYIpCQIDAQAB"
+  ],
+  [
+    "_dmarc.example.test.",
+    "TXT",
+    "v=DMARC1; p=reject; rua=mailto:dmarc@example.test"
+  ],
+  [
+    "_smtp._tls.example.test.",
+    "TXT",
+    "v=TLSRPTv1; rua=mailto:tlsrpt@example.test"
+  ],
+  [
+    "example.test.",
+    "CAA",
+    "0 issue \"letsencrypt.org\""
+  ]
+]

@@ -1,0 +1,8 @@
+   Compiling capture-cross-check v0.0.0 (/private/tmp/agentdns-capture-cross-check)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running `/private/tmp/agentdns-capture-cross-check/target/debug/capture-cross-check .validation/lifecycle-cross/register.json .validation/lifecycle-cross/renew.json .validation/lifecycle-cross/deregister.json .validation/lifecycle-cross/acme_challenge_create.json .validation/lifecycle-cross/acme_challenge_delete.json`
+Register: Rust schema, JCS, fixed P256 signature and evidence digest verified; signed digest 01eeb75b774ac5dad29da1f9beb0c6f85432db5d9ead2afb7bc9f35f1da826ec
+Renew: Rust schema, JCS, fixed P256 signature and evidence digest verified; signed digest 14e925d8715b73972f6ed12ef89a655fa7b89dddd707b047f5b96a0b3baa2e52
+Deregister: Rust schema, JCS, fixed P256 signature and evidence digest verified; signed digest 86c3da266162f5614eb198214448188fbc4fd0ae93ba7b6539be93843b408961
+AcmeChallengeCreate: Rust schema, JCS, fixed P256 signature and evidence digest verified; signed digest 2c706483721ed211946dc8c316c90f9e4f5172815e4df2002d8c7a5c690cadfa
+AcmeChallengeDelete: Rust schema, JCS, fixed P256 signature and evidence digest verified; signed digest 872621120749480dbd50ae81210e1c4fdd18c0f2eb43a19e7c992319489c6b57

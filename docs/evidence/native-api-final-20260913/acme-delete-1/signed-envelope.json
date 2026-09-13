@@ -1,0 +1,17 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "acme_challenge_delete",
+    "parameters": {
+      "challenge_id": "chal-46973f5a49ef1191c9ebc129bd4a1893"
+    },
+    "request_id": "native-acme-delete-1-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhzpngg2y3jPR3tZxWoD5dfqUHhqKNBRfCMYQei_ZhCqyUTl7pfT4NWSkxhVORYTpCLJ7OPlP595nHS0aQmSEg",
+    "zone": "example.test."
+  },
+  "client_signature": "WS8CwlTg8Z_7ST_0zp4PRF4J9p-2b6E9Q3IIWljqN6AaMdk7nWIf_SUvnCO20TXNIjoy4bnZruGXDe_bMfjaRw",
+  "intent_hash": "fd50ccd883560dba635931f5745dba96014ff84fc2be1f2e4cb189e6a0422a4a",
+  "nonce": "63e94c079f977d9fc43c1526f3e30da634f4d0de814f88c2240ed9a740da4406",
+  "nonce_expires_at": 1789288483
+}

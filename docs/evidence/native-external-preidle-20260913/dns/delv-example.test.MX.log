@@ -1,0 +1,3 @@
+; fully validated
+example.test.		503	IN	MX	10 mail.example.test.
+example.test.		503	IN	RRSIG	MX 14 2 3600 20260913083337 20260913081837 20222 example.test. MnHGTjaDnxWqewQQNFsDRSwQ75X7tgvEoJA/pXidO2CWX3kQiwx3jLfo 1UNVRCwkNohWJZcyTz5El6bVg9Fh33hY6h+8htV9G5dd9v+tTwEsLo7T Z/ZCu60AgGngiqDX

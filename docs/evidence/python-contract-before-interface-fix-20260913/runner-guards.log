@@ -1,0 +1,12 @@
+test_only_public_allowlist_is_copied_and_hashed (test_export_ccf_results.ExportTests.test_only_public_allowlist_is_copied_and_hashed) ... ok
+test_private_key_marker_cannot_be_published_under_log_name (test_export_ccf_results.ExportTests.test_private_key_marker_cannot_be_published_under_log_name) ... ok
+test_public_named_symlink_cannot_escape_to_private_file (test_export_ccf_results.ExportTests.test_public_named_symlink_cannot_escape_to_private_file) ... ok
+test_every_synchronous_docker_command_has_a_bounded_default (test_run_ccf.RunnerGuardTests.test_every_synchronous_docker_command_has_a_bounded_default) ... ok
+test_rejects_mutable_image_and_unsupported_duration_before_docker (test_run_ccf.RunnerGuardTests.test_rejects_mutable_image_and_unsupported_duration_before_docker) ... ok
+test_snapshot_is_exact_allowlist_and_survives_source_mutation (test_run_ccf.RunnerGuardTests.test_snapshot_is_exact_allowlist_and_survives_source_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.006s
+
+OK
+{"public_artifacts": 1, "destination": "/tmp/tmp15vpb__a/public"}

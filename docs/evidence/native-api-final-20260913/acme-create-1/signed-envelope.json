@@ -1,0 +1,22 @@
+{
+  "action": {
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "operation": "acme_challenge_create",
+    "parameters": {
+      "lifetime_seconds": 180,
+      "name": "mail.example.test.",
+      "order_id": "native-order-1-20260913",
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "ttl": 30,
+      "txt_value": "NfcHu1ycEEt0xMRumoQcuPf9NdlXUCluEpxKKY1d46A"
+    },
+    "request_id": "native-acme-create-1-20260913",
+    "signer_spki_der": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhzpngg2y3jPR3tZxWoD5dfqUHhqKNBRfCMYQei_ZhCqyUTl7pfT4NWSkxhVORYTpCLJ7OPlP595nHS0aQmSEg",
+    "zone": "example.test."
+  },
+  "client_signature": "_ZYkGWxgRTQyPF2iQlQR7CdcErGMBSgfqdhKxM-_94mHJeAeg3jxS64sH6k5q_6wXl3QjjRKaz0bvyGZFOQndg",
+  "intent_hash": "69cd90a9924cd8340389d981ed42d30cd4f225677b0feda9c360ad6406f6da9d",
+  "nonce": "dea1f0952cdfc50070d6ef74a22f27bcc310b0d61fc2be48d561e0513fc7e391",
+  "nonce_expires_at": 1789288333
+}

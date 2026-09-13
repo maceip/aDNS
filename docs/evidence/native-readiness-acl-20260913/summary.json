@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "isolated_cases": 2,
+  "image_index_sha256": "c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "amd64_image_manifest_sha256": "4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "exact_elf_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "production_image_modified": false,
+  "azure_node_mutated": false,
+  "network": "none, independent Docker namespaces, no published ports",
+  "state": "ephemeral tmpfs, discarded on container removal; no ledger or generated private key exported",
+  "test_override": "Read-only launcher shim injects CCF_PLATFORM_OVERRIDE=Virtual only into unchanged exact ELF. Production supervisor environment filtering is unchanged.",
+  "first_attempt": "Both ACL/driver assertions passed, then diagnostic JSON serialization rejected an empty503body. That failed attempt is preserved privately under external/readiness-acl-regression/attempt1-empty-response-diagnostic; current check.py records raw body and both complete cases passed.",
+  "conclusion": "Exact/node/state on loopback internal ACL enables existing authenticated readiness probe and starts actual host_driver; unrelated /node/network remains denied."
+}

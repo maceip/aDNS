@@ -1,0 +1,15 @@
+{
+  "base_image": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615",
+  "container_dependency_installation": "python3-cbor2, recorded separately; base image itself unchanged",
+  "node_command": [
+    "/Users/mac/.nvm/versions/node/v24.15.0/bin/node",
+    "--test",
+    "/Users/mac/agentdns/.validation/python-contract-final-20260913/source/ccf/tests/governance_actions_test.js"
+  ],
+  "node_exit_code": 0,
+  "node_seconds": 0.13416075706481934,
+  "node_version": "v24.15.0",
+  "source_files": 67,
+  "frozen_source_unchanged": true,
+  "live_source_matches": true
+}

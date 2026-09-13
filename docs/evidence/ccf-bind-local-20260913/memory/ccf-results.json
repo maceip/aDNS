@@ -1,0 +1,13 @@
+{
+  "process": "ccf",
+  "pid_in_target_container": 1,
+  "started_unix_seconds": 1789263549.6876523,
+  "ended_unix_seconds": 1789264749.693873,
+  "elapsed_seconds": 1200.0062910159977,
+  "samples": 121,
+  "minimum_rss_kib": 65176,
+  "maximum_rss_kib": 66348,
+  "first_rss_kib": 66216,
+  "last_rss_kib": 65280,
+  "scope": "Linux /proc RSS for one actual process; excludes other processes and does not establish absence of leaks."
+}

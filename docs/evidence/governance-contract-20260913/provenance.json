@@ -1,0 +1,25 @@
+{
+  "scope": "actual local Virtual CCF governance and private provisioning, not hardware evidence or BIND propagation",
+  "executable_sha256": "7b41a3a9c147a923542bdda424d9c669f0d166d5c5c8601934b164928218e888",
+  "primary_image_index_sha256": "f4f4d4331461c3b9b3283b18db60a35de6c021ce776b576092b30250edf58ab7",
+  "constitution_sha256": "bc18a726e061fcb0b45c64fb4e67e774355c5c0abcfb772966bb9704ee129346",
+  "toolchain_image_id": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+  "source_mode": "copied public allowlist mounted read-only; exact executable bind-mounted read-only without recompilation",
+  "collected_unix_seconds": 1789268754.376895,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--platform",
+    "linux/amd64",
+    "-v",
+    "FROZEN_SOURCE:/src:ro",
+    "-v",
+    "agentdns-ccf-build:/build",
+    "-v",
+    "EXACT_ELF:/build/agentdns:ro",
+    "agentdns-ccf-toolchain:7.0.15",
+    "python3",
+    "/src/tools/tests/ccf_control_smoke.py"
+  ]
+}

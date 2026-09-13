@@ -1,0 +1,9 @@
+{
+  "last_sample_before_assertion": 1789261132,
+  "assertion": "maintenance unhealthy: original monitor accepted only ok",
+  "exact_failed_status_body_recorded": false,
+  "diagnosis": "Source inspection and timing indicate the legitimate refresh_due boundary; serial 7 transferred automatically at 1789261143.867 and independently validated afterward",
+  "frontend_monitor_continued": true,
+  "fix": "Persist each status before assertion, allow refresh_due for at most 15 seconds, still reject expired signatures or any other unhealthy status",
+  "runtime_restarted": false
+}

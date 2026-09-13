@@ -1,0 +1,33 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "356",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.509",
+    "x-ms-ccf-transaction-id": "2.509"
+  },
+  "body": {
+    "committed_state": {
+      "ccf_tx_id": "2.509",
+      "earliest_rrsig_expiration": 1789288655,
+      "maintenance_health": "ok",
+      "rrsig_inception": 1789287755,
+      "serial": 12
+    },
+    "frontend_propagation": {
+      "secondaries": [
+        {
+          "endpoint": "20.166.33.141:53",
+          "in_sync": true,
+          "last_notified_serial": 12,
+          "last_observed_at": 1789288130,
+          "last_observed_serial": 12
+        }
+      ]
+    },
+    "tx_id": "2.509",
+    "zone": "example.test."
+  },
+  "confirmed_ccf_transaction_id": "2.509"
+}

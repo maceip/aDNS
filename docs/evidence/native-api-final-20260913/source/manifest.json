@@ -1,0 +1,30 @@
+{
+  "captured_at_unix_seconds": 1789286374.813705,
+  "files": {
+    ".validation/azure/native-final-20260913/native_flow.py": {
+      "sha256": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+      "bytes": 19135
+    },
+    "tools/ccf_control.py": {
+      "sha256": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+      "bytes": 10255
+    },
+    "tools/sign_capture_request.py": {
+      "sha256": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+      "bytes": 4377
+    },
+    "tools/http_limits.py": {
+      "sha256": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+      "bytes": 1858
+    },
+    "tests/rust-integration/reconcile_ccf_inside.py": {
+      "sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+      "bytes": 10278
+    },
+    "target/debug/examples/appraise": {
+      "sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+      "bytes": 3812856
+    }
+  },
+  "supersedes": "v2: appraiser rebuilt after reviewed SNPv5 support; flow source unchanged, no live flow executed yet"
+}

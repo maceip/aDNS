@@ -1,0 +1,28 @@
+{
+  "network": {
+    "node_to_node_interface": {"bind_address":"0.0.0.0:8002"},
+    "rpc_interfaces": {
+      "primary_rpc_interface": {"bind_address":"0.0.0.0:8000","app_protocol":"HTTP1","max_open_sessions_soft":256,"max_open_sessions_hard":512},
+      "agentdns-internal": {"bind_address":"127.0.0.1:8001","app_protocol":"HTTP1","max_open_sessions_soft":64,"max_open_sessions_hard":128,"accepted_endpoints":["/app/internal/.*","/node/state"]}
+    }
+  },
+  "node_certificate":{"subject_name":"CN=agentdns","subject_alt_names":["iPAddress:127.0.0.1"],"curve_id":"Secp384R1","initial_validity_days":365},
+  "command": {
+    "type":"Start",
+    "service_certificate_file":"service_cert.pem",
+    "start": {
+      "constitution_files":["/opt/agentdns/governance/constitution.js"],
+      "members":[{"certificate_file":"/config/member0_cert.pem","encryption_public_key_file":"/config/member0_enc_pubk.pem"}],
+      "service_configuration":{"recovery_threshold":1},
+      "initial_service_certificate_validity_days":365,
+      "service_subject_name":"CN=agentdns Service",
+      "cose_signatures":{"issuer":"agentdns","subject":"ledger.signature"}
+    }
+  },
+  "ledger":{"directory":"ledger","chunk_size":"5MB"},
+  "snapshots":{"directory":"snapshots","tx_count":10000},
+  "ledger_signatures":{"tx_count":1000,"delay":"1s"},
+  "logging":{"format":"Text"},
+  "output_files":{"node_certificate_file":"node.pem","pid_file":"node.pid","node_to_node_address_file":"node.node_address","rpc_addresses_file":"node.rpc_addresses"},
+  "tick_interval":"10ms","worker_threads":0
+}

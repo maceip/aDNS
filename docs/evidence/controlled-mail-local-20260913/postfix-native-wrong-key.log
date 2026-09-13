@@ -1,0 +1,20 @@
+posttls-finger: initializing the client-side TLS engine
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail-good.example.test: 3 1 1 E2343D44B665063E94A7E4EEB25B98668BAC3636F5F6FFE4B8E291C922CFD4F4
+posttls-finger: Connected to mail-good.example.test[192.0.2.1]:25
+posttls-finger: < 220 controlled-wrong-key ESMTP validation
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-controlled-wrong-key
+posttls-finger: < 250 STARTTLS
+posttls-finger: > STARTTLS
+posttls-finger: < 220 Ready for TLS
+posttls-finger: setting up TLS connection to mail-good.example.test[192.0.2.1]:25
+posttls-finger: mail-good.example.test[192.0.2.1]:25: TLS cipher list "aNULL:-aNULL:HIGH:MEDIUM:!SEED:!IDEA:!3DES:!RC2:!RC4:!RC5:!kDH:!kECDH:!aDSS:!MD5:+RC4:@STRENGTH:!aNULL"
+posttls-finger: mail-good.example.test[192.0.2.1]:25: depth=0 verify=0 subject=/CN=controlled-wrong-key
+posttls-finger: server certificate verification failed for mail-good.example.test[192.0.2.1]:25: num=65:no matching DANE TLSA records
+posttls-finger: mail-good.example.test[192.0.2.1]:25: subject_CN=controlled-wrong-key, issuer_CN=controlled-wrong-key, fingerprint=00:E6:EF:9F:22:F2:CC:C4:2E:C0:10:76:39:85:4A:83:D4:DF:F4:A7:77:23:8B:72:6F:BA:94:FD:1A:62:06:94, pkey_fingerprint=5F:A2:93:99:44:A3:EF:F7:08:EB:12:2D:4B:10:EE:F9:9D:FE:E1:CD:93:A0:25:A6:57:BC:E0:68:E3:11:CA:01
+posttls-finger: Untrusted TLS connection established to mail-good.example.test[192.0.2.1]:25: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits) key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-controlled-wrong-key
+posttls-finger: < 250 STARTTLS
+posttls-finger: > QUIT
+posttls-finger: < 221 Bye

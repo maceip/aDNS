@@ -1,0 +1,33 @@
+[
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "82",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.362",
+      "x-ms-ccf-transaction-id": "2.362"
+    },
+    "body": {
+      "key_name": "agentdns-transfer-replacement.",
+      "status": "committed",
+      "tx_id": "2.362"
+    }
+  },
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "109",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.364",
+      "x-ms-ccf-transaction-id": "2.364"
+    },
+    "body": {
+      "already_provisioned": true,
+      "key_name": "agentdns-transfer-replacement.",
+      "status": "committed",
+      "tx_id": "2.364"
+    }
+  }
+]

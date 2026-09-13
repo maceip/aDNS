@@ -1,0 +1,25 @@
+{
+  "recorded_at_utc": "2026-09-13T01:45:04.670401+00:00",
+  "image": "agentdns-capture:local",
+  "platform": "linux/amd64",
+  "local_image_id": "sha256:d87d04d9b38f6673f0fbbf1bc2507c41f0ddceb95030d5f711cd32eabce05b30",
+  "embedded_and_reviewed_capture_script_sha256": "66b6426b49331c09a252239ff8718b945e998d9adb035271fc9e2cf27e47391c",
+  "software_tests_passed": 18,
+  "https_port": 8080,
+  "test_mail_ports": [
+    25,
+    465,
+    993
+  ],
+  "absolute_http_deadline_seconds": 30,
+  "absolute_ccf_http_deadline_seconds": 30,
+  "tls_sans": [
+    "agentdns-capture.test",
+    "configured service_host"
+  ],
+  "native_evidence_source": "only the repository native SNP ioctl collector; tests mock it outside the image",
+  "registry_manifest_digest": "sha256:61027bfc59833975356d526d58557e2b18e4af76464b52acb448e3a9a5feba7a",
+  "hardware_execution_of_this_image": "not established by local software tests",
+  "published_registry_reference": "agentdnsport20260913.azurecr.io/capture:20260913-deadline",
+  "deployment_status": "not deployed; explicit user approval pending"
+}

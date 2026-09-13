@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "server": "20.166.33.141",
+  "port": 53,
+  "minimum_committed_serial": 14,
+  "observed_serial": 14,
+  "started_unix_seconds": 1789288276.6817265,
+  "matched_unix_seconds": 1789288276.9861574,
+  "elapsed_seconds": 0.6380581459998211,
+  "poll_samples": 1,
+  "checks": [
+    {
+      "owner": "_acme-challenge.mail.example.test.",
+      "type": "TXT",
+      "expected_rdata": [],
+      "dnssec_validated": true
+    }
+  ],
+  "boundary": "Exact public authoritative RRsets and stock DNSSEC validation; cause/timing is correlated with separate committed mutation/maintenance evidence."
+}

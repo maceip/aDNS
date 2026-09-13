@@ -1,0 +1,114 @@
+{
+  "kind": "independent offline appraisal of captured native Azure ACI SNP evidence",
+  "verification_time": 1789261905,
+  "original_public_allowlist": [
+    {
+      "source": ".validation/azure/native-capture/capture.json",
+      "bundle_file": "capture.json",
+      "bytes": 31466,
+      "sha256": "b3e0be0e338aeae3b10284f9ac6b720257ffedd40544ff39e7807ee8e0c141d0"
+    },
+    {
+      "source": ".validation/azure/native-capture/evidence.cose",
+      "bundle_file": "evidence.cose",
+      "bytes": 21081,
+      "sha256": "224382f563e279018617a2d032b531e15c7b673263d5a52bc475d1c7dab65a1d"
+    },
+    {
+      "source": ".validation/azure/native-capture/spki.der",
+      "bundle_file": "spki.der",
+      "bytes": 91,
+      "sha256": "d45b785636681b5016d1b93a8a2c8f86f6eea028b458b5264c3ca636766498e8"
+    },
+    {
+      "source": ".validation/azure/native-capture/peer.der",
+      "bundle_file": "peer.der",
+      "bytes": 413,
+      "sha256": "d417ad0566ed1d8759aa221b3c9b4074abe9026938e4df0bc5b79dbf054e58f8"
+    },
+    {
+      "source": ".validation/azure/native-policy.json",
+      "bundle_file": "policy.json",
+      "bytes": 1105,
+      "sha256": "610a96bc2196aedc25c2675b969ad49d3f2a52e913cfc1d46b57a07df811e328"
+    },
+    {
+      "source": ".validation/azure/native-appraisal.json",
+      "bundle_file": "initial-appraisal.json",
+      "bytes": 2011,
+      "sha256": "eb477e38796f8e64181377c061ca5f9748ff1ac7e77c89103613082027a7d96f"
+    }
+  ],
+  "appraiser_binary_sha256": "4c48c2e52a7fa2037dd429a8662e2afd202c2c6463310f6745b0ac6f8ea16209",
+  "appraiser_sources": [
+    {
+      "path": "crates/adns-attest/Cargo.toml",
+      "sha256": "c4bb26c803f8283a6aac7e996da290fb8635bbcebcf19438ddbbee221bba213a"
+    },
+    {
+      "path": "crates/adns-attest/examples/appraise.rs",
+      "sha256": "92d4edeb7bc8191f640ac0ee58a46243bdda73b6c793eab78ce2f60020b83252"
+    },
+    {
+      "path": "crates/adns-attest/examples/audit_ccf_node.rs",
+      "sha256": "dd74c0dacac156faf433d8b31a9e300088b4cbec604d8cd8b1bb337f02956c04"
+    },
+    {
+      "path": "crates/adns-attest/src/amd_genoa_ark.pem",
+      "sha256": "ac73dc98bd03d1e8e5f7e6189b138eb861a6730614a1933758dc58b7166ce476"
+    },
+    {
+      "path": "crates/adns-attest/src/amd_milan_ark.pem",
+      "sha256": "71243b7121625f6333513389c53fcacd1a552989d5ce7457ca81faea1b4730ff"
+    },
+    {
+      "path": "crates/adns-attest/src/certificates.rs",
+      "sha256": "d1132fa1296259c6a37c79834a1b82528619c948ab44a15b32d45a0d8e168fce"
+    },
+    {
+      "path": "crates/adns-attest/src/cose.rs",
+      "sha256": "5fa62ee9084d1f372f4072bbbcc252a2cbbad39d9963be3876132eade331f87f"
+    },
+    {
+      "path": "crates/adns-attest/src/lib.rs",
+      "sha256": "54650ecaa4ab10394f440708c7db36d69e2cbc06c7be6cc3112bc0bb671ab651"
+    },
+    {
+      "path": "crates/adns-attest/src/node_audit.rs",
+      "sha256": "393464bc4fb724798ea6c1f1166a809ee14bb230fd18a35f6a65cd95fdbe6cbf"
+    },
+    {
+      "path": "crates/adns-attest/src/snp.rs",
+      "sha256": "08c9d1955bce73260dc7dfb4819adf1cef75e9ebe552387a06de5fd50b1d1471"
+    },
+    {
+      "path": "crates/adns-attest/src/tests.rs",
+      "sha256": "8527ad87b2f7dc07633100fd9533b469600615c6f5869c70682f779bcc68b968"
+    },
+    {
+      "path": "crates/adns-attest/src/uvm.rs",
+      "sha256": "9c37ee590d466a8b478a3ffd614df6dfad1e78f8ef66c940ffb7391fde79558f"
+    }
+  ],
+  "rust_compiler": "rustc 1.95.0 (59807616e 2026-04-14) (Homebrew)",
+  "python_verifier_image_id": "sha256:26b74b9090577bc862650c09bdc4ce7eb5a4f97081c8e0d36b16af194d1f5f8b",
+  "python_verifier_image_role": "local independent verifier environment; not a claim about the deployed ACI image identity",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cryptography": "41.0.7",
+  "openssl_cli": "OpenSSL 3.0.13 30 Jan 2024",
+  "source_scripts": [
+    {
+      "path": "tools/verify_native_aci.py",
+      "sha256": "5157545c21ff408b429f3fd07363a602b05407e2098f79d98b6b3037a3474306"
+    },
+    {
+      "path": "tools/check_native_appraisal.py",
+      "sha256": "cad8e9d65b6fc08d4c493dd676ffc35dd74d3d7f394b6c9d91054a30b27a05ba"
+    }
+  ],
+  "positive_native_cases": 1,
+  "negative_appraisal_cases": 16,
+  "no_secret_inputs_read": true,
+  "captured_private_key_never_available_to_verifier": true,
+  "artifact_digest_note": "SHA256 provenance is a content-integrity record, not an independent signature or ledger proof"
+}

@@ -1,0 +1,20 @@
+id 63328
+opcode QUERY
+rcode NXDOMAIN
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+_acme-challenge.mail.example.test. IN TXT
+;ANSWER
+;AUTHORITY
+example.test. 60 IN SOA ns.example.test. hostmaster.example.test. 14 60 30 600 60
+example.test. 60 IN RRSIG SOA 14 2 60 20260913084038 20260913082538 20222 example.test. DVZ87mDvs6C9JfEMQd2Kk4T9s3HU+3OD wO+pNEPAsda0jkVfKxLhg14C6TWYS1z0 10inpeeMg2sQ8VHyVnZQ/bi1ZBlfjP/q w/HEQVJi+8ybs55rOOie/HuNdVaZBp5E
+r01tvlkdfkaoshi4nmio4qj4i8vo78v4.example.test. 60 IN NSEC3 1 0 0 - r21ft2k91qu9nqin05kvslsdgdd9hod0 A AAAA RRSIG
+r01tvlkdfkaoshi4nmio4qj4i8vo78v4.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913084038 20260913082538 20222 example.test. cp1e7lMSeHjJkqgsuNvRDwcyV39uKHb3 WX7CSO0y5P4g1/2dBQWRVXmjLeuisYYO xKPrArITMv5k9phrI3jp/hwJ4Hm3bu9w HDQKJy0z/yxKAnLWgl+ZHT+c3rhv0255
+0jc7a65tch3ngjfd6hvcaitsat0fokat.example.test. 60 IN NSEC3 1 0 0 - 0nifbh5cafktn39i4jqdkpblstee8jqp TXT RRSIG
+0jc7a65tch3ngjfd6hvcaitsat0fokat.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913084038 20260913082538 20222 example.test. UfX8CvIGJ5jrqDg+96QmuQdnUAPpq/a2 WA76Q/WvX3o+Nh37ArYBQAMyvf9hjoKp lFy6f41eAGhti07O2aBgz8NSayJCwsTF I0+wsRylie+mvwr2MRa12vfvrmPd0gsr
+e51hv0kg8lgr1plfgo4nhv860b6e7u74.example.test. 60 IN NSEC3 1 0 0 - ee4vefg7ui7iq0f8aalg9shce8bktj70 TXT RRSIG
+e51hv0kg8lgr1plfgo4nhv860b6e7u74.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913084038 20260913082538 20222 example.test. 0WEQhI6GYlcfBsyTk9KVIlQRlkDc7vzr V0r4mqpl08wHyMLFVM2p+6PSgb/iCzpS YejXBb7X+3mqEw/v6TD0bYaEPyh/s4ir yYwTGLr3jFjS0EXrVvyBLUHwdRNVA9Pv
+;ADDITIONAL

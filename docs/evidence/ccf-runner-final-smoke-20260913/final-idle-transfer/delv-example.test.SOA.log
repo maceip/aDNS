@@ -1,0 +1,3 @@
+; fully validated
+example.test.		60	IN	SOA	ns.example.test. hostmaster.example.test. 8 60 30 600 60
+example.test.		60	IN	RRSIG	SOA 14 2 60 20260913033347 20260913031847 28357 example.test. 00a/OJ6t22NnTni9BgDMF2lZ+zuEiEewDGuq7tq9e+o24WC0U78jriHw MM8tu+p8WEQM0fNO9T070pb/p3o4OZ0mrEvlaOcdFdO3+H1qDgosWyVu fwTh7JnWnr86RkGi

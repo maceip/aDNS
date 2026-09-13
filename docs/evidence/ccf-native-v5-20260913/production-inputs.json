@@ -1,0 +1,359 @@
+{
+  "files": {
+    ".dockerignore": {
+      "bytes": 97,
+      "sha256": "35282c10e8b39ac96c149c59c3881815f26bf29edf005edf035649c9b771097a"
+    },
+    "Cargo.lock": {
+      "bytes": 35140,
+      "sha256": "7e2b705eb28dc5df0a69df59847afa44179019b954023cdac35f5a13e94bc63a"
+    },
+    "Cargo.toml": {
+      "bytes": 381,
+      "sha256": "f998d9ba736c0f04511899427ca2eb68414931a5b4873fd2553a75832c093346"
+    },
+    "ccf/CMakeLists.txt": {
+      "bytes": 2178,
+      "sha256": "a1eb035876b35c6edb8fb982921a2cf6c5db3c0012990b8831f658610f79e24d"
+    },
+    "ccf/app.cpp": {
+      "bytes": 12294,
+      "sha256": "14c1c4975d3bcbd3dae75f3ee1783ff3e3c766e2cd088768d1c72ba68b9e24c5"
+    },
+    "ccf/governance/actions.js": {
+      "bytes": 11173,
+      "sha256": "87bc2e47389ab963de71f659c3b4d4cb8092a7139192be0a8c4f084ed96794d7"
+    },
+    "ccf/host_driver.py": {
+      "bytes": 15363,
+      "sha256": "06c9f9162f240ccb9941d57b067bb615a9a0664fe73f796ddcbd99cd9edeb2d9"
+    },
+    "ccf/main.cpp": {
+      "bytes": 82,
+      "sha256": "d2e749083b11dbf12b6754c67d3a757fd99adb48625e2bd00d47608eb7108098"
+    },
+    "ccf/namespace_rust_runtime.py": {
+      "bytes": 1634,
+      "sha256": "0f4c740e1c0f6de501d209c3893519ae3a21cbd0a991cee810b63023f5ad0775"
+    },
+    "ccf/node.example.json": {
+      "bytes": 1551,
+      "sha256": "a5f1f3cf9b5f092edbc66f449b6bcfb95ad43189292c388d39f8396d54df0749"
+    },
+    "ccf/run.py": {
+      "bytes": 14129,
+      "sha256": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9"
+    },
+    "ccf/test_host_driver.py": {
+      "bytes": 7314,
+      "sha256": "a6b47c22a4847f956607588d05877fe1cfcaf542be79422549677651030bfc35"
+    },
+    "ccf/tests/governance_actions_test.js": {
+      "bytes": 6287,
+      "sha256": "885373a573c7cfd5cd793bf5d736a2ea1dcc96378c9b9669d7ac8e452f62c1e5"
+    },
+    "ccf/tests/live_smoke.py": {
+      "bytes": 15328,
+      "sha256": "3aba183e108b80b81206d3e5ce73f5ac7b7740818965fb0d5941e1847b22aaf3"
+    },
+    "ccf/tests/observe_process.py": {
+      "bytes": 2509,
+      "sha256": "ea348a8b3462e44e204767d2a3c883742fd5eac441c3dd415affd1c26ea62fad"
+    },
+    "ccf/tests/observe_status.py": {
+      "bytes": 3675,
+      "sha256": "0b703a8dd2812e749770932f73abecdaf5c793cbe708b10044644fcc1dba5498"
+    },
+    "ccf/tests/operator_mail.py": {
+      "bytes": 8315,
+      "sha256": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a"
+    },
+    "ccf/tests/quorum.py": {
+      "bytes": 15502,
+      "sha256": "4126f5c3ef4b1c0c3590921ef67accb55ca820c0dc1fc38e431b60d1ad7f450f"
+    },
+    "ccf/tests/recovery.py": {
+      "bytes": 10370,
+      "sha256": "51819448d7d2af6e2ca249aeab11bf4d276896d5ca6b2e01b5c2c9bbd2d8f5ff"
+    },
+    "ccf/tests/requirements.txt": {
+      "bytes": 194,
+      "sha256": "1600b4f530002b6eca773ddfa45152f10c24ee9c4039cafa9c68b9d4cd022b38"
+    },
+    "ccf/tests/test_supervisor.py": {
+      "bytes": 10579,
+      "sha256": "753b1a54bb98b0b8be6aac49d1b4da0faab486454b7fc8a7b59192c1180ed043"
+    },
+    "ccf/tests/verify_live_transfer.py": {
+      "bytes": 5399,
+      "sha256": "06c179b2a8c9b038d5d45ef6c10ce77d85a2d58c6d78fa8d72dfddf5fa3daffa"
+    },
+    "ccf/tests/verify_operator_mail.py": {
+      "bytes": 3215,
+      "sha256": "8b1002a36d2f8fa682692e1a85f52e5b868e9998e7f9b4f25fae2c8bc3ebbc81"
+    },
+    "containers/agentdns-ccf.Dockerfile": {
+      "bytes": 1262,
+      "sha256": "7257a79ff97232b19e92dcd487a82aba51172553a5c7ece1b99deb820c96864c"
+    },
+    "containers/ccf-toolchain.Dockerfile": {
+      "bytes": 1504,
+      "sha256": "0266783e5d08d3e043fade6ce16885c7483f9cd265d2eee64b3fb2279d97f24d"
+    },
+    "crates/adns-attest/Cargo.toml": {
+      "bytes": 465,
+      "sha256": "c4bb26c803f8283a6aac7e996da290fb8635bbcebcf19438ddbbee221bba213a"
+    },
+    "crates/adns-attest/examples/appraise.rs": {
+      "bytes": 900,
+      "sha256": "92d4edeb7bc8191f640ac0ee58a46243bdda73b6c793eab78ce2f60020b83252"
+    },
+    "crates/adns-attest/examples/audit_ccf_node.rs": {
+      "bytes": 589,
+      "sha256": "dd74c0dacac156faf433d8b31a9e300088b4cbec604d8cd8b1bb337f02956c04"
+    },
+    "crates/adns-attest/src/amd_genoa_ark.pem": {
+      "bytes": 800,
+      "sha256": "ac73dc98bd03d1e8e5f7e6189b138eb861a6730614a1933758dc58b7166ce476"
+    },
+    "crates/adns-attest/src/amd_milan_ark.pem": {
+      "bytes": 800,
+      "sha256": "71243b7121625f6333513389c53fcacd1a552989d5ce7457ca81faea1b4730ff"
+    },
+    "crates/adns-attest/src/certificates.rs": {
+      "bytes": 9563,
+      "sha256": "8fe2278d8aaf28dd17ee1190fddef23a24ae43c580b1aa076734bbdec203a812"
+    },
+    "crates/adns-attest/src/cose.rs": {
+      "bytes": 8365,
+      "sha256": "5fa62ee9084d1f372f4072bbbcc252a2cbbad39d9963be3876132eade331f87f"
+    },
+    "crates/adns-attest/src/lib.rs": {
+      "bytes": 7912,
+      "sha256": "54650ecaa4ab10394f440708c7db36d69e2cbc06c7be6cc3112bc0bb671ab651"
+    },
+    "crates/adns-attest/src/node_audit.rs": {
+      "bytes": 5301,
+      "sha256": "454935bd790e90b9409d7cbac5be8c9a4f75dc0e49ec9febce87c7b5f7e41d7a"
+    },
+    "crates/adns-attest/src/snp.rs": {
+      "bytes": 6867,
+      "sha256": "b18ac098933abf58427f16e2c4b5798a983cd0d7ad33d61d348cdd5e5d8a7aa1"
+    },
+    "crates/adns-attest/src/tests.rs": {
+      "bytes": 27370,
+      "sha256": "9b77bb840206c77cb5dcdfb9c5d3eb6dc24600fc13f68c10d9554243f41899e7"
+    },
+    "crates/adns-attest/src/uvm.rs": {
+      "bytes": 9232,
+      "sha256": "9c37ee590d466a8b478a3ffd614df6dfad1e78f8ef66c940ffb7391fde79558f"
+    },
+    "crates/adns-attest/tests/fixtures/CCF-LICENSE": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "crates/adns-attest/tests/fixtures/README.md": {
+      "bytes": 2243,
+      "sha256": "dff0f5168558a0fd7b1bd1b4a3ace85bc61377cdc4d180a4ba8793a3a5f7aafb"
+    },
+    "crates/adns-attest/tests/fixtures/aci_ccf_genoa_v5_peer.der": {
+      "bytes": 477,
+      "sha256": "f6e7feed4d9230ff3517bcf2d05c7786c3541a1a1fa192a02827de347efad822"
+    },
+    "crates/adns-attest/tests/fixtures/aci_ccf_genoa_v5_policy.json": {
+      "bytes": 1123,
+      "sha256": "5b71e5db24a67ce9495cc66bc3122ec224f90a78e9734b370d8f962f3c60d184"
+    },
+    "crates/adns-attest/tests/fixtures/aci_ccf_genoa_v5_quote.json": {
+      "bytes": 25022,
+      "sha256": "f0118e0298c7ac5927250c084d329bb1841622300bc51eb94e384c7e4c59fb85"
+    },
+    "crates/adns-attest/tests/fixtures/ccf_uvm_0.2.10.cose": {
+      "bytes": 6145,
+      "sha256": "f4f5321316ac3cf876292f41cb7bdcd1056aef3a815fb137887a4ef93c3210bc"
+    },
+    "crates/adns-attest/tests/fixtures/ccf_uvm_0.2.9.cose": {
+      "bytes": 10900,
+      "sha256": "5c9f4dd2c502d4b0bad23f47df749f36de195e50a4520aee863debf6ffe792a6"
+    },
+    "crates/adns-auth/Cargo.toml": {
+      "bytes": 317,
+      "sha256": "fde777d59e586bb341508d2f2a27e4c2f02b3c873e8c4b4850dce72a169aa7d8"
+    },
+    "crates/adns-auth/src/canonical.rs": {
+      "bytes": 5735,
+      "sha256": "8935bed6dccb057292c7746bfe3ab03e99d8d4c886c08220a282b48960f987b4"
+    },
+    "crates/adns-auth/src/grants.rs": {
+      "bytes": 12803,
+      "sha256": "f3c9b3c3e4961a88a6a469b49ac7d8279de29fb708bcffdfae7f23ddc6aab351"
+    },
+    "crates/adns-auth/src/lib.rs": {
+      "bytes": 11885,
+      "sha256": "370352ef3c2fbde80a44931fdf1183aafb4db48591302880c5c41903832e7b6b"
+    },
+    "crates/adns-auth/src/schema.rs": {
+      "bytes": 15792,
+      "sha256": "2f45be3c1421e1c7f264597ba94204c27b14929f8be466837ce6dd173070359b"
+    },
+    "crates/adns-auth/tests/contract.rs": {
+      "bytes": 22459,
+      "sha256": "5b7c0f88e27f3a38d85fd5c0b6cd397796f4c329421d2ce5dcfd1603bdcd776b"
+    },
+    "crates/adns-ccf/Cargo.toml": {
+      "bytes": 694,
+      "sha256": "afdc458819c0badee2bf38ce5251ce7f43794dd5c1e1aa92ea2c840d3d1674a9"
+    },
+    "crates/adns-ccf/build.rs": {
+      "bytes": 767,
+      "sha256": "2d62c3892e0576ed30a4cc84766692922761a9cc0b9980b20631e265a5496b90"
+    },
+    "crates/adns-ccf/include/adns-ccf/ccf_tx.h": {
+      "bytes": 870,
+      "sha256": "682e0b232103537e936912aa7f2876ec1ae7eaaca353b8bc1cf34dcc825bf62e"
+    },
+    "crates/adns-ccf/src/bridge.rs": {
+      "bytes": 9079,
+      "sha256": "9c12ea7055ffcf9f3b6376bd9355ed90abdebb7e42a02f0c19a8b81658d5cbc1"
+    },
+    "crates/adns-ccf/src/ccf_tx.cpp": {
+      "bytes": 2472,
+      "sha256": "c8bed0bc34f0eda9946b65b294e5315c9dba5793ff3ab88345a56c681244fbef"
+    },
+    "crates/adns-ccf/src/lib.rs": {
+      "bytes": 29248,
+      "sha256": "bd78715aeb3c6cd8d9749832896fe835796423ccfed63b2f4c9675dd5a9d34fa"
+    },
+    "crates/adns-ccf/tests/adapter.rs": {
+      "bytes": 28611,
+      "sha256": "f803c535c7e6061054c6ba5b9f6a014dccd431aed84264225dad48bd49a645da"
+    },
+    "crates/adns-dnssec/Cargo.toml": {
+      "bytes": 385,
+      "sha256": "430ad6872fdc4b54ec137254e6a89d91af0b5952b117e070382cc41e02757072"
+    },
+    "crates/adns-dnssec/examples/export.rs": {
+      "bytes": 4109,
+      "sha256": "5d603a3efed6eebda4e8aee03b52aba0455459f59ef6923aeceb33bf9fbd2341"
+    },
+    "crates/adns-dnssec/src/denial.rs": {
+      "bytes": 2510,
+      "sha256": "deb434c209fd7397f71d185d11b2df119a96b47a7452e1ca2ac7dbb9aea05f60"
+    },
+    "crates/adns-dnssec/src/lib.rs": {
+      "bytes": 1053,
+      "sha256": "ffe3291b2e59e46f5971d76e50a63a33e6338ad64cea42dddd02b1144ddbb45d"
+    },
+    "crates/adns-dnssec/src/sign.rs": {
+      "bytes": 6540,
+      "sha256": "43c5b0c784c989765f8a5733c44749fb1340202a14b91c922deb5e79e5fbc3b3"
+    },
+    "crates/adns-dnssec/src/tlsa.rs": {
+      "bytes": 2149,
+      "sha256": "e260d3ac184853b378841df4f627f629b09cf1d4097a6e2506eb7bfda0726db4"
+    },
+    "crates/adns-dnssec/src/zone.rs": {
+      "bytes": 35187,
+      "sha256": "5675a01bddc06e21e9c407ed53bb1b49af55328719fc115f5c2a385ba0a06d8e"
+    },
+    "crates/adns-dnssec/tests/dnssec.rs": {
+      "bytes": 12161,
+      "sha256": "f418f88f0903d85c2f7327ee7e37f9de784a87779f23ca32f530606947bc86db"
+    },
+    "crates/adns-dnssec/tests/validate_packets.py": {
+      "bytes": 4838,
+      "sha256": "7707847ca3df0653a71271fca6064ed0b49d88db6972cf99f4aa33f190f8be5c"
+    },
+    "crates/adns-server/Cargo.toml": {
+      "bytes": 715,
+      "sha256": "334f58bc34f86a4a300f55884c0f819feae634cccf80f9ec3aecc2d50e5998bb"
+    },
+    "crates/adns-server/src/attempts.rs": {
+      "bytes": 7753,
+      "sha256": "94c9e22f8bb2b24ca1808494498883305ed4d72f1ddf7ca87632c6560cdd70f4"
+    },
+    "crates/adns-server/src/bin/adns-dev.rs": {
+      "bytes": 21637,
+      "sha256": "0fb24368150b0836dc32caec4ffc86e13054a9f295ddce5deb502e8fc9361d0f"
+    },
+    "crates/adns-server/src/lib.rs": {
+      "bytes": 1511,
+      "sha256": "761eacd60a618ad475e0a68e584d8911fc61d00b3db038d57eccb66aa64dcdd0"
+    },
+    "crates/adns-server/src/limits.rs": {
+      "bytes": 8782,
+      "sha256": "532154a9195785e59763cdc2864c93c1ec57cdb207aa0d946dc026870a9dbda1"
+    },
+    "crates/adns-server/src/query.rs": {
+      "bytes": 3279,
+      "sha256": "607e33c879e66507c2f4ab3d1cb49e0b23909d8038d303c97d4f844edd0884fb"
+    },
+    "crates/adns-server/src/service.rs": {
+      "bytes": 27279,
+      "sha256": "26bf63d1b4a3950d5d152f898372fa2309bbbf73bd219e517c010b361f90b996"
+    },
+    "crates/adns-server/src/state.rs": {
+      "bytes": 9381,
+      "sha256": "abe509daa866573a773d8a909205845a5add8fa9fee84255b52363a7ef208c1e"
+    },
+    "crates/adns-server/src/zone.rs": {
+      "bytes": 9660,
+      "sha256": "8dbc68abdbda10fc03df63d739e44d20681c0aad14532beb4bc08294a02e184d"
+    },
+    "crates/adns-server/tests/transactions.rs": {
+      "bytes": 60524,
+      "sha256": "369fdb909b20da16ca9821ac5fae730d679dab30b404be690c15ac5e6a821dd6"
+    },
+    "crates/adns-storage/Cargo.toml": {
+      "bytes": 253,
+      "sha256": "0aec8593a972518f375aaf60be98350b2c10157fe420798dc77a02d53feb148b"
+    },
+    "crates/adns-storage/src/lib.rs": {
+      "bytes": 21099,
+      "sha256": "433602192027e009a73538cade2fe4b0c866a89aa00ec65ecdbcdb98f91e6f66"
+    },
+    "crates/adns-transfer/Cargo.toml": {
+      "bytes": 263,
+      "sha256": "cf4bd325fa67138d802c63895ddd2a9ec3d2134b83f2345a56aa74a6c1f24816"
+    },
+    "crates/adns-transfer/examples/interop_vectors.rs": {
+      "bytes": 1790,
+      "sha256": "c9e40422501f9dc68300210fdbcbaaa6e3809b2d69942a2541a91293c705a3e9"
+    },
+    "crates/adns-transfer/src/lib.rs": {
+      "bytes": 27605,
+      "sha256": "f1ad2965d013113c9275c0862f7444a2b32824c079b1f110bb5fd0964a171c0b"
+    },
+    "crates/adns-wire/Cargo.toml": {
+      "bytes": 278,
+      "sha256": "d90b743d3790b8fe89189f26ab500a8fddd1a1b2ced85fa9bfb8f4ecf87eeea3"
+    },
+    "crates/adns-wire/src/borrowed.rs": {
+      "bytes": 9241,
+      "sha256": "6ad25ecce5f27451f05f95a504d14b81154f86fceebace47aeb03424af887218"
+    },
+    "crates/adns-wire/src/codec.rs": {
+      "bytes": 25108,
+      "sha256": "7efc0577596644536a9c57d7db2e4cfc99ef40db094efa553004817b97baa636"
+    },
+    "crates/adns-wire/src/encoding.rs": {
+      "bytes": 2748,
+      "sha256": "858d23d96a3ade985aa45774edd0b6e168b425388b43bff9f38c1aac4851c65e"
+    },
+    "crates/adns-wire/src/lib.rs": {
+      "bytes": 862,
+      "sha256": "43cc9a3ca2f92862fc9cf4cad369e8a6509696605224429d9517e89331364d8d"
+    },
+    "crates/adns-wire/src/name.rs": {
+      "bytes": 7906,
+      "sha256": "2da20044e3f0a0fea04d00bc2c8898aeb29af898993274b33fb236c2f3c22cac"
+    },
+    "crates/adns-wire/tests/codec.rs": {
+      "bytes": 10215,
+      "sha256": "0c4e2a6e1220511a6a0217d9dcf2694b924ec116df7c2dbf66bd6529030c5f03"
+    }
+  },
+  "frozen_at_utc": "2026-09-13T07:47:07.679842+00:00",
+  "schema": "agentdns-production-build-inputs-v1",
+  "scope": "Complete Cargo manifests/lock, crates and ccf source trees consumed by Docker COPY excluding Docker-ignored bytecode, both pinned Dockerfiles and .dockerignore. Native bootstrap configuration is supplied and separately pinned at runtime."
+}

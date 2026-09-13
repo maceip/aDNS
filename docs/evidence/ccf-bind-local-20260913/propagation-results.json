@@ -1,0 +1,50 @@
+{
+  "secondary_in_sync_samples": 121,
+  "secondary_pending_samples": 0,
+  "minimum_observed_signature_lifetime_seconds": 321,
+  "transfers": [
+    {
+      "serial": 7,
+      "transferred_unix_seconds": 1789263221.869459,
+      "seconds_after_signing_span_log": 3.285585880279541,
+      "seconds_before_previous_signature_expiration": null,
+      "previous_snapshot_rrsig_expiration": null
+    },
+    {
+      "serial": 8,
+      "transferred_unix_seconds": 1789263521.432821,
+      "seconds_after_signing_span_log": 2.728806972503662,
+      "seconds_before_previous_signature_expiration": 296.56717896461487,
+      "previous_snapshot_rrsig_expiration": 1789263818
+    },
+    {
+      "serial": 9,
+      "transferred_unix_seconds": 1789263820.957602,
+      "seconds_after_signing_span_log": 2.123110055923462,
+      "seconds_before_previous_signature_expiration": 297.04239797592163,
+      "previous_snapshot_rrsig_expiration": 1789264118
+    },
+    {
+      "serial": 10,
+      "transferred_unix_seconds": 1789264121.557063,
+      "seconds_after_signing_span_log": 2.613924026489258,
+      "seconds_before_previous_signature_expiration": 296.44293689727783,
+      "previous_snapshot_rrsig_expiration": 1789264418
+    },
+    {
+      "serial": 11,
+      "transferred_unix_seconds": 1789264421.086583,
+      "seconds_after_signing_span_log": 2.0595858097076416,
+      "seconds_before_previous_signature_expiration": 296.9134171009064,
+      "previous_snapshot_rrsig_expiration": 1789264718
+    },
+    {
+      "serial": 12,
+      "transferred_unix_seconds": 1789264721.649366,
+      "seconds_after_signing_span_log": 2.522991895675659,
+      "seconds_before_previous_signature_expiration": 297.350634098053,
+      "previous_snapshot_rrsig_expiration": 1789265019
+    }
+  ],
+  "method": "BIND transfer-completion log timestamps compared with observed previous snapshot RRSIG expiration; signing-to-transfer timing includes CCF commitment, notification and transfer."
+}

@@ -1,0 +1,3 @@
+; fully validated
+reconcile.example.test.	60	IN	TXT	"durable authenticated request reconciliation"
+reconcile.example.test.	60	IN	RRSIG	TXT 14 3 60 20260913033447 20260913031947 28357 example.test. d6CU3I5NOmcNA4nky+z3nLt0GvoegPkOvKMNhLCVBSS/XhnzfsCdH4HZ KlvsXzWsXvAURjvlv8NA2eSNSDR/CHOl06dxtZ8vCwMjb/OZs413fzzL Uj7AmG5/h87Nfo82

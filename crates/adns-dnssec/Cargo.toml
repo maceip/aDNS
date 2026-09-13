@@ -1,0 +1,18 @@
+[package]
+name = "adns-dnssec"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+adns-wire = { path = "../adns-wire" }
+ring.workspace = true
+sha2.workspace = true
+base64.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+allocation-counter = "0.8.1"
+serde_json.workspace = true

@@ -1,0 +1,16 @@
+id 27280
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+fresh.wild.example.test. IN A
+;ANSWER
+fresh.wild.example.test. 60 IN A 192.0.2.99
+fresh.wild.example.test. 60 IN RRSIG A 14 3 60 20260913083337 20260913081837 20222 example.test. w8QvpSWT/yNgGTBZejevpUZVqAoZ9m/L n3HsH2XptZDk2L8eQDQm6fVHoOyZtfVm Hk0d6zyZcnSPg7ZK0d3x2swjCwK0Rd6O +zLQhN//3J9zwZ7OHBdVf4i6SVB5X2Xl
+;AUTHORITY
+epo5gp2s2rls9dv88u7gve2t7g63s1m8.example.test. 60 IN NSEC3 1 0 0 - f1q3ponf5bi6b598pld7f2rli2o4va2h TXT RRSIG
+epo5gp2s2rls9dv88u7gve2t7g63s1m8.example.test. 60 IN RRSIG NSEC3 14 3 60 20260913083337 20260913081837 20222 example.test. VTF7ulvk8SO7glghsgql/mR0mwJ6Ad+g iBZeGY0+nJmyr1Y+w1IoO2g5Le96ocbC nJ20KK8bsDDT0LqIfTs++Br+Zi/0lZnT BHiJfHx9tlroVer6ZqyxlmQyjiqUz3SO
+;ADDITIONAL

@@ -1,0 +1,11 @@
+.git
+target
+build
+__pycache__
+**/__pycache__
+.venv
+node_modules
+.validation
+.env
+.env.*
+.secrets

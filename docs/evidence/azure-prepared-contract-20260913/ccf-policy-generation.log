@@ -1,0 +1,11 @@
+WARNING: WARNING: Using default stdio setting (Enabled)
+For the most secure deployments, ensure stdio is disabled. Default behaviour may change in the future, you can set stdio with:
+    --disable-stdio
+    --enable-stdio
+
+WARNING: Generating security policy for ARM Template: /work/ccf.template.json in base64
+WARNING: Using platform: linux/amd64
+Pulling and hashing images...:   0%|[32m          [0m| 0/4 [00:00<?, ?percent/s]Pulling and hashing images...:  50%|[32m█████     [0m| 2/4 [00:01<00:01,  1.49percent/s]Pulling and hashing images...: 100%|[32m██████████[0m| 4/4 [00:03<00:00,  1.27percent/s]Pulling and hashing images...: 100%|[32m██████████[0m| 4/4 [00:03<00:00,  1.30percent/s]
+WARNING: agentdnsport20260913.azurecr.io/primary:20260913-contract read from local tar file
+WARNING: agentdnsport20260913.azurecr.io/secondary:20260913 read from local tar file
+e7964ee62042f1d2dd368df16cc1285f62a73fca6935ad80b09ffed687973603

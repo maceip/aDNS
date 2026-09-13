@@ -1,0 +1,16 @@
+{
+  "kind": "local routing harness software acceptance",
+  "hardware_evidence": false,
+  "ccf_commitment": false,
+  "keys": "ordinary local test key only; no private key published",
+  "harness_sha256": "486c2c2f3a30b475723ea3ab204dc2d8b44efb205fac85e9291fbc443035ddea",
+  "positive": "stock Postfix authenticated the exact local peer SPKI under DNSSEC TLSA while connection used container-only DNAT",
+  "negative": "same unchanged authenticated TLSA and DNS name; local generated wrong peer key was observed and rejected",
+  "implicit_tls": "465/993 controlled trust and hostname checked, actual DER SPKI matched authenticated TLSA; wrong hostname and untrusted CA rejected",
+  "limits": [
+    "controlled routing; advertised reserved addresses are not proved publicly routable",
+    "controlled certificate trust; not public ACME issuance",
+    "SMTP TLS probe; no email delivery",
+    "this tool consumes appraised public artifacts and cannot itself prove hardware or CCF commitment"
+  ]
+}

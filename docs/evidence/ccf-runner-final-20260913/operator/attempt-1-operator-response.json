@@ -1,0 +1,18 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "100",
+    "content-type": "application/json",
+    "x-agentdns-commit-status": "committed",
+    "x-agentdns-transaction-id": "2.1799",
+    "x-ms-ccf-transaction-id": "2.1799"
+  },
+  "body": {
+    "frontend_propagation": {
+      "status": "pending"
+    },
+    "status": "committed",
+    "tx_id": "2.1799",
+    "zone_serial": 13
+  }
+}

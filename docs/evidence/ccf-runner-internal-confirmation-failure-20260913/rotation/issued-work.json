@@ -1,0 +1,17 @@
+[
+  {
+    "http_status": 200,
+    "headers": {
+      "content-length": "48",
+      "content-type": "application/json",
+      "x-agentdns-commit-status": "committed",
+      "x-agentdns-transaction-id": "2.376",
+      "x-ms-ccf-transaction-id": "2.376"
+    },
+    "body": {
+      "status": "committed",
+      "tx_id": "2.376",
+      "work": []
+    }
+  }
+]

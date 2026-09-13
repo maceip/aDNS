@@ -1,0 +1,27 @@
+{
+  "verified": {
+    "zone": "example.test.",
+    "key_tag": 9055,
+    "ds_sha256": "b83d40933194855aec2e0da371bd4b93d0bde35548b60d14d999c92026d62540",
+    "claims_digest": "eeb3254efbd0a64e5c78efaa8d9dce34346e340732fc83b3445c2a0d34bccef0",
+    "tx_id": "2.48"
+  },
+  "negative_variants": {
+    "altered_zone": {
+      "rejected": true,
+      "error_type": "ValueError"
+    },
+    "modified_dnskey_rdata": {
+      "rejected": true,
+      "error_type": "ValueError"
+    },
+    "invalid_ccf_signature": {
+      "rejected": true,
+      "error_type": "InvalidSignature"
+    },
+    "modified_commit_evidence": {
+      "rejected": true,
+      "error_type": "InvalidSignature"
+    }
+  }
+}

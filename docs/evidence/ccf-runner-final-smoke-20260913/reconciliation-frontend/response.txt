@@ -1,0 +1,14 @@
+id 36277
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+reconcile.example.test. IN TXT
+;ANSWER
+reconcile.example.test. 60 IN TXT "durable authenticated request reconciliation"
+reconcile.example.test. 60 IN RRSIG TXT 14 3 60 20260913033447 20260913031947 28357 example.test. d6CU3I5NOmcNA4nky+z3nLt0GvoegPkO vKMNhLCVBSS/XhnzfsCdH4HZKlvsXzWs XvAURjvlv8NA2eSNSDR/CHOl06dxtZ8v CwMjb/OZs413fzzLUj7AmG5/h87Nfo82
+;AUTHORITY
+;ADDITIONAL

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "ccf_version": "7.0.15",
+  "platform": "Virtual (consensus test only)",
+  "operator_tx_id": "2.13",
+  "receipt_tx_id": "2.15",
+  "artifacts": "/build/live-smoke-bfa802947f3b",
+  "disk_recovery": {
+    "method": "new CCF Recover process, disk ledger/snapshot, real RSA-decrypted member share",
+    "ksk": "exact DNSKEY RDATA preserved; new identity receipt verified",
+    "tsig": "original private key authenticates AXFR after recovery",
+    "history": "original committed result and transaction ID preserved",
+    "nonce": "pre-recovery unconsumed nonce commits exactly once after recovery",
+    "original_tx_id": "2.13",
+    "recovered_receipt_tx_id": "4.35",
+    "post_recovery_tx_id": "4.37"
+  }
+}

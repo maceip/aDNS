@@ -1,0 +1,15 @@
+{
+  "scope": "native deployment preparation and preflight; runtime image unchanged",
+  "files": {
+    "tools/prepare_aci_control.py": "6c86c07899bc6da3fb19b1be44fe2dad6899dcda6b80fa7901b7845cdf625cb7",
+    "tools/build_aci_template.py": "fe12cb7e3c089658ca688e776588bc2e8dcbf861da0eab7f794ee1aad5941853",
+    "tools/check_aci_template.py": "71bc757c5cf9d6d1e4317d61242dfa0a6cd0fb5db1175c13a8b394aba8437378",
+    "tools/tests/test_control_tools.py": "35b2e6f5367cd1732dbce5d01e2d47d7fb33832e7eff3fb1811c1a21dccaa00f",
+    "tools/tests/test_aci_preflight.py": "77d1595442c2ce9e0b60758bd90fa31b730195c285b91d1a1f2ce02072d4f29f"
+  },
+  "tests": "18 focused preflight/control tests passed, including missing/broadened readiness ACL and real loopback TLS",
+  "native_internal_endpoint_acl": [
+    "/app/internal/.*",
+    "/node/state"
+  ]
+}

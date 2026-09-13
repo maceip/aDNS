@@ -1,0 +1,75 @@
+13-Sep-2026 03:01:43.522 starting BIND 9.18.39-0ubuntu0.24.04.7-Ubuntu (Extended Support Version) <id:>
+13-Sep-2026 03:01:43.523 running on Linux x86_64 7.0.14-orbstack-00380-ga7e0a2dc9535 #1 SMP PREEMPT Fri Aug  7 03:48:40 UTC 2026
+13-Sep-2026 03:01:43.523 built with  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/x86_64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/bind9-8LYxaJ/bind9-9.18.39=/usr/src/bind9-1:9.18.39-0ubuntu0.24.04.7 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -ledit' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+13-Sep-2026 03:01:43.523 running as: named -g -n 1 -u bind -c /run/agentdns-secondary/named.conf
+13-Sep-2026 03:01:43.523 compiled by GCC 13.3.0
+13-Sep-2026 03:01:43.523 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 03:01:43.523 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 03:01:43.523 compiled with libuv version: 1.48.0
+13-Sep-2026 03:01:43.523 linked to libuv version: 1.48.0
+13-Sep-2026 03:01:43.523 compiled with libxml2 version: 2.9.14
+13-Sep-2026 03:01:43.523 linked to libxml2 version: 20914
+13-Sep-2026 03:01:43.523 compiled with json-c version: 0.17
+13-Sep-2026 03:01:43.523 linked to json-c version: 0.17
+13-Sep-2026 03:01:43.523 compiled with zlib version: 1.3
+13-Sep-2026 03:01:43.523 linked to zlib version: 1.3
+13-Sep-2026 03:01:43.523 ----------------------------------------------------
+13-Sep-2026 03:01:43.523 BIND 9 is maintained by Internet Systems Consortium,
+13-Sep-2026 03:01:43.524 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+13-Sep-2026 03:01:43.524 corporation.  Support and training for BIND 9 are 
+13-Sep-2026 03:01:43.524 available at https://www.isc.org/support
+13-Sep-2026 03:01:43.524 ----------------------------------------------------
+13-Sep-2026 03:01:43.524 found 18 CPUs, using 1 worker thread
+13-Sep-2026 03:01:43.524 using 1 UDP listener per interface
+13-Sep-2026 03:01:43.552 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+13-Sep-2026 03:01:43.552 DS algorithms: SHA-1 SHA-256 SHA-384
+13-Sep-2026 03:01:43.552 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+13-Sep-2026 03:01:43.552 TKEY mode 2 support (Diffie-Hellman): yes
+13-Sep-2026 03:01:43.552 TKEY mode 3 support (GSS-API): yes
+13-Sep-2026 03:01:43.561 the initial working directory is '/'
+13-Sep-2026 03:01:43.561 loading configuration from '/run/agentdns-secondary/named.conf'
+13-Sep-2026 03:01:43.561 the working directory is now '/var/lib/bind/agentdns'
+13-Sep-2026 03:01:43.568 reading built-in trust anchors from file '/etc/bind/bind.keys'
+13-Sep-2026 03:01:43.568 looking for GeoIP2 databases in '/usr/share/GeoIP'
+13-Sep-2026 03:01:43.571 using default UDP/IPv4 port range: [32768, 60999]
+13-Sep-2026 03:01:43.571 using default UDP/IPv6 port range: [32768, 60999]
+13-Sep-2026 03:01:43.574 listening on IPv4 interface lo, 127.0.0.1#53
+13-Sep-2026 03:01:43.577 listening on IPv4 interface eth0, 192.168.215.3#53
+13-Sep-2026 03:01:43.577 IPv6 socket API is incomplete; explicitly binding to each IPv6 address separately
+13-Sep-2026 03:01:43.577 listening on IPv6 interface lo, ::1#53
+13-Sep-2026 03:01:43.580 generating session key for dynamic DNS
+13-Sep-2026 03:01:43.585 sizing zone task pool based on 1 zones
+13-Sep-2026 03:01:43.609 set up managed keys zone for view _default, file 'managed-keys.bind'
+13-Sep-2026 03:01:43.618 not using config file logging statement for logging due to -g option
+13-Sep-2026 03:01:43.624 managed-keys-zone: loaded serial 0
+13-Sep-2026 03:01:43.632 all zones loaded
+13-Sep-2026 03:01:43.633 running
+13-Sep-2026 03:01:43.648 zone example.test/IN: refresh: failure trying primary 127.0.0.1#5353 (source 0.0.0.0#0): connection refused
+13-Sep-2026 03:01:46.107 client @0x7ffff4058898 127.0.0.1#46466/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 03:01:46.107 zone example.test/IN: notify from 127.0.0.1#46466: no serial
+13-Sep-2026 03:01:47.100 zone example.test/IN: Transfer started.
+13-Sep-2026 03:01:47.107 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+13-Sep-2026 03:01:47.151 zone example.test/IN: transferred serial 7: TSIG 'agentdns-transfer'
+13-Sep-2026 03:01:47.154 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+13-Sep-2026 03:01:47.154 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 10 messages, 978 records, 144452 bytes, 0.047 secs (3073446 bytes/sec) (serial 7)
+13-Sep-2026 03:06:45.681 client @0x7ffff5278928 127.0.0.1#57059/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 03:06:45.682 zone example.test/IN: notify from 127.0.0.1#57059: no serial
+13-Sep-2026 03:06:46.683 zone example.test/IN: Transfer started.
+13-Sep-2026 03:06:46.683 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+13-Sep-2026 03:06:46.730 zone example.test/IN: transferred serial 8: TSIG 'agentdns-transfer'
+13-Sep-2026 03:06:46.730 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+13-Sep-2026 03:06:46.730 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 10 messages, 978 records, 144452 bytes, 0.045 secs (3210044 bytes/sec) (serial 8)
+13-Sep-2026 03:07:35.964 client @0x7ffff4058898 127.0.0.1#48797/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 03:07:35.964 zone example.test/IN: notify from 127.0.0.1#48797: no serial
+13-Sep-2026 03:07:36.964 zone example.test/IN: Transfer started.
+13-Sep-2026 03:07:36.964 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+13-Sep-2026 03:07:37.022 zone example.test/IN: transferred serial 9: TSIG 'agentdns-transfer'
+13-Sep-2026 03:07:37.024 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+13-Sep-2026 03:07:37.024 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 10 messages, 997 records, 147002 bytes, 0.060 secs (2450033 bytes/sec) (serial 9)
+13-Sep-2026 03:07:51.022 client @0x7ffff5278928 127.0.0.1#50750/key agentdns-transfer: received notify for zone 'example.test': TSIG 'agentdns-transfer'
+13-Sep-2026 03:07:51.022 zone example.test/IN: notify from 127.0.0.1#50750: no serial
+13-Sep-2026 03:07:52.030 zone example.test/IN: Transfer started.
+13-Sep-2026 03:07:52.030 transfer of 'example.test/IN' from 127.0.0.1#5353: connected using 127.0.0.1#5353 TSIG agentdns-transfer
+13-Sep-2026 03:07:52.085 zone example.test/IN: transferred serial 10: TSIG 'agentdns-transfer'
+13-Sep-2026 03:07:52.085 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer status: success
+13-Sep-2026 03:07:52.085 transfer of 'example.test/IN' from 127.0.0.1#5353: Transfer completed: 10 messages, 1001 records, 147438 bytes, 0.055 secs (2680690 bytes/sec) (serial 10)

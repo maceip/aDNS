@@ -1,0 +1,7 @@
+; negative response, fully validated
+; mail-good.example.test.	60	IN	\-TXT	;-$NXRRSET
+; example.test. SOA ns.example.test. hostmaster.example.test. 1 5 2 3600 60
+; example.test. RRSIG SOA ...
+; ji228bhetnc9828ugsipk2pj3do7ulsk.example.test. RRSIG NSEC3 ...
+; ji228bhetnc9828ugsipk2pj3do7ulsk.example.test. NSEC3 1 0 0 - JLF7KANGAS100K826HS2ULFSPUTCSKE2 A AAAA RRSIG
+;; resolution failed: ncache nxrrset

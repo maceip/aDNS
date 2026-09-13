@@ -1,0 +1,7 @@
+{
+  "member_id": "3552372ebdc37ab6ae5eddc694623dbebb8ae40b159250136c47dd29c7ef173d",
+  "config_manifest_sha256": "f4d501a1521ef98ea87135ce955fba638a733d7acd2236f52cf7cc475278838a",
+  "transfer_secret_sha256": "f16ad9f7845bc158e5b1bde89a92103af2896e0ce71b6567b5782d434fdecd5a",
+  "transfer_key_name": "agentdns-transfer.",
+  "secondary_endpoint": "127.0.0.1:53"
+}

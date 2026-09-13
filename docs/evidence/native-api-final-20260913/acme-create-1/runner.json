@@ -1,0 +1,167 @@
+{
+  "before": {
+    "status": "passed",
+    "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+    "files": {
+      ".validation/azure/native-final-20260913/native_flow.py": {
+        "expected": {
+          "sha256": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+          "bytes": 19135
+        },
+        "actual": {
+          "sha256": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+          "bytes": 19135
+        },
+        "matches": true
+      },
+      "tools/ccf_control.py": {
+        "expected": {
+          "sha256": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+          "bytes": 10255
+        },
+        "actual": {
+          "sha256": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+          "bytes": 10255
+        },
+        "matches": true
+      },
+      "tools/sign_capture_request.py": {
+        "expected": {
+          "sha256": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+          "bytes": 4377
+        },
+        "actual": {
+          "sha256": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+          "bytes": 4377
+        },
+        "matches": true
+      },
+      "tools/http_limits.py": {
+        "expected": {
+          "sha256": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+          "bytes": 1858
+        },
+        "actual": {
+          "sha256": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+          "bytes": 1858
+        },
+        "matches": true
+      },
+      "tests/rust-integration/reconcile_ccf_inside.py": {
+        "expected": {
+          "sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+          "bytes": 10278
+        },
+        "actual": {
+          "sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+          "bytes": 10278
+        },
+        "matches": true
+      },
+      "target/debug/examples/appraise": {
+        "expected": {
+          "sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+          "bytes": 3812856
+        },
+        "actual": {
+          "sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+          "bytes": 3812856
+        },
+        "matches": true
+      }
+    }
+  },
+  "started_unix_seconds": 1789288032.048929,
+  "runner_sha256": "2103b4a57105222bceb82b7f8fa8952edb60fde11a1566414f95703e31185ebe",
+  "context_sha256": "d87d2c3983e3943143c9856af716869b78ba5b7e752898ff7577ee723ecc52bd",
+  "command": [
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/venv/bin/python",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/native_flow.py",
+    "--context",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/context.json",
+    "--out",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/acme-create-1",
+    "--worker",
+    "a",
+    "--mode",
+    "lifecycle",
+    "--body",
+    "/Users/mac/agentdns/.validation/azure/native-final-20260913/requests/acme-create-1.json"
+  ],
+  "returncode": 0,
+  "ended_unix_seconds": 1789288039.803912,
+  "after": {
+    "status": "passed",
+    "manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363",
+    "files": {
+      ".validation/azure/native-final-20260913/native_flow.py": {
+        "expected": {
+          "sha256": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+          "bytes": 19135
+        },
+        "actual": {
+          "sha256": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+          "bytes": 19135
+        },
+        "matches": true
+      },
+      "tools/ccf_control.py": {
+        "expected": {
+          "sha256": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+          "bytes": 10255
+        },
+        "actual": {
+          "sha256": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+          "bytes": 10255
+        },
+        "matches": true
+      },
+      "tools/sign_capture_request.py": {
+        "expected": {
+          "sha256": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+          "bytes": 4377
+        },
+        "actual": {
+          "sha256": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+          "bytes": 4377
+        },
+        "matches": true
+      },
+      "tools/http_limits.py": {
+        "expected": {
+          "sha256": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+          "bytes": 1858
+        },
+        "actual": {
+          "sha256": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+          "bytes": 1858
+        },
+        "matches": true
+      },
+      "tests/rust-integration/reconcile_ccf_inside.py": {
+        "expected": {
+          "sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+          "bytes": 10278
+        },
+        "actual": {
+          "sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+          "bytes": 10278
+        },
+        "matches": true
+      },
+      "target/debug/examples/appraise": {
+        "expected": {
+          "sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+          "bytes": 3812856
+        },
+        "actual": {
+          "sha256": "5f2f84e425b9cc91a9a8e62560c1750a53c0da886638953f7e90dbf2b7513fae",
+          "bytes": 3812856
+        },
+        "matches": true
+      }
+    }
+  },
+  "status": "passed",
+  "completed_unix_seconds": 1789288039.806889
+}

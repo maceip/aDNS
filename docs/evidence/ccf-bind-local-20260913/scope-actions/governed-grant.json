@@ -1,0 +1,42 @@
+{
+  "grant_id": "aci-test-owner",
+  "subject_spki_sha256": "d45b785636681b5016d1b93a8a2c8f86f6eea028b458b5264c3ca636766498e8",
+  "zones": [
+    "example.test."
+  ],
+  "mailbox_domains": [
+    "example.test."
+  ],
+  "service_hosts": [
+    "mail.example.test."
+  ],
+  "roles": [
+    "mx-edge"
+  ],
+  "address_cidrs": [
+    "192.0.2.0/24",
+    "2001:db8::/32"
+  ],
+  "ports": [
+    25,
+    465,
+    993
+  ],
+  "allowed_operations": [
+    "register",
+    "renew",
+    "deregister",
+    "acme_challenge_create",
+    "acme_challenge_delete"
+  ],
+  "acme_names": [
+    "mail.example.test."
+  ],
+  "operator_names": [],
+  "operator_record_types": [],
+  "max_lease_seconds": 3600,
+  "max_challenge_lifetime_seconds": 1800,
+  "valid_from": 1789263015,
+  "valid_until": 1789277475,
+  "revoked": false
+}

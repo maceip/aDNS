@@ -1,0 +1,8 @@
+{
+  "ksk-receipt.json": "569c49c0192714ad25cb9dc592be75d4d0fdcbebe20ca8046fbac41d9ddfe80f",
+  "service_cert.pem": "50cb7ff11a90b5f317f9bcac82d37219bab33749ad780d66f4904ec75a12ee4e",
+  "a-spki.der": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+  "a-peer.pem": "02998ae8a7e652ee149e11d73cdc388c232000e38a88eaeded773842b1949d2a",
+  "b-spki.der": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+  "b-peer.pem": "e0bd45a751571a2d3cda975ce52f27b1f4734eee9544a2afedbb3525f0c80098"
+}

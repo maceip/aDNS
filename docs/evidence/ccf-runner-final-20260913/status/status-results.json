@@ -1,0 +1,13 @@
+{
+  "samples": 126,
+  "failures": 0,
+  "elapsed_seconds": 1250.0437485170005,
+  "observed_serials": [
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "all_samples_committed_unexpired": true
+}

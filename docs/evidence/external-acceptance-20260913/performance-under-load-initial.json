@@ -1,0 +1,16 @@
+{
+  "sampling": "3000 mixed DO=1 requests paced at 100/s during concurrent 1000-qps DO=1 dnsperf load",
+  "duration_seconds": 30.302869256000122,
+  "samples": 3000,
+  "failed_latency_samples": 0,
+  "p50_ms": 0.179043,
+  "p99_ms": 0.767046,
+  "max_ms": 3.751314,
+  "concurrent_load": {
+    "queries_sent": 30000,
+    "queries_completed": 30000,
+    "queries_lost": 0,
+    "completed_qps": 999.998833
+  },
+  "dnsperf_log": "dnsperf-dnssec-under-load.log"
+}

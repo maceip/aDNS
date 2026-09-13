@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "scope": "real signed operator request; no native registration claim",
+  "request_id": "1718f57f55974475b6e1930719d375c3",
+  "grant_id": "reconcile-e2f5cfbb83924426",
+  "pending_observation_committed": true,
+  "authenticated_failure_durable": true,
+  "failure_http_status": 403,
+  "same_nonce_and_envelope_retry_succeeded": true,
+  "historical_result_precedes_observation": true,
+  "identical_retry_preserves_original_result": true,
+  "zone_serial_increment": 1,
+  "committed_transaction_id": "2.349",
+  "zone_serial": 10
+}

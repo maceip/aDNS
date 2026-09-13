@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "review": "independent offline verification of actual native envelopes, recorded TLS-bound responses, transaction confirmations and source guards",
+  "registrations": {
+    "a": {
+      "tx_id": "2.143",
+      "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+      "signed_message_digest": "be3840a84201959e7aa5080ba2173a65c08a284d7b3563b8fd766e6f8ee5628a",
+      "spki_sha256": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+      "serial": 8,
+      "lease_expires_at": 1789291385,
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363"
+    },
+    "b": {
+      "tx_id": "2.173",
+      "registration_id": "reg-4e3f2d76d1ab50153ef0745ef5283e24",
+      "signed_message_digest": "4e3f2d76d1ab50153ef0745ef5283e247c0e2f9694133a7c6da1f58af7c4662f",
+      "spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+      "serial": 9,
+      "lease_expires_at": 1789291417,
+      "exact_retry_and_history": true,
+      "source_manifest_sha256": "1c74a1d625a9c6305ef8f74a63a538356184730b2b04b6290f54503d33682363"
+    }
+  },
+  "transaction_header_semantics": "Body and x-agentdns-transaction-id retain the authentic original execution transaction on historical reads/retries; x-ms-ccf-transaction-id identifies the newer framework response snapshot. Original commitment is separately confirmed through /node/tx. Initial submissions agree across all headers.",
+  "negative_checks": {
+    "authenticated_scope_failures_without_serial_change": 6,
+    "invalid_signature_or_evidence_failures": 3,
+    "cryptographically_valid_consumed_nonce_failure": true,
+    "unknown_consumed_intent_http_status": 404
+  },
+  "files_reviewed_sha256": {
+    "registration-a-runner.json": "0c7fd69edd405cca9c9e649d9e920ff81b1fb1b436630caf8d001c9cf4364191",
+    "registration-b-runner.json": "f0177a63dcdc2b9393708bffaa8428edc2abb68299918d1a2cef5dd13aa1d724",
+    "root-flow-source-v2/native_flow.py": "e73d5758c621a750c56482ef7428d76be7c3093c01c6f590b3fecb2068af490f",
+    "root-flow-source-v2/sign_capture_request.py": "bc7f7a8e17b682c94e42c6ed64bb7ed1509b77a1184d82d87654b46f3c8571f5",
+    "root-flow-source-v2/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b"
+  }
+}

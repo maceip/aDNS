@@ -1,0 +1,31 @@
+{
+  "grant_id": "mail-policy-e8dd6bb96e524848",
+  "subject_spki_sha256": "7b5b5896a40c679f4a5ff8fd40ac09ea654d51024af321a245561b459e9acbbf",
+  "zones": [
+    "example.test."
+  ],
+  "mailbox_domains": [],
+  "service_hosts": [],
+  "roles": [],
+  "address_cidrs": [],
+  "ports": [],
+  "allowed_operations": [
+    "operator_records"
+  ],
+  "acme_names": [],
+  "operator_names": [
+    "_dmarc.example.test.",
+    "_smtp._tls.example.test.",
+    "example.test.",
+    "selector1._domainkey.example.test."
+  ],
+  "operator_record_types": [
+    "TXT",
+    "CAA"
+  ],
+  "max_lease_seconds": 3600,
+  "max_challenge_lifetime_seconds": 3600,
+  "valid_from": 1789287912,
+  "valid_until": 1789291572,
+  "revoked": false
+}

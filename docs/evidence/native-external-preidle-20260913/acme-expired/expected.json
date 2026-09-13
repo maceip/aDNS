@@ -1,0 +1,7 @@
+[
+  {
+    "owner": "_acme-challenge.mail.example.test.",
+    "type": "TXT",
+    "rdata": []
+  }
+]

@@ -1,0 +1,7 @@
+    Checking allocation-counter v0.8.1
+    Checking adns-transfer v0.1.0 (/Users/mac/agentdns/crates/adns-transfer)
+    Checking adns-auth v0.1.0 (/Users/mac/agentdns/crates/adns-auth)
+    Checking adns-attest v0.1.0 (/Users/mac/agentdns/crates/adns-attest)
+    Checking adns-dnssec v0.1.0 (/Users/mac/agentdns/crates/adns-dnssec)
+    Checking adns-wire v0.1.0 (/Users/mac/agentdns/crates/adns-wire)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.78s

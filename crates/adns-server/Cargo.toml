@@ -1,0 +1,23 @@
+[package]
+name = "adns-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+[dependencies]
+adns-wire = { path = "../adns-wire" }
+adns-dnssec = { path = "../adns-dnssec" }
+adns-auth = { path = "../adns-auth" }
+adns-attest = { path = "../adns-attest" }
+adns-storage = { path = "../adns-storage" }
+adns-transfer = { path = "../adns-transfer" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+ring.workspace = true
+hex.workspace = true
+base64.workspace = true
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "io-util", "sync", "time", "signal"] }
+axum = "0.8"
+form_urlencoded = "1"

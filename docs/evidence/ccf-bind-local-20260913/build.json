@@ -1,0 +1,10 @@
+{
+  "image_tag": "agentdns-ccf:7.0.15",
+  "oci_index_digest": "sha256:fb1e9d6d747ea9cac9f42e341bdcb46673237a51f4845ac6aa2072bcf9d054c0",
+  "amd64_manifest_digest": "sha256:ebb2f0ae114744cc59255945088b7fb87189de467cbed98036ed445d107b9c7c",
+  "constitution_sha256": "97bf47b3800c109f665c92f0c188300be3d5a6fc7955a368f9205e7db34055cb",
+  "binary_sha256": "be6131ec2cec3434ad3e4e57f51fa807fbe13cdec80fd061515dc99ae1399b2a",
+  "local_consensus_platform": "Virtual; not evidence of confidential hardware execution",
+  "adapter_regression_tests": 7,
+  "supervisor_regression_tests": 5
+}

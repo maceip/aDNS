@@ -1,0 +1,14 @@
+{
+  "README.md": "1ac208c3d7e4f371a519ea17400e16bc4db3b134bef892059c9ba72eac21dcfa",
+  "capture-deadline-policy-summary.json": "447cb9b143f7b19240c1dff894bf3c494e92b804fcc282fd6d66c1d7d8432138",
+  "capture-deadline-policy.rego": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+  "capture-deadline.template.json": "b62c1d938ec648f76eea0057aab19fce627200402c4ff4c65d85f5de21225d68",
+  "capture-rotation-policy-summary.json": "7585d14a68d03866174c32ecfe63f52e5a8b99f537dad367267d2e870493a1c7",
+  "capture-rotation-policy.rego": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+  "capture-rotation.template.json": "cc75bd2f6bde328b61568f449f2a02333d66c05dfe17421d70dccaa3b0f132e0",
+  "ccf-policy-summary.json": "ab9ee0b6b5972654e0c9a865c40dc6add16ca7bdd132cb8d2a8fde8d48e7b05d",
+  "ccf-policy.rego": "bd43386ec3095deecd89f199cc4e6b0c9be79529d45f07f7bfb7ebd136de001c",
+  "ccf-preflight.json": "d96f150ad3a26de9cedfb24f3b178eabc820f12d1200187c65034b7727ff38c9",
+  "ccf.template.json": "4c53ac435dea1ff9ce54a0131894669b972fa10399ab31545b5352a636f9b413",
+  "summary.json": "658b5f5293629587d860899741644b693a8676292029e18729877ff74cfc57ae"
+}

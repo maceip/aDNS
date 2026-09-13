@@ -1,0 +1,18 @@
+{
+  "image_tag": "agentdns-ccf:7.0.15",
+  "oci_index_digest": "sha256:d0c9ffdf7a37b4d12deb09d929eb817574160970e1f7218d8b7b70a51b940e18",
+  "amd64_manifest_digest": "sha256:e19e89d475f2176fe729071151657719b618b1eeced20eb2a907467b35d5f415",
+  "constitution_sha256": "97bf47b3800c109f665c92f0c188300be3d5a6fc7955a368f9205e7db34055cb",
+  "binary_sha256": "6506a1aaf9acee7edad970fbd1d6cf9ab55c1c97a6db85bb35baf13c2793766a",
+  "local_consensus_platform": "Virtual; not evidence of confidential hardware execution",
+  "adapter_regression_tests": 9,
+  "supervisor_regression_tests": 9,
+  "image_config_digest": "sha256:304c6a6d509e298d902187001f1e7c27b3f7502ca764a2e545af1b624bd4ef4f",
+  "supervisor_sha256": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9",
+  "host_driver_sha256": "06c9f9162f240ccb9941d57b067bb615a9a0664fe73f796ddcbd99cd9edeb2d9",
+  "verification": "Exact image ELF copied to test volume without rebuilding; real CCF smoke, three-node quorum-loss and member-share disk recovery passed",
+  "test_runs": {
+    "quorum": "live-smoke-29fc369c9a03",
+    "recovery": "live-smoke-d038b15f43f5"
+  }
+}

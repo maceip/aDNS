@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "purpose": "independent-offline-ccf-node-quote-cross-check-only",
+  "verification_time": 1789287725,
+  "specification": {
+    "url": "https://docs.amd.com/api/khub/documents/x_tYkgJNtfpvqwPq45NrSQ/content",
+    "layout": "AMD report v3",
+    "table": 23
+  },
+  "quote_format": "AMD_SEV_SNP_v1",
+  "node_id": "35db9f1e658e79159a42a36fb2d851a895c970c5c42460530b83bb22d356e6ed",
+  "node_key_curve": "secp384r1",
+  "report": {
+    "version": 3,
+    "signed_region": {
+      "start": 0,
+      "end_inclusive": 671
+    },
+    "launch_mitigation_vector": null,
+    "current_mitigation_vector": null,
+    "mitigation_vector_policy": "not present in report version 3; bytes504..671 are reserved",
+    "reserved_start": 504,
+    "reserved_520_through_671_zero": true,
+    "tcb_states": {
+      "current": {
+        "bootloader": 10,
+        "tee": 0,
+        "snp": 23,
+        "microcode": 84
+      },
+      "reported": {
+        "bootloader": 10,
+        "tee": 0,
+        "snp": 23,
+        "microcode": 84
+      },
+      "committed": {
+        "bootloader": 10,
+        "tee": 0,
+        "snp": 23,
+        "microcode": 84
+      },
+      "launch": {
+        "bootloader": 10,
+        "tee": 0,
+        "snp": 23,
+        "microcode": 84
+      }
+    }
+  },
+  "tls_peer_spki_matches_hardware_report_data": true,
+  "report_data_sha256_spki_plus_zero32": true,
+  "native_p384_sha384_signature_verified": true,
+  "amd_genoa_pinned_ark_chain_currently_valid": true,
+  "vcek_chip_id_and_reported_tcb_match": true,
+  "exact_preapproved_measurement": "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866",
+  "exact_preapproved_host_data": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "uvm": {
+    "ps384_signature_verified": true,
+    "did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+    "feed": "ContainerPlat-AMD-UVM",
+    "svn": 104,
+    "time_policy": "approved_release",
+    "authenticated_issuance_time": null,
+    "verified_certificate_path_time": 1747335423,
+    "current_certificate_time_valid": false,
+    "publisher_certificate_not_after": 1778871423
+  },
+  "negative_checks": {
+    "report_data_original_hardware_signature_rejected": true,
+    "report_data_padding_original_hardware_signature_rejected": true,
+    "measurement_original_hardware_signature_rejected": true,
+    "cce_original_hardware_signature_rejected": true,
+    "reserved_504_original_hardware_signature_rejected": true,
+    "reserved_512_original_hardware_signature_rejected": true,
+    "reserved_520_original_hardware_signature_rejected": true,
+    "nonzero_reserved_520_structurally_rejected": true,
+    "wrong_spki_binding_rejected": true,
+    "wrong_cce_rejected": true,
+    "wrong_measurement_rejected": true,
+    "inactive_profile_rejected": true,
+    "expired_policy_rejected": true,
+    "tcb_floor_above_actual_rejected": true,
+    "uvm_svn_floor_above_actual_rejected": true,
+    "strict_current_uvm_certificate_expiry_rejected": true
+  },
+  "negative_check_count": 16,
+  "provenance": {
+    "quote_json_sha256": "93d2c0c626f48095ede41a9d69783b01dea245d90a2b0f423eed4d6910a38019",
+    "raw_report_sha256": "1b1554e8b5170f46aef18b8cb8bb5b8e3be172c3b9320c91aa89c0247900d706",
+    "actual_tls_peer_der_sha256": "8248eb6c5fce180197ce2801427e24bb6c32e2d6d57946ad32a793ae483bf2b9",
+    "node_spki_sha256": "35db9f1e658e79159a42a36fb2d851a895c970c5c42460530b83bb22d356e6ed",
+    "policy_json_sha256": "df4a434b945c06b2b83f4d0b63673a4c68901e18e30cc48f3a47bf996b7f3a7f",
+    "policy_id": "c2d82e217eff29621df71c10983fcc5a2512fc199b83c799c78cf1d29de2db20",
+    "amd_chain_sha256": "7854ca687d76fea6160b26284c49a387092b9bf450271d3f9edb63b6af14dabe",
+    "uvm_sha256": "19c8e00a90e7ed0324d0c7a2b410d2c7e970e4af49ce3aa4b6a16db134119d35",
+    "pinned_ark_pem_sha256": "ac73dc98bd03d1e8e5f7e6189b138eb861a6730614a1933758dc58b7166ce476"
+  },
+  "limits": [
+    "Offline check of the supplied captured actual TLS peer; this command makes no fresh TLS connection.",
+    "No worker Sign1 envelope exists or was synthesized. This is not a service registration appraisal.",
+    "TLS peer certificate issuer validation is not used as the bootstrap trust source; its key is authenticated directly by SNP.",
+    "Policy was supplied independently; no observed measurement, CCE, TCB or UVM value was auto-approved.",
+    "Negative report edits retain the original hardware signature; no freshly hardware-signed malformed report is claimed."
+  ],
+  "runtime": {
+    "python": "3.12.3",
+    "cryptography": "41.0.7",
+    "openssl": "OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)"
+  },
+  "public_artifact_sha256": {
+    "node-quote.json": "93d2c0c626f48095ede41a9d69783b01dea245d90a2b0f423eed4d6910a38019",
+    "node-peer.der": "8248eb6c5fce180197ce2801427e24bb6c32e2d6d57946ad32a793ae483bf2b9",
+    "node-policy.json": "df4a434b945c06b2b83f4d0b63673a4c68901e18e30cc48f3a47bf996b7f3a7f",
+    "amd_genoa_ark.pem": "ac73dc98bd03d1e8e5f7e6189b138eb861a6730614a1933758dc58b7166ce476",
+    "verify_native_ccf.py": "e533d09c18b0598529234338e9fa2f1f87c5b8fa96fe98ad90daa350f68d551b",
+    "verify_native_aci.py": "5157545c21ff408b429f3fd07363a602b05407e2098f79d98b6b3037a3474306"
+  }
+}

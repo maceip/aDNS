@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "tests": 18,
+  "scope": "focused native helper/preflight and real loopback TLS tests after generic node.example exact readiness ACL correction",
+  "command": ".validation/azure/native-final-20260913/venv/bin/python -m unittest tools.tests.test_aci_preflight tools.tests.test_control_tools",
+  "recorded_unix_seconds": 1789288825.7063181,
+  "source_sha256": {
+    "ccf/node.example.json": "ac5cafbd31a319dee46a39bd65250671ebb21abdc892bc8a7dc31e8c0c676a14",
+    "tools/prepare_aci_control.py": "6c86c07899bc6da3fb19b1be44fe2dad6899dcda6b80fa7901b7845cdf625cb7",
+    "tools/build_aci_template.py": "fe12cb7e3c089658ca688e776588bc2e8dcbf861da0eab7f794ee1aad5941853",
+    "tools/check_aci_template.py": "71bc757c5cf9d6d1e4317d61242dfa0a6cd0fb5db1175c13a8b394aba8437378",
+    "tools/tests/test_control_tools.py": "35b2e6f5367cd1732dbce5d01e2d47d7fb33832e7eff3fb1811c1a21dccaa00f",
+    "tools/tests/test_aci_preflight.py": "77d1595442c2ce9e0b60758bd90fa31b730195c285b91d1a1f2ce02072d4f29f"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "a6ed2dae37a19628159c625ce3e3d364b7c93b3465a290f4c8182d824102ac1c",
+  "image_and_elf_unchanged": true
+}

@@ -1,0 +1,5 @@
+{
+  "unix_seconds": 1789259912,
+  "reason": "Fix stock BIND IXFR refresh fallback and add authenticated UDP SOA; preserve sealed serial2 state",
+  "first_run_defect": "BIND received NOTIFY but its IXFR request was rejected; frontend still served valid serial1 at restart"
+}

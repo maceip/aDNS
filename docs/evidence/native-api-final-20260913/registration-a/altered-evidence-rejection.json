@@ -1,0 +1,10 @@
+{
+  "http_status": 403,
+  "headers": {
+    "content-length": "36",
+    "content-type": "application/json"
+  },
+  "body": {
+    "error": "EVIDENCE_DIGEST_MISMATCH"
+  }
+}

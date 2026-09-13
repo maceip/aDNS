@@ -1,0 +1,6 @@
+{
+  "revoked_axfr_rejected": true,
+  "revoked_axfr_observed_error": "EOFError",
+  "revoked_udp_soa_rejected": true,
+  "revoked_udp_observed_error": "Timeout"
+}

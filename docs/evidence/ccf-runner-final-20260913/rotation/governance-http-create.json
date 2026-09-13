@@ -1,0 +1,53 @@
+[
+  {
+    "method": "POST",
+    "path": "/gov/members/proposals:create?api-version=2024-07-01",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "260",
+        "content-type": "application/json",
+        "x-ms-ccf-transaction-id": "2.1844"
+      },
+      "body": {
+        "ballotCount": 0,
+        "ballotSubmitters": [],
+        "finalVotes": {},
+        "proposalId": "c035a200a5ba1fdcf9ce6503a3865707dd8d2bb161599cd8ffedafb078dbf966",
+        "proposalState": "Accepted",
+        "proposerId": "9fec0cdb79cdcad6258adbb0d3c6549a48a7107012406a04f21c4453f8f8b80a",
+        "voteFailures": {}
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1844",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "46",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Pending",
+        "transaction_id": "2.1844"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.1844",
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "48",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.1844"
+      }
+    }
+  }
+]

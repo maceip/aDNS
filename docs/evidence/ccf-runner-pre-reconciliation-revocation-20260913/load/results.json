@@ -1,0 +1,22 @@
+{
+  "server": "192.168.215.3",
+  "port": 53,
+  "dnssec_ok_bit": true,
+  "offered_load_qps": 1000,
+  "offered_sample_qps": 10,
+  "started_unix_seconds": 1789267052.984248,
+  "ended_unix_seconds": 1789268253.2124388,
+  "elapsed_seconds": 1200.228192597002,
+  "samples": 12001,
+  "failed_samples": 0,
+  "p50_ms": 0.566127,
+  "p99_ms": 1.926433,
+  "maximum_ms": 22.137841,
+  "dnsperf": {
+    "queries_sent": 1199997,
+    "queries_completed": 1199997,
+    "queries_lost": 0,
+    "completed_qps": 999.997312
+  },
+  "boundary": "Public DNS only; no registration or governance mutations. External idle delv validates signatures separately. This is a fixed offered load, not maximum capacity."
+}

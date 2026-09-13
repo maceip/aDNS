@@ -1,0 +1,4 @@
+; fully validated
+example.test.		60	IN	DNSKEY	256 3 14 /brOt6t85SBgoPUpwKkkbhXqK1i0Ivkup/oXPsA3V1j+ztP2/Pbo/2DT inGmnco/J94OfKVngzlYI2voy3UXuDVD4lF4ib2SKoOGsomchPw9LSfb gncwY79xG2SXj6Zb  ; ZSK; alg = ECDSAP384SHA384 ; key id = 47765
+example.test.		60	IN	DNSKEY	257 3 14 hpVkgl9DzCe/XkYW4skvT9ztphGyazKs08xYsTxzCi8v61kzyOL2oXOB jdYs+UZlDN8HgjI158uKedrwl1i3sYfJKX58mqstTJPuQSFyQMA/YfbV allGYhG89+nnrkb0  ; KSK; alg = ECDSAP384SHA384 ; key id = 17116
+example.test.		60	IN	RRSIG	DNSKEY 14 2 60 20260913032532 20260913031032 17116 example.test. NxMxCVcQnA/IXQ1TBewHPdmKGdwMXdwjFATnVGMPsYGLIq2GHazD7JDB 6NZ9FlY+wI2uXf11cBo26DlgLqbe5NO0ZowTer49q1I+en5CTBs2fw7t xJSmYDj7pzahdxHA

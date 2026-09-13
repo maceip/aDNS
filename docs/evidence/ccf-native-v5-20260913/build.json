@@ -1,0 +1,29 @@
+{
+  "schema": "agentdns-build-provenance-v1",
+  "image_tag": "agentdns-ccf:20260913-native-v5",
+  "oci_index_digest": "sha256:c921354c712a293af58925657404be3e28853cc70e652d164e4f793da3f2ed1a",
+  "amd64_manifest_digest": "sha256:4f1e45729cf74748f897cb64ec86c6be3e7e6fbdd711774c698222e9f38d2dff",
+  "image_config_digest": "sha256:04cd4253b4bdab244c7d33dda571b2f1b966bd314d6574b058f608b2993f81b9",
+  "image_created_at_utc": "2026-09-13T07:48:23.193465+00:00",
+  "binary_sha256": "6bcbf0a885cabdbea18ea3a25e0a3c56a49deaf1cf97e100ec97ff069ada8683",
+  "constitution_sha256": "bc18a726e061fcb0b45c64fb4e67e774355c5c0abcfb772966bb9704ee129346",
+  "supervisor_sha256": "260290bf30620f0b9eaa24f39ac205d3f2d953fed00e072d7738fdb973b569e9",
+  "host_driver_sha256": "06c9f9162f240ccb9941d57b067bb615a9a0664fe73f796ddcbd99cd9edeb2d9",
+  "production_input_manifest": "production-inputs.json",
+  "production_input_manifest_sha256": "861f78453c8a4511afd26a8a9260dfd266f9e7084fd0b57012a74e25cf55b26e",
+  "production_input_files": 88,
+  "input_freeze_verified_after_build": true,
+  "toolchain_image_digest": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+  "runtime_base_digest": "sha256:c877612270d1ee2d6ab2bc1f64bfe38ab697ac50be325154ee5129fce89c17e4",
+  "build_command": "docker build --platform linux/amd64 -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:20260913-native-v5 .",
+  "build_context": "isolated frozen copy of all production inputs, matched to production-inputs.json before and after build",
+  "local_consensus_platform": "Virtual; not evidence of confidential hardware execution",
+  "verification": "Exact image ELF bind-mounted read-only at /build/agentdns without rebuilding; real CCF smoke, three-node quorum-loss and member-share disk recovery passed",
+  "test_runs": {
+    "quorum": "live-smoke-a7e338ffb5b3",
+    "recovery": "live-smoke-f90c28282df5"
+  },
+  "supersedes": "docs/evidence/ccf-pre-native-v5-20260913: explicit SNP report version5 typed fields and preserved signed region; no change to DNS, request reconciliation, supervisor, or governance logic",
+  "registry_tag": "agentdnsport20260913.azurecr.io/primary:20260913-native-v5",
+  "attestation_tests": 23
+}

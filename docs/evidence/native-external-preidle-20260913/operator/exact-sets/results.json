@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "server": "20.166.33.141",
+  "port": 53,
+  "minimum_committed_serial": 10,
+  "observed_serial": 12,
+  "started_unix_seconds": 1789288120.864012,
+  "matched_unix_seconds": 1789288121.768498,
+  "elapsed_seconds": 2.6419704149993777,
+  "poll_samples": 1,
+  "checks": [
+    {
+      "owner": "example.test.",
+      "type": "TXT",
+      "expected_rdata": [
+        "\"v=spf1 -all\"",
+        "\"Native CCF governed initial test zone\""
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "selector1._domainkey.example.test.",
+      "type": "TXT",
+      "expected_rdata": [
+        "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkJaQHLlApaADsrAeyIz79UXSkkb4xYWchArGLSVjgMmo/UdTjYle46S7yeg4ygXMmucX8imPITNKSMkmkYicq9SrfSXWkk9NcoIH6kBijViL3QSvJQECBReao0gthz9te3L3X4ynw4plFroczgvf4aF3WwMoyTSjpPo/yqHNBfnKIkWsjESrlbZnMH1K+DOOS\" \"l2BWIck1tcyWKcGrwPNsaN3ZuIaXDcrU+QBzfp3wWAcXraNe84F9qHPm34s5HG9CD1GMMa9yB2YvqCX9LHMoAo76qMypHc0NPBcEVYLO3/+iW3dV6i+k4nV21hkntkGfbRZjqq/8kemO+zUXiF9kQIDAQAB\""
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_dmarc.example.test.",
+      "type": "TXT",
+      "expected_rdata": [
+        "\"v=DMARC1; p=reject; rua=mailto:dmarc@example.test\""
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "_smtp._tls.example.test.",
+      "type": "TXT",
+      "expected_rdata": [
+        "\"v=TLSRPTv1; rua=mailto:tlsrpt@example.test\""
+      ],
+      "dnssec_validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "CAA",
+      "expected_rdata": [
+        "0 issue \"letsencrypt.org\""
+      ],
+      "dnssec_validated": true
+    }
+  ],
+  "boundary": "Exact public authoritative RRsets and stock DNSSEC validation; cause/timing is correlated with separate committed mutation/maintenance evidence."
+}

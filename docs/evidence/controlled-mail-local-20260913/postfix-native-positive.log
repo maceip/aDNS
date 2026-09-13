@@ -1,0 +1,22 @@
+posttls-finger: initializing the client-side TLS engine
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail-good.example.test: 3 1 1 E2343D44B665063E94A7E4EEB25B98668BAC3636F5F6FFE4B8E291C922CFD4F4
+posttls-finger: Connected to mail-good.example.test[192.0.2.1]:25
+posttls-finger: < 220 mail-good.example.test ESMTP acceptance fixture
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > STARTTLS
+posttls-finger: < 220 Go ahead
+posttls-finger: setting up TLS connection to mail-good.example.test[192.0.2.1]:25
+posttls-finger: mail-good.example.test[192.0.2.1]:25: TLS cipher list "aNULL:-aNULL:HIGH:MEDIUM:!SEED:!IDEA:!3DES:!RC2:!RC4:!RC5:!kDH:!kECDH:!aDSS:!MD5:+RC4:@STRENGTH:!aNULL"
+posttls-finger: mail-good.example.test[192.0.2.1]:25: depth=0 verify=1 subject=/CN=mail-good.example.test
+posttls-finger: mail-good.example.test[192.0.2.1]:25: Matched DANE EE certificate at depth 0: 3 1 1 E2343D44B665063E94A7E4EEB25B98668BAC3636F5F6FFE4B8E291C922CFD4F4
+posttls-finger: mail-good.example.test[192.0.2.1]:25: subject_CN=mail-good.example.test, issuer_CN=mail-good.example.test, fingerprint=C9:14:83:61:54:3A:25:04:09:3C:3D:AA:92:55:6C:30:A2:A9:3C:62:E2:7C:EC:21:5E:8A:34:30:41:5B:D8:E3, pkey_fingerprint=E2:34:3D:44:B6:65:06:3E:94:A7:E4:EE:B2:5B:98:66:8B:AC:36:36:F5:F6:FF:E4:B8:E2:91:C9:22:CF:D4:F4
+posttls-finger: Verified TLS connection established to mail-good.example.test[192.0.2.1]:25: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits) key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > QUIT
+posttls-finger: < 221 Bye

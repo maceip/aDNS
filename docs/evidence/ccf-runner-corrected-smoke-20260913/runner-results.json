@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "kind": "short-smoke-only",
+  "platform": "Virtual; no native appraisal or service registration",
+  "observation_seconds": 30,
+  "total_elapsed_seconds": 362.71231269836426,
+  "images": {
+    "ccf": "sha256:cc749ceddf064ae31d4c571849d81f8d0a457ff135486b9020daa861f764b457",
+    "secondary": "sha256:597dabfca422bdac5b51efb3d7a40c3a9727c1401946be61783664886fbf8105",
+    "toolchain": "sha256:3707fa7e6dc286ea217062b9402fc1bd41cf260eace2bdbf93c52923c4bd2d8f",
+    "validator": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615"
+  },
+  "independent_receipt_and_multimessage_tsig_dnssec_verified": true,
+  "committed_status": {
+    "samples": 4,
+    "failures": 0,
+    "elapsed_seconds": 30.038501905000885,
+    "observed_serials": [
+      8
+    ],
+    "all_samples_committed_unexpired": true
+  },
+  "operator": {
+    "scope": "real governed operator mutation, not attested registration or email delivery",
+    "transaction_id": "2.317",
+    "zone_serial": 9,
+    "governance_transaction_id": "2.313",
+    "policies": [
+      "SPF",
+      "DKIM",
+      "DMARC",
+      "TLSRPT",
+      "CAA"
+    ],
+    "dkim_txt_exceeds_255_bytes": true,
+    "der_rejected_without_consuming_nonce": true,
+    "exact_retry_preserves_original_result": true,
+    "changed_signed_action_returns_conflict": true,
+    "operator_commit_latency_ms_including_tls": 942.418148
+  },
+  "operator_frontend": [
+    {
+      "name": "example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "selector1._domainkey.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 2
+    },
+    {
+      "name": "_dmarc.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "_smtp._tls.example.test.",
+      "type": "TXT",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": 1
+    },
+    {
+      "name": "example.test.",
+      "type": "CAA",
+      "exact_rdata_matches": true,
+      "dnssec_validated": true,
+      "txt_chunks": null
+    }
+  ],
+  "output": "/Users/mac/agentdns/.validation/ccf-runs/run-a1142n4z/results"
+}

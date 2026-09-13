@@ -1,0 +1,14 @@
+id 31635
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+mail.example.test. IN AAAA
+;ANSWER
+mail.example.test. 300 IN AAAA 2001:db8::1
+mail.example.test. 300 IN RRSIG AAAA 14 3 300 20260913083337 20260913081837 20222 example.test. uliPwI01RZxbiiob7TkVB/TkUOBNl+vX vKG2/aU/WBLnz9AHw8f3+/4B2Pe7Z9gz vH2jSsGf/J/0oLWg86PIPLSe/UPG5MTb qWf97tKrstcSxeKM5P67p14bpL77cGK1
+;AUTHORITY
+;ADDITIONAL

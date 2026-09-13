@@ -1,0 +1,39 @@
+{
+  "unix_seconds": 1789265615.4022827,
+  "server": "192.168.215.3",
+  "primary_transfer_port": 5353,
+  "secondary_port": 53,
+  "transfer_messages": 10,
+  "transfer_records": 978,
+  "transfer_reserialized_wire_bytes": 134262,
+  "every_message_tsig_verified": true,
+  "ksk_matches_verified_receipt": true,
+  "transfer_serial": 8,
+  "secondary_serial": 8,
+  "secondary_authoritative": true,
+  "full_zone_ldns_validated": true,
+  "queries": [
+    {
+      "owner": "example.test.",
+      "type": "SOA",
+      "validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "DNSKEY",
+      "validated": true
+    },
+    {
+      "owner": "example.test.",
+      "type": "TXT",
+      "validated": true
+    },
+    {
+      "owner": "definitely-absent-agentdns.example.test.",
+      "type": "A",
+      "validated": true
+    }
+  ],
+  "unsigned_rejected": true,
+  "wrong_key_rejected": true
+}

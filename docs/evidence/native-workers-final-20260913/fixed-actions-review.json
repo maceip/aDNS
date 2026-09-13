@@ -1,0 +1,56 @@
+[
+  {
+    "worker": "a",
+    "fixed_action_matches_reviewed_configuration": true,
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner",
+    "request_id": "aci-capture-20260913-01",
+    "zone": "example.test.",
+    "parameters": {
+      "role": "mx-edge",
+      "mailbox_domain": "example.test.",
+      "service_host": "mail.example.test.",
+      "addresses": {
+        "ipv4": [
+          "192.0.2.1"
+        ],
+        "ipv6": [
+          "2001:db8::1"
+        ]
+      },
+      "ports": [
+        25,
+        465,
+        993
+      ],
+      "lease_seconds": 3600
+    }
+  },
+  {
+    "worker": "b",
+    "fixed_action_matches_reviewed_configuration": true,
+    "audience": "ccf://agentdns.test",
+    "grant_id": "aci-test-owner-rotation",
+    "request_id": "aci-capture-20260913-02",
+    "zone": "example.test.",
+    "parameters": {
+      "role": "mx-edge",
+      "mailbox_domain": "example.test.",
+      "service_host": "mail.example.test.",
+      "addresses": {
+        "ipv4": [
+          "192.0.2.1"
+        ],
+        "ipv6": [
+          "2001:db8::1"
+        ]
+      },
+      "ports": [
+        25,
+        465,
+        993
+      ],
+      "lease_seconds": 3600
+    }
+  }
+]

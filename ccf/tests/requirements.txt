@@ -1,0 +1,9 @@
+# Exact versions exercised by the CCF governance and independent receipt tests.
+cbor2==5.9.0
+ccf==7.0.15
+cffi==2.1.1
+cryptography==50.0.1
+cwt==3.3.0
+packaging==26.3
+pycparser==3.0
+pyhpke==0.6.5

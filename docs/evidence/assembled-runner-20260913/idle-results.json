@@ -1,0 +1,18 @@
+{
+  "elapsed_seconds": 1257,
+  "observed_serials": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "samples": 125,
+  "initial_signature_expiration": 1789263689,
+  "final_time": 1789264346,
+  "final_signature_expiration": 1789264889,
+  "maximum_runtime_rss_kib": 39776,
+  "mutating_requests_during_window": 0,
+  "refresh_due_samples": 0,
+  "development_backend": true
+}

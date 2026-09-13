@@ -1,0 +1,171 @@
+[
+  {
+    "method": "POST",
+    "path": "/app/service/nonce",
+    "at_unix_seconds": 1789287996.669657,
+    "elapsed_ms": 931.291625,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "220",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.338",
+        "x-ms-ccf-transaction-id": "2.338"
+      },
+      "body": {
+        "expires_at": 1789288296,
+        "intent_hash": "c757f65b63f5fa802d98f80ce12ce838774148acc88ae03a9e1f7449bd4f0c21",
+        "issued_at": 1789287996,
+        "nonce": "ea4ec5c2b55730387e688ad4a54b3f9a8cc38f83cdae4bace95335bb666da874",
+        "tx_id": "2.338"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.338",
+    "at_unix_seconds": 1789287997.298232,
+    "elapsed_ms": 627.88575,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.338"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/renew",
+    "at_unix_seconds": 1789287999.757746,
+    "elapsed_ms": 1501.601083,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "186",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.341",
+        "x-ms-ccf-transaction-id": "2.341"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.341",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.341",
+    "at_unix_seconds": 1789288000.4366841,
+    "elapsed_ms": 678.234041,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.341"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/app/service/request?grant_id=aci-test-owner&request_id=native-renew-a-20260913",
+    "at_unix_seconds": 1789288001.703418,
+    "elapsed_ms": 1266.143292,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "186",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.341",
+        "x-ms-ccf-transaction-id": "2.345"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.341",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.341",
+    "at_unix_seconds": 1789288002.379137,
+    "elapsed_ms": 674.998417,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.341"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/app/service/renew",
+    "at_unix_seconds": 1789288003.0597608,
+    "elapsed_ms": 679.871167,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "186",
+        "content-type": "application/json",
+        "x-agentdns-commit-status": "committed",
+        "x-agentdns-transaction-id": "2.341",
+        "x-ms-ccf-transaction-id": "2.346"
+      },
+      "body": {
+        "frontend_propagation": {
+          "status": "pending"
+        },
+        "lease_expires_at": 1789291385,
+        "registration_id": "reg-be3840a84201959e7aa5080ba2173a65",
+        "status": "committed",
+        "tx_id": "2.341",
+        "zone_serial": 10
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/node/tx?transaction_id=2.341",
+    "at_unix_seconds": 1789288003.740403,
+    "elapsed_ms": 679.962125,
+    "response": {
+      "http_status": 200,
+      "headers": {
+        "content-length": "47",
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "Committed",
+        "transaction_id": "2.341"
+      }
+    }
+  }
+]

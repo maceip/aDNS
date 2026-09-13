@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "phase": "before",
+  "unix_seconds": 1789269410.4922042,
+  "server": "192.168.215.3",
+  "replacement_key_name": "agentdns-transfer-replacement.",
+  "transfer_messages": 10,
+  "transfer_records": 1001,
+  "every_message_authenticated_with_replacement": true,
+  "full_zone_dnssec_validated": true,
+  "ksk_matches_verified_receipt": true,
+  "authenticated_replacement_udp_soa": true,
+  "serial": 10,
+  "post_revocation_returned_work_packets": null,
+  "scope": "independent replacement AXFR/SOA; replacement BIND propagation is not claimed"
+}

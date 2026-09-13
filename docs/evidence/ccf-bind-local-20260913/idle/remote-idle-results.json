@@ -1,0 +1,17 @@
+{
+  "source": "independent-public-BIND-DNSSEC-probes",
+  "server": "192.168.215.2",
+  "port": 53,
+  "elapsed_seconds": 1262.4520927200028,
+  "observed_serials": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "external_validations": 86,
+  "crossed_initial_signature_expiration": true,
+  "all_samples_passed": true,
+  "proof_limit": "CCF transaction provenance, leases and hardware require separate evidence; this verifier sends no mutations."
+}

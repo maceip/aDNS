@@ -1,0 +1,14 @@
+id 20988
+opcode QUERY
+rcode NOERROR
+flags QR AA RD
+edns 0
+eflags DO
+payload 1232
+;QUESTION
+example.test. IN CAA
+;ANSWER
+example.test. 300 IN CAA 0 issue "letsencrypt.org"
+example.test. 300 IN RRSIG CAA 14 2 300 20260913083735 20260913082235 20222 example.test. jdUDuU/FPiCsYbcPBdWYcczNnoHDWoMH 9R9n0A9HWFiRzL3EgIh2tCYjLXnqEJoN 6Z42UzB8VuYWRJ5D3zAx5dzQsf1MwikQ mYRnRF74ohfaMDnhuulYGU0qJq7xJsMA
+;AUTHORITY
+;ADDITIONAL

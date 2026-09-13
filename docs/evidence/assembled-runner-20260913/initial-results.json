@@ -1,0 +1,12 @@
+{
+  "initial_time": 1789263090,
+  "initial_serial": 1,
+  "axfr_messages": 11,
+  "axfr_records": 1036,
+  "every_message_tsig_verified": true,
+  "unsigned_axfr_rejected": true,
+  "wrong-key_axfr_rejected": true,
+  "bind_serial": 1,
+  "bind_authoritative": true,
+  "external_dnssec_validated": true
+}

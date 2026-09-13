@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/src/tests/rust-integration/ccf_runner_inside.py", line 124, in <module>
+    main()
+  File "/src/tests/rust-integration/ccf_runner_inside.py", line 103, in main
+    raise TimeoutError('CCF and BIND did not reach a committed signed in-sync state')
+TimeoutError: CCF and BIND did not reach a committed signed in-sync state

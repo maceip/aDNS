@@ -1,0 +1,3 @@
+; fully validated
+mail.example.test.	300	IN	A	192.0.2.1
+mail.example.test.	300	IN	RRSIG	A 14 3 300 20260913083337 20260913081837 20222 example.test. gj91fF+ZFj6M6XQjEzPxkzqSeaEAsSKJRhTAIfpVIUbfvE6U45L7m9X3 +siUGogIWXj61qHlMdhCrs44a9WJ7dtShSJIUOjix6fMolfg4VvrTwZk rUjPq2pTrPJRy6Gj

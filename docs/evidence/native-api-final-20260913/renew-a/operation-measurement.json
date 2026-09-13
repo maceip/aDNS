@@ -1,0 +1,9 @@
+{
+  "operation": "renew",
+  "samples": 1,
+  "submission_to_globally_committed_response_ms_including_tls": 1501.601083,
+  "signed_message_digest": "7df3bba77db4b3997e1007704341270f5005b1d434f39b1a69e020bc0ad40a78",
+  "transaction_id": "2.341",
+  "historical_result_exactly_matches": true,
+  "exact_retry_matches": true
+}

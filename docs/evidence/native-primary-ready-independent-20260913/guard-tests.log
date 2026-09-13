@@ -1,0 +1,12 @@
+test_ambiguous_json_and_noncanonical_base64_are_rejected (test_native_ccf_quote.NodeQuoteGuards.test_ambiguous_json_and_noncanonical_base64_are_rejected) ... ok
+test_fixed_binding_rejects_nonzero_upper_half (test_native_ccf_quote.NodeQuoteGuards.test_fixed_binding_rejects_nonzero_upper_half) ... ok
+test_reserved_and_signature_padding_cannot_be_treated_as_vectors (test_native_ccf_quote.NodeQuoteGuards.test_reserved_and_signature_padding_cannot_be_treated_as_vectors) ... ok
+test_security_flags_vmpl_and_reserved_tcb_are_checked (test_native_ccf_quote.NodeQuoteGuards.test_security_flags_vmpl_and_reserved_tcb_are_checked) ... ok
+test_unsupported_layout_is_never_silently_treated_as_v5 (test_native_ccf_quote.NodeQuoteGuards.test_unsupported_layout_is_never_silently_treated_as_v5) ... ok
+test_v3_has_no_mitigation_vectors_and_reserves_all_504_onward (test_native_ccf_quote.NodeQuoteGuards.test_v3_has_no_mitigation_vectors_and_reserves_all_504_onward) ... ok
+test_v5_vectors_are_independent_unsigned_little_endian (test_native_ccf_quote.NodeQuoteGuards.test_v5_vectors_are_independent_unsigned_little_endian) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK

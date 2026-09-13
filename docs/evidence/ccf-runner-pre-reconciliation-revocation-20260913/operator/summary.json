@@ -1,0 +1,18 @@
+{
+  "scope": "real governed operator mutation, not attested registration or email delivery",
+  "transaction_id": "2.1800",
+  "zone_serial": 13,
+  "governance_transaction_id": "2.1792",
+  "policies": [
+    "SPF",
+    "DKIM",
+    "DMARC",
+    "TLSRPT",
+    "CAA"
+  ],
+  "dkim_txt_exceeds_255_bytes": true,
+  "der_rejected_without_consuming_nonce": true,
+  "exact_retry_preserves_original_result": true,
+  "changed_signed_action_returns_conflict": true,
+  "operator_commit_latency_ms_including_tls": 921.501845
+}

@@ -1,0 +1,56 @@
+{
+  "run": "run-px_xd2d2",
+  "review_scope": "Independent post-run checks after successful cleanup; later harness patches are not represented as executed by this run",
+  "initial_provenance_sha256_protected_outside_work_before_end": "83ff62d7f91eae052b74cc28aa972b15d76e22467f0f39f28a1d12cb5c0c638a",
+  "original_provenance_unchanged": true,
+  "executed_runner_sha256": "a972b3074ad9e3f7540f4061154b841073e3f0caeb37882467a71c42d3837fc7",
+  "review_checker_sha256": "e36bb7afe331e1a02cd7c75be5d8a4d1f06d354e92600b67a6be0165361db5c2",
+  "observation_checker_sha256": "865d299d3d7fee695e4928cd5e80526adfc06503b33600a4caafe447d079e574",
+  "source_inventory": {
+    "status": "passed",
+    "checked_unix_seconds": 1789271624.674922,
+    "expected_source_files": 19,
+    "verified_source_files": 19,
+    "post_execution_sha256": {
+      "tests/rust-integration/run_ccf.py": "a972b3074ad9e3f7540f4061154b841073e3f0caeb37882467a71c42d3837fc7",
+      "tests/rust-integration/ccf_runner_inside.py": "86ed974471299b5f8be72de42c4e6222ecb0d37ba158a8e32db5fdbee239ed25",
+      "tests/rust-integration/export_ccf_results.py": "709e06eeea9f62b0c6d508c2d15abf0793d1a575ecb6a85a92b247e58ca5866f",
+      "tests/rust-integration/monitor_remote.py": "50e43df191a6a2b578940be52189e1708691cc9a14788b02532a87897518759f",
+      "tests/rust-integration/benchmark_remote.py": "3516001d5f3660a6b1554be92bee2cc2d2523fd5bf6b6b88f68158c7f035307b",
+      "tests/rust-integration/reconcile_ccf_inside.py": "693cf87c5b36fdb35755fddda0bfb2446f1622cc3329ee80c9af4fdf876be385",
+      "tests/rust-integration/verify_reconciliation.py": "f598e0eb00935470b2fc06860765d839ade54985eb8c7dc9e31fe677e67bb887",
+      "tests/rust-integration/rotate_tsig_ccf_inside.py": "aa10c3a4f79b541f1464c377415feeddf31faff122d1fca0e9b5319520a9903e",
+      "tests/rust-integration/verify_tsig_rotation.py": "336be7918505812b8b4565d2f571b8f50782b8e92684952341f743e3399b48e4",
+      "ccf/tests/observe_process.py": "ea348a8b3462e44e204767d2a3c883742fd5eac441c3dd415affd1c26ea62fad",
+      "tools/ccf_control.py": "59948136a4ec10fac7a784ac52166cdec5a44515ac29593fb80d58c9a2a0141b",
+      "tools/prepare_aci_control.py": "8f6a1430d5bb21219c2f681cb1564e06b39d158f144961703593791f807cc155",
+      "tools/verify_ksk_receipt.py": "e7cbc38cc2d7f3ebda33f2c1e7273581284354c2e2fa555790097055f5c265ea",
+      "tools/http_limits.py": "c6a66cbba0f427322bd5bb31023dab189864625e4eae6f12ed7626ed75d37be6",
+      "ccf/node.example.json": "a5f1f3cf9b5f092edbc66f449b6bcfb95ad43189292c388d39f8396d54df0749",
+      "ccf/tests/verify_live_transfer.py": "06c179b2a8c9b038d5d45ef6c10ce77d85a2d58c6d78fa8d72dfddf5fa3daffa",
+      "ccf/tests/observe_status.py": "0b703a8dd2812e749770932f73abecdaf5c793cbe708b10044644fcc1dba5498",
+      "ccf/tests/operator_mail.py": "9803c7a3d74a568c66549cdc24d0a95e237ed902b6aedec104a4f6c46916f40a",
+      "ccf/tests/verify_operator_mail.py": "8b1002a36d2f8fa682692e1a85f52e5b868e9998e7f9b4f25fae2c8bc3ebbc81"
+    },
+    "failures": []
+  },
+  "observations": [
+    {
+      "response": "pending",
+      "transaction_id": "2.1821",
+      "required_ids_all_present_and_equal": true,
+      "actual_node_tx_committed_confirmations": 1
+    },
+    {
+      "response": "failed-observation",
+      "transaction_id": "2.1827",
+      "required_ids_all_present_and_equal": true,
+      "actual_node_tx_committed_confirmations": 2
+    }
+  ],
+  "failed_http403_observation_transaction_confirmed": "2.1826",
+  "successful_historical_result_and_transaction_unchanged": "2.1830",
+  "production_input_hashes_unchanged": 85,
+  "cleanup_confirmed": true,
+  "limitation": "Executed control helpers had a writable source alias. End-of-run bytes and exact inventory match the protected initial hashes; this is not a claim of filesystem-enforced immutability throughout that older run."
+}

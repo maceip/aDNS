@@ -1,0 +1,7 @@
+{
+  "helper": "/src/ccf/tests/verify_operator_mail.py",
+  "container": "agentdns-ccf-runner-4a72fc2f1211-helper-bf016746",
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/src/ccf/tests/verify_operator_mail.py\", line 65, in <module>\n    main()\n  File \"/src/ccf/tests/verify_operator_mail.py\", line 35, in main\n    raise ValueError(\"expected the five operator mail policies\")\nValueError: expected the five operator mail policies\n"
+}

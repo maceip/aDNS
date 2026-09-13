@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "new_cce": "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e",
+  "only_rego_change": "pinned bootstrap manifest digest",
+  "node_policy_changes": [
+    {
+      "path": "release_id",
+      "old": "isolated-native-primary-v5-20260913",
+      "new": "isolated-native-primary-v5-readiness-20260913"
+    },
+    {
+      "path": "approved_host_data",
+      "old": [
+        "bcda0e39dabca3347887d13902cd550f47e0785b4a969f7bc0981bd56c811d63"
+      ],
+      "new": [
+        "8603aef5c7e35fb24ec32902fcad8572474e814f7b7f54abaa4b6e83ad50a94e"
+      ]
+    },
+    {
+      "path": "policy_id",
+      "old": [
+        197,
+        192,
+        8,
+        45,
+        185,
+        227,
+        73,
+        193,
+        52,
+        162,
+        119,
+        234,
+        5,
+        58,
+        20,
+        47,
+        210,
+        140,
+        80,
+        193,
+        106,
+        151,
+        105,
+        179,
+        83,
+        97,
+        216,
+        243,
+        49,
+        118,
+        177,
+        229
+      ],
+      "new": [
+        194,
+        216,
+        46,
+        33,
+        126,
+        255,
+        41,
+        98,
+        29,
+        247,
+        28,
+        16,
+        152,
+        63,
+        204,
+        90,
+        37,
+        18,
+        252,
+        25,
+        155,
+        131,
+        199,
+        153,
+        199,
+        140,
+        241,
+        210,
+        157,
+        226,
+        219,
+        32
+      ]
+    }
+  ]
+}

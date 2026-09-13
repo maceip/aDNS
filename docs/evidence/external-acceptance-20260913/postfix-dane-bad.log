@@ -1,0 +1,22 @@
+posttls-finger: initializing the client-side TLS engine
+posttls-finger: DNSSEC-signed TLSA record: _25._tcp.mail-bad.example.test: 3 1 1 0000000000000000000000000000000000000000000000000000000000000000
+posttls-finger: Connected to mail-bad.example.test[127.0.0.1]:25
+posttls-finger: < 220 mail-good.example.test ESMTP acceptance fixture
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > STARTTLS
+posttls-finger: < 220 Go ahead
+posttls-finger: setting up TLS connection to mail-bad.example.test[127.0.0.1]:25
+posttls-finger: mail-bad.example.test[127.0.0.1]:25: TLS cipher list "aNULL:-aNULL:HIGH:MEDIUM:!SEED:!IDEA:!3DES:!RC2:!RC4:!RC5:!kDH:!kECDH:!aDSS:!MD5:+RC4:@STRENGTH:!aNULL"
+posttls-finger: mail-bad.example.test[127.0.0.1]:25: depth=0 verify=0 subject=/CN=mail-good.example.test
+posttls-finger: server certificate verification failed for mail-bad.example.test[127.0.0.1]:25: num=65:no matching DANE TLSA records
+posttls-finger: mail-bad.example.test[127.0.0.1]:25: subject_CN=mail-good.example.test, issuer_CN=agentdns isolated acceptance CA, fingerprint=38:81:46:E9:76:B7:7E:C1:27:6B:D2:9B:68:8E:50:38:B2:43:EB:C7:71:9B:99:B6:C1:1D:24:C4:34:E2:FB:C6, pkey_fingerprint=F3:73:85:D9:20:2C:5C:D2:43:D7:52:AC:62:CE:6B:5D:A0:0B:2A:0B:F9:81:E6:A4:6A:8E:E2:11:8E:45:1F:49
+posttls-finger: Untrusted TLS connection established to mail-bad.example.test[127.0.0.1]:25: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits) key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256
+posttls-finger: > EHLO localhost
+posttls-finger: < 250-mail-good.example.test
+posttls-finger: < 250-STARTTLS
+posttls-finger: < 250 SIZE 1024
+posttls-finger: > QUIT
+posttls-finger: < 221 Bye

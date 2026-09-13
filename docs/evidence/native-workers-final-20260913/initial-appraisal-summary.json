@@ -1,0 +1,38 @@
+[
+  {
+    "worker": "a",
+    "exit_code": 0,
+    "verification_time": 1789283202,
+    "binary_sha256": "2fb1eb9ed2742a646f84e8b003a710ccd28f63cc489673c46d1fd218133b38a1",
+    "spki_sha256": "aec3b0f1c46c6b0d0c5a6e365d06f9edd4df9f9443207477793a9552fd05183c",
+    "evidence_digest": "d830de4a2c3af8da9f48e8c2e77083582191b24fe64cb09dd4849edc939f6222",
+    "host_data": "68f46918d210a8eb57ccbdade383ba459cb5260273be3d5f778ca37eef6ab75a",
+    "valid_until": 1789290402,
+    "uvm_svn": 104,
+    "product": "Genoa",
+    "reported_tcb": {
+      "bootloader": 10,
+      "tee": 0,
+      "snp": 23,
+      "microcode": 84
+    }
+  },
+  {
+    "worker": "b",
+    "exit_code": 0,
+    "verification_time": 1789283202,
+    "binary_sha256": "2fb1eb9ed2742a646f84e8b003a710ccd28f63cc489673c46d1fd218133b38a1",
+    "spki_sha256": "632a0f390a030838f11124a26f41ee1f99565f88a8552f5c6465f4e167c147ed",
+    "evidence_digest": "cb7aea3f310073d52e190f860d38fd089c34c15ae9711953750ded6f975da7f6",
+    "host_data": "d8251696c7dcad3eaca72e3eb34b86dd28c936b056567e3a6ad5e6049024fd29",
+    "valid_until": 1789290402,
+    "uvm_svn": 104,
+    "product": "Genoa",
+    "reported_tcb": {
+      "bootloader": 10,
+      "tee": 0,
+      "snp": 23,
+      "microcode": 84
+    }
+  }
+]

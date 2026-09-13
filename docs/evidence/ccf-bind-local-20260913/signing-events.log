@@ -1,0 +1,6 @@
+2026-09-13T01:33:38.583873280Z {"elapsed_micros":7065,"event":"agentdns.dnssec.signing","record_count":3,"serial":7,"zone":"example.test."}
+2026-09-13T01:38:38.704014851Z {"elapsed_micros":2338,"event":"agentdns.dnssec.signing","record_count":3,"serial":8,"zone":"example.test."}
+2026-09-13T01:43:38.834492127Z {"elapsed_micros":2932,"event":"agentdns.dnssec.signing","record_count":3,"serial":9,"zone":"example.test."}
+2026-09-13T01:48:38.943139714Z {"elapsed_micros":2078,"event":"agentdns.dnssec.signing","record_count":3,"serial":10,"zone":"example.test."}
+2026-09-13T01:53:39.026997167Z {"elapsed_micros":2173,"event":"agentdns.dnssec.signing","record_count":3,"serial":11,"zone":"example.test."}
+2026-09-13T01:58:39.126374237Z {"elapsed_micros":2034,"event":"agentdns.dnssec.signing","record_count":3,"serial":12,"zone":"example.test."}

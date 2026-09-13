@@ -1,0 +1,71 @@
+13-Sep-2026 00:30:27.451 starting BIND 9.18.39-0ubuntu0.24.04.7-Ubuntu (Extended Support Version) <id:>
+13-Sep-2026 00:30:27.451 running on Linux aarch64 7.0.14-orbstack-00380-ga7e0a2dc9535 #1 SMP PREEMPT Fri Aug  7 03:48:40 UTC 2026
+13-Sep-2026 00:30:27.451 built with  '--build=aarch64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/aarch64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/aarch64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=aarch64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-qMcUJy/bind9-9.18.39=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -mbranch-protection=standard -fdebug-prefix-map=/build/bind9-qMcUJy/bind9-9.18.39=/usr/src/bind9-1:9.18.39-0ubuntu0.24.04.7 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now -ledit' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+13-Sep-2026 00:30:27.451 running as: named -g -n 1 -c /work/named-resolver.conf
+13-Sep-2026 00:30:27.451 compiled by GCC 13.3.0
+13-Sep-2026 00:30:27.451 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 00:30:27.451 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+13-Sep-2026 00:30:27.451 compiled with libuv version: 1.48.0
+13-Sep-2026 00:30:27.451 linked to libuv version: 1.48.0
+13-Sep-2026 00:30:27.452 compiled with libxml2 version: 2.9.14
+13-Sep-2026 00:30:27.452 linked to libxml2 version: 20914
+13-Sep-2026 00:30:27.452 compiled with json-c version: 0.17
+13-Sep-2026 00:30:27.452 linked to json-c version: 0.17
+13-Sep-2026 00:30:27.452 compiled with zlib version: 1.3
+13-Sep-2026 00:30:27.452 linked to zlib version: 1.3
+13-Sep-2026 00:30:27.452 ----------------------------------------------------
+13-Sep-2026 00:30:27.452 BIND 9 is maintained by Internet Systems Consortium,
+13-Sep-2026 00:30:27.452 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+13-Sep-2026 00:30:27.452 corporation.  Support and training for BIND 9 are 
+13-Sep-2026 00:30:27.452 available at https://www.isc.org/support
+13-Sep-2026 00:30:27.452 ----------------------------------------------------
+13-Sep-2026 00:30:27.452 found 18 CPUs, using 1 worker thread
+13-Sep-2026 00:30:27.452 using 1 UDP listener per interface
+13-Sep-2026 00:30:27.452 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+13-Sep-2026 00:30:27.452 DS algorithms: SHA-1 SHA-256 SHA-384
+13-Sep-2026 00:30:27.452 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+13-Sep-2026 00:30:27.452 TKEY mode 2 support (Diffie-Hellman): yes
+13-Sep-2026 00:30:27.452 TKEY mode 3 support (GSS-API): yes
+13-Sep-2026 00:30:27.453 the initial working directory is '/work'
+13-Sep-2026 00:30:27.453 loading configuration from '/work/named-resolver.conf'
+13-Sep-2026 00:30:27.453 the working directory is now '/work/bind-resolver'
+13-Sep-2026 00:30:27.453 reading built-in trust anchors from file '/etc/bind/bind.keys'
+13-Sep-2026 00:30:27.453 looking for GeoIP2 databases in '/usr/share/GeoIP'
+13-Sep-2026 00:30:27.453 using default UDP/IPv4 port range: [32768, 60999]
+13-Sep-2026 00:30:27.453 using default UDP/IPv6 port range: [32768, 60999]
+13-Sep-2026 00:30:27.453 listening on IPv4 interface lo, 127.0.0.1#53
+13-Sep-2026 00:30:27.454 generating session key for dynamic DNS
+13-Sep-2026 00:30:27.454 sizing zone task pool based on 1 zones
+13-Sep-2026 00:30:27.454 none:99: 'max-cache-size 90%' - setting to 57828MB (out of 64253MB)
+13-Sep-2026 00:30:27.457 set up managed keys zone for view _default, file 'managed-keys.bind'
+13-Sep-2026 00:30:27.460 not using config file logging statement for logging due to -g option
+13-Sep-2026 00:30:27.460 managed-keys-zone: loaded serial 0
+13-Sep-2026 00:30:27.460 all zones loaded
+13-Sep-2026 00:30:27.460 running
+13-Sep-2026 00:45:08.496 network unreachable resolving './NS/IN': 2001:503:ba3e::2:30#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:503:ba3e::2:30#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:1::53#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:1::53#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:7fd::1#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:7fd::1#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:9f::42#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:9f::42#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:2::c#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:2::c#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:a8::e#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:a8::e#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:12::d0d#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:12::d0d#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2801:1b8:10::b#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2801:1b8:10::b#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:503:c27::2:30#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:503:c27::2:30#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:2d::d#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:2d::d#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:dc3::35#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:dc3::35#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:500:2f::f#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:500:2f::f#53
+13-Sep-2026 00:45:08.500 network unreachable resolving './NS/IN': 2001:7fe::53#53
+13-Sep-2026 00:45:08.500 network unreachable resolving 'internal/NS/IN': 2001:7fe::53#53
+13-Sep-2026 00:45:08.510 network unreachable resolving 'host.docker.internal/A/IN': 2001:500:2f::f#53
