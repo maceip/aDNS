@@ -322,7 +322,7 @@ fn outer_signature_key_and_p1363_format_are_enforced() {
         cose::verify_es256(&parsed, &spki),
         Err(AttestationError::UnsupportedAlgorithm)
     ));
-    let mut trailing = spki.clone();
+    let mut trailing = spki;
     trailing.push(0);
     assert!(cose::verify_es256(&parsed, &trailing).is_err());
 }

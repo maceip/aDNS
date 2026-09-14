@@ -5,7 +5,7 @@ use openssl::{
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-pub const REPORT_SIZE: usize = 1184;
+pub(crate) const REPORT_SIZE: usize = 1184;
 const SIGNED_SIZE: usize = 672;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -18,14 +18,17 @@ pub struct TcbVersion {
 }
 impl TcbVersion {
     fn parse(bytes: &[u8]) -> Result<Self, AttestationError> {
-        if bytes[2..6] != [0; 4] {
+        let b: [u8; 8] = bytes
+            .try_into()
+            .map_err(|_| AttestationError::Malformed("TCB version"))?;
+        if b[2..6] != [0; 4] {
             return Err(AttestationError::Malformed("reserved TCB bits"));
         }
         Ok(Self {
-            bootloader: bytes[0],
-            tee: bytes[1],
-            snp: bytes[6],
-            microcode: bytes[7],
+            bootloader: b[0],
+            tee: b[1],
+            snp: b[6],
+            microcode: b[7],
         })
     }
     pub fn meets(&self, min: &Self) -> bool {
@@ -67,9 +70,23 @@ impl SnpAttestationReport {
             return Err(AttestationError::Malformed("SNP report must be 1184 bytes"));
         }
         // Fixed offsets from AMD ABI; copy into arrays rather than casting memory.
-        let u32_at =
-            |p| u32::from_le_bytes(bytes[p..p + 4].try_into().expect("bounded fixed offset"));
-        let version = u32_at(0);
+        // All slicing is fallible so malformed/truncated input returns an
+        // error instead of panicking on an attacker-controlled report.
+        let u32_at = |p: usize| -> Result<u32, AttestationError> {
+            bytes
+                .get(p..p + 4)
+                .and_then(|s| s.try_into().ok())
+                .map(u32::from_le_bytes)
+                .ok_or(AttestationError::Malformed("SNP report offset"))
+        };
+        let u64_at = |p: usize| -> Result<u64, AttestationError> {
+            bytes
+                .get(p..p + 8)
+                .and_then(|s| s.try_into().ok())
+                .map(u64::from_le_bytes)
+                .ok_or(AttestationError::Malformed("SNP report offset"))
+        };
+        let version = u32_at(0)?;
         if !matches!(version, 2 | 3 | 5) {
             return Err(AttestationError::Malformed(
                 "unsupported SNP report version",
@@ -89,27 +106,71 @@ impl SnpAttestationReport {
                 "nonzero reserved version bytes",
             ));
         }
+        let array_64: [u8; 64] = bytes
+            .get(80..144)
+            .and_then(|s| s.try_into().ok())
+            .ok_or(AttestationError::Malformed("SNP report_data"))?;
+        let array_48: [u8; 48] = bytes
+            .get(144..192)
+            .and_then(|s| s.try_into().ok())
+            .ok_or(AttestationError::Malformed("SNP measurement"))?;
+        let array_32: [u8; 32] = bytes
+            .get(192..224)
+            .and_then(|s| s.try_into().ok())
+            .ok_or(AttestationError::Malformed("SNP host_data"))?;
+        let array_chip: [u8; 64] = bytes
+            .get(416..480)
+            .and_then(|s| s.try_into().ok())
+            .ok_or(AttestationError::Malformed("SNP chip_id"))?;
+        let launch_mitigation_vector = if version == 5 {
+            Some(u64_at(504)?)
+        } else {
+            None
+        };
+        let current_mitigation_vector = if version == 5 {
+            Some(u64_at(512)?)
+        } else {
+            None
+        };
         Ok(Self {
             version,
-            guest_svn: u32_at(4),
-            policy: u64::from_le_bytes(bytes[8..16].try_into().unwrap()),
-            vmpl: u32_at(48),
-            signature_algo: u32_at(52),
-            flags: u32_at(72),
-            current_tcb: TcbVersion::parse(&bytes[56..64])?,
-            reported_tcb: TcbVersion::parse(&bytes[384..392])?,
-            committed_tcb: TcbVersion::parse(&bytes[480..488])?,
-            launch_tcb: TcbVersion::parse(&bytes[496..504])?,
-            report_data: bytes[80..144].try_into().unwrap(),
-            measurement: bytes[144..192].try_into().unwrap(),
-            host_data: bytes[192..224].try_into().unwrap(),
-            chip_id: bytes[416..480].try_into().unwrap(),
-            cpuid_family: bytes[392],
-            cpuid_model: bytes[393],
-            launch_mitigation_vector: (version == 5)
-                .then(|| u64::from_le_bytes(bytes[504..512].try_into().unwrap())),
-            current_mitigation_vector: (version == 5)
-                .then(|| u64::from_le_bytes(bytes[512..520].try_into().unwrap())),
+            guest_svn: u32_at(4)?,
+            policy: u64_at(8)?,
+            vmpl: u32_at(48)?,
+            signature_algo: u32_at(52)?,
+            flags: u32_at(72)?,
+            current_tcb: TcbVersion::parse(
+                bytes
+                    .get(56..64)
+                    .ok_or(AttestationError::Malformed("SNP current TCB"))?,
+            )?,
+            reported_tcb: TcbVersion::parse(
+                bytes
+                    .get(384..392)
+                    .ok_or(AttestationError::Malformed("SNP reported TCB"))?,
+            )?,
+            committed_tcb: TcbVersion::parse(
+                bytes
+                    .get(480..488)
+                    .ok_or(AttestationError::Malformed("SNP committed TCB"))?,
+            )?,
+            launch_tcb: TcbVersion::parse(
+                bytes
+                    .get(496..504)
+                    .ok_or(AttestationError::Malformed("SNP launch TCB"))?,
+            )?,
+            report_data: array_64,
+            measurement: array_48,
+            host_data: array_32,
+            chip_id: array_chip,
+            cpuid_family: *bytes
+                .get(392)
+                .ok_or(AttestationError::Malformed("SNP cpuid"))?,
+            cpuid_model: *bytes
+                .get(393)
+                .ok_or(AttestationError::Malformed("SNP cpuid"))?,
+            launch_mitigation_vector,
+            current_mitigation_vector,
         })
     }
     pub fn verify_security_policy(&self) -> Result<(), AttestationError> {

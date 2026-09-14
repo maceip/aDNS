@@ -2,6 +2,7 @@
 name = "adns-ccf"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 license.workspace = true
 build = "build.rs"
 
@@ -28,3 +29,6 @@ cxx = { version = "1", optional = true }
 
 [build-dependencies]
 cxx-build = { version = "1", optional = true }
+
+[lints]
+workspace = true

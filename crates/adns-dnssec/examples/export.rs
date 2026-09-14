@@ -13,19 +13,33 @@ fn rr(name: &str, data: RData) -> ResourceRecord {
     ResourceRecord::new(n(name), 300, data).unwrap()
 }
 fn main() -> Result<(), Box<dyn Error>> {
+    let mut rest = std::env::args().skip(1);
     let path = PathBuf::from(
-        std::env::args()
-            .nth(1)
+        rest.next()
             .unwrap_or_else(|| "/tmp/agentdns-wire-validation".into()),
     );
+    // Optional apex + NS names. Defaults reproduce the historical example
+    // zone byte-for-byte; pass an empty extra NS for single-NS zones.
+    let apex: String = rest.next().unwrap_or_else(|| "example.".into());
+    let primary: String = rest.next().unwrap_or_else(|| format!("ns.{apex}"));
+    let extra: String = rest.next().unwrap_or_else(|| format!("ns2.{apex}"));
+    let fq = |label: &str| -> String {
+        if label.is_empty() {
+            apex.clone()
+        } else {
+            format!("{label}.{apex}")
+        }
+    };
+    // Glue is only emitted for NS names inside the zone itself.
+    let in_zone = |name: &str| -> bool { n(name).is_subdomain_of(&n(&apex)) && name != apex };
     fs::create_dir_all(&path)?;
     let now = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs() as u32;
-    let records = vec![
+    let mut records = vec![
         rr(
-            "example.",
+            &apex,
             RData::Soa(SoaData {
-                mname: n("ns.example."),
-                rname: n("hostmaster.example."),
+                mname: n(&primary),
+                rname: n(&fq("hostmaster")),
                 serial: 42,
                 refresh: 300,
                 retry: 60,
@@ -33,45 +47,48 @@ fn main() -> Result<(), Box<dyn Error>> {
                 minimum: 60,
             }),
         ),
-        rr("example.", RData::Ns(n("ns.example."))),
-        rr("ns.example.", RData::A("192.0.2.53".parse()?)),
-        rr("mail.example.", RData::A("192.0.2.1".parse()?)),
-        rr("mail.example.", RData::Aaaa("2001:db8::1".parse()?)),
+        rr(&apex, RData::Ns(n(&primary))),
+    ];
+    if !extra.is_empty() {
+        records.push(rr(&apex, RData::Ns(n(&extra))));
+    }
+    if in_zone(&primary) {
+        records.push(rr(&primary, RData::A("192.0.2.53".parse()?)));
+    }
+    if !extra.is_empty() && in_zone(&extra) {
+        records.push(rr(&extra, RData::A("192.0.2.54".parse()?)));
+    }
+    records.extend([
+        rr(&fq("mail"), RData::A("192.0.2.1".parse()?)),
+        rr(&fq("mail"), RData::Aaaa("2001:db8::1".parse()?)),
         rr(
-            "example.",
+            &apex,
             RData::Mx(MxData {
                 preference: 10,
-                exchange: n("mail.example."),
+                exchange: n(&fq("mail")),
             }),
         ),
-        rr("leaf.ent.example.", RData::Txt(vec![b"deep".to_vec()])),
-        rr("*.wild.example.", RData::A("192.0.2.2".parse()?)),
-        rr("alias.example.", RData::Cname(n("mail.example."))),
-        rr("child.example.", RData::Ns(n("ns.child.example."))),
-        rr("ns.child.example.", RData::A("192.0.2.80".parse()?)),
+        rr(&fq("leaf.ent"), RData::Txt(vec![b"deep".to_vec()])),
+        rr(&fq("*.wild"), RData::A("192.0.2.2".parse()?)),
+        rr(&fq("alias"), RData::Cname(n(&fq("mail")))),
+        rr(&fq("child"), RData::Ns(n(&fq("ns.child")))),
+        rr(&fq("ns.child"), RData::A("192.0.2.80".parse()?)),
         rr(
-            "example.",
+            &apex,
             RData::Caa(CaaData {
                 flags: 0,
                 tag: b"issue".to_vec(),
                 value: b"letsencrypt.org".to_vec(),
             }),
         ),
-    ];
+    ]);
     for (name, mode) in [("nsec", DenialMode::Nsec), ("nsec3", DenialMode::default())] {
         let ksk = SigningKey::generate()?;
         let zsk = SigningKey::generate()?;
-        let zone = SignedZone::sign_with_keys(
-            n("example."),
-            records.clone(),
-            &ksk,
-            &zsk,
-            now,
-            86400,
-            mode,
-        )?;
+        let zone =
+            SignedZone::sign_with_keys(n(&apex), records.clone(), &ksk, &zsk, now, 86400, mode)?;
         fs::write(path.join(format!("{name}.zone")), zone.to_zone_file()?)?;
-        let key = ResourceRecord::new(n("example."), 300, RData::Dnskey(ksk.dnskey(257)))?;
+        let key = ResourceRecord::new(n(&apex), 300, RData::Dnskey(ksk.dnskey(257)))?;
         fs::write(
             path.join(format!("{name}.key")),
             format!(
@@ -82,19 +99,19 @@ fn main() -> Result<(), Box<dyn Error>> {
             ),
         )?;
         let cases = [
-            ("dnskey", "example.", RecordType::Dnskey),
-            ("ent-ds", "ent.example.", RecordType::Ds),
-            ("any", "mail.example.", RecordType::Any),
-            ("wildcard-any", "foo.wild.example.", RecordType::Any),
-            ("nxdomain", "x.y.ent.example.", RecordType::A),
-            ("nodata", "mail.example.", RecordType::Txt),
-            ("ent", "ent.example.", RecordType::A),
-            ("wildcard", "foo.bar.wild.example.", RecordType::A),
-            ("wildcard-nodata", "foo.wild.example.", RecordType::Txt),
-            ("ds-nodata", "child.example.", RecordType::Ds),
+            ("dnskey", "", RecordType::Dnskey),
+            ("ent-ds", "ent", RecordType::Ds),
+            ("any", "mail", RecordType::Any),
+            ("wildcard-any", "foo.wild", RecordType::Any),
+            ("nxdomain", "x.y.ent", RecordType::A),
+            ("nodata", "mail", RecordType::Txt),
+            ("ent", "ent", RecordType::A),
+            ("wildcard", "foo.bar.wild", RecordType::A),
+            ("wildcard-nodata", "foo.wild", RecordType::Txt),
+            ("ds-nodata", "child", RecordType::Ds),
         ];
-        for (case, owner, qtype) in cases {
-            let qname = n(owner);
+        for (case, label, qtype) in cases {
+            let qname = n(&fq(label));
             let r = zone.resolve(&qname, qtype, true);
             let m = Message {
                 header: Header {

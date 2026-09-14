@@ -19,3 +19,6 @@ thiserror.workspace = true
 x509-parser = "0.18"
 # x509-parser permits newer time releases whose MSRV exceeds workspace Rust 1.85.
 time = "=0.3.44"
+
+[lints]
+workspace = true

@@ -9,3 +9,6 @@ adns-wire = { path = "../adns-wire" }
 ring.workspace = true
 thiserror.workspace = true
 serde.workspace = true
+
+[lints]
+workspace = true

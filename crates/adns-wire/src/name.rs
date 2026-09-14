@@ -152,7 +152,11 @@ impl WireName {
         }
         let mut result = Self::root();
         for label in self.labels().skip(1) {
-            result.push_label(label).expect("suffix fits original name");
+            // A suffix of a valid name always fits; return None instead of
+            // panicking if an invariant is ever broken upstream.
+            if result.push_label(label).is_err() {
+                return None;
+            }
         }
         Some(result)
     }

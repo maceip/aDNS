@@ -10,3 +10,13 @@ serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
 ring.workspace = true
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bench]]
+name = "storage"
+harness = false
+
+[lints]
+workspace = true

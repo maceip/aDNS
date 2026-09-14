@@ -94,16 +94,53 @@ fn rfc6605_p384_key_tag_ds_and_signature_vector() {
     verify_rrset(&[a], &sig, &key, 1282000000).unwrap();
 }
 #[test]
+fn rfc4034_dskey_key_tag_vector() {
+    // RFC 4034 Section 5.4: the DS example states key tag 60485 for this
+    // dskey.example.com DNSKEY (algorithm 5, generic key-tag path).
+    let key = DnskeyData {
+        flags: 256,
+        protocol: 3,
+        algorithm: 5,
+        public_key: STANDARD
+            .decode(concat!(
+                "AQOeiiR0GOMYkDshWoSKz9XzfwJr1AYtsmx3TGkJaNXVbfi/",
+                "2pHm822aJ5iI9BMzNXxeYCmZDRD99WYwYqUSdjMmmAphXdvx",
+                "egXd/M5+X7OrzKBaMbCVdFLUUh6DhweJBjEVv5f2wwjM9Xzc",
+                "nOf+EPbtG9DMBmADjFDc2w/rljwvFw=="
+            ))
+            .unwrap(),
+    };
+    assert_eq!(key_tag(&RData::Dnskey(key).to_wire().unwrap()), 60485);
+}
+
+#[test]
 fn rfc5155_hash_vectors_and_limits() {
+    // RFC 5155 Appendix A: all 12 published H() vectors (SHA-1, salt
+    // aabbccdd, 12 iterations). Our encoder emits uppercase base32hex.
     let salt = hex_decode("aabbccdd").unwrap();
-    assert_eq!(
-        base32hex_encode(&nsec3_hash(&n("example."), 12, &salt).unwrap()),
-        "0P9MHAVEQVM6T7VBL5LOP2U3T2RP3TOM"
-    );
-    assert_eq!(
-        base32hex_encode(&nsec3_hash(&n("a.example."), 12, &salt).unwrap()),
-        "35MTHGPGCU1QG68FAB165KLNSNK3DPVL"
-    );
+    for (name, expected) in [
+        ("example.", "0P9MHAVEQVM6T7VBL5LOP2U3T2RP3TOM"),
+        ("a.example.", "35MTHGPGCU1QG68FAB165KLNSNK3DPVL"),
+        ("ai.example.", "GJEQE526PLBF1G8MKLP59ENFD789NJGI"),
+        ("ns1.example.", "2T7B4G4VSA5SMI47K61MV5BV1A22BOJR"),
+        ("ns2.example.", "Q04JKCEVQVMU85R014C7DKBA38O0JI5R"),
+        ("w.example.", "K8UDEMVP1J2F7EG6JEBPS17VP3N8I58H"),
+        ("*.w.example.", "R53BQ7CC2UVMUBFU5OCMM6PERS9TK9EN"),
+        ("x.w.example.", "B4UM86EGHHDS6NEA196SMVMLO4ORS995"),
+        ("y.w.example.", "JI6NEOAEPV8B5O6K4EV33ABHA8HT9FGC"),
+        ("x.y.w.example.", "2VPTU5TIMAMQTTGL4LUU9KG21E0AOR3S"),
+        ("xx.example.", "T644EBQK9BIBCNA874GIVR6JOJ62MLHV"),
+        (
+            "2t7b4g4vsa5smi47k61mv5bv1a22bojr.example.",
+            "KOHAR7MBB8DC2CE8A9QVL8HON4K53UHI",
+        ),
+    ] {
+        assert_eq!(
+            base32hex_encode(&nsec3_hash(&n(name), 12, &salt).unwrap()),
+            expected,
+            "NSEC3 vector for {name}"
+        );
+    }
     assert!(nsec3_hash(&n("example."), 251, &salt).is_err());
 }
 #[test]

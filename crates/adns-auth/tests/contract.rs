@@ -216,7 +216,7 @@ fn strict_schema_rejects_unknown_duplicate_float_null_and_bad_encoding() {
             v
         },
         {
-            let mut v = value.clone();
+            let mut v = value;
             v["client_signature"] = json!(format!("{}=", request.client_signature));
             v
         },
@@ -397,7 +397,7 @@ fn historical_idempotency_is_exact_and_authenticates_retries() {
         reconcile_result(&same_action_new_nonce, &result),
         Err(AuthError::RequestIdConflict)
     );
-    let mut different = request.action.clone();
+    let mut different = request.action;
     if let ActionParameters::Register(p) = &mut different.parameters {
         p.lease_seconds = 60;
     }
@@ -542,7 +542,7 @@ fn owner_grant_rejects_authentic_keys_outside_every_scope() {
             g
         },
         {
-            let mut g = owner.clone();
+            let mut g = owner;
             g.max_lease_seconds = 100;
             g
         },

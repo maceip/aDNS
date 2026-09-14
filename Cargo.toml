@@ -7,17 +7,59 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 license = "Apache-2.0"
+description = "Confidential DNSSEC authority ported from microsoft/ccfdns to safe Rust on CCF"
+repository = "https://github.com/microsoft/ccfdns"
+readme = "README.md"
+keywords = ["dns", "dnssec", "ccf", "confidential-computing"]
+categories = ["network-programming", "cryptography"]
 
 [workspace.dependencies]
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1", features = ["derive", "rc"] }
 serde_json = "1"
 thiserror = "2"
 sha2 = "0.10"
 ring = "0.17"
 base64 = "0.22"
 hex = "0.4"
+criterion = { version = "0.8", features = ["html_reports"] }
+
+[workspace.lints.rust]
+elided_lifetimes_in_paths = "warn"
+trivial_numeric_casts = "warn"
+unnameable_types = "warn"
+unreachable_pub = "warn"
+unused_extern_crates = "warn"
+unused_import_braces = "warn"
+unused_qualifications = "warn"
+missing_docs = "allow"
+
+# no_std lints (`alloc_instead_of_core`, `std_instead_of_core`) are intentionally
+# off: unlike rustls this service is std-only (tokio, CCF bridge), so rewriting
+# `std::` imports to `core::` adds churn with no portability gain.
+[workspace.lints.clippy]
+cloned_instead_of_copied = "warn"
+manual_let_else = "warn"
+needless_bitwise_bool = "warn"
+needless_collect = "warn"
+needless_pass_by_ref_mut = "warn"
+or_fun_call = "warn"
+redundant_clone = "warn"
+upper_case_acronyms = "warn"
+use_self = "warn"
+too_many_arguments = "allow"
+new_without_default = "allow"
 
 [profile.release]
 lto = "thin"
 codegen-units = 1
 panic = "abort"
+
+# Criterion-style micro-benchmarks: single codegen unit + LTO, like rustls.
+[profile.bench]
+codegen-units = 1
+lto = true
+
+# Heavier integration runs inherit release with light optimization, like tlsn.
+[profile.tests-integration]
+inherits = "release"
+opt-level = 1

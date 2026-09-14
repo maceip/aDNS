@@ -97,7 +97,7 @@ To ensure accurate engineering planning, the baseline distinguishes upstream `cc
 |  - Algorithm 14 (P-384) native P1363 signing       |  - RFC 8785 JCS + ECDSA P-256 fixed r||s checks   |
 |  - Multi-port TLSA overlap engine (25, 465, 993)   |  - 32-byte nonces & committed idempotency cache   |
 +----------------------------------------------------+---------------------------------------------------+
-|  Storage & Lifecycle (`adns-storage`, `adns-lifecycle`)                                                |
+|  Storage & Lifecycle (`adns-storage`, lifecycle in `adns-server`)                                     |
 |  - Logical collections: zones, records, registrations, grants, nonces, request_results, challenges     |
 |  - Private encrypted maps for DNSSEC private keys and TSIG secrets                                    |
 |  - Autonomous lifecycle driver: signature refresh before expiry, lease GC, secondary observation      |
@@ -639,7 +639,7 @@ The project is structured into **6 decoupled workstreams** across **4 sequential
                                                             |
                                                             v
                                             +-------------------------------+
-                                            |  WS 7: adns-lifecycle & CI    |
+                                            |  WS 7: lifecycle & CI         |
                                             |  - Autonomous Resign Driver   |
                                             |  - BIND 9 AXFR Integration    |
                                             |  - 12 Acceptance Checks       |
@@ -724,9 +724,12 @@ The project is structured into **6 decoupled workstreams** across **4 sequential
 | **6.6** | KSK Transparency Receipt Endpoint | `GET /governance/ksk-receipt`. Emit CCF Merkle inclusion proof binding canonical owner name and full DNSKEY RDATA. | 2.2, 5.4 | Parallel with 6.1 |
 | **6.7** | RFC 8484 DoH Query Handler | `/dns-query` (GET and POST) for internal enclave forwarders. | 1.4, 5.4 | Parallel with 6.4 |
 
-#### Workstream 7: Autonomous Lifecycle Driver & Acceptance Testing (`adns-lifecycle` / `adns-ci`)
+#### Workstream 7: Autonomous Lifecycle Driver & Acceptance Testing (lifecycle in `adns-server` / `adns-ci`)
 * **Focus:** Background maintenance timer, secondary integration, and the 12 acceptance criteria.
 * **Prerequisites:** Integrated Milestone C artifacts.
+* **Implementation note:** there is no separate `adns-lifecycle` crate; the driver
+  lives in `adns-server` (`limits.rs` bounds + format marker, `state.rs`
+  maintenance entry, `zone.rs` re-sign). The `port.md` diagram name is historical.
 
 | ID | Work Item | Technical Requirements & Constraints | Dependencies | Parallel Status |
 | :--- | :--- | :--- | :--- | :--- |

@@ -649,12 +649,12 @@ pub fn secondary_response(
     }
     let state_key = adns_storage::composite_key(&[origin.as_slice(), pending.endpoint.as_bytes()]);
     let mut state: adns_transfer::SecondaryState =
-        get_json(tx, Collection::SecondaryStatus, &state_key)?.unwrap_or(
+        get_json(tx, Collection::SecondaryStatus, &state_key)?.unwrap_or_else(|| {
             adns_transfer::SecondaryState {
                 endpoint: pending.endpoint,
                 ..Default::default()
-            },
-        );
+            }
+        });
     if pending.kind == "notify" {
         state.notified(pending.serial);
     } else {

@@ -22,3 +22,6 @@ base64.workspace = true
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "io-util", "sync", "time", "signal"] }
 axum = "0.8"
 form_urlencoded = "1"
+
+[lints]
+workspace = true

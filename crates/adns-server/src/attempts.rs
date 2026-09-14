@@ -61,12 +61,12 @@ pub fn mutate_observed(
         return Err(error);
     }
     let authenticated = (|| {
-        let config = crate::service::configuration(tx)?;
+        let config = configuration(tx)?;
         if now < config.last_time {
             return Err(AppError::Invalid("time moved backwards"));
         }
         let request = observe(Name::Parse, || parse_signed_request(body))?;
-        if crate::service::expected_route(request.action.operation()) != (method, path) {
+        if expected_route(request.action.operation()) != (method, path) {
             return Err(AppError::Invalid("operation does not match endpoint"));
         }
         let verified = observe(Name::Signature, || verify_request_signature(&request))?;
@@ -135,7 +135,7 @@ pub(crate) fn reconcile_uncompleted(
 ) -> Result<AppResponse> {
     adns_auth::validate_identifier(grant_id)?;
     adns_auth::validate_identifier(request_id)?;
-    let config = crate::service::configuration(tx)?;
+    let config = configuration(tx)?;
     let rows = tx.scan_prefix(Collection::Nonces, b"")?;
     if rows.len() > MAX_OUTSTANDING_NONCES {
         return Err(inconsistent("nonce capacity"));
@@ -143,7 +143,7 @@ pub(crate) fn reconcile_uncompleted(
     let mut observations = Vec::new();
     for (key, value) in rows {
         let nonce: NonceRecord =
-            serde_json::from_slice(&value.bytes).map_err(adns_storage::StorageError::from)?;
+            serde_json::from_slice(&value.bytes).map_err(StorageError::from)?;
         if key != nonce_key(config.epoch, &nonce.nonce)
             || nonce.grant_id != grant_id
             || nonce.request_id != request_id
@@ -157,7 +157,7 @@ pub(crate) fn reconcile_uncompleted(
         let mut failed = false;
         if let Some(row) = tx.get(Collection::Lifecycle, &attempt_key(&key))? {
             let attempt: FailedAttempt =
-                serde_json::from_slice(&row.bytes).map_err(adns_storage::StorageError::from)?;
+                serde_json::from_slice(&row.bytes).map_err(StorageError::from)?;
             if attempt.grant_id != nonce.grant_id
                 || attempt.request_id != nonce.request_id
                 || attempt.nonce != nonce.nonce

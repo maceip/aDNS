@@ -124,7 +124,9 @@ pub(crate) fn verify_chain(chain: &[X509], now: u64) -> Result<u64, AttestationE
             ));
         }
     }
-    let root = chain.last().unwrap();
+    let root = chain
+        .last()
+        .ok_or(AttestationError::Malformed("empty certificate chain"))?;
     let root_key = root.public_key()?;
     if root.issuer_name().to_der()? != root.subject_name().to_der()? || !root.verify(&root_key)? {
         return Err(AttestationError::CertificateInvalid(

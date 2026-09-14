@@ -1,0 +1,6 @@
+# cargo-nextest profile: keep the full suite green without hiding failures.
+[profile.default]
+fail-fast = false
+test-threads = "num-cpus"
+status-level = "pass"
+final-status-level = "flaky"

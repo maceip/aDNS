@@ -485,7 +485,7 @@ mod tests {
             verify_request(&signed, &key, 1000),
             Err(TransferError::BadTime)
         ));
-        let mut corrupt = signed.clone();
+        let mut corrupt = signed;
         corrupt[20] ^= 1;
         assert!(verify_request(&corrupt, &key, 100).is_err());
         let mut response = query();

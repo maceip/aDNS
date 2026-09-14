@@ -194,7 +194,10 @@ pub fn composite_key(components: &[&[u8]]) -> Vec<u8> {
 #[derive(Clone, Default, Serialize, Deserialize)]
 struct State {
     revision: u64,
-    tables: BTreeMap<Collection, BTreeMap<Vec<u8>, VersionedValue>>,
+    /// Per-table `Arc` shares untouched tables between snapshots: `commit`
+    /// clones 12 `Arc`s and deep-copies only tables present in the write set
+    /// instead of cloning the whole database under the global write lock.
+    tables: BTreeMap<Collection, Arc<BTreeMap<Vec<u8>, VersionedValue>>>,
 }
 #[derive(Clone, Default)]
 pub struct MemoryStorage {
@@ -313,10 +316,12 @@ impl MemoryWrite {
             .revision
             .checked_add(1)
             .ok_or_else(|| StorageError::Backend("revision exhausted".into()))?;
-        let mut state = (**guard).clone();
-        state.revision = revision;
+        let mut state = State {
+            revision,
+            tables: guard.tables.clone(),
+        };
         for ((table, key), value) in self.writes {
-            let map = state.tables.entry(table).or_default();
+            let map = Arc::make_mut(state.tables.entry(table).or_default());
             if let Some(bytes) = value {
                 map.insert(
                     key,
@@ -403,7 +408,11 @@ impl MemoryStorage {
             ..State::default()
         };
         for (t, k, v) in entries {
-            if v.version > revision || state.tables.entry(t).or_default().insert(k, v).is_some() {
+            if v.version > revision
+                || Arc::make_mut(state.tables.entry(t).or_default())
+                    .insert(k, v)
+                    .is_some()
+            {
                 return Err(StorageError::InvalidSnapshot);
             }
         }

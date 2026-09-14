@@ -154,7 +154,7 @@ pub fn mutate(
     let replay = observe(Name::Idempotency, || {
         if let Some(v) = tx.get(Collection::RequestResults, &result_key)? {
             let result: RequestResult =
-                serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+                serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
             if result.signed_message_digest != verified.signed_message_digest {
                 return Err(AppError::Auth(AuthError::RequestIdConflict));
             }
@@ -466,8 +466,7 @@ pub fn maintenance(tx: &mut impl WriteTx, now: u64) -> Result<Vec<String>> {
         return Err(inconsistent("challenge capacity"));
     }
     for (key, v) in challenges {
-        let c: AcmeChallenge =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+        let c: AcmeChallenge = serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
         let g = get_json::<OwnerGrant>(tx, Collection::Grants, c.grant_id.as_bytes())?;
         let r =
             get_json::<Registration>(tx, Collection::Registrations, c.registration_id.as_bytes())?;
@@ -510,8 +509,7 @@ pub fn maintenance(tx: &mut impl WriteTx, now: u64) -> Result<Vec<String>> {
         return Err(inconsistent("zone count exceeds supported bound"));
     }
     for (_, v) in zones {
-        let zone: ZoneMetadata =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+        let zone: ZoneMetadata = serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
         if now.saturating_add(zone.refresh_before.into()) >= zone.earliest_signature_expiration {
             dirty.insert(zone.origin);
         }
@@ -538,7 +536,7 @@ fn collect_live_nonces(tx: &mut impl WriteTx, now: u64, epoch: u64) -> Result<Ve
     let mut live = Vec::new();
     for (key, value) in entries {
         let nonce: NonceRecord =
-            serde_json::from_slice(&value.bytes).map_err(adns_storage::StorageError::from)?;
+            serde_json::from_slice(&value.bytes).map_err(StorageError::from)?;
         if nonce.expires_at <= now || nonce.consumed || key != nonce_key(epoch, &nonce.nonce) {
             tx.remove(Collection::Nonces, &key)?;
             remove_failed_attempt(tx, &key)?;
@@ -584,8 +582,8 @@ pub fn read_json(
             };
             let mut contributions = Vec::new();
             for (_, value) in tx.scan_prefix(Collection::Records, &zone_prefix(&origin))? {
-                let rrset: VersionedRrset = serde_json::from_slice(&value.bytes)
-                    .map_err(adns_storage::StorageError::from)?;
+                let rrset: VersionedRrset =
+                    serde_json::from_slice(&value.bytes).map_err(StorageError::from)?;
                 contributions.extend(
                     rrset
                         .contributions
@@ -620,7 +618,7 @@ pub fn read_json(
                 );
             };
             let result: RequestResult =
-                serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+                serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
             let mut response = AppResponse::new(result.body);
             response.original_version = Some(v.version);
             Ok(response)
@@ -631,7 +629,7 @@ pub fn read_json(
             let mut secondaries = Vec::new();
             for (_, v) in tx.scan_prefix(Collection::SecondaryStatus, &zone_prefix(&origin))? {
                 let state: adns_transfer::SecondaryState =
-                    serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+                    serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
                 let mut value = json!(state);
                 value["in_sync"] = json!(state.in_sync(zone.serial, now, 60));
                 secondaries.push(value);

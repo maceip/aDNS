@@ -785,12 +785,11 @@ fn doh_ds_at_a_hosted_child_apex_uses_the_parent_zone() {
 fn doh_rejects_a_missing_lifecycle_recovery_marker() {
     let db = database();
     let mut tx = db.write().unwrap();
-    let marker_keys: Vec<_> =
-        adns_storage::ReadTx::scan_prefix(&tx, Collection::Lifecycle, b"server/")
-            .unwrap()
-            .into_iter()
-            .map(|(key, _)| key)
-            .collect();
+    let marker_keys: Vec<_> = ReadTx::scan_prefix(&tx, Collection::Lifecycle, b"server/")
+        .unwrap()
+        .into_iter()
+        .map(|(key, _)| key)
+        .collect();
     assert!(!marker_keys.is_empty());
     for key in marker_keys {
         tx.remove(Collection::Lifecycle, &key).unwrap();
@@ -816,7 +815,7 @@ fn ksk_claims_bind_canonical_owner_and_complete_rdata_with_real_leaf_counter() {
     let owner: WireName = first.body["owner_name"].as_str().unwrap().parse().unwrap();
     let rdata = hex::decode(first.body["dnskey_rdata_hex"].as_str().unwrap()).unwrap();
     assert_eq!(first.claims_digest, Some(ksk_claims_digest(&owner, &rdata)));
-    let mut altered = rdata.clone();
+    let mut altered = rdata;
     altered[4] ^= 1;
     assert_ne!(
         first.claims_digest,

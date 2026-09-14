@@ -74,13 +74,18 @@ pub fn resign_zone(
     let ksk = key(b"ksk")?;
     let zsk = key(b"zsk")?;
     zone_usage(tx, origin)?;
-    let mut all = metadata.base_records.clone();
+    // Pre-size for owned contributions to avoid a reallocation on extend;
+    // full-zone re-sign is still O(RRsets) — incremental signing is tracked
+    // work, and benches/adns-dnssec-sign now pins the current cost.
+    let owned = records(tx, origin)?;
+    let mut all = Vec::with_capacity(metadata.base_records.len() + owned.len());
+    all.extend(metadata.base_records.iter().cloned());
     for r in &mut all {
         if let RData::Soa(soa) = &mut r.rdata {
             soa.serial = metadata.serial;
         }
     }
-    all.extend(records(tx, origin)?);
+    all.extend(owned);
     // Governed base records and owned contributions may share an RRset. Its
     // TTL and duplicate handling must include every source before signing.
     let all = normalize_rrsets(all)?;

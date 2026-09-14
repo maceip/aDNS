@@ -1,0 +1,30 @@
+# cargo-deny config: advisories + license gate for a confidential service.
+# Run with: cargo deny check
+[graph]
+targets = [{ triple = "x86_64-unknown-linux-gnu" }]
+
+[advisories]
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+ignore = [
+    # time is pinned to =0.3.44 for MSRV 1.85 (see crates/adns-attest/Cargo.toml)
+    # and only reaches us via x509-parser ASN.1 times. The RUSTSEC-2026-0009
+    # stack-exhaustion path is RFC 2822 parsing, which nothing in this
+    # workspace calls. Revisit when time >= 0.3.47 fits the MSRV floor.
+    { id = "RUSTSEC-2026-0009", reason = "RFC 2822 parsing unreachable via x509-parser ASN.1 use; upgrade blocked by MSRV pin" },
+]
+
+[licenses]
+allow = ["Apache-2.0", "MIT", "BSD-2-Clause", "BSD-3-Clause", "ISC", "Unicode-3.0", "Unicode-DFS-2016", "MPL-2.0", "CDLA-Permissive-2.0"]
+confidence-threshold = 0.8
+
+[bans]
+multiple-versions = "warn"
+# Intra-workspace path deps carry no version and trip this lint; a bare "*"
+# version requirement from crates.io is what this gate is really about, and
+# that still warns.
+wildcards = "warn"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "warn"

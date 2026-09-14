@@ -97,9 +97,8 @@ impl SignedZone {
         {
             return Err(DnssecError::InvalidZone);
         }
-        let soa = match &soas[0].rdata {
-            RData::Soa(s) => s,
-            _ => return Err(DnssecError::InvalidZone),
+        let RData::Soa(soa) = &soas[0].rdata else {
+            return Err(DnssecError::InvalidZone);
         };
         let serial = soa.serial;
         let ttl = soas[0].ttl.min(soa.minimum);

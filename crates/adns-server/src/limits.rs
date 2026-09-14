@@ -1,6 +1,9 @@
 //! Admission bounds and versioned indexes for autonomous work. Historical
 //! registration/request rows remain available by key and are never scanned by
 //! maintenance. All updates belong to the caller's atomic write transaction.
+//!
+//! This module is the lifecycle driver together with `state.rs` (maintenance
+//! entry) and `zone.rs` (re-sign): there is no separate `adns-lifecycle` crate.
 use crate::*;
 use adns_storage::{Collection, ReadTx, StorageError, WriteTx, composite_key, get_json, put_json};
 use adns_wire::{ResourceRecord, WireName};

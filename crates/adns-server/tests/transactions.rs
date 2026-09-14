@@ -1,4 +1,5 @@
 use adns_auth::*;
+use adns_server::Result;
 use adns_server::*;
 use adns_storage::*;
 use adns_wire::*;
@@ -1516,7 +1517,7 @@ fn zone_and_initial_record_admission_caps_are_enforced() {
     );
 }
 
-fn reconcile_request(db: &MemoryStorage, id: &str, now: u64) -> adns_server::Result<AppResponse> {
+fn reconcile_request(db: &MemoryStorage, id: &str, now: u64) -> Result<AppResponse> {
     read_json(
         &db.read().unwrap(),
         "/service/request",

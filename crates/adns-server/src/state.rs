@@ -103,8 +103,7 @@ pub fn records(tx: &impl ReadTx, origin: &WireName) -> Result<Vec<ResourceRecord
     zone_usage(tx, origin)?;
     let mut out = Vec::new();
     for (_, v) in tx.scan_prefix(Collection::Records, &zone_prefix(origin))? {
-        let rrset: VersionedRrset =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+        let rrset: VersionedRrset = serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
         out.extend(rrset.contributions.into_iter().map(|c| c.record));
     }
     normalize_rrsets(out)
@@ -147,8 +146,7 @@ pub fn add_contribution(
     // CNAME exclusivity applies across all owners and all contributors.
     let prefix = composite_key(&[origin.as_slice(), record.name.as_slice()]);
     for (_, v) in tx.scan_prefix(Collection::Records, &prefix)? {
-        let set: VersionedRrset =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+        let set: VersionedRrset = serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
         for existing in set.contributions {
             if (existing.record.rtype == RecordType::Cname || record.rtype == RecordType::Cname)
                 && (existing.record.rtype != record.rtype || existing.record.rdata != record.rdata)
@@ -222,7 +220,7 @@ fn remove_matching_contributions(
     let mut usage = zone_usage(tx, origin)?;
     for (key, v) in tx.scan_prefix(Collection::Records, &zone_prefix(origin))? {
         let mut set: VersionedRrset =
-            serde_json::from_slice(&v.bytes).map_err(adns_storage::StorageError::from)?;
+            serde_json::from_slice(&v.bytes).map_err(StorageError::from)?;
         let before = set.contributions.len();
         let mut retained = Vec::new();
         for c in set.contributions {

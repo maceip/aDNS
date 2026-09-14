@@ -192,7 +192,7 @@ fn all_typed_records_roundtrip_compression_and_bounds() {
     for end in 0..wire.len() {
         assert!(Message::parse(&wire[..end]).is_err(), "truncation {end}");
     }
-    let mut trailing = wire.clone();
+    let mut trailing = wire;
     trailing.push(0);
     assert!(Message::parse(&trailing).is_err());
     let mut bad = m.clone();
