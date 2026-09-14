@@ -21,7 +21,7 @@ sha2 = "0.10"
 ring = "0.17"
 base64 = "0.22"
 hex = "0.4"
-criterion = { version = "0.8", features = ["html_reports"] }
+criterion = { version = "0.5", features = ["html_reports"] }
 
 [workspace.lints.rust]
 elided_lifetimes_in_paths = "warn"
