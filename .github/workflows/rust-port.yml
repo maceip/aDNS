@@ -51,6 +51,11 @@ jobs:
           /usr/bin/python3 -m unittest discover -s tests/rust-integration -p 'test_*.py' -v
           node --test ccf/tests/governance_actions_test.js
 
+      - name: DoH transport and DNSSEC smoke over loopback
+        run: |
+          cargo build --locked -p adns-server --bin adns-dev
+          /usr/bin/python3 tools/doh_smoke.py --binary target/debug/adns-dev --work .validation/doh-smoke
+
       - name: Genuine native ACI fixture and rejection regressions at recorded time
         run: |
           cargo build --locked -p adns-attest --example appraise
