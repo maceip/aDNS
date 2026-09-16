@@ -314,7 +314,7 @@ actions.set("adns_set_governor", new Action(
   args=>{
     adnsObject(args,["member_id","class","note"]);adnsString(args.member_id,64);
     if(!/^[0-9a-f]{64}$/.test(args.member_id))throw new Error("member_id is a 64-hex CCF member id");
-    if(!["agent","trapdoor"].includes(args.class))throw new Error("class agent|trapdoor");adnsString(args.note,512);
+    if(!["agent","trapdoor"].includes(args.class))throw new Error("class agent|trapdoor");adnsText(args.note,512);
   },
   (args,proposalId)=>{
     const params=adnsParams(), key=ccf.strToBuf(args.member_id), old=ccf.kv[adnsGovGovernors].get(key);

@@ -319,7 +319,7 @@ test('governance parameters: validated, merged, and reputation is not set by re-
   f.invoke('adns_set_governance_parameters', {parameters: {min_agent_yes: 2, open_join: false}});
   assert.equal(f.read('public:ccf.gov.agentdns.governance', 'parameters').min_agent_yes, 2);
   assert.equal(f.read('public:ccf.gov.agentdns.governance', 'parameters').release_threshold[0], 2, 'defaults merged');
-  f.invoke('adns_set_governor', {member_id: A, class: 'trapdoor', note: 'reclassified'});
+  f.invoke('adns_set_governor', {member_id: A, class: 'trapdoor', note: 'reclassified: human trap door'});
   assert.equal(f.read('public:ccf.gov.agentdns.governors', A).reputation, 7, 'reclassification keeps reputation');
   assert.throws(() => f.invoke('adns_set_governor', {member_id: 'nope', class: 'agent', note: ''}), /64-hex/);
 });
