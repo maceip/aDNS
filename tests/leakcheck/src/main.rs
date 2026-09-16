@@ -300,6 +300,7 @@ fn main() -> std::result::Result<(), Box<dyn Error>> {
                 earliest_signature_expiration: 0,
                 maintenance_health: String::new(),
                 ksk_dnskey_rdata: vec![],
+                ksk_rollover: None,
             },
             1000,
         )?;
