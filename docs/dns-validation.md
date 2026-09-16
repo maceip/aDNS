@@ -119,6 +119,18 @@ No layer trusts our code; each uses a different validator.
   DS-propagation window — persist keys or automate CDS before making this
   routine; (c) RRSIG validity is 24 h from signing, so the zone needs a
   daily re-sign pipeline or it goes dark on expiry.
+- **knotc zone-set APPENDS, it does not replace** (learned 2026-09-14: the
+  `dns` A change left both `.102` and `.117` live; same earlier for NS).
+  Always `zone-unset` the old RR first (or the full RRset), then set, then
+  `zone-read` to verify a single value — recursors served the dual-A set
+  for ~2 h.
+- **Revalidation 2026-09-14 ~21:40 UTC** (post-convergence): public NS single
+  `ns1.stare.network`; DNSViz (Linux vantage, island view) zero `[!]` with
+  25 RRSIG + NSEC3 proofs analyzed (KSK 27004, ZSK 43703, validity
+  09-14→09-15); delv exit 0 root-anchored (island-insecure, by design) and
+  explicit-anchor (fully validated); DoH 11/11 on the dns name. Root-anchored
+  delv from Docker Desktop on macOS SERVFAILs spuriously (large-response
+  iterative path) — use a Linux vantage, not a container on Mac.
 - **IPv6 (same day)**: Knot on the DNS box now serves `2a05:f480:1400:25f6::53`
   (static, netplan-persisted; needs `systemctl restart knot`, not just
   `reload`, to take effect) and `ns1.stare.network` has a matching AAAA

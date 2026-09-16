@@ -294,6 +294,12 @@ cutover. A valid receipt is evidence about the KSK, not authority to change the
 registrar. This port does not implement an online DNSSEC KSK rollover API; do
 not recreate a zone to simulate one.
 
+## Live code upgrade
+
+See `docs/upgrade-runbook.md`: D-signed, SVN-gated node join policy
+(`adns_set_node_join_policy`), join the new node, verify receipts, retire the
+old node, close the window. Published anchors are in `docs/anchors.md`.
+
 ## Release rollback and cutover
 
 Keep the previous approved artifacts and a tested recovery copy until the new

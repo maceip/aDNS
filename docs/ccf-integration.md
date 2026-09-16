@@ -2,7 +2,7 @@
 
 The production adapter builds against CCF **7.0.15** on Azure Linux 3, using the release RPM and base image digests pinned in `containers/ccf-toolchain.Dockerfile`. `containers/agentdns-ccf.Dockerfile` produces the standalone CCF 7 executable plus the autonomous host driver. Pin the resulting OCI digest in the confidential deployment policy; a mutable tag is not an attestation identity.
 
-The SDK's `UserEndpointRegistry` is dispatched by CCF's fixed `app` actor. Native paths therefore use `/app/service/...`, `/app/zone/...`, `/app/governance/ksk-receipt`, and `/app/dns-query`. An approved TLS frontend can map the specification's unprefixed paths to these native routes. The request signature binds the service audience and action, so that mapping does not alter signed content.
+The SDK's `UserEndpointRegistry` is dispatched by CCF's fixed `app` actor. Native paths therefore use `/app/service/...` (including `/app/service/anchor`), `/app/zone/...`, `/app/governance/ksk-receipt`, `/app/governance/policy-receipt`, `/app/governance/anchors`, and `/app/dns-query`. An approved TLS frontend can map the specification's unprefixed paths to these native routes. The request signature binds the service audience and action, so that mapping does not alter signed content.
 
 ## Transaction and key boundaries
 
