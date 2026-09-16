@@ -491,9 +491,11 @@ def start_mail_fixtures(state):
 
 
 class CaptureState:
-    def __init__(self, config):
+    MAX_LIFECYCLE_ACTIONS = 128
+
+    def __init__(self, config, *, config_validator=validate_config):
         # Copy and validate once. Nothing supplied to HTTP handlers changes this scope.
-        self.config = validate_config(strict_json(json.dumps(config).encode()))
+        self.config = config_validator(strict_json(json.dumps(config).encode()))
         self._key = ec.generate_private_key(ec.SECP256R1())
         self.spki = self._key.public_key().public_bytes(serialization.Encoding.DER,
                                                       serialization.PublicFormat.SubjectPublicKeyInfo)
@@ -643,7 +645,7 @@ class CaptureState:
             previous = self._request_ids.get(request_id)
             if previous is not None and previous != action_id:
                 raise ValueError("request ID already belongs to a different fixed action")
-            if action_id not in self._prepared_actions and len(self._prepared_actions) >= 128:
+            if action_id not in self._prepared_actions and len(self._prepared_actions) >= self.MAX_LIFECYCLE_ACTIONS:
                 raise ValueError("bounded validation lifecycle action capacity reached")
             self._request_ids[request_id] = action_id
             self._prepared_actions[action_id] = action

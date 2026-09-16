@@ -9,7 +9,8 @@ COPY crates /src/crates
 COPY ccf /src/ccf
 RUN cmake -S /src/ccf -B /build -GNinja -DCMAKE_BUILD_TYPE=Release && cmake --build /build -j4
 RUN mkdir -p /out/governance \
- && cat /opt/ccf/bin/actions.js /src/ccf/governance/actions.js /opt/ccf/bin/validate.js /opt/ccf/bin/apply.js /opt/ccf/bin/resolve.js > /out/governance/constitution.js \
+ && cp /src/ccf/governance/constitution.js /out/governance/constitution.js \
+ && echo "$(cat /src/ccf/governance/constitution.sha256)  /out/governance/constitution.js" | sha256sum -c - \
  && cp /opt/ccf/share/VERSION /out/CCF_VERSION \
  && sha256sum /build/agentdns /out/governance/constitution.js > /out/build.sha256
 

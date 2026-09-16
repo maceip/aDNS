@@ -78,7 +78,7 @@ that receipt before updating its pin (agent-hosting `infra/trust/verify.py --aut
 
 ## Owner grants for agent-hosting
 
-See `docs/governance/agent.hosting/`. Grants carry `attested_names` and
+See steward `governance/agent.hosting/`. Grants carry `attested_names` and
 `attested_record_types`; records under those names are published on the
 attested path as registration contributions (withdrawn with the registration),
 distinct from operator records.

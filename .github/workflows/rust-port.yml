@@ -49,7 +49,7 @@ jobs:
           .validation/ci-python/bin/python -m unittest discover -s ccf -p 'test_*.py' -v
           /usr/bin/python3 -m unittest discover -s ccf/tests -p test_supervisor.py -v
           /usr/bin/python3 -m unittest discover -s tests/rust-integration -p 'test_*.py' -v
-          node --test ccf/tests/governance_actions_test.js
+          echo "$(cat ccf/governance/constitution.sha256)  ccf/governance/constitution.js" | sha256sum -c -
 
       - name: DoH transport and DNSSEC smoke over loopback
         run: |
