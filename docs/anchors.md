@@ -36,7 +36,7 @@ RDATA). Append the new identity here with its recovery transaction ID.
 | Zone | KSK algorithm / key tag | DS (type 2) | Public delegation |
 |---|---|---|---|
 | `attestation.agent.hosting.` | 14 / 45132 | `d746e07e0b7214b995b195310db4f5bb0e4c2dc7cb8817c6afae1ff55c1e6aa2` | none (private integration zone) |
-| `agent.hosting.` | created under governance by `docs/governance/agent.hosting/create-zone.json`; KSK generated in the enclave at creation | see `/app/governance/anchors` | Azure DNS remains authoritative (DS `8806 13 2 39FAF5…`) until the owner re-delegates |
+| `agent.hosting.` | 14 / 59729 | `63db4cd20f2596721ce86bd43add9adb90e83d870eb3d3fe6beb8e5b534fcc14` (created 2026-09-16, tx `2.273965`) | Azure DNS remains authoritative (DS `8806 13 2 39FAF5…`) until the owner re-delegates |
 
 No online KSK rollover exists (see `operations.md`); a KSK change is a new zone
 or an offline procedure with domain-owner sign-off.
@@ -87,4 +87,12 @@ distinct from operator records.
 
 | Date | Change | Transaction |
 |---|---|---|
-| 2026-09-16 | constitution: `adns_set_release_authority`, `adns_set_node_join_policy`, grant `attested_names`/`attested_record_types`, `anchor` operation, D-signature requirement on appraisal policies | see `docs/governance/agent.hosting/README.md` once applied |
+| 2026-09-16 | constitution `cf33091aa0135ca69354c406692428b51b95d32651cb231dc3d56f925c8960db`: `adns_set_release_authority`, `adns_set_node_join_policy`, grant `attested_names`/`attested_record_types`, `anchor` operation, D-signature requirement on appraisal policies | `2.273944` |
+| 2026-09-16 | `adns_create_zone agent.hosting.` (private, not delegated) | `2.273965` |
+| 2026-09-16 | owner grant `agent-hosting-mail-20260916` | `2.273969` |
+| 2026-09-16 | owner grant `agent-hosting-worker-20260916` | `2.273971` |
+
+The running primary is still the pre-`anchors.rs` release: grants with
+`attested_names` are stored but unreadable by that binary until the primary is
+upgraded under `docs/upgrade-runbook.md`; the anchor and receipt endpoints do
+not exist on it yet. Nothing uses those grants before agent-hosting phase 2.

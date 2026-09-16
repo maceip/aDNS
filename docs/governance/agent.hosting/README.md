@@ -27,3 +27,16 @@ python3 tools/ccf_control.py propose --url https://agentdns.test:8000 --connect-
 
 Each proposal's acceptance is its confirmed global-commit transaction ID; record
 it in `docs/anchors.md`.
+
+## Applied 2026-09-16
+
+| Proposal | Transaction | Result |
+|---|---|---|
+| `set_constitution` (digest `cf33091a…`, 2129 lines: pinned CCF 7.0.15 defaults + `ccf/governance/actions.js` + exports) | `2.273944` | Accepted |
+| `create-zone.json` | `2.273965` | Accepted; zone signed, serial 2026091601, KSK tag 59729, DS `63db4cd2…` |
+| `grant-mail.json` | `2.273969` | Accepted |
+| `grant-worker.json` | `2.273971` | Accepted |
+
+Voted by the single active member `3552372e…` under a `resolve()` that accepts
+every proposal — the one-member test fixture the operations guide warns about.
+These commits are governance facts, not consortium approval.
