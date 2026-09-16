@@ -263,3 +263,111 @@ actions.set("adns_revoke_transfer", new Action(
   args=>{adnsObject(args,["key_name"]);adnsName(args.key_name);},
   args=>{const key=ccf.strToBuf("governance/transfer/"+args.key_name),old=ccf.kv[adnsGovTransfer].get(key);if(old===undefined)throw new Error("transfer identity missing");const revoked=ccf.bufToJsonCompatible(old);revoked.revoked=true;adnsWrite(adnsGovTransfer,key,revoked);adnsWrite(adnsLifecycle,key,revoked);}
 ));
+// ---- Governors: open-join, reputation-weighted, agent-led, with a human trap door ----
+// Shape (agent-hosting ADR 0025 / agentdns ADR 0002): members are verifier agents
+// (class "agent") or humans (class "trapdoor"). Votes are weighted by reputation,
+// earned by verdicts that agree with outcomes and lost by verdicts that do not.
+// A `block` verdict (a BountyNet-style finding) holds a release proposal open until
+// withdrawn. A trapdoor vote is decisive either way and is loud in the ledger.
+const adnsGovGovernors = "public:ccf.gov.agentdns.governors";
+const adnsGovVerdicts = "public:ccf.gov.agentdns.verdicts";
+const adnsGovSettled = "public:ccf.gov.agentdns.settled";
+const adnsGovParams = "public:ccf.gov.agentdns.governance";
+const adnsHighImpact = ["set_constitution","set_js_app","set_member","remove_member","set_recovery_threshold","transition_service_to_open",
+  "add_snp_measurement","add_snp_host_data","add_snp_uvm_endorsement","set_snp_minimum_tcb_version","set_snp_minimum_tcb_version_hex",
+  "remove_snp_measurement","remove_snp_host_data","remove_snp_uvm_endorsement","remove_snp_minimum_tcb_version",
+  "adns_set_node_join_policy","adns_set_appraisal_policy","adns_set_release_authority","adns_set_governance_parameters","adns_set_governor"];
+function adnsDefaultParams() {
+  return {release_threshold:[2,3],block_threshold:[1,3],routine_threshold:[1,2],min_agent_yes:1,newcomer_weight_cap_percent:20,
+    max_member_weight_percent:34,reputation_min:1,reputation_max:64,reputation_step:1,block_reputation:2,open_join:true,high_impact_actions:adnsHighImpact};
+}
+function adnsParams() {
+  const raw=ccf.kv[adnsGovParams].get(ccf.strToBuf("parameters"));
+  return raw===undefined?adnsDefaultParams():{...adnsDefaultParams(),...ccf.bufToJsonCompatible(raw)};
+}
+function adnsGovernorOf(memberId, params) {
+  const raw=ccf.kv[adnsGovGovernors].get(ccf.strToBuf(memberId));
+  return raw===undefined?{class:"agent",reputation:params.reputation_min,joined_via:"unregistered"}:ccf.bufToJsonCompatible(raw);
+}
+function adnsText(value, maximum) { if (typeof value !== "string" || value.length > maximum || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value)) throw new Error("invalid text"); }
+function adnsRatio(value) { if(!Array.isArray(value)||value.length!==2)throw new Error("ratio [num,den] required");adnsInteger(value[0],0,1000);adnsInteger(value[1],1,1000);if(value[0]>value[1])throw new Error("ratio above one"); }
+actions.set("adns_set_governance_parameters", new Action(
+  args=>{
+    adnsObject(args,["parameters"]);
+    const p=args.parameters, keys=Object.keys(adnsDefaultParams());
+    adnsObject(p,Object.keys(p).filter(k=>keys.includes(k)));
+    for(const k of ["release_threshold","block_threshold","routine_threshold"]) if(k in p) adnsRatio(p[k]);
+    if("min_agent_yes" in p) adnsInteger(p.min_agent_yes,1,64);
+    for(const k of ["newcomer_weight_cap_percent","max_member_weight_percent"]) if(k in p) adnsInteger(p[k],1,100);
+    for(const k of ["reputation_min","reputation_max","reputation_step","block_reputation"]) if(k in p) adnsInteger(p[k],1,1000000);
+    if("reputation_min" in p && "reputation_max" in p && p.reputation_min>p.reputation_max) throw new Error("reputation bounds");
+    if("open_join" in p && typeof p.open_join!=="boolean") throw new Error("open_join boolean");
+    if("high_impact_actions" in p) adnsArray(p.high_impact_actions,v=>adnsString(v,128),128);
+  },
+  (args,proposalId)=>{adnsWrite(adnsGovParams,ccf.strToBuf("parameters"),{...adnsParams(),...args.parameters});adnsWrite(adnsLifecycle,ccf.strToBuf("governance/parameters"),{...adnsParams(),...args.parameters});if(typeof invalidateOtherOpenProposals==="function")invalidateOtherOpenProposals(proposalId);}
+));
+// Register or reclassify a member as a governor. Open join: any member may be
+// proposed by any member; admission is decided by the weighted vote like any
+// other high-impact proposal. Reputation is set only at registration (to the
+// minimum unless a trapdoor is being registered) and thereafter only by settle.
+actions.set("adns_set_governor", new Action(
+  args=>{
+    adnsObject(args,["member_id","class","note"]);adnsString(args.member_id,64);
+    if(!/^[0-9a-f]{64}$/.test(args.member_id))throw new Error("member_id is a 64-hex CCF member id");
+    if(!["agent","trapdoor"].includes(args.class))throw new Error("class agent|trapdoor");adnsString(args.note,512);
+  },
+  (args,proposalId)=>{
+    const params=adnsParams(), key=ccf.strToBuf(args.member_id), old=ccf.kv[adnsGovGovernors].get(key);
+    const existing=old===undefined?undefined:ccf.bufToJsonCompatible(old);
+    const record={class:args.class,reputation:existing?existing.reputation:params.reputation_min,joined_via:existing?existing.joined_via:proposalId,note:args.note};
+    adnsWrite(adnsGovGovernors,key,record);adnsWrite(adnsLifecycle,ccf.strToBuf("governance/governor/"+args.member_id),record);
+    if(typeof invalidateOtherOpenProposals==="function")invalidateOtherOpenProposals(proposalId);
+  }
+));
+// A verdict is a self-attesting statement by the proposing member about another
+// proposal: approve, block (a finding), or withdraw (of its own block). It is
+// accepted by resolve() on the proposer's word alone because it only writes the
+// verdict table; its effect on the target proposal comes through resolve().
+actions.set("adns_record_verdict", new Action(
+  args=>{
+    adnsObject(args,["proposal_id","verdict","checks","evidence","rationale"]);
+    if(!/^[0-9a-f]{64}$/.test(args.proposal_id))throw new Error("proposal_id is a 64-hex CCF proposal id");
+    if(!["approve","block","withdraw"].includes(args.verdict))throw new Error("verdict approve|block|withdraw");
+    adnsArray(args.checks,c=>{adnsObject(c,["name","passed","detail"]);adnsString(c.name,64);if(typeof c.passed!=="boolean")throw new Error("passed boolean");adnsText(c.detail,1024);},64);
+    if(args.verdict==="block" && !args.checks.some(c=>c.passed===false))throw new Error("a block verdict needs at least one failed check");
+    adnsObject(args.evidence,Object.keys(args.evidence));for(const k of Object.keys(args.evidence)){adnsString(k,64);adnsText(args.evidence[k],4096);}
+    if(Object.keys(args.evidence).length>32)throw new Error("evidence keys");adnsText(args.rationale,4096);
+  },
+  (args,proposalId)=>{
+    const raw=ccf.kv["public:ccf.gov.proposals_info"].get(ccf.strToBuf(proposalId));
+    if(raw===undefined)throw new Error("verdict proposal has no info");
+    const proposer=ccf.bufToJsonCompatible(raw).proposer_id;
+    const record={...args,by:proposer,in_proposal:proposalId};
+    adnsWrite(adnsGovVerdicts,ccf.strToBuf(args.proposal_id+"/"+proposer),record);
+    adnsWrite(adnsLifecycle,ccf.strToBuf("governance/verdict/"+args.proposal_id+"/"+proposer),record);
+  }
+));
+// Settle reputation for a resolved proposal, once: voters on the winning side gain
+// a step, voters on the losing side lose a step, within [min, max]. Any member may
+// propose settlement; the ledger's own final_votes are the only input.
+actions.set("adns_settle", new Action(
+  args=>{adnsObject(args,["proposal_id"]);if(!/^[0-9a-f]{64}$/.test(args.proposal_id))throw new Error("proposal_id is a 64-hex CCF proposal id");},
+  (args,proposalId)=>{
+    const key=ccf.strToBuf(args.proposal_id);
+    if(ccf.kv[adnsGovSettled].has(key))throw new Error("already settled");
+    const raw=ccf.kv["public:ccf.gov.proposals_info"].get(key);
+    if(raw===undefined)throw new Error("unknown proposal");
+    const info=ccf.bufToJsonCompatible(raw);
+    if(!["Accepted","Rejected"].includes(info.state))throw new Error("proposal not resolved");
+    const params=adnsParams(), winning=info.state==="Accepted", changes={};
+    for(const [memberId,vote] of Object.entries(info.final_votes||{})) {
+      const g=adnsGovernorOf(memberId,params);
+      if(g.class!=="agent")continue;
+      const delta=(vote===winning)?params.reputation_step:-params.reputation_step;
+      const next=Math.max(params.reputation_min,Math.min(params.reputation_max,g.reputation+delta));
+      if(next!==g.reputation){changes[memberId]=[g.reputation,next];adnsWrite(adnsGovGovernors,ccf.strToBuf(memberId),{...g,reputation:next});}
+    }
+    const record={state:info.state,changes,settled_in:proposalId};
+    adnsWrite(adnsGovSettled,key,record);adnsWrite(adnsLifecycle,ccf.strToBuf("governance/settled/"+args.proposal_id),record);
+  }
+));

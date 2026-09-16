@@ -7,6 +7,7 @@ const vm = require('node:vm');
 const {test} = require('node:test');
 const crypto = require('node:crypto');
 const source = fs.readFileSync(path.join(__dirname, '../governance/actions.js'), 'utf8');
+const resolveSource = fs.readFileSync(path.join(__dirname, '../governance/resolve.js'), 'utf8').replace(/^export /gm, '');
 const transferTable = 'public:ccf.gov.agentdns.transfers';
 const policyTable = 'public:ccf.gov.agentdns.policy_identities';
 const lifecycle = 'public:agentdns.lifecycle';
@@ -42,11 +43,26 @@ function fixture() {
       get size() { return table(name).size; },
     })}),
   };
-  vm.runInNewContext(source, {ccf, actions, Action: class {
+  const context = {ccf, actions, Action: class {
     constructor(validate, apply) { this.validate = validate; this.apply = apply; }
-  }});
+  }};
+  vm.createContext(context);
+  vm.runInContext(source + '\n' + resolveSource, context);
+  let proposalCounter = 0;
   return {
-    invoke(name, args) { const action=actions.get(name); action.validate(args); action.apply(args, 'proposal-test'); },
+    invoke(name, args, proposalId) { const action=actions.get(name); action.validate(args); action.apply(args, proposalId || 'proposal-test'); },
+    member(id, status = 'Active') { table('public:ccf.gov.members.info').set(bytes(Buffer.from(id)), ccf.jsonCompatibleToBuf({status, member_data: {}})); },
+    // Register a proposal the way CCF does (raw body + info), then run resolve() with the given votes.
+    resolve(actionsList, proposer, votes, existingId) {
+      const id = existingId || crypto.createHash('sha256').update('proposal-' + (++proposalCounter)).digest('hex');
+      const body = JSON.stringify({actions: actionsList});
+      table('public:ccf.gov.proposals').set(bytes(Buffer.from(id)), Buffer.from(body));
+      table('public:ccf.gov.proposals_info').set(bytes(Buffer.from(id)), ccf.jsonCompatibleToBuf({proposer_id: proposer, state: 'Open', ballots: {}, final_votes: Object.fromEntries(votes.map(v => [v.member_id, v.vote]))}));
+      const state = context.resolve(body, proposer, votes);
+      const info = ccf.bufToJsonCompatible(table('public:ccf.gov.proposals_info').get(bytes(Buffer.from(id))));
+      info.state = state; table('public:ccf.gov.proposals_info').set(bytes(Buffer.from(id)), ccf.jsonCompatibleToBuf(info));
+      return {id, state};
+    },
     read(name, key) { return ccf.bufToJsonCompatible(table(name).get(bytes(Buffer.from(key)))); },
     keys(name) { return [...table(name).keys()].map(k => Buffer.from(k, 'hex').toString()); },
     table,
@@ -205,4 +221,105 @@ test('release authority record is validated: did:x509, SPKI PEM, validity window
   assert.throws(() => f.invoke('adns_set_release_authority', {authority: {...D.record, valid_until: 0}}), /integer outside range/);
   f.invoke('adns_set_release_authority', {authority: D.record});
   assert.equal(f.read(lifecycle, 'governance/release-authority').did, D.record.did);
+});
+
+
+// ---- Governance: governors, weighted resolve, verdicts, trapdoor, settle ----
+const A = 'a'.repeat(64), B = 'b'.repeat(64), C = 'c'.repeat(64), H = 'd'.repeat(64), N1 = 'e'.repeat(64), N2 = 'f'.repeat(64), N3 = '0'.repeat(64);
+const RELEASE = [{name: 'adns_set_appraisal_policy', args: {}}];
+const ROUTINE = [{name: 'adns_set_owner_grant', args: {}}];
+function governed(f, members) { for (const [id, cls, rep] of members) { f.member(id); f.invoke('adns_set_governor', {member_id: id, class: cls, note: 't'}); if (rep) f.table('public:ccf.gov.agentdns.governors').set(Buffer.from(id).toString('hex'), Buffer.from(JSON.stringify({class: cls, reputation: rep, joined_via: 'x', note: 't'}))); } }
+
+test('resolve: a single unregistered member is an agent with minimum reputation and can pass a high-impact proposal alone (bootstrap)', () => {
+  const f = fixture(); f.member(A);
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}]).state, 'Accepted');
+  assert.equal(f.resolve(RELEASE, A, []).state, 'Open');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: false}]).state, 'Rejected');
+});
+
+test('resolve: high-impact needs 2/3 of reputation weight and min_agent_yes; routine needs a strict majority', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 3], [B, 'agent', 3], [C, 'agent', 3]]);
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}]).state, 'Open', '1/3 of weight is not enough');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}]).state, 'Accepted', '2/3 passes');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: false}]).state, 'Rejected', '1/3 no blocks a release');
+  assert.equal(f.resolve(ROUTINE, A, [{member_id: A, vote: true}]).state, 'Open');
+  assert.equal(f.resolve(ROUTINE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}]).state, 'Accepted');
+  assert.equal(f.resolve(ROUTINE, A, [{member_id: A, vote: false}, {member_id: B, vote: false}]).state, 'Rejected');
+  f.invoke('adns_set_governance_parameters', {parameters: {min_agent_yes: 3}});
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}]).state, 'Open', 'distinct-agent minimum');
+});
+
+test('resolve: caps stop one veteran or a flood of newcomers from deciding alone', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 60], [B, 'agent', 2], [C, 'agent', 2]]);
+  // A has 60/64 raw weight but is capped at 34% -> cannot reach 2/3 alone.
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}]).state, 'Open');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}, {member_id: C, vote: true}]).state, 'Accepted');
+  const g = fixture(); governed(g, [[A, 'agent', 4], [N1, 'agent', 1], [N2, 'agent', 1], [N3, 'agent', 1]]);
+  // Three fresh joiners (raw 3 of 7) are capped to 20% collectively; they cannot outvote the veteran.
+  assert.equal(g.resolve(ROUTINE, N1, [{member_id: N1, vote: true}, {member_id: N2, vote: true}, {member_id: N3, vote: true}]).state, 'Open');
+  assert.equal(g.resolve(ROUTINE, A, [{member_id: A, vote: true}]).state, 'Accepted');
+});
+
+test('trapdoor: a human vote is decisive either way and beats agent weight', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 10], [B, 'agent', 10], [H, 'trapdoor', 0]]);
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}, {member_id: H, vote: false}]).state, 'Rejected', 'veto');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: H, vote: true}]).state, 'Accepted', 'override');
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}]).state, 'Accepted', 'agents alone still decide when the trapdoor is silent');
+  // A trapdoor never counts as agent weight.
+  assert.equal(f.resolve(ROUTINE, A, [{member_id: A, vote: true}]).state, 'Open');
+});
+
+test('verdicts: a block finding from a reputable agent holds a release open until withdrawn; approve verdicts self-accept', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 3], [B, 'agent', 3], [C, 'agent', 1]]);
+  const target = f.resolve(RELEASE, A, []);   // Open release proposal
+  // Verdict proposals resolve on the proposer's word alone.
+  const verdict = [{name: 'adns_record_verdict', args: {proposal_id: target.id, verdict: 'block', checks: [{name: 'svn', passed: false, detail: 'svn did not advance'}], evidence: {source_manifest_sha256: 'ab'.repeat(32)}, rationale: 'rollback'}}];
+  const v = f.resolve(verdict, B, []);
+  assert.equal(v.state, 'Accepted');
+  f.invoke('adns_record_verdict', verdict[0].args, v.id);
+  assert.equal(f.read('public:ccf.gov.agentdns.verdicts', target.id + '/' + B).by, B);
+  // Even unanimous yes cannot pass while B's finding stands.
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}, {member_id: C, vote: true}], target.id).state, 'Open');
+  // A low-reputation blocker (C, rep 1 < block_reputation 2) does not hold anything.
+  f.invoke('adns_record_verdict', {...verdict[0].args, verdict: 'withdraw', checks: [], rationale: 'fixed'}, f.resolve([{name: 'adns_record_verdict', args: verdict[0].args}], B, []).id);
+  assert.equal(f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}], target.id).state, 'Accepted');
+  assert.throws(() => f.invoke('adns_record_verdict', {...verdict[0].args, verdict: 'block', checks: [{name: 'x', passed: true, detail: ''}]}), /failed check/);
+  // Trapdoor override passes through a finding.
+  const g = fixture(); governed(g, [[A, 'agent', 3], [H, 'trapdoor', 0]]);
+  const t2 = g.resolve(RELEASE, A, []);
+  g.invoke('adns_record_verdict', {proposal_id: t2.id, verdict: 'block', checks: [{name: 'x', passed: false, detail: 'd'}], evidence: {}, rationale: 'r'}, g.resolve([{name: 'adns_record_verdict', args: {proposal_id: t2.id, verdict: 'block', checks: [{name: 'x', passed: false, detail: 'd'}], evidence: {}, rationale: 'r'}}], A, []).id);
+  assert.equal(g.resolve(RELEASE, A, [{member_id: H, vote: true}], t2.id).state, 'Accepted');
+});
+
+test('settle: winning voters gain, losing voters lose, bounded, once; trapdoors are never scored', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 3], [B, 'agent', 3], [C, 'agent', 3], [H, 'trapdoor', 0]]);
+  const p = f.resolve(RELEASE, A, [{member_id: A, vote: true}, {member_id: B, vote: true}, {member_id: C, vote: false}, {member_id: H, vote: true}]);
+  assert.equal(p.state, 'Accepted');
+  f.invoke('adns_settle', {proposal_id: p.id}, 's'.repeat(64));
+  assert.equal(f.read('public:ccf.gov.agentdns.governors', A).reputation, 4);
+  assert.equal(f.read('public:ccf.gov.agentdns.governors', B).reputation, 4);
+  assert.equal(f.read('public:ccf.gov.agentdns.governors', C).reputation, 2);
+  assert.equal(f.read('public:ccf.gov.agentdns.governors', H).reputation, 1, 'trapdoor untouched');
+  assert.throws(() => f.invoke('adns_settle', {proposal_id: p.id}), /already settled/);
+  const open = f.resolve(RELEASE, A, []);
+  assert.throws(() => f.invoke('adns_settle', {proposal_id: open.id}), /not resolved/);
+  // Floor at reputation_min.
+  const g = fixture(); governed(g, [[A, 'agent', 1], [B, 'agent', 5]]);
+  const q = g.resolve(ROUTINE, A, [{member_id: A, vote: true}, {member_id: B, vote: false}]);
+  assert.equal(q.state, 'Rejected');
+  g.invoke('adns_settle', {proposal_id: q.id}, 's'.repeat(64));
+  assert.equal(g.read('public:ccf.gov.agentdns.governors', A).reputation, 1);
+  assert.equal(g.read('public:ccf.gov.agentdns.governors', B).reputation, 6);
+});
+
+test('governance parameters: validated, merged, and reputation is not set by re-registering a governor', () => {
+  const f = fixture(); governed(f, [[A, 'agent', 7]]);
+  assert.throws(() => f.invoke('adns_set_governance_parameters', {parameters: {release_threshold: [3, 2]}}), /above one/);
+  assert.throws(() => f.invoke('adns_set_governance_parameters', {parameters: {bogus: 1}}), /unknown or missing field/);
+  f.invoke('adns_set_governance_parameters', {parameters: {min_agent_yes: 2, open_join: false}});
+  assert.equal(f.read('public:ccf.gov.agentdns.governance', 'parameters').min_agent_yes, 2);
+  assert.equal(f.read('public:ccf.gov.agentdns.governance', 'parameters').release_threshold[0], 2, 'defaults merged');
+  f.invoke('adns_set_governor', {member_id: A, class: 'trapdoor', note: 'reclassified'});
+  assert.equal(f.read('public:ccf.gov.agentdns.governors', A).reputation, 7, 'reclassification keeps reputation');
+  assert.throws(() => f.invoke('adns_set_governor', {member_id: 'nope', class: 'agent', note: ''}), /64-hex/);
 });

@@ -40,3 +40,11 @@ it in `docs/anchors.md`.
 Voted by the single active member `3552372e…` under a `resolve()` that accepts
 every proposal — the one-member test fixture the operations guide warns about.
 These commits are governance facts, not consortium approval.
+
+## Governance v2 (open-join, reputation-weighted, agent-led)
+
+`tools/compose_constitution.py` composes the constitution from the pinned CCF
+defaults, `ccf/governance/actions.js`, `exports.js` and `resolve.js`. The
+steward agent (`tools/steward.py`) reviews, records verdicts, votes, settles
+reputation and sponsors joins. See `docs/decisions/0002-governance-open-join-reputation-agent-led.md`.
+Live application transactions are appended below when performed.
