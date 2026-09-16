@@ -643,8 +643,10 @@ pub fn read_json(
                 value["in_sync"] = json!(state.in_sync(zone.serial, now, 60));
                 secondaries.push(value);
             }
+            let rollover = zone.ksk_rollover.as_ref().map(|r| json!({"stage": r.stage, "started_at": r.started_at, "minimum_hold_seconds": r.minimum_hold_seconds,
+                "next_key_tag": key_tag(&r.next_ksk_dnskey_rdata), "next_ds_sha256": ds_sha256(&origin, &r.next_ksk_dnskey_rdata)}));
             Ok(AppResponse::new(
-                json!({"zone":origin.to_string(),"committed_state":{"serial":zone.serial,"rrsig_inception":zone.last_signed_at.saturating_sub(300),"earliest_rrsig_expiration":zone.earliest_signature_expiration,"maintenance_health":if now>=zone.earliest_signature_expiration{"expired"}else if now.saturating_add(zone.refresh_before.into())>=zone.earliest_signature_expiration{"refresh_due"}else{&zone.maintenance_health}},"frontend_propagation":{"secondaries":secondaries}}),
+                json!({"zone":origin.to_string(),"ksk_key_tag":key_tag(&zone.ksk_dnskey_rdata),"ksk_rollover":rollover,"committed_state":{"serial":zone.serial,"rrsig_inception":zone.last_signed_at.saturating_sub(300),"earliest_rrsig_expiration":zone.earliest_signature_expiration,"maintenance_health":if now>=zone.earliest_signature_expiration{"expired"}else if now.saturating_add(zone.refresh_before.into())>=zone.earliest_signature_expiration{"refresh_due"}else{&zone.maintenance_health}},"frontend_propagation":{"secondaries":secondaries}}),
             ))
         }
         "/service/anchor" => {

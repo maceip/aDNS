@@ -59,6 +59,7 @@ fn database() -> MemoryStorage {
             earliest_signature_expiration: 0,
             maintenance_health: "initializing".into(),
             ksk_dnskey_rdata: vec![],
+            ksk_rollover: None,
         },
         NOW,
     )
@@ -719,6 +720,7 @@ fn doh_ds_at_a_hosted_child_apex_uses_the_parent_zone() {
                 earliest_signature_expiration: 0,
                 maintenance_health: "initializing".into(),
                 ksk_dnskey_rdata: vec![],
+                ksk_rollover: None,
             },
             NOW,
         )
@@ -874,4 +876,42 @@ fn receipt_reads_force_a_leaf_and_reject_unlisted_paths() {
     // Non-receipt paths are not served here even though read_json knows them.
     assert!(receipt_read(&mut tx, "/zone/status", "zone=example.test.", NOW).is_err());
     assert!(receipt_read(&mut tx, "/governance/anchors", "zone=example.test.", NOW).is_err());
+}
+#[test]
+fn governed_ksk_rollover_command_is_drained_by_maintenance_and_visible_in_receipt() {
+    let db = database();
+    let origin: WireName = "example.test.".parse().unwrap();
+    let mut tx = db.write().unwrap();
+    put_json(
+        &mut tx,
+        Collection::Lifecycle,
+        b"governance/ksk-rollover/example.test.".to_vec(),
+        &json!({"zone": "example.test.", "command": "start", "minimum_hold_seconds": 600}),
+    )
+    .unwrap();
+    let changed = governed_maintenance(&mut tx, NOW + 1).unwrap();
+    assert!(changed.contains(&"example.test.".to_string()));
+    assert!(
+        tx.get(
+            Collection::Lifecycle,
+            b"governance/ksk-rollover/example.test."
+        )
+        .unwrap()
+        .is_none(),
+        "command consumed"
+    );
+    let receipt = ksk_receipt_claims(&mut tx, "zone=example.test.", NOW + 1).unwrap();
+    assert_eq!(receipt.body["rollover"]["stage"], "double-signature");
+    let next_tag = receipt.body["rollover"]["next_key_tag"].as_u64().unwrap();
+    assert_ne!(next_tag, receipt.body["key_tag"].as_u64().unwrap());
+    // Claims still bind the current KSK only (verifiers of the v1 receipt are unaffected).
+    let rdata = hex::decode(receipt.body["dnskey_rdata_hex"].as_str().unwrap()).unwrap();
+    assert_eq!(
+        receipt.claims_digest,
+        Some(ksk_claims_digest(&origin, &rdata))
+    );
+    // A bad completion command fails maintenance loudly instead of being dropped.
+    put_json(&mut tx, Collection::Lifecycle, b"governance/ksk-rollover/example.test.".to_vec(),
+        &json!({"zone": "example.test.", "command": "complete", "new_key_tag": next_tag, "new_ds_sha256": "00".repeat(32)})).unwrap();
+    assert!(governed_maintenance(&mut tx, NOW + 700).is_err());
 }

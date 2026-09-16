@@ -485,6 +485,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 earliest_signature_expiration: 0,
                 maintenance_health: "starting".into(),
                 ksk_dnskey_rdata: vec![],
+                ksk_rollover: None,
             },
             now(),
         )?;

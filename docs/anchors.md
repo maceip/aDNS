@@ -38,8 +38,11 @@ RDATA). Append the new identity here with its recovery transaction ID.
 | `attestation.agent.hosting.` | 14 / 45132 | `d746e07e0b7214b995b195310db4f5bb0e4c2dc7cb8817c6afae1ff55c1e6aa2` | none (private integration zone) |
 | `agent.hosting.` | 14 / 59729 | `63db4cd20f2596721ce86bd43add9adb90e83d870eb3d3fe6beb8e5b534fcc14` (created 2026-09-16, tx `2.273965`) | Azure DNS remains authoritative (DS `8806 13 2 39FAF5…`) until the owner re-delegates |
 
-No online KSK rollover exists (see `operations.md`); a KSK change is a new zone
-or an offline procedure with domain-owner sign-off.
+Online KSK rollover is governed (`adns_ksk_rollover`, steward `v0.2.0`) and
+applied by the app in maintenance (`operations.md` → KSK rollover). During a
+rollover the anchors document and the KSK receipt show the incoming key; the
+parent DS switch stays a domain-owner action attested in the `complete` command.
+Not yet exercised live: requires the primary to run this release.
 
 ## Node join policy (SVN-gated)
 

@@ -52,13 +52,31 @@ impl SignedZone {
     }
     pub fn sign_with_keys(
         origin: WireName,
-        mut records: Vec<ResourceRecord>,
+        records: Vec<ResourceRecord>,
         ksk: &SigningKey,
         zsk: &SigningKey,
         now: u32,
         validity: u32,
         mode: DenialMode,
     ) -> Result<Self, DnssecError> {
+        Self::sign_with_keysets(origin, records, &[ksk], zsk, now, validity, mode)
+    }
+    /// RFC 6781 double-signature KSK rollover: every KSK is published in the
+    /// DNSKEY RRset and signs it, so a validator holding either DS validates.
+    /// `ksks[0]` is the current key; extra keys are the incoming ones.
+    pub fn sign_with_keysets(
+        origin: WireName,
+        mut records: Vec<ResourceRecord>,
+        ksks: &[&SigningKey],
+        zsk: &SigningKey,
+        now: u32,
+        validity: u32,
+        mode: DenialMode,
+    ) -> Result<Self, DnssecError> {
+        let ksk = *ksks.first().ok_or(DnssecError::InvalidZone)?;
+        if ksks.len() > 4 {
+            return Err(DnssecError::InvalidZone);
+        }
         // Existing generated records are replaced as one snapshot.
         records.retain(|r| {
             !matches!(
@@ -135,11 +153,13 @@ impl SignedZone {
             }
         }
         let same_key = ksk.dnskey(257) == zsk.dnskey(257);
-        records.push(ResourceRecord::new(
-            origin,
-            key_ttl,
-            RData::Dnskey(ksk.dnskey(257)),
-        )?);
+        for k in ksks {
+            records.push(ResourceRecord::new(
+                origin,
+                key_ttl,
+                RData::Dnskey(k.dnskey(257)),
+            )?);
+        }
         if !same_key {
             records.push(ResourceRecord::new(
                 origin,
@@ -264,13 +284,17 @@ impl SignedZone {
             {
                 continue;
             }
-            let signer = if *t == RecordType::Dnskey { ksk } else { zsk };
-            let flags = if *t == RecordType::Dnskey || same_key {
-                257
-            } else {
-                256
-            };
-            let sig = signer.sign_rrset(rrset, origin, flags, now, validity)?;
+            if *t == RecordType::Dnskey {
+                // One RRSIG per KSK over the complete DNSKEY RRset.
+                let mut sigs = Vec::with_capacity(ksks.len());
+                for k in ksks {
+                    sigs.push(k.sign_rrset(rrset, origin, 257, now, validity)?);
+                }
+                rrset.extend(sigs);
+                continue;
+            }
+            let flags = if same_key { 257 } else { 256 };
+            let sig = zsk.sign_rrset(rrset, origin, flags, now, validity)?;
             rrset.push(sig);
         }
         let records = rrsets.values().flatten().cloned().collect();

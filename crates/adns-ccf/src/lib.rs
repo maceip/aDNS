@@ -74,6 +74,15 @@ pub fn governed_maintenance(tx: &mut impl WriteTx, now: u64) -> adns_server::Res
         }
         tx.remove(Collection::Lifecycle, &key)?;
     }
+    // Governed KSK rollover commands (start / complete / abort), applied inside
+    // the enclave; the parent DS switch stays an attested external action.
+    for (key, row) in tx.scan_prefix(Collection::Lifecycle, b"governance/ksk-rollover/")? {
+        let command: adns_server::KskRolloverCommand =
+            serde_json::from_slice(&row.bytes).map_err(adns_storage::StorageError::from)?;
+        adns_server::apply_ksk_rollover(tx, &command, now)?;
+        changed.push(command.zone.clone());
+        tx.remove(Collection::Lifecycle, &key)?;
+    }
     let mut maintenance = adns_server::maintenance(tx, now)?;
     changed.append(&mut maintenance);
     changed.sort();
@@ -418,9 +427,14 @@ pub fn ksk_receipt_claims(
         b"ksk-receipt-latest".to_vec(),
         &json!({"owner":owner.to_string(),"claims_digest":hex::encode(claims),"requested_at":now,"counter":counter}),
     )?;
-    let mut response = AppResponse::new(
-        json!({"zone":owner.to_string(),"owner_name":owner.to_string(),"dnskey_rdata_hex":hex::encode(rdata),"key_tag":key_tag,"algorithm":14,"ds_digest":{"digest_type":2,"digest_hex":adns_auth::sha256_hex(&ds_data)},"status":"pending"}),
-    );
+    let mut body = json!({"zone":owner.to_string(),"owner_name":owner.to_string(),"dnskey_rdata_hex":hex::encode(rdata),"key_tag":key_tag,"algorithm":14,"ds_digest":{"digest_type":2,"digest_hex":adns_auth::sha256_hex(&ds_data)},"status":"pending"});
+    if let Some(rollover) = &zone.ksk_rollover {
+        // Informational: the claims digest still binds only the current KSK.
+        let next = &rollover.next_ksk_dnskey_rdata;
+        body["rollover"] = json!({"stage": rollover.stage, "started_at": rollover.started_at, "minimum_hold_seconds": rollover.minimum_hold_seconds,
+            "next_dnskey_rdata_hex": hex::encode(next), "next_key_tag": adns_server::key_tag(next), "next_ds_sha256": adns_server::ds_sha256(&owner, next)});
+    }
+    let mut response = AppResponse::new(body);
     response.claims_digest = Some(claims);
     Ok(response)
 }

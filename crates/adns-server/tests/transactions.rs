@@ -115,6 +115,7 @@ fn setup_with_base(
             earliest_signature_expiration: 0,
             maintenance_health: String::new(),
             ksk_dnskey_rdata: vec![],
+            ksk_rollover: None,
         },
         1000,
     )
@@ -2100,15 +2101,9 @@ fn anchors_are_owner_bound_monotonic_idempotent_and_receipted() {
     let first = envelope(&db, &signer, anchor(1, "aa", "anchor-1"), 1100);
     let response = submit(&db, &first, 1100).unwrap();
     assert_eq!(response.body["anchor"]["sequence"], 1);
-    assert_eq!(
-        response.body["anchor"]["type"],
-        adns_server::anchors::ANCHOR_CLAIMS_TYPE
-    );
-    let expected = adns_server::anchors::claims_digest(
-        adns_server::anchors::ANCHOR_CLAIMS_TYPE,
-        &response.body["anchor"],
-    )
-    .unwrap();
+    assert_eq!(response.body["anchor"]["type"], anchors::ANCHOR_CLAIMS_TYPE);
+    let expected =
+        anchors::claims_digest(anchors::ANCHOR_CLAIMS_TYPE, &response.body["anchor"]).unwrap();
     assert_eq!(
         response.claims_digest,
         Some(expected),
@@ -2230,13 +2225,7 @@ fn governance_receipts_cover_policy_and_anchors_document() {
     );
     assert_eq!(
         policy.claims_digest,
-        Some(
-            adns_server::anchors::claims_digest(
-                adns_server::anchors::POLICY_CLAIMS_TYPE,
-                &policy.body["claims"]
-            )
-            .unwrap()
-        )
+        Some(anchors::claims_digest(anchors::POLICY_CLAIMS_TYPE, &policy.body["claims"]).unwrap())
     );
     assert!(matches!(
         read_json(
@@ -2262,10 +2251,7 @@ fn governance_receipts_cover_policy_and_anchors_document() {
     );
     assert_eq!(
         anchors.claims_digest,
-        Some(
-            adns_server::anchors::claims_digest(adns_server::anchors::ANCHORS_CLAIMS_TYPE, claims)
-                .unwrap()
-        )
+        Some(anchors::claims_digest(anchors::ANCHORS_CLAIMS_TYPE, claims).unwrap())
     );
     assert!(matches!(
         read_json(
@@ -2276,4 +2262,205 @@ fn governance_receipts_cover_policy_and_anchors_document() {
         ),
         Err(AppError::Invalid(_))
     ));
+}
+
+#[test]
+fn ksk_rollover_double_signs_then_swaps_only_after_hold_and_attested_ds() {
+    let (db, _, _) = setup();
+    let origin: WireName = "example.".parse().unwrap();
+    let before = {
+        let tx = db.read().unwrap();
+        zone_metadata(&tx, &origin).unwrap()
+    };
+    let old_rdata = before.ksk_dnskey_rdata.clone();
+    assert!(before.ksk_rollover.is_none());
+    let dnskeys = |db: &MemoryStorage| {
+        let tx = db.read().unwrap();
+        let z = zone_metadata(&tx, &origin).unwrap();
+        let keys = z
+            .signed_records
+            .iter()
+            .filter(|r| {
+                r.rtype == RecordType::Dnskey
+                    && matches!(&r.rdata, RData::Dnskey(k) if k.flags == 257)
+            })
+            .count();
+        let sigs = z
+            .signed_records
+            .iter()
+            .filter(|r| matches!(&r.rdata, RData::Rrsig(s) if s.type_covered == RecordType::Dnskey))
+            .count();
+        (keys, sigs, z)
+    };
+    assert_eq!(dnskeys(&db).0, 1);
+    // start: incoming KSK generated in the enclave, both published, DNSKEY signed twice
+    let mut tx = db.write().unwrap();
+    apply_ksk_rollover(
+        &mut tx,
+        &KskRolloverCommand {
+            zone: "example.".into(),
+            command: "start".into(),
+            new_key_tag: None,
+            new_ds_sha256: None,
+            minimum_hold_seconds: Some(1000),
+        },
+        2000,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    let (ksks, sigs, z) = dnskeys(&db);
+    assert_eq!(
+        (ksks, sigs),
+        (2, 2),
+        "two KSKs published, DNSKEY RRset signed by both"
+    );
+    let rollover = z.ksk_rollover.clone().unwrap();
+    assert_eq!(rollover.stage, "double-signature");
+    assert_eq!(
+        z.ksk_dnskey_rdata, old_rdata,
+        "current KSK unchanged during double-signature"
+    );
+    let next_tag = key_tag(&rollover.next_ksk_dnskey_rdata);
+    let next_ds = ds_sha256(&origin, &rollover.next_ksk_dnskey_rdata);
+    assert_ne!(next_tag, key_tag(&old_rdata));
+    // a second start is refused; completion before the hold is refused; wrong attestation is refused
+    let mut tx = db.write().unwrap();
+    assert!(matches!(
+        apply_ksk_rollover(
+            &mut tx,
+            &KskRolloverCommand {
+                zone: "example.".into(),
+                command: "start".into(),
+                new_key_tag: None,
+                new_ds_sha256: None,
+                minimum_hold_seconds: None
+            },
+            2001
+        ),
+        Err(AppError::Conflict(_))
+    ));
+    assert!(matches!(
+        apply_ksk_rollover(
+            &mut tx,
+            &KskRolloverCommand {
+                zone: "example.".into(),
+                command: "complete".into(),
+                new_key_tag: Some(next_tag),
+                new_ds_sha256: Some(next_ds.clone()),
+                minimum_hold_seconds: None
+            },
+            2500
+        ),
+        Err(AppError::Conflict(_))
+    ));
+    assert!(matches!(
+        apply_ksk_rollover(
+            &mut tx,
+            &KskRolloverCommand {
+                zone: "example.".into(),
+                command: "complete".into(),
+                new_key_tag: Some(next_tag ^ 1),
+                new_ds_sha256: Some(next_ds.clone()),
+                minimum_hold_seconds: None
+            },
+            3001
+        ),
+        Err(AppError::Invalid(_))
+    ));
+    assert!(matches!(
+        apply_ksk_rollover(
+            &mut tx,
+            &KskRolloverCommand {
+                zone: "example.".into(),
+                command: "complete".into(),
+                new_key_tag: Some(next_tag),
+                new_ds_sha256: Some(ds_sha256(&origin, &old_rdata)),
+                minimum_hold_seconds: None
+            },
+            3001
+        ),
+        Err(AppError::Invalid(_))
+    ));
+    drop(tx);
+    // status and anchors show the rollover
+    {
+        let tx = db.read().unwrap();
+        let status = read_json(
+            &tx,
+            "/zone/status",
+            &[("zone".into(), "example.".into())],
+            2500,
+        )
+        .unwrap();
+        assert_eq!(status.body["ksk_rollover"]["next_key_tag"], next_tag);
+        let anchors = read_json(&tx, "/governance/anchors", &[], 2500).unwrap();
+        assert_eq!(
+            anchors.body["claims"]["zones"][0]["rollover"]["next_ds_sha256"],
+            next_ds
+        );
+    }
+    // complete after the hold with the exact incoming tag/DS: old key gone, new key current, single signature again
+    let mut tx = db.write().unwrap();
+    apply_ksk_rollover(
+        &mut tx,
+        &KskRolloverCommand {
+            zone: "example.".into(),
+            command: "complete".into(),
+            new_key_tag: Some(next_tag),
+            new_ds_sha256: Some(next_ds.clone()),
+            minimum_hold_seconds: None,
+        },
+        3001,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    let (ksks, sigs, z) = dnskeys(&db);
+    assert_eq!((ksks, sigs), (1, 1));
+    assert!(z.ksk_rollover.is_none());
+    assert_eq!(key_tag(&z.ksk_dnskey_rdata), next_tag);
+    assert_eq!(ds_sha256(&origin, &z.ksk_dnskey_rdata), next_ds);
+    assert!(
+        db.read()
+            .unwrap()
+            .get(
+                Collection::PrivateKeys,
+                &composite_key(&[origin.as_slice(), b"ksk-next"])
+            )
+            .unwrap()
+            .is_none()
+    );
+    // abort path: start then abort restores the single current key
+    let mut tx = db.write().unwrap();
+    apply_ksk_rollover(
+        &mut tx,
+        &KskRolloverCommand {
+            zone: "example.".into(),
+            command: "start".into(),
+            new_key_tag: None,
+            new_ds_sha256: None,
+            minimum_hold_seconds: None,
+        },
+        4000,
+    )
+    .unwrap();
+    apply_ksk_rollover(
+        &mut tx,
+        &KskRolloverCommand {
+            zone: "example.".into(),
+            command: "abort".into(),
+            new_key_tag: None,
+            new_ds_sha256: None,
+            minimum_hold_seconds: None,
+        },
+        4001,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    let (ksks, _, z) = dnskeys(&db);
+    assert_eq!(ksks, 1);
+    assert_eq!(
+        key_tag(&z.ksk_dnskey_rdata),
+        next_tag,
+        "abort keeps the current key"
+    );
 }

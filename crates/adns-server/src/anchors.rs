@@ -265,7 +265,13 @@ pub fn anchors(tx: &impl ReadTx) -> Result<AppResponse> {
             serde_json::from_slice(&value.bytes).map_err(StorageError::from)?;
         let owner = zone.origin;
         if !zone.ksk_dnskey_rdata.is_empty() {
-            zones.push(ksk_summary(&owner, &zone.ksk_dnskey_rdata)?);
+            let mut summary = ksk_summary(&owner, &zone.ksk_dnskey_rdata)?;
+            if let Some(rollover) = &zone.ksk_rollover {
+                let next = &rollover.next_ksk_dnskey_rdata;
+                summary["rollover"] = json!({"stage": rollover.stage, "started_at": rollover.started_at, "minimum_hold_seconds": rollover.minimum_hold_seconds,
+                    "next_key_tag": key_tag(next), "next_ds_sha256": ds_sha256(&owner, next), "next_dnskey_rdata_hex": hex::encode(next)});
+            }
+            zones.push(summary);
         }
         if let Some(policy) = get_json::<Value>(tx, Collection::Policies, owner.as_slice())? {
             let mut summary = policy_claims(&owner, &policy)?;

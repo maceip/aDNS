@@ -33,6 +33,21 @@ pub struct ZoneMetadata {
     pub earliest_signature_expiration: u64,
     pub maintenance_health: String,
     pub ksk_dnskey_rdata: Vec<u8>,
+    /// RFC 6781 double-signature KSK rollover in progress (None when not rolling).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ksk_rollover: Option<KskRollover>,
+}
+/// While Some, the zone publishes both KSKs in its DNSKEY RRset and signs that
+/// RRset with both, so validators holding either DS keep validating. The parent
+/// DS switch is an external, domain-owner action attested through governance.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct KskRollover {
+    pub next_ksk_dnskey_rdata: Vec<u8>,
+    pub started_at: u64,
+    /// Seconds the double-signature period must last before completion is
+    /// accepted: at least the DNSKEY TTL plus propagation, set at start.
+    pub minimum_hold_seconds: u64,
+    pub stage: String,
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Contribution {

@@ -291,8 +291,32 @@ Compare the computed DS with the intended delegation and independently validate
 the transferred zone. Publishing/changing a parent DS, NS delegation, public
 mail routing or public certificate issuance is a separate domain-owner-approved
 cutover. A valid receipt is evidence about the KSK, not authority to change the
-registrar. This port does not implement an online DNSSEC KSK rollover API; do
-not recreate a zone to simulate one.
+registrar.
+
+## KSK rollover (online, RFC 6781 double signature)
+
+Governed by the `adns_ksk_rollover` action in the steward constitution; the app
+drains the command in maintenance and never touches the parent DS itself.
+
+1. **start** (`{zone, command:"start", minimum_hold_seconds}`): the enclave
+   generates the incoming KSK, publishes both KSKs in the DNSKEY RRset and signs
+   that RRset with both. `/app/zone/status`, the KSK receipt (`rollover` field)
+   and `/app/governance/anchors` show the incoming key tag and DS. The receipt's
+   claims still bind only the current KSK, so v1 verifiers are unaffected.
+2. Wait at least the hold (default 2 × the largest base TTL, minimum 2 h) so
+   every validator has seen the double-signed DNSKEY RRset, then the **domain
+   owner** publishes the incoming DS at the parent (registrar) and waits the
+   parent's DS TTL.
+3. **complete** (`{zone, command:"complete", new_key_tag, new_ds_sha256}`): the
+   proposer attests the parent now names the incoming key; the app refuses the
+   command unless the tag and DS equal the incoming key's exactly and the hold
+   has elapsed, then makes the incoming key current, deletes the old key and
+   re-signs with a single KSK.
+4. **abort** is accepted only while double-signing.
+
+Agent-hosting's `infra/trust/pins.json` is updated from the KSK receipt after
+completion (the receipt for the new key must verify under the pinned service
+identity). Do not recreate a zone to simulate a rollover.
 
 ## Live code upgrade
 

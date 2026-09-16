@@ -3,6 +3,7 @@ use adns_dnssec::{DenialMode, SignedZone, SigningKey};
 use adns_storage::{Collection, WriteTx, composite_key, put_json};
 use adns_telemetry::{Name, observe};
 use adns_wire::*;
+use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 /// Called only by a governance adapter, never from an unauthenticated endpoint.
@@ -73,6 +74,10 @@ pub fn resign_zone(
     };
     let ksk = key(b"ksk")?;
     let zsk = key(b"zsk")?;
+    let next_ksk = match &metadata.ksk_rollover {
+        Some(_) => Some(key(b"ksk-next")?),
+        None => None,
+    };
     zone_usage(tx, origin)?;
     // Pre-size for owned contributions to avoid a reallocation on extend;
     // full-zone re-sign is still O(RRsets) — incremental signing is tracked
@@ -89,11 +94,15 @@ pub fn resign_zone(
     // Governed base records and owned contributions may share an RRset. Its
     // TTL and duplicate handling must include every source before signing.
     let all = normalize_rrsets(all)?;
+    let ksks: Vec<&SigningKey> = match &next_ksk {
+        Some(next) => vec![&ksk, next],
+        None => vec![&ksk],
+    };
     let signed = observe(Name::DnssecSign, || {
-        SignedZone::sign_with_keys(
+        SignedZone::sign_with_keysets(
             *origin,
             all,
-            &ksk,
+            &ksks,
             &zsk,
             u32::try_from(now).map_err(|_| AppError::Invalid("DNSSEC time range"))?,
             metadata.signature_validity,
@@ -106,6 +115,9 @@ pub fn resign_zone(
     })?;
     metadata.signed_records = signed.records;
     metadata.ksk_dnskey_rdata = RData::Dnskey(ksk.dnskey(257)).to_wire()?;
+    if let (Some(rollover), Some(next)) = (&mut metadata.ksk_rollover, &next_ksk) {
+        rollover.next_ksk_dnskey_rdata = RData::Dnskey(next.dnskey(257)).to_wire()?;
+    }
     metadata.last_signed_at = now;
     metadata.earliest_signature_expiration = now + u64::from(metadata.signature_validity);
     metadata.maintenance_health = "ok".into();
@@ -278,4 +290,121 @@ pub fn apply_operator_records(
         }
     }
     Ok(())
+}
+
+/// Governed KSK rollover commands, written by the constitution to
+/// `public:agentdns.lifecycle/governance/ksk-rollover/<origin>` and drained by
+/// maintenance inside the enclave. The parent DS change is never automated.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct KskRolloverCommand {
+    pub zone: String,
+    pub command: String,
+    #[serde(default)]
+    pub new_key_tag: Option<u16>,
+    #[serde(default)]
+    pub new_ds_sha256: Option<String>,
+    #[serde(default)]
+    pub minimum_hold_seconds: Option<u64>,
+}
+
+pub fn key_tag(rdata: &[u8]) -> u16 {
+    let mut ac = 0u32;
+    for (i, b) in rdata.iter().enumerate() {
+        ac += if i & 1 == 0 {
+            u32::from(*b) << 8
+        } else {
+            u32::from(*b)
+        };
+    }
+    ac += (ac >> 16) & 0xffff;
+    ac as u16
+}
+
+pub fn ds_sha256(owner: &WireName, rdata: &[u8]) -> String {
+    let mut data = owner.as_slice().to_vec();
+    data.extend_from_slice(rdata);
+    let mut h = Sha256::new();
+    h.update(&data);
+    hex::encode(h.finalize())
+}
+
+/// Start: generate the incoming KSK in the enclave, publish both, sign DNSKEY
+/// with both. Complete: only after the hold and only when governance attests the
+/// parent DS now names the incoming key (tag + DS recomputed here must match);
+/// the old key is then removed. Abort: allowed only while double-signing.
+pub fn apply_ksk_rollover(
+    tx: &mut impl WriteTx,
+    command: &KskRolloverCommand,
+    now: u64,
+) -> Result<()> {
+    let origin: WireName = command.zone.parse()?;
+    let mut metadata = zone_metadata(tx, &origin)?;
+    let next_key = composite_key(&[origin.as_slice(), b"ksk-next"]);
+    let current_key = composite_key(&[origin.as_slice(), b"ksk"]);
+    match command.command.as_str() {
+        "start" => {
+            if metadata.ksk_rollover.is_some() {
+                return Err(AppError::Conflict("KSK rollover already in progress"));
+            }
+            let next = SigningKey::generate().map_err(|e| AppError::Dnssec(e.to_string()))?;
+            tx.put(Collection::PrivateKeys, next_key, next.pkcs8().to_vec())?;
+            let dnskey_ttl = metadata
+                .base_records
+                .iter()
+                .map(|r| u64::from(r.ttl))
+                .max()
+                .unwrap_or(3600);
+            metadata.ksk_rollover = Some(KskRollover {
+                next_ksk_dnskey_rdata: RData::Dnskey(next.dnskey(257)).to_wire()?,
+                started_at: now,
+                minimum_hold_seconds: command
+                    .minimum_hold_seconds
+                    .unwrap_or_else(|| 2 * dnskey_ttl.max(3600)),
+                stage: "double-signature".into(),
+            });
+        }
+        "complete" => {
+            let rollover = metadata
+                .ksk_rollover
+                .clone()
+                .ok_or(AppError::Conflict("no KSK rollover in progress"))?;
+            if now
+                < rollover
+                    .started_at
+                    .saturating_add(rollover.minimum_hold_seconds)
+            {
+                return Err(AppError::Conflict("double-signature hold has not elapsed"));
+            }
+            let next_rdata = &rollover.next_ksk_dnskey_rdata;
+            if command.new_key_tag != Some(key_tag(next_rdata))
+                || command.new_ds_sha256.as_deref() != Some(ds_sha256(&origin, next_rdata).as_str())
+            {
+                return Err(AppError::Invalid(
+                    "completion must name the incoming KSK's key tag and DS exactly",
+                ));
+            }
+            let next_pkcs8 = tx
+                .get(Collection::PrivateKeys, &next_key)?
+                .ok_or(AppError::NotFound("incoming KSK"))?;
+            tx.put(Collection::PrivateKeys, current_key, next_pkcs8.bytes)?;
+            tx.remove(Collection::PrivateKeys, &next_key)?;
+            metadata.ksk_rollover = None;
+        }
+        "abort" => {
+            let rollover = metadata
+                .ksk_rollover
+                .clone()
+                .ok_or(AppError::Conflict("no KSK rollover in progress"))?;
+            if rollover.stage != "double-signature" {
+                return Err(AppError::Conflict(
+                    "rollover past double-signature cannot be aborted",
+                ));
+            }
+            tx.remove(Collection::PrivateKeys, &next_key)?;
+            metadata.ksk_rollover = None;
+        }
+        _ => return Err(AppError::Invalid("KSK rollover command")),
+    }
+    put_json(tx, Collection::Zones, origin.as_slice().to_vec(), &metadata)?;
+    resign_zone(tx, &origin, now, true)
 }
