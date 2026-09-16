@@ -1954,15 +1954,6 @@ function adnsBase64Url(value, maximum) {
   return new Uint8Array(out).buffer;
 }
 function adnsHexOf(buffer){return Array.from(new Uint8Array(buffer)).map(b=>b.toString(16).padStart(2,"0")).join("");}
-// Fixed 64-byte r||s (the same convention as service request signatures)
-// converted to DER for ccf.crypto.verifySignature.
-function adnsEcdsaDer(raw) {
-  const bytes=new Uint8Array(raw);
-  if(bytes.length!==64)throw new Error("fixed-width P-256 signature required");
-  const integer=part=>{let i=0;while(i<part.length-1&&part[i]===0)i++;let body=Array.from(part.slice(i));if(body[0]&0x80)body=[0,...body];return [0x02,body.length,...body];};
-  const r=integer(bytes.slice(0,32)), s=integer(bytes.slice(32));
-  return new Uint8Array([0x30,r.length+s.length,...r,...s]).buffer;
-}
 // JCS-equivalent canonical JSON for bounded values of strings, safe integers,
 // booleans, null, arrays and objects (the same value space adnsPolicyIdentity accepts).
 function adnsCanonical(value) {
@@ -1992,8 +1983,9 @@ function adnsRequireAuthoritySignature(payload, signature, purpose) {
   if(signature.did!==authority.did)throw new Error("signature DID differs from the governed release authority");
   adnsInteger(signature.svn,authority.svn,authority.svn+1);
   const message=ccf.strToBuf(adnsCanonical({svn:signature.svn,payload}));
-  const der=adnsEcdsaDer(adnsBase64Url(signature.signature,128));
-  if(!ccf.crypto.verifySignature({name:"ECDSA",hash:"SHA-256"},authority.public_key_pem,der,message))throw new Error("release authority signature invalid for "+purpose);
+  const raw=adnsBase64Url(signature.signature,128);
+  if(new Uint8Array(raw).length!==64)throw new Error("fixed-width P-256 signature required");
+  if(!ccf.crypto.verifySignature({name:"ECDSA",hash:"SHA-256"},authority.public_key_pem,raw,message))throw new Error("release authority signature invalid for "+purpose);
   if(signature.svn>authority.svn){
     // The authority record's svn is the high-water mark of everything D has signed.
     const ratcheted={...authority,svn:signature.svn};

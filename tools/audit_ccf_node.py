@@ -21,8 +21,8 @@ MAX_BYTES = 1024 * 1024
 BOOTSTRAP_DEADLINE_SECONDS = 15
 
 
-def connect_unhandshaken(context, host, port):
-    raw = socket.create_connection((host, port), timeout=min(10, BOOTSTRAP_DEADLINE_SECONDS))
+def connect_unhandshaken(context, host, port, connect_host=None):
+    raw = socket.create_connection((connect_host or host, port), timeout=min(10, BOOTSTRAP_DEADLINE_SECONDS))
     try:
         # Arm the absolute timer on the retained TLS socket before handshake.
         return context.wrap_socket(raw, server_hostname=host, do_handshake_on_connect=False)
@@ -31,7 +31,7 @@ def connect_unhandshaken(context, host, port):
         raise
 
 
-def public_get(host, port, path, expected_peer=None):
+def public_get(host, port, path, expected_peer=None, connect_host=None):
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context.check_hostname = False
     context.verify_mode = ssl.CERT_NONE
@@ -53,7 +53,7 @@ def public_get(host, port, path, expected_peer=None):
     timer.daemon = True
     timer.start()
     try:
-        connection.sock = connect_unhandshaken(context, host, port)
+        connection.sock = connect_unhandshaken(context, host, port, connect_host=connect_host)
         with lock:
             stream[0] = connection.sock
         remaining = deadline - time.monotonic()
@@ -90,6 +90,7 @@ def public_get(host, port, path, expected_peer=None):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", required=True)
+    parser.add_argument("--connect-ip", help="Override socket connect IP (keeps TLS SNI from url)")
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--verifier", type=Path, default=Path("target/debug/examples/audit_ccf_node"))
@@ -98,7 +99,8 @@ def main():
     if url.scheme != "https" or not url.hostname or url.username or url.password or url.query or url.fragment or url.path not in ("", "/"):
         parser.error("URL must be an HTTPS origin without credentials or path")
     args.output.mkdir(parents=True, exist_ok=True, mode=0o700)
-    quote, peer = public_get(url.hostname, url.port or 443, "/node/quotes/self")
+    kwargs = {"connect_host": args.connect_ip} if args.connect_ip else {}
+    quote, peer = public_get(url.hostname, url.port or 443, "/node/quotes/self", **kwargs)
     quote_file, peer_file = args.output / "node-quote.json", args.output / "node-peer.der"
     quote_file.write_bytes(quote)
     peer_file.write_bytes(peer)
@@ -109,7 +111,7 @@ def main():
         raise ValueError("native node audit did not establish a current TLS identity")
     # This request is sent only after matching the actual TLS peer against the
     # independently audited certificate, before any HTTP bytes are transmitted.
-    network_raw, _ = public_get(url.hostname, url.port or 443, "/node/network", expected_peer=peer)
+    network_raw, _ = public_get(url.hostname, url.port or 443, "/node/network", expected_peer=peer, **kwargs)
     network = json.loads(network_raw)
     service_pem = network.get("service_certificate")
     if not isinstance(service_pem, str):
