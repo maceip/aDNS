@@ -1,7 +1,7 @@
 use crate::{
-    Action, ActionParameters, AuthError, MAX_SAFE_INTEGER, Operation, OperatorRecordType,
-    RegisterParameters, decode_p256_spki, invalid, name_in_zone, sha256_hex, validate_hex_digest,
-    validate_identifier, validate_lease, validate_name, validate_ports,
+    Action, ActionParameters, AttestedRecordType, AuthError, MAX_SAFE_INTEGER, Operation,
+    OperatorRecordType, RegisterParameters, decode_p256_spki, invalid, name_in_zone, sha256_hex,
+    validate_hex_digest, validate_identifier, validate_lease, validate_name, validate_ports,
 };
 use serde::{Deserialize, Serialize};
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
@@ -24,6 +24,13 @@ pub struct OwnerGrant {
     pub acme_names: Vec<String>,
     pub operator_names: Vec<String>,
     pub operator_record_types: Vec<OperatorRecordType>,
+    /// Exact owner names a registration may publish on the attested path
+    /// (e.g. `cvm1._domainkey.example.`), and the permitted RR types. Grants
+    /// committed before these fields existed deserialize as empty lists.
+    #[serde(default)]
+    pub attested_names: Vec<String>,
+    #[serde(default)]
+    pub attested_record_types: Vec<AttestedRecordType>,
     pub max_lease_seconds: u64,
     pub max_challenge_lifetime_seconds: u64,
     pub valid_from: u64,
@@ -120,6 +127,8 @@ impl OwnerGrant {
             || !unique(&self.acme_names)
             || !unique(&self.operator_names)
             || !unique(&self.operator_record_types)
+            || !unique(&self.attested_names)
+            || !unique(&self.attested_record_types)
         {
             return Err(invalid("grant list"));
         }
@@ -141,6 +150,12 @@ impl OwnerGrant {
             validate_name(name, true)?;
             if !self.zones.iter().any(|zone| name_in_zone(name, zone)) {
                 return Err(invalid("operator name outside granted zones"));
+            }
+        }
+        for name in &self.attested_names {
+            validate_name(name, true)?;
+            if !self.zones.iter().any(|zone| name_in_zone(name, zone)) {
+                return Err(invalid("attested name outside granted zones"));
             }
         }
         for role in &self.roles {
@@ -220,6 +235,9 @@ pub fn authorize_action(
             }
         }
         ActionParameters::AcmeChallengeDelete(_) => {}
+        // Ownership of the referenced registration is checked inside the
+        // transaction with authorize_registration_target.
+        ActionParameters::Anchor(_) => {}
         ActionParameters::OperatorRecords(p) => {
             if p.mutations.iter().any(|m| {
                 !grant.operator_names.contains(&m.name)
@@ -242,7 +260,7 @@ pub fn authorize_registration_target(
 ) -> Result<(), AuthError> {
     if !matches!(
         action.parameters,
-        ActionParameters::Renew(_) | ActionParameters::Deregister(_)
+        ActionParameters::Renew(_) | ActionParameters::Deregister(_) | ActionParameters::Anchor(_)
     ) {
         return Err(denied("wrong registration operation"));
     }
@@ -344,6 +362,13 @@ pub fn authorize_registration_scope(
         .any(|port| !grant.ports.contains(port))
     {
         return Err(denied("port"));
+    }
+    // Attested records: exact owner-name match, never suffix matching.
+    if parameters.attested_records.iter().any(|record| {
+        !grant.attested_names.contains(&record.name)
+            || !grant.attested_record_types.contains(&record.record_type)
+    }) {
+        return Err(denied("attested owner or type"));
     }
     let cidrs = grant
         .address_cidrs

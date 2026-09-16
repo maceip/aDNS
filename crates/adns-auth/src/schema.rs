@@ -11,6 +11,9 @@ pub enum Operation {
     AcmeChallengeCreate,
     AcmeChallengeDelete,
     OperatorRecords,
+    /// Bind a caller-supplied digest (e.g. an execution-record chain head) to a
+    /// committed ledger transaction under an active registration's key.
+    Anchor,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -33,6 +36,7 @@ pub enum ActionParameters {
     AcmeChallengeCreate(AcmeChallengeCreateParameters),
     AcmeChallengeDelete(AcmeChallengeDeleteParameters),
     OperatorRecords(OperatorParameters),
+    Anchor(AnchorParameters),
 }
 
 // Flatten + deny_unknown_fields is not a safe deserialization boundary. Parse
@@ -73,6 +77,9 @@ impl<'de> Deserialize<'de> for Action {
             Operation::OperatorRecords => {
                 ActionParameters::OperatorRecords(parameters::<_, D::Error>(raw.parameters)?)
             }
+            Operation::Anchor => {
+                ActionParameters::Anchor(parameters::<_, D::Error>(raw.parameters)?)
+            }
         };
         Ok(Self {
             request_id: raw.request_id,
@@ -94,6 +101,7 @@ impl ActionParameters {
             Self::AcmeChallengeCreate(_) => Operation::AcmeChallengeCreate,
             Self::AcmeChallengeDelete(_) => Operation::AcmeChallengeDelete,
             Self::OperatorRecords(_) => Operation::OperatorRecords,
+            Self::Anchor(_) => Operation::Anchor,
         }
     }
     pub fn evidence_digest(&self) -> Option<&str> {
@@ -130,6 +138,74 @@ pub struct RegisterParameters {
     pub lease_seconds: u64,
     pub evidence_profile: String,
     pub evidence_digest: String,
+    /// Records published on the attested path, owned by this registration and
+    /// withdrawn with it (DKIM TXT, receipt-key TXT). Distinct from operator
+    /// records, which carry no evidence. Omitted when empty so existing signed
+    /// actions keep their canonical form.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub attested_records: Vec<AttestedRecord>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum AttestedRecordType {
+    Txt,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct AttestedRecord {
+    pub name: String,
+    #[serde(rename = "type")]
+    pub record_type: AttestedRecordType,
+    pub ttl: u32,
+    pub rdata_strings: Vec<String>,
+}
+
+pub const MAX_ATTESTED_RECORDS: usize = 16;
+pub const MAX_ATTESTED_RDATA_STRINGS: usize = 16;
+pub const MAX_ATTESTED_STRING_BYTES: usize = 255;
+pub const MAX_ATTESTED_RECORD_BYTES: usize = 4096;
+
+impl AttestedRecord {
+    pub fn validate(&self, zone: &str) -> Result<(), AuthError> {
+        validate_name(&self.name, true)?;
+        if !name_in_zone(&self.name, zone) {
+            return Err(invalid("attested record outside zone"));
+        }
+        if !(60..=86400).contains(&self.ttl) {
+            return Err(invalid("attested record TTL"));
+        }
+        if self.rdata_strings.is_empty() || self.rdata_strings.len() > MAX_ATTESTED_RDATA_STRINGS {
+            return Err(invalid("attested record string count"));
+        }
+        let mut total = 0usize;
+        for text in &self.rdata_strings {
+            if text.is_empty()
+                || text.len() > MAX_ATTESTED_STRING_BYTES
+                || !text.bytes().all(|b| (0x20..0x7f).contains(&b))
+            {
+                return Err(invalid("attested TXT string"));
+            }
+            total += text.len();
+        }
+        if total > MAX_ATTESTED_RECORD_BYTES {
+            return Err(invalid("attested record size"));
+        }
+        Ok(())
+    }
+}
+
+/// Anchor a digest under an active registration. The authority does not
+/// interpret the digest; it commits (registration, subject, sequence, digest)
+/// and the response carries a CCF receipt over exactly those claims.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct AnchorParameters {
+    pub registration_id: String,
+    pub subject: String,
+    pub sequence: u64,
+    pub digest_sha256: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -358,6 +434,24 @@ impl Action {
                 validate_lease(p.lease_seconds)?;
                 validate_identifier(&p.evidence_profile)?;
                 validate_hex_digest(&p.evidence_digest)?;
+                if p.attested_records.len() > MAX_ATTESTED_RECORDS {
+                    return Err(invalid("attested record count"));
+                }
+                let mut owners = std::collections::BTreeSet::new();
+                for record in &p.attested_records {
+                    record.validate(&self.zone)?;
+                    if !owners.insert((&record.name, record.record_type)) {
+                        return Err(invalid("duplicate attested RRset"));
+                    }
+                }
+            }
+            ActionParameters::Anchor(p) => {
+                validate_identifier(&p.registration_id)?;
+                validate_identifier(&p.subject)?;
+                if p.sequence == 0 || p.sequence > MAX_SAFE_INTEGER {
+                    return Err(invalid("anchor sequence"));
+                }
+                validate_hex_digest(&p.digest_sha256)?;
             }
             ActionParameters::Renew(p) => {
                 validate_identifier(&p.registration_id)?;

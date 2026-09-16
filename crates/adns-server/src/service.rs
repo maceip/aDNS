@@ -59,7 +59,7 @@ fn registration(tx: &impl ReadTx, id: &str) -> Result<Registration> {
     }
     Ok(r)
 }
-fn active_registration(tx: &impl ReadTx, id: &str, now: u64) -> Result<Registration> {
+pub(crate) fn active_registration(tx: &impl ReadTx, id: &str, now: u64) -> Result<Registration> {
     let r = registration(tx, id)?;
     if r.status != "active"
         || r.lease_expires_at <= now
@@ -96,6 +96,7 @@ pub(crate) fn expected_route(operation: Operation) -> (&'static str, &'static st
         Operation::AcmeChallengeCreate => ("POST", "/zone/acme-challenge"),
         Operation::AcmeChallengeDelete => ("DELETE", "/zone/acme-challenge"),
         Operation::OperatorRecords => ("POST", "/zone/operator/records"),
+        Operation::Anchor => ("POST", "/service/anchor"),
     }
 }
 /// The caller MUST discard the entire transaction on ANY returned error.
@@ -183,6 +184,7 @@ pub fn mutate(
     let origin: WireName = request.action.zone.parse()?;
     zone_metadata(tx, &origin)?;
     let mut changed = false;
+    let mut anchor_claims: Option<[u8; 32]> = None;
     let result = match &request.action.parameters {
         ActionParameters::Register(p) => {
             admit_registration(tx)?;
@@ -210,6 +212,7 @@ pub fn mutate(
                 appraisal.valid_until,
             )?;
             let mut contributions = mail_contributions(p, &verified.signer_spki_sha256)?;
+            contributions.extend(attested_contributions(p)?);
             for record in &mut contributions {
                 record.ttl = record
                     .ttl
@@ -332,6 +335,11 @@ pub fn mutate(
             )?;
             json!({"status":"pending","registration_id":r.registration_id,"registration_status":r.status,"active_ports":r.active_ports})
         }
+        ActionParameters::Anchor(_) => {
+            let (body, digest) = anchors::anchor(tx, &request, &verified, now)?;
+            anchor_claims = Some(digest);
+            body
+        }
         ActionParameters::AcmeChallengeCreate(p) => {
             if tx.scan_prefix(Collection::AcmeChallenges, b"")?.len() >= MAX_ACME_CHALLENGES {
                 return Err(AppError::Capacity("ACME challenges"));
@@ -425,6 +433,7 @@ pub fn mutate(
         &config,
     )?;
     let mut response = AppResponse::new(result);
+    response.claims_digest = anchor_claims;
     if changed {
         response.changed_zones.push(origin.to_string());
     }
@@ -637,6 +646,29 @@ pub fn read_json(
             Ok(AppResponse::new(
                 json!({"zone":origin.to_string(),"committed_state":{"serial":zone.serial,"rrsig_inception":zone.last_signed_at.saturating_sub(300),"earliest_rrsig_expiration":zone.earliest_signature_expiration,"maintenance_health":if now>=zone.earliest_signature_expiration{"expired"}else if now.saturating_add(zone.refresh_before.into())>=zone.earliest_signature_expiration{"refresh_due"}else{&zone.maintenance_health}},"frontend_propagation":{"secondaries":secondaries}}),
             ))
+        }
+        "/service/anchor" => {
+            let sequence = match query.iter().filter(|(k, _)| k == "sequence").count() {
+                0 => None,
+                _ => Some(
+                    parameter("sequence")?
+                        .parse::<u64>()
+                        .map_err(|_| AppError::Invalid("sequence"))?,
+                ),
+            };
+            anchors::read_anchor(
+                tx,
+                parameter("registration_id")?,
+                parameter("subject")?,
+                sequence,
+            )
+        }
+        "/governance/policy-receipt" => anchors::policy_receipt(tx, parameter("zone")?),
+        "/governance/anchors" => {
+            if !query.is_empty() {
+                return Err(AppError::Invalid("unexpected query parameter"));
+            }
+            anchors::anchors(tx)
         }
         "/governance/ksk-receipt" => {
             Err(AppError::Invalid("CCF historical receipt adapter required"))

@@ -1,6 +1,7 @@
 //! Transport-independent enclave application. All mutation effects remain inside
 //! the caller's transaction; only its consensus adapter may report commitment.
 #![forbid(unsafe_code)]
+pub mod anchors;
 mod attempts;
 mod limits;
 mod service;

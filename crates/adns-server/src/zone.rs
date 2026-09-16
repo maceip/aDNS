@@ -128,14 +128,20 @@ pub fn mail_contributions(
     spki_digest: &str,
 ) -> Result<Vec<ResourceRecord>> {
     let host: WireName = parameters.service_host.parse()?;
-    let mut out = vec![ResourceRecord::new(
-        parameters.mailbox_domain.parse()?,
-        3600,
-        RData::Mx(MxData {
-            preference: 10,
-            exchange: host,
-        }),
-    )?];
+    let mut out = Vec::new();
+    // Only mail exchangers contribute an MX. Other attested workloads (e.g. a
+    // worker publishing its DKIM and receipt keys) get A/AAAA/TLSA and their
+    // attested records without becoming a mail destination.
+    if parameters.role == "mx-edge" {
+        out.push(ResourceRecord::new(
+            parameters.mailbox_domain.parse()?,
+            3600,
+            RData::Mx(MxData {
+                preference: 10,
+                exchange: host,
+            }),
+        )?);
+    }
     for ip in &parameters.addresses.ipv4 {
         out.push(ResourceRecord::new(
             host,
@@ -165,6 +171,32 @@ pub fn mail_contributions(
                 certificate_association_data: digest.clone(),
             }),
         )?);
+    }
+    Ok(out)
+}
+/// Attested-path records requested at registration (DKIM TXT, receipt-key TXT).
+/// They are contributions owned by the registration: published with it,
+/// bounded by its lease and withdrawn with it. Authorization against the
+/// grant's exact `attested_names`/`attested_record_types` happened earlier.
+pub fn attested_contributions(
+    parameters: &adns_auth::RegisterParameters,
+) -> Result<Vec<ResourceRecord>> {
+    let mut out = Vec::new();
+    for record in &parameters.attested_records {
+        let owner: WireName = record.name.parse()?;
+        match record.record_type {
+            adns_auth::AttestedRecordType::Txt => out.push(ResourceRecord::new(
+                owner,
+                record.ttl,
+                RData::Txt(
+                    record
+                        .rdata_strings
+                        .iter()
+                        .map(|s| s.as_bytes().to_vec())
+                        .collect(),
+                ),
+            )?),
+        }
     }
     Ok(out)
 }

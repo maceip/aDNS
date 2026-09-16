@@ -41,10 +41,16 @@ fn setup_with_base(
             Operation::AcmeChallengeCreate,
             Operation::AcmeChallengeDelete,
             Operation::OperatorRecords,
+            Operation::Anchor,
         ],
         acme_names: vec!["mail.example.".into()],
         operator_names: vec!["example.".into()],
         operator_record_types: vec![OperatorRecordType::Txt],
+        attested_names: vec![
+            "cvm1._domainkey.example.".into(),
+            "_receipt.mail.example.".into(),
+        ],
+        attested_record_types: vec![AttestedRecordType::Txt],
         max_lease_seconds: 86400,
         max_challenge_lifetime_seconds: 1800,
         valid_from: 0,
@@ -483,6 +489,7 @@ fn params() -> RegisterParameters {
         lease_seconds: 10000,
         evidence_profile: "azure-aci-snp".into(),
         evidence_digest: "01".repeat(32),
+        attested_records: Vec::new(),
     }
 }
 #[test]
@@ -995,6 +1002,7 @@ fn challenge_maintenance_rechecks_tightened_issuer_scope() {
                 issuer.service_hosts.clear();
                 issuer.acme_names.clear();
                 issuer.operator_names.clear();
+                issuer.attested_names.clear();
             }
             "key" => issuer.subject_spki_sha256 = "ab".repeat(32),
             "expiry" => issuer.valid_until = 1102,
@@ -1958,4 +1966,314 @@ fn saturated_diagnostics_do_not_change_business_failure_or_commit_partial_record
             .iter()
             .any(|record| record.rtype == RecordType::Txt)
     );
+}
+
+fn attested(name: &str, text: &str) -> AttestedRecord {
+    AttestedRecord {
+        name: name.into(),
+        record_type: AttestedRecordType::Txt,
+        ttl: 300,
+        rdata_strings: vec![text.into()],
+    }
+}
+
+#[test]
+fn attested_records_publish_with_registration_and_withdraw_with_it() {
+    let (db, signer, grant) = setup();
+    let mut p = params();
+    p.attested_records = vec![
+        attested("cvm1._domainkey.example.", "v=DKIM1; k=rsa; p=AAAA"),
+        attested("_receipt.mail.example.", "v=AHRK1; k=es256; spki_sha256=ab"),
+    ];
+    let origin: WireName = "example.".parse().unwrap();
+    // Exact grant scope: a name outside attested_names is denied before any state changes.
+    let mut outside = p.clone();
+    outside
+        .attested_records
+        .push(attested("evil._domainkey.example.", "x"));
+    assert!(matches!(
+        authorize_action(
+            &action(&signer, "reg-outside", ActionParameters::Register(outside)),
+            &grant,
+            "ccf://test",
+            1000
+        ),
+        Err(AuthError::GrantDenied(_))
+    ));
+    // Ownership: contributions carry the registration id and are removed on withdraw_all.
+    let r = seed_registration(&db, &grant);
+    let mut tx = db.write().unwrap();
+    for record in attested_contributions(&p).unwrap() {
+        add_contribution(&mut tx, &origin, &r.registration_id, record).unwrap();
+    }
+    resign_zone(&mut tx, &origin, 1000, true).unwrap();
+    tx.commit().unwrap();
+    let published = |db: &MemoryStorage| {
+        let tx = db.read().unwrap();
+        tx.scan_prefix(Collection::Records, &zone_prefix(&origin))
+            .unwrap()
+            .into_iter()
+            .map(|(_, v)| serde_json::from_slice::<VersionedRrset>(&v.bytes).unwrap())
+            .filter(|set| {
+                set.contributions.iter().any(|c| {
+                    c.contributor == "seeded-registration" && c.record.rtype == RecordType::Txt
+                })
+            })
+            .count()
+    };
+    assert_eq!(published(&db), 2);
+    let withdraw = envelope(
+        &db,
+        &signer,
+        action(
+            &signer,
+            "withdraw-attested",
+            ActionParameters::Deregister(DeregisterParameters {
+                registration_id: r.registration_id.clone(),
+                selected_ports: vec![],
+                withdraw_all: true,
+                reason: "key_rotation".into(),
+            }),
+        ),
+        1100,
+    );
+    let mut tx = db.write().unwrap();
+    mutate(
+        &mut tx,
+        "POST",
+        "/service/deregister",
+        &serde_json::to_vec(&withdraw).unwrap(),
+        1100,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    assert_eq!(
+        published(&db),
+        0,
+        "attested TXT contributions leave with their registration"
+    );
+    // A non-MX role publishes no MX record.
+    let mut worker = params();
+    worker.role = "worker".into();
+    worker.service_host = "worker.example.".into();
+    let records = mail_contributions(&worker, &grant.subject_spki_sha256).unwrap();
+    assert!(records.iter().all(|r| r.rtype != RecordType::Mx));
+    assert!(records.iter().any(|r| r.rtype == RecordType::Tlsa));
+    assert!(
+        mail_contributions(&params(), &grant.subject_spki_sha256)
+            .unwrap()
+            .iter()
+            .any(|r| r.rtype == RecordType::Mx)
+    );
+}
+
+#[test]
+fn anchors_are_owner_bound_monotonic_idempotent_and_receipted() {
+    let (db, signer, grant) = setup();
+    let r = seed_registration(&db, &grant);
+    let anchor = |seq: u64, digest: &str, id: &str| {
+        action(
+            &signer,
+            id,
+            ActionParameters::Anchor(AnchorParameters {
+                registration_id: r.registration_id.clone(),
+                subject: "conversation-1".into(),
+                sequence: seq,
+                digest_sha256: digest.repeat(32),
+            }),
+        )
+    };
+    let submit = |db: &MemoryStorage, request: &SignedRequest, now: u64| {
+        let mut tx = db.write().unwrap();
+        let out = mutate(
+            &mut tx,
+            "POST",
+            "/service/anchor",
+            &serde_json::to_vec(request).unwrap(),
+            now,
+        );
+        if out.is_ok() {
+            tx.commit().unwrap();
+        }
+        out
+    };
+    let first = envelope(&db, &signer, anchor(1, "aa", "anchor-1"), 1100);
+    let response = submit(&db, &first, 1100).unwrap();
+    assert_eq!(response.body["anchor"]["sequence"], 1);
+    assert_eq!(
+        response.body["anchor"]["type"],
+        adns_server::anchors::ANCHOR_CLAIMS_TYPE
+    );
+    let expected = adns_server::anchors::claims_digest(
+        adns_server::anchors::ANCHOR_CLAIMS_TYPE,
+        &response.body["anchor"],
+    )
+    .unwrap();
+    assert_eq!(
+        response.claims_digest,
+        Some(expected),
+        "receipt claims digest covers exactly the returned anchor claims"
+    );
+    // Same sequence, different digest: rejected.
+    let fork = envelope(&db, &signer, anchor(1, "bb", "anchor-1-fork"), 1101);
+    assert!(matches!(
+        submit(&db, &fork, 1101),
+        Err(AppError::Conflict(_))
+    ));
+    // Sequence must advance.
+    assert!(
+        anchor(0, "cc", "anchor-0").validate().is_err(),
+        "sequence 0 is rejected by schema"
+    );
+    let next = envelope(&db, &signer, anchor(2, "cc", "anchor-2"), 1103);
+    submit(&db, &next, 1103).unwrap();
+    let behind = envelope(&db, &signer, anchor(2, "dd", "anchor-2b"), 1104);
+    assert!(matches!(
+        submit(&db, &behind, 1104),
+        Err(AppError::Conflict(_))
+    ));
+    // Same digest re-anchored under a new request id: idempotent, still receipted.
+    let dup = envelope(&db, &signer, anchor(2, "cc", "anchor-2-again"), 1105);
+    let again = submit(&db, &dup, 1105).unwrap();
+    assert_eq!(again.body["duplicate"], true);
+    assert!(again.claims_digest.is_some());
+    // Another key cannot anchor under this registration.
+    let rng = SystemRandom::new();
+    let other = signature::EcdsaKeyPair::from_pkcs8(
+        &signature::ECDSA_P256_SHA256_FIXED_SIGNING,
+        signature::EcdsaKeyPair::generate_pkcs8(&signature::ECDSA_P256_SHA256_FIXED_SIGNING, &rng)
+            .unwrap()
+            .as_ref(),
+        &rng,
+    )
+    .unwrap();
+    let foreign = action(
+        &other,
+        "anchor-foreign",
+        ActionParameters::Anchor(AnchorParameters {
+            registration_id: r.registration_id.clone(),
+            subject: "conversation-1".into(),
+            sequence: 3,
+            digest_sha256: "ee".repeat(32),
+        }),
+    );
+    assert!(matches!(
+        authorize_action(&foreign, &grant, "ccf://test", 1106),
+        Err(AuthError::GrantDenied(_))
+    ));
+    // Reads re-emit receipt claims for a stored anchor and for the head.
+    let tx = db.read().unwrap();
+    let head = read_json(
+        &tx,
+        "/service/anchor",
+        &[
+            ("registration_id".into(), r.registration_id.clone()),
+            ("subject".into(), "conversation-1".into()),
+        ],
+        1200,
+    )
+    .unwrap();
+    assert_eq!(head.body["anchor"]["sequence"], 2);
+    assert_eq!(head.body["anchor"]["digest_sha256"], "cc".repeat(32));
+    assert!(head.claims_digest.is_some());
+    let explicit = read_json(
+        &tx,
+        "/service/anchor",
+        &[
+            ("registration_id".into(), r.registration_id.clone()),
+            ("subject".into(), "conversation-1".into()),
+            ("sequence".into(), "1".into()),
+        ],
+        1200,
+    )
+    .unwrap();
+    assert_eq!(explicit.body["anchor"]["digest_sha256"], "aa".repeat(32));
+    assert!(matches!(
+        read_json(
+            &tx,
+            "/service/anchor",
+            &[
+                ("registration_id".into(), r.registration_id.clone()),
+                ("subject".into(), "nope".into())
+            ],
+            1200
+        ),
+        Err(AppError::NotFound(_))
+    ));
+}
+
+#[test]
+fn governance_receipts_cover_policy_and_anchors_document() {
+    let (db, _, grant) = setup();
+    seed_registration(&db, &grant);
+    let mut tx = db.write().unwrap();
+    put_json(&mut tx, Collection::Lifecycle, b"governance/node-join-policy".to_vec(), &json!({
+        "svn": 3, "release_id": "agentdns-v5", "measurements": ["ab".repeat(48)], "host_data": ["cd".repeat(32)],
+        "uvm_endorsements": [{"did": "did:x509:0:sha256:x::eku:1", "feed": "ContainerPlat-AMD-UVM", "svn": "104"}],
+        "tcb_versions": {"Genoa": {"boot_loader": 10, "tee": 0, "snp": 23, "microcode": 84}}, "policy_sha256": "ef".repeat(32)})).unwrap();
+    put_json(&mut tx, Collection::Lifecycle, b"governance/release-authority".to_vec(), &json!({
+        "did": "did:x509:0:sha256:abc::subject:CN:agent.hosting", "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMFkw\n-----END PUBLIC KEY-----\n",
+        "svn": 3, "valid_from": 0, "valid_until": 4000})).unwrap();
+    tx.commit().unwrap();
+    let tx = db.read().unwrap();
+    let policy = read_json(
+        &tx,
+        "/governance/policy-receipt",
+        &[("zone".into(), "example.".into())],
+        1200,
+    )
+    .unwrap();
+    assert_eq!(policy.body["claims"]["policy_id_hex"], "01".repeat(32));
+    assert_eq!(
+        policy.body["claims"]["release_id"],
+        "approved-fixture-state"
+    );
+    assert_eq!(
+        policy.claims_digest,
+        Some(
+            adns_server::anchors::claims_digest(
+                adns_server::anchors::POLICY_CLAIMS_TYPE,
+                &policy.body["claims"]
+            )
+            .unwrap()
+        )
+    );
+    assert!(matches!(
+        read_json(
+            &tx,
+            "/governance/policy-receipt",
+            &[("zone".into(), "missing.".into())],
+            1200
+        ),
+        Err(AppError::NotFound(_))
+    ));
+    let anchors = read_json(&tx, "/governance/anchors", &[], 1200).unwrap();
+    let claims = &anchors.body["claims"];
+    assert_eq!(claims["zones"][0]["zone"], "example.");
+    assert_eq!(claims["zones"][0]["algorithm"], 14);
+    assert_eq!(
+        claims["appraisal_policies"][0]["policy_id_hex"],
+        "01".repeat(32)
+    );
+    assert_eq!(claims["node_join_policy"]["svn"], 3);
+    assert_eq!(
+        claims["release_authority"]["did"],
+        "did:x509:0:sha256:abc::subject:CN:agent.hosting"
+    );
+    assert_eq!(
+        anchors.claims_digest,
+        Some(
+            adns_server::anchors::claims_digest(adns_server::anchors::ANCHORS_CLAIMS_TYPE, claims)
+                .unwrap()
+        )
+    );
+    assert!(matches!(
+        read_json(
+            &tx,
+            "/governance/anchors",
+            &[("x".into(), "y".into())],
+            1200
+        ),
+        Err(AppError::Invalid(_))
+    ));
 }

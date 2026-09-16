@@ -44,6 +44,7 @@ fn action(key: &signature::EcdsaKeyPair) -> Action {
             lease_seconds: 86400,
             evidence_profile: "azure-aci-snp".into(),
             evidence_digest: sha256_hex(b"test signed COSE fixture"),
+            attested_records: Vec::new(),
         }),
     }
 }
@@ -68,6 +69,8 @@ fn grant(action: &Action) -> OwnerGrant {
         acme_names: vec!["mail.agent.hosting.".into()],
         operator_names: vec!["agent.hosting.".into(), "_dmarc.agent.hosting.".into()],
         operator_record_types: vec![OperatorRecordType::Txt, OperatorRecordType::Caa],
+        attested_names: Vec::new(),
+        attested_record_types: Vec::new(),
         max_lease_seconds: 86400,
         max_challenge_lifetime_seconds: 1800,
         valid_from: NOW - 60,
