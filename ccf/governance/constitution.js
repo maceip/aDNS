@@ -2092,6 +2092,33 @@ actions.set("adns_revoke_transfer", new Action(
   args=>{adnsObject(args,["key_name"]);adnsName(args.key_name);},
   args=>{const key=ccf.strToBuf("governance/transfer/"+args.key_name),old=ccf.kv[adnsGovTransfer].get(key);if(old===undefined)throw new Error("transfer identity missing");const revoked=ccf.bufToJsonCompatible(old);revoked.revoked=true;adnsWrite(adnsGovTransfer,key,revoked);adnsWrite(adnsLifecycle,key,revoked);}
 ));
+// ---- KSK rollover (RFC 6781 double signature), governed; the app drains the command ----
+// start: the enclave generates the incoming KSK and publishes/signs with both.
+// complete: only with the incoming key's exact tag and DS, which the proposer
+// attests are now published at the parent; the app also enforces its hold.
+// abort: allowed while double-signing. The app refuses anything else.
+const adnsGovKskRollover = "public:ccf.gov.agentdns.ksk_rollover";
+actions.set("adns_ksk_rollover", new Action(
+  args=>{
+    adnsObject(args,["zone","command","new_key_tag","new_ds_sha256","minimum_hold_seconds"]);adnsName(args.zone);
+    if(!["start","complete","abort"].includes(args.command))throw new Error("command start|complete|abort");
+    if(args.command==="complete"){adnsInteger(args.new_key_tag,0,65535);adnsHex(args.new_ds_sha256);}
+    else if(args.new_key_tag!==null||args.new_ds_sha256!==null)throw new Error("tag and DS only with complete");
+    if(args.minimum_hold_seconds!==null)adnsInteger(args.minimum_hold_seconds,600,30*86400);
+    if(args.command!=="start"&&args.minimum_hold_seconds!==null)throw new Error("hold only with start");
+  },
+  (args,proposalId)=>{
+    const key=ccf.strToBuf(args.zone), raw=ccf.kv[adnsGovKskRollover].get(key);
+    const state=raw===undefined?{stage:"idle"}:ccf.bufToJsonCompatible(raw);
+    if(args.command==="start"&&state.stage!=="idle")throw new Error("rollover already in progress");
+    if(args.command!=="start"&&state.stage!=="double-signature")throw new Error("no rollover in progress");
+    const next=args.command==="start"?{stage:"double-signature",started_in:proposalId}:{stage:"idle",last:args.command,proposal:proposalId};
+    adnsWrite(adnsGovKskRollover,key,next);
+    const command={zone:args.zone,command:args.command,new_key_tag:args.new_key_tag,new_ds_sha256:args.new_ds_sha256,minimum_hold_seconds:args.minimum_hold_seconds};
+    adnsWrite(adnsLifecycle,ccf.strToBuf("governance/ksk-rollover/"+args.zone),command);
+    if(typeof invalidateOtherOpenProposals==="function")invalidateOtherOpenProposals(proposalId);
+  }
+));
 // ---- Governors: open-join, reputation-weighted, agent-led, with a human trap door ----
 // Shape (agent-hosting ADR 0025 / agentdns ADR 0002): members are verifier agents
 // (class "agent") or humans (class "trapdoor"). Votes are weighted by reputation,
@@ -2105,7 +2132,7 @@ const adnsGovParams = "public:ccf.gov.agentdns.governance";
 const adnsHighImpact = ["set_constitution","set_js_app","set_member","remove_member","set_recovery_threshold","transition_service_to_open",
   "add_snp_measurement","add_snp_host_data","add_snp_uvm_endorsement","set_snp_minimum_tcb_version","set_snp_minimum_tcb_version_hex",
   "remove_snp_measurement","remove_snp_host_data","remove_snp_uvm_endorsement","remove_snp_minimum_tcb_version",
-  "adns_set_node_join_policy","adns_set_appraisal_policy","adns_set_release_authority","adns_set_governance_parameters","adns_set_governor"];
+  "adns_set_node_join_policy","adns_set_appraisal_policy","adns_set_release_authority","adns_set_governance_parameters","adns_set_governor","adns_ksk_rollover"];
 function adnsDefaultParams() {
   return {release_threshold:[2,3],block_threshold:[1,3],routine_threshold:[1,2],min_agent_yes:1,newcomer_weight_cap_percent:20,
     max_member_weight_percent:34,reputation_min:1,reputation_max:64,reputation_step:1,block_reputation:2,open_join:true,high_impact_actions:adnsHighImpact};

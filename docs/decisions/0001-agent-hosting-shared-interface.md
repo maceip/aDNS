@@ -27,8 +27,10 @@ enforces the rules below; agent-hosting automates its side against them.
    agent whose key moves to a VPS at a third provider, still the operator's.
    The earlier requirement "not by the sole operator" is **not met** and this
    ADR records that plainly: governance is single-organisation by decision
-   until a second party holds a key. Live state at this note: `release_authority`
-   unset; no node-join policy set; admission via `add_snp_*`.
+   until a second party holds a key. Live state (applied 2026-09-16): D minted on
+   operator laptop (`did:x509:0:sha256:1YRq01voPnpplmc8U1z8JuIM6iTla__bGbck-J6rd7c::subject:CN:agent.hosting-release-authority`),
+   committed via `adns_set_release_authority` at tx `2.330709` (svn 0).
+   Constitution v0.2.0 (`1a05b637…`, adding `adns_ksk_rollover`) committed at tx `2.330731`.
 4. **Attested records.** Owner grants carry `attested_names` and
    `attested_record_types`; a registration may publish TXT under exactly those
    names as its own contributions (DKIM selector keys, receipt keys). SVCB is
