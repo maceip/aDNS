@@ -37,7 +37,7 @@ RDATA). Append the new identity here with its recovery transaction ID.
 | Zone | KSK algorithm / key tag | DS (type 2) | Public delegation |
 |---|---|---|---|
 | `attestation.agent.hosting.` | 14 / 45132 | `d746e07e0b7214b995b195310db4f5bb0e4c2dc7cb8817c6afae1ff55c1e6aa2` | none (private integration zone) |
-| `agent.hosting.` | 14 / 59729 | `63db4cd20f2596721ce86bd43add9adb90e83d870eb3d3fe6beb8e5b534fcc14` (created 2026-09-16, tx `2.273965`) | Azure DNS remains authoritative (DS `8806 13 2 39FAF5…`) until the owner re-delegates |
+| `agent.hosting.` | 14 / 22434 | `ea02f545b3b20b8ee68c6c75e9d29c252b8022458670109cde9d4d26f0282947` (rolled over 2026-09-16, tx `3.361273`) | Azure DNS remains authoritative (DS `8806 13 2 39FAF5…`) until the owner re-delegates |
 | `example.test.` | 14 / 9190 | `460abdec2424c10315522b207bc690ff06491f0d2fe7c0344cf709755057460e` | testing zone |
 
 Online KSK rollover is governed (`adns_ksk_rollover`, steward `v0.2.1`) and
