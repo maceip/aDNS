@@ -65,6 +65,7 @@ mod ffi {
         ) -> Response;
         fn handle_transfer_key(tx: Pin<&mut CcfTx>, body: &[u8]) -> Response;
         fn handle_ksk_receipt(tx: Pin<&mut CcfTx>, query: &str, now: u64) -> Response;
+        fn handle_receipt_read(tx: Pin<&mut CcfTx>, path: &str, query: &str, now: u64) -> Response;
     }
 }
 struct Adapter<'a> {
@@ -244,6 +245,19 @@ fn handle_transfer_key(tx: Pin<&mut ffi::CcfTx>, body: &[u8]) -> ffi::Response {
     diagnosed(adns_telemetry::Name::TransferKey, || {
         json_response(
             crate::provision_transfer_key(&mut Adapter { inner: tx }, body),
+            true,
+        )
+    })
+}
+fn handle_receipt_read(
+    tx: Pin<&mut ffi::CcfTx>,
+    path: &str,
+    query: &str,
+    now: u64,
+) -> ffi::Response {
+    diagnosed(adns_telemetry::Name::ReceiptClaims, || {
+        json_response(
+            crate::receipt_read(&mut Adapter { inner: tx }, path, query, now),
             true,
         )
     })

@@ -830,3 +830,48 @@ fn ksk_claims_bind_canonical_owner_and_complete_rdata_with_real_leaf_counter() {
     assert!(ksk_receipt_claims(&mut tx, "zone=EXAMPLE.test.", NOW).is_err());
     assert!(query_pairs("zone=a&%7aone=b").is_err());
 }
+#[test]
+fn receipt_reads_force_a_leaf_and_reject_unlisted_paths() {
+    let db = database();
+    let mut tx = db.write().unwrap();
+    // The governed zone from database() has a KSK, so the anchors document has one zone entry.
+    let anchors = receipt_read(&mut tx, "/governance/anchors", "", NOW).unwrap();
+    assert_eq!(
+        anchors.body["claims"]["type"],
+        adns_server::anchors::ANCHORS_CLAIMS_TYPE
+    );
+    assert_eq!(anchors.body["claims"]["zones"][0]["zone"], "example.test.");
+    assert!(anchors.body["claims"]["node_join_policy"].is_null());
+    assert!(anchors.body["claims"]["release_authority"].is_null());
+    assert_eq!(
+        anchors.claims_digest,
+        Some(
+            adns_server::anchors::claims_digest(
+                adns_server::anchors::ANCHORS_CLAIMS_TYPE,
+                &anchors.body["claims"]
+            )
+            .unwrap()
+        )
+    );
+    assert_eq!(
+        get_json::<u64>(&tx, Collection::Lifecycle, b"receipt-counter").unwrap(),
+        Some(1)
+    );
+    // Unknown anchor: NotFound, no counter bump.
+    assert!(
+        receipt_read(
+            &mut tx,
+            "/service/anchor",
+            "registration_id=none&subject=x",
+            NOW
+        )
+        .is_err()
+    );
+    assert_eq!(
+        get_json::<u64>(&tx, Collection::Lifecycle, b"receipt-counter").unwrap(),
+        Some(1)
+    );
+    // Non-receipt paths are not served here even though read_json knows them.
+    assert!(receipt_read(&mut tx, "/zone/status", "zone=example.test.", NOW).is_err());
+    assert!(receipt_read(&mut tx, "/governance/anchors", "zone=example.test.", NOW).is_err());
+}

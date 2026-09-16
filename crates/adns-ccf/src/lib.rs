@@ -331,6 +331,46 @@ pub fn query_pairs(query: &str) -> adns_server::Result<Vec<(String, String)>> {
     Ok(out)
 }
 
+/// Receipt-bearing reads (anchor lookups, governance policy receipt, anchors
+/// document). Like the KSK receipt, each request forces an actual ledger leaf by
+/// bumping a bounded counter, so CCF issues a receipt whose claims digest the
+/// handler set. The read itself never mutates governed state.
+pub fn receipt_read(
+    tx: &mut impl WriteTx,
+    path: &str,
+    query: &str,
+    now: u64,
+) -> adns_server::Result<AppResponse> {
+    let pairs = query_pairs(query)?;
+    if !matches!(
+        path,
+        "/service/anchor" | "/governance/policy-receipt" | "/governance/anchors"
+    ) {
+        return Err(AppError::NotFound("receipt endpoint"));
+    }
+    let response = adns_server::read_json(tx, path, &pairs, now)?;
+    if response.claims_digest.is_none() {
+        return Err(AppError::Invalid("receipt read produced no claims"));
+    }
+    let counter: u64 = get_json(tx, Collection::Lifecycle, b"receipt-counter")?.unwrap_or(0);
+    let counter = counter
+        .checked_add(1)
+        .ok_or(AppError::Invalid("receipt counter exhausted"))?;
+    put_json(
+        tx,
+        Collection::Lifecycle,
+        b"receipt-counter".to_vec(),
+        &counter,
+    )?;
+    put_json(
+        tx,
+        Collection::Lifecycle,
+        b"receipt-latest".to_vec(),
+        &json!({"path":path,"claims_digest":hex::encode(response.claims_digest.unwrap_or_default()),"requested_at":now,"counter":counter}),
+    )?;
+    Ok(response)
+}
+
 pub fn ksk_receipt_claims(
     tx: &mut impl WriteTx,
     query: &str,

@@ -190,7 +190,7 @@ public:
     CommonEndpointRegistry::init_handlers();
     for(const auto& [method,path]:std::vector<std::pair<std::string,std::string>>{
       {"POST","/service/nonce"},{"POST","/service/register"},{"POST","/service/renew"},{"POST","/service/deregister"},
-      {"POST","/zone/acme-challenge"},{"DELETE","/zone/acme-challenge"},{"POST","/zone/operator/records"}}) {
+      {"POST","/zone/acme-challenge"},{"DELETE","/zone/acme-challenge"},{"POST","/zone/operator/records"},{"POST","/service/anchor"}}) {
       make_endpoint(path,ccf::RESTVerb(method),[this,method,path](ccf::endpoints::EndpointContext& ctx){
         dispatch(ctx,false,"application/json",method,path,[&](auto& tx){return ffi::handle_mutation(tx,method,path,slice(ctx.rpc_ctx->get_request_body()),now_seconds());});
       },ccf::no_auth_required).install();
@@ -209,6 +209,12 @@ public:
     make_endpoint("/governance/ksk-receipt",HTTP_GET,[this](ccf::endpoints::EndpointContext& ctx){
       dispatch(ctx,false,"","GET","/governance/ksk-receipt",[&](auto& tx){return ffi::handle_ksk_receipt(tx,ctx.rpc_ctx->get_request_query(),now_seconds());});
     },ccf::no_auth_required).install();
+    // Receipt-bearing reads: anchors and governance state a consumer pins.
+    for(const auto& path:{"/service/anchor","/governance/policy-receipt","/governance/anchors"}) {
+      make_endpoint(path,HTTP_GET,[this,path](ccf::endpoints::EndpointContext& ctx){
+        dispatch(ctx,false,"","GET",path,[&](auto& tx){return ffi::handle_receipt_read(tx,path,ctx.rpc_ctx->get_request_query(),now_seconds());});
+      },ccf::no_auth_required).install();
+    }
     make_endpoint("/internal/maintenance",HTTP_POST,[this](ccf::endpoints::EndpointContext& ctx){
       dispatch(ctx,true,"application/json","POST","/internal/maintenance",[&](auto& tx){return ffi::handle_maintenance(tx,now_seconds());});
     },ccf::no_auth_required).set_forwarding_required(ccf::endpoints::ForwardingRequired::Never).install();
