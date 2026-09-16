@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const {test} = require('node:test');
+const crypto = require('node:crypto');
 const source = fs.readFileSync(path.join(__dirname, '../governance/actions.js'), 'utf8');
 const transferTable = 'public:ccf.gov.agentdns.transfers';
 const policyTable = 'public:ccf.gov.agentdns.policy_identities';
@@ -18,8 +19,16 @@ function fixture() {
   };
   const ccf = {
     strToBuf: value => Buffer.from(value),
+    bufToStr: value => Buffer.from(value).toString(),
     jsonCompatibleToBuf: value => Buffer.from(JSON.stringify(value)),
     bufToJsonCompatible: value => JSON.parse(Buffer.from(value).toString()),
+    crypto: {
+      digest: (algorithm, data) => { assert.equal(algorithm, 'SHA-256'); return crypto.createHash('sha256').update(Buffer.from(data)).digest().buffer; },
+      verifySignature: (algorithm, pem, signature, data) => {
+        assert.deepStrictEqual(JSON.parse(JSON.stringify(algorithm)), {name: 'ECDSA', hash: 'SHA-256'});
+        return crypto.createVerify('sha256').update(Buffer.from(data)).verify({key: pem, dsaEncoding: 'der'}, Buffer.from(signature));
+      },
+    },
     kv: new Proxy({}, {get: (_, name) => ({
       get: key => {
         assert.ok(name.startsWith('public:ccf.gov.'), 'governance cannot read app tables');
@@ -27,6 +36,9 @@ function fixture() {
       },
       has: key => table(name).has(bytes(key)),
       set: (key, value) => table(name).set(bytes(key), value),
+      delete: key => table(name).delete(bytes(key)),
+      clear: () => table(name).clear(),
+      forEach: fn => table(name).forEach((v, k) => fn(v, Buffer.from(k, 'hex'))),
       get size() { return table(name).size; },
     })}),
   };
@@ -34,10 +46,33 @@ function fixture() {
     constructor(validate, apply) { this.validate = validate; this.apply = apply; }
   }});
   return {
-    invoke(name, args) { const action=actions.get(name); action.validate(args); action.apply(args); },
+    invoke(name, args) { const action=actions.get(name); action.validate(args); action.apply(args, 'proposal-test'); },
     read(name, key) { return ccf.bufToJsonCompatible(table(name).get(bytes(Buffer.from(key)))); },
+    keys(name) { return [...table(name).keys()].map(k => Buffer.from(k, 'hex').toString()); },
     table,
   };
+}
+// Release authority D for tests: a P-256 key whose signatures use the fixed
+// 64-byte r||s convention, exactly as a signing tool outside CCF would produce.
+function authority() {
+  const {privateKey, publicKey} = crypto.generateKeyPairSync('ec', {namedCurve: 'prime256v1'});
+  const pem = publicKey.export({type: 'spki', format: 'pem'});
+  const canonical = value => { const walk = v => v === null || typeof v === 'boolean' || typeof v === 'string' ? JSON.stringify(v) : typeof v === 'number' ? String(v) : Array.isArray(v) ? '[' + v.map(walk).join(',') + ']' : '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + walk(v[k])).join(',') + '}'; return walk(value); };
+  const sign = (svn, payload) => ({did: 'did:x509:0:sha256:abc::eku:1.3.6.1.4.1.311.76.59.1.2', svn,
+    signature: crypto.sign('sha256', Buffer.from(canonical({svn, payload})), {key: privateKey, dsaEncoding: 'ieee-p1363'}).toString('base64url')});
+  return {record: {did: 'did:x509:0:sha256:abc::eku:1.3.6.1.4.1.311.76.59.1.2', public_key_pem: pem, svn: 0, valid_from: 0, valid_until: 4000000000}, sign};
+}
+function joinPolicy(svn) {
+  return {svn, release_id: 'agentdns-v' + svn, measurements: ['ab'.repeat(48)], host_data: ['cd'.repeat(32)],
+    uvm_endorsements: [{did: 'did:x509:0:sha256:uvm::eku:1', feed: 'ContainerPlat-AMD-UVM', svn: '104'}],
+    tcb_versions: {Genoa: {boot_loader: 10, tee: 0, snp: 23, microcode: 84}}};
+}
+function grant() {
+  return {grant_id: 'mail-owner', subject_spki_sha256: 'ab'.repeat(32), zones: ['agent.hosting.'], mailbox_domains: ['agent.hosting.'],
+    service_hosts: ['mail.agent.hosting.'], roles: ['mx-edge'], address_cidrs: ['20.114.5.117/32'], ports: [25, 465, 587, 993],
+    allowed_operations: ['register', 'renew', 'deregister', 'anchor'], acme_names: [], operator_names: [], operator_record_types: [],
+    attested_names: ['cvm1._domainkey.agent.hosting.', '_receipt.mail.agent.hosting.'], attested_record_types: ['TXT'],
+    max_lease_seconds: 86400, max_challenge_lifetime_seconds: 1800, valid_from: 0, valid_until: 4000000000, revoked: false};
 }
 function transfer(key_name='old.example.test.') {
   return {key_name, endpoint:'192.0.2.53:53', zones:['example.test.'], secret_sha256:'ab'.repeat(32)};
@@ -103,4 +138,71 @@ test('policy identity rejects ambiguous numbers, Unicode and excessive structure
   assert.throws(()=>setPolicy(f,{...policy(),minimum_tcb:deep}),/bounds/);
   assert.throws(()=>setPolicy(f,{...policy(),approved_host_data:Array(4097).fill('x')}),/bounds/);
   assert.equal(f.table(policyTable).size,0);
+});
+
+
+test('owner grant accepts attested names/types and the anchor operation; mismatched attested fields are rejected', () => {
+  const f = fixture();
+  f.invoke('adns_set_owner_grant', {grant: grant()});
+  assert.deepEqual(f.read('public:ccf.gov.agentdns.grants', 'mail-owner').attested_names, ['cvm1._domainkey.agent.hosting.', '_receipt.mail.agent.hosting.']);
+  const half = grant(); half.attested_record_types = [];
+  assert.throws(() => f.invoke('adns_set_owner_grant', {grant: half}), /go together/);
+  const badType = grant(); badType.attested_record_types = ['SVCB'];
+  assert.throws(() => f.invoke('adns_set_owner_grant', {grant: badType}), /unknown attested type/);
+  const outside = grant(); outside.attested_names = ['cvm1._domainkey.other.'];
+  // Rust rejects names outside granted zones; the constitution only checks syntax here.
+  f.invoke('adns_set_owner_grant', {grant: outside});
+});
+
+test('node join policy needs a governed release authority, a valid D signature, and an advancing svn', () => {
+  const f = fixture(), D = authority();
+  assert.throws(() => f.invoke('adns_set_node_join_policy', {policy: joinPolicy(1), signature: D.sign(1, joinPolicy(1))}), /release authority not set/);
+  f.invoke('adns_set_release_authority', {authority: D.record});
+  const first = joinPolicy(1);
+  f.invoke('adns_set_node_join_policy', {policy: first, signature: D.sign(1, first)});
+  assert.deepEqual(f.keys('public:ccf.gov.nodes.snp.measurements'), ['ab'.repeat(48)]);
+  assert.deepEqual(f.read('public:ccf.gov.nodes.snp.measurements', 'ab'.repeat(48)), 'AllowedToJoin');
+  assert.deepEqual(f.read('public:ccf.gov.nodes.snp.uvm_endorsements', 'did:x509:0:sha256:uvm::eku:1'), {'ContainerPlat-AMD-UVM': {svn: '104'}});
+  assert.deepEqual(f.read('public:ccf.gov.nodes.snp.tcb_versions', 'Genoa'), {boot_loader: 10, tee: 0, snp: 23, microcode: 84});
+  const mirrored = f.read(lifecycle, 'governance/node-join-policy');
+  assert.equal(mirrored.svn, 1); assert.match(mirrored.policy_sha256, /^[0-9a-f]{64}$/); assert.equal(mirrored.signed_by, D.record.did);
+  assert.equal(f.read('public:ccf.gov.agentdns.release_authority', 'release-authority').svn, 1, 'authority svn ratchets to the signed svn');
+  // Rollback and replay are refused.
+  assert.throws(() => f.invoke('adns_set_node_join_policy', {policy: first, signature: D.sign(1, first)}), /anti-rollback/);
+  const second = joinPolicy(2); second.measurements = ['ef'.repeat(48)];
+  // Wrong signature (signed a different payload) fails.
+  assert.throws(() => f.invoke('adns_set_node_join_policy', {policy: second, signature: D.sign(2, first)}), /signature invalid/);
+  // Skipping an svn fails (must be current or current+1).
+  const third = joinPolicy(3);
+  assert.throws(() => f.invoke('adns_set_node_join_policy', {policy: third, signature: D.sign(3, third)}), /integer outside range/);
+  f.invoke('adns_set_node_join_policy', {policy: second, signature: D.sign(2, second)});
+  assert.deepEqual(f.keys('public:ccf.gov.nodes.snp.measurements'), ['ef'.repeat(48)], 'SET semantics: the retired measurement is gone');
+  // A different key claiming the same DID cannot sign.
+  const impostor = authority();
+  assert.throws(() => f.invoke('adns_set_node_join_policy', {policy: third, signature: impostor.sign(3, third)}), /signature invalid/);
+  // Authority rotation cannot lower the svn floor.
+  assert.throws(() => f.invoke('adns_set_release_authority', {authority: {...impostor.record, svn: 1}}), /cannot regress/);
+  f.invoke('adns_set_release_authority', {authority: {...impostor.record, svn: 2}});
+  f.invoke('adns_set_node_join_policy', {policy: third, signature: impostor.sign(3, third)});
+});
+
+test('appraisal policies are unsigned before D exists and must be D-signed afterwards', () => {
+  const f = fixture(), D = authority();
+  setPolicy(f, policy(1));
+  f.invoke('adns_set_release_authority', {authority: D.record});
+  assert.throws(() => setPolicy(f, policy(2)), /requires the release authority signature/);
+  const p2 = policy(2);
+  assert.throws(() => f.invoke('adns_set_appraisal_policy', {zone: 'example.test.', policy: p2, signature: D.sign(1, policy(3))}), /signature invalid/);
+  f.invoke('adns_set_appraisal_policy', {zone: 'example.test.', policy: p2, signature: D.sign(1, p2)});
+  assert.deepEqual(f.read('public:agentdns.policies', Buffer.from([7,101,120,97,109,112,108,101,4,116,101,115,116,0]).toString()).policy_id, Array(32).fill(2));
+  assert.equal(f.read('public:ccf.gov.agentdns.release_authority', 'release-authority').svn, 1);
+});
+
+test('release authority record is validated: did:x509, SPKI PEM, validity window', () => {
+  const f = fixture(), D = authority();
+  assert.throws(() => f.invoke('adns_set_release_authority', {authority: {...D.record, did: 'did:web:example'}}), /did:x509/);
+  assert.throws(() => f.invoke('adns_set_release_authority', {authority: {...D.record, public_key_pem: 'nope'}}), /SPKI PEM/);
+  assert.throws(() => f.invoke('adns_set_release_authority', {authority: {...D.record, valid_until: 0}}), /integer outside range/);
+  f.invoke('adns_set_release_authority', {authority: D.record});
+  assert.equal(f.read(lifecycle, 'governance/release-authority').did, D.record.did);
 });
