@@ -21,10 +21,14 @@ enforces the rules below; agent-hosting automates its side against them.
    transition only when, for the same zone, receipts under each identity verify
    and bind identical DNSKEY RDATA. agentdns records identities in
    `docs/anchors.md` with the recovery transaction.
-3. **Custody.** D is a `did:x509` whose key is held outside the node and not by
-   the sole operator; the consortium is more than one member. Both are
-   organisational decisions and are **undecided** as of this ADR; until decided
-   `release_authority` is unset and every consumer says so.
+3. **Custody.** D is a `did:x509` whose key is held outside the node. **Decided
+   2026-09-16 (agent-hosting `docs/workstreams/DECISIONS.md` #1, #14):** the
+   operator mints and holds D; the consortium's second member is the steward
+   agent whose key moves to a VPS at a third provider, still the operator's.
+   The earlier requirement "not by the sole operator" is **not met** and this
+   ADR records that plainly: governance is single-organisation by decision
+   until a second party holds a key. Live state at this note: `release_authority`
+   unset; no node-join policy set; admission via `add_snp_*`.
 4. **Attested records.** Owner grants carry `attested_names` and
    `attested_record_types`; a registration may publish TXT under exactly those
    names as its own contributions (DKIM selector keys, receipt keys). SVCB is

@@ -65,9 +65,12 @@ SPKI), svn, valid_from, valid_until}`. Once set, every `adns_set_appraisal_polic
 and `adns_set_node_join_policy` proposal must carry D's signature; D's `svn`
 ratchets to the highest signed svn and a rotation cannot lower it.
 
-Current: **not set**. Custody is an organisational decision recorded in both
-repositories' shared-interface ADRs; the operator running this node must not be
-the sole holder of D.
+Current: **not set** (live, 2026-09-16). Decided the same day: the operator
+mints and holds D (agent-hosting `docs/workstreams/DECISIONS.md` #1), so the
+operator running this node **is** the sole holder; the shared-interface ADRs on
+both sides record this as single-organisation governance by decision. This
+section is updated with DID, key and svn when `adns_set_release_authority`
+commits.
 
 ## Appraisal policies
 
