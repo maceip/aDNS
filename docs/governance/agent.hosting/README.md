@@ -48,3 +48,16 @@ defaults, `ccf/governance/actions.js`, `exports.js` and `resolve.js`. The
 steward agent (`tools/steward.py`) reviews, records verdicts, votes, settles
 reputation and sponsors joins. See `docs/decisions/0002-governance-open-join-reputation-agent-led.md`.
 Live application transactions are appended below when performed.
+
+### Applied 2026-09-16 (governance v2)
+
+| Proposal | Transaction | Result |
+|---|---|---|
+| `set_constitution` v2 (`8712e257…`) then v2.1 (`5f28aa7c…`, governor notes accept text) | `2.303357`, `2.303431` | Accepted under the previous rule (one unregistered agent, bootstrap) |
+| `adns_set_governor` operator key `3552372e…` → **trapdoor** | `2.303439` | Accepted |
+| `set_member` + `adns_set_governor` steward agent `11c6ae7f…` (key on VM-worker, `agenthost`, `/var/lib/agentdns-steward`) | `2.303474` create, `2.303498` trapdoor override, `2.303603` ack | Active |
+| `adns_set_governance_parameters {min_agent_yes:1, open_join:true}` proposed by the trapdoor **with abstention** | `2.303625` create | **Accepted by the steward's vote alone** (proposal `c2837a53…`, final votes `{11c6ae7f: true}`); verdict `approve` recorded; settled by the steward |
+
+The steward runs every 10 minutes on VM-worker (`agentdns-steward.timer`) with a
+24-hour trap-door window on high-impact proposals. The operator key is now a
+trapdoor: its `true` ballot overrides, its `false` ballot vetoes, both visible.

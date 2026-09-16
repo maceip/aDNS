@@ -124,11 +124,14 @@ class Governance:
         digest = self.post(f"/gov/members/state-digests/{self.id}:update", None, "state_digest")
         return self.post(f"/gov/members/state-digests/{self.id}:ack", digest["body"], "ack")
 
-    def propose(self, actions):
+    def propose(self, actions, abstain=False):
         result = self.post("/gov/members/proposals:create", {"actions": actions}, "proposal")
         proposal = result["body"]
         if not isinstance(proposal, dict) or proposal.get("proposalState") not in ("Open", "Accepted"):
             raise ValueError("proposal failed or returned an invalid state")
+        if abstain:
+            # Leave the decision to the other governors (agent-led governance, ADR 0002).
+            return result
         if proposal["proposalState"] != "Accepted":
             proposal_id = proposal.get("proposalId")
             if not isinstance(proposal_id, str) or re.fullmatch(r"[0-9a-f]{64}", proposal_id) is None:
@@ -153,6 +156,7 @@ def main():
     parser.add_argument("--method", default="GET", choices=("GET", "POST", "DELETE"))
     parser.add_argument("--path")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--abstain", action="store_true", help="create the proposal without casting the proposer's ballot")
     args = parser.parse_args()
     client = Client(args.url, args.connect_ip, args.service_cert)
     if args.mode == "request":
@@ -172,7 +176,7 @@ def main():
         else:
             if args.body is None:
                 parser.error("propose requires a reviewed JSON actions array in --body")
-            result = gov.propose(json.loads(args.body.read_text()))
+            result = gov.propose(json.loads(args.body.read_text()), abstain=args.abstain)
     descriptor = os.open(args.output, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
     os.fchmod(descriptor, 0o600)
     with os.fdopen(descriptor, "w") as output:

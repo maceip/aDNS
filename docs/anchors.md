@@ -91,6 +91,9 @@ distinct from operator records.
 | 2026-09-16 | `adns_create_zone agent.hosting.` (private, not delegated) | `2.273965` |
 | 2026-09-16 | owner grant `agent-hosting-mail-20260916` | `2.273969` |
 | 2026-09-16 | owner grant `agent-hosting-worker-20260916` | `2.273971` |
+| 2026-09-16 | constitution v2/v2.1 `5f28aa7c79ed2eefad95fc7151fab0faa91bf66a472517b6af6c649649c7b107`: governance v2 (ADR 0002) — reputation-weighted `resolve()`, governors, verdicts, settle | `2.303357`, `2.303431` |
+| 2026-09-16 | operator member classified trapdoor; steward agent member `11c6ae7f…` admitted and active | `2.303439`, `2.303498`, `2.303603` |
+| 2026-09-16 | first agent-decided proposal (governance parameters) | `2.303625` (create); accepted by the steward's ballot |
 
 The running primary is still the pre-`anchors.rs` release: grants with
 `attested_names` are stored but unreadable by that binary until the primary is
