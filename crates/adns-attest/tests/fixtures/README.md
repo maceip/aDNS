@@ -15,3 +15,31 @@ The three `aci_ccf_genoa_v5_*` files were captured from the isolated native Azur
 | `aci_ccf_genoa_v5_policy.json` | `5b71e5db24a67ce9495cc66bc3122ec224f90a78e9734b370d8f962f3c60d184` |
 
 AMD [56860 revision 1.58, Table 23](https://www.amd.com/content/dam/amd/en/documents/developer/56860.pdf) defines report version 5 with launch/current mitigation vectors at offsets `0x1f8`/`0x200`, reserved bytes `0x208..0x29f`, and the unchanged signature over bytes `0..0x29f`. The parser supports versions 2, 3, and 5 explicitly; version 4 and unknown future versions remain rejected. Versions 2/3 retain their prior reserved ranges. The two vectors are authenticated u64 observations, absent for older reports. No minimum mitigation mask is inferred from this fixture's values of 7: admission still requires the independently approved product-specific TCB floor, measurement, CCE policy, Microsoft identity and key binding. A specific mitigation-mask authorization policy would require a separate governed contract.
+
+## Azure CVM captures (2026-09-16)
+
+`azure_cvm_provenance.json` identifies the exact source JSON paths and SHA256
+hashes. The mail HCL was copied from the operator's agent-hosting checkout;
+the worker JSON was absent there and recovered read-only from Agent D's
+`ws-D` worktree. The `.bin` files are decoded bytes without corrections.
+The worker AK NV region has one DER leaf certificate followed by zero padding;
+`azure_cvm_worker_ak_0.der` is the leaf with padding removed.
+
+The mail HCL parses and its original 1233-byte runtime JSON hash matches
+`report_data[0..32]`, with a zero upper half. It contains `HCLAkPub` (RSA-2048),
+not a workload SPKI digest. Its VCEK, AK certificate/chain and a TPM workload
+quote were **not** present in the source capture.
+
+The worker HCL is a **negative fixture**: declared runtime length 1200, actual
+JSON length 1203; declared bytes truncate a JSON string. Neither the declared
+nor full JSON hash matches report_data. Do not repair those bytes and then
+call them hardware evidence. The AK leaf is valid from 2026-09-16 through
+2027-09-15 and names `Azure Cloud Virtual TPM CA - 25` as issuer, but no issuer
+chain, AMD VCEK or TPM quote was captured.
+
+Tests distinguish parse/hash checks, real ACI AMD crypto regression tests,
+real worker AK leaf constraints, and synthetic TPM quote tests. There is no
+successful complete CVM workload appraisal fixture. `security_claim: false`.
+The Genoa ARK certificate in `src/amd_genoa_ark_cert.pem` was extracted from
+the existing captured `aci_ccf_genoa_v5_quote.json` endorsement chain; its
+public key matches the pre-existing pinned AMD Genoa SPKI.

@@ -1,0 +1,164 @@
+{
+  "security_claim": false,
+  "captures": [
+    {
+      "name": "mail",
+      "source": "/Users/mac/agent-hosting/docs/reviews/evidence/2026-09-16/coprocessor-cvm-hardware.json",
+      "source_sha256": "926cc8e711de483e95b9a2ef3888cd642976fa5f81eaf8f8859d7120316e5ebe",
+      "hcl_sha256": "4c0b9674e0389546659700af6fb25ba39c94efb2a950b8f4c560408b34efd8e1",
+      "hcl_size": 2600,
+      "header": [
+        1095517000,
+        2,
+        2469,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "runtime_header": [
+        1253,
+        1,
+        2,
+        1,
+        1233
+      ],
+      "runtime_sha256": "c5f86ab82f0eba4c4ab1d42c0742f37746812c52c5a3731f144a95943ad4b5e5",
+      "report_data": "c5f86ab82f0eba4c4ab1d42c0742f37746812c52c5a3731f144a95943ad4b5e50000000000000000000000000000000000000000000000000000000000000000",
+      "measurement": "b2b53ada66639958b707804dade56a9336a6bbd51e625ba93002ce8614482c198245c6d012196aa845353fe259fd0a34",
+      "host_data": "0000000000000000000000000000000000000000000000000000000000000000",
+      "chip_id": "742d80770c3a10c0f84936d73e98095a21d81879ec82aefe41db355c0bcb72cdca87f1c5a634b453bfd2616d13d93e9a958e0be26c7e856481507d3e9b1f94b2",
+      "vmpl": 0,
+      "cpuid": "191101",
+      "tcb": {
+        "current": [
+          12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          28,
+          88
+        ],
+        "reported": [
+          12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          28,
+          88
+        ],
+        "committed": [
+          12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          28,
+          88
+        ],
+        "launch": [
+          12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          28,
+          88
+        ]
+      },
+      "runtime_keys": [
+        "HCLAkPub",
+        "HCLEkPub"
+      ],
+      "actual_runtime_len": 1233,
+      "actual_runtime_hash": "c5f86ab82f0eba4c4ab1d42c0742f37746812c52c5a3731f144a95943ad4b5e5"
+    },
+    {
+      "name": "worker",
+      "source": "/Users/mac/ws-D/docs/reviews/evidence/2026-09-16/worker-cvm-hardware.json",
+      "source_sha256": "268f97a9c764bb9e3e184cd5e5f0e5486390fbafd01bf9f758c494a759a10187",
+      "hcl_sha256": "898e124dcef063d11d34d30f560362284829f2537a252bb49472d95cce24d879",
+      "hcl_size": 2603,
+      "header": [
+        1095517000,
+        2,
+        2436,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "runtime_header": [
+        1220,
+        1,
+        2,
+        1,
+        1200
+      ],
+      "runtime_sha256": "11830e48255fce7ca5866a4db3716d3e42f71762610c81be9c98512545e81625",
+      "report_data": "98e5fbce08bc15766625e7f0f2984a7aaa31625ff9f51f61c0b44592bc0bf91e0000000000000000000000000000000000000000000000000000000000000000",
+      "measurement": "aa7c9da55c1386e5b1653b125978beda7b3f95a85aeb0f9ddbbdb783ce056a28c9d021da239c34a58c3a657654270eef",
+      "host_data": "0000000000000000000000000000000000000000000000000000000000000000",
+      "chip_id": "b3e02178a54f24e953dd7415d4842032082faaa31ad522cd7f10f467571be10c1a4592910a80491f24b2293b2fd3a4ac629dabde91d92c5ac8607c7bf204af45",
+      "vmpl": 0,
+      "cpuid": "191101",
+      "tcb": {
+        "current": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27,
+          88
+        ],
+        "reported": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27,
+          88
+        ],
+        "committed": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27,
+          88
+        ],
+        "launch": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27,
+          88
+        ]
+      },
+      "runtime_error": "Unterminated string starting at: line 1 column 1070 (char 1069)",
+      "actual_runtime_len": 1203,
+      "actual_runtime_hash": "44955f636a629a5e39623b7b5fc3c28f2200e407939bc481d272b0765b4547d0",
+      "ak_size": 3580,
+      "ak_certs": 1,
+      "ak_tail_bytes": 1977,
+      "ak_tail_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

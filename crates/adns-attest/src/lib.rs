@@ -4,6 +4,7 @@
 
 mod certificates;
 mod cose;
+pub mod cvm;
 pub mod node_audit;
 mod snp;
 mod uvm;
@@ -16,6 +17,7 @@ use std::collections::{BTreeMap, BTreeSet};
 pub use uvm::{UvmEndorsementTimePolicy, UvmIdentity};
 
 pub const AZURE_ACI_SNP: &str = "azure-aci-snp";
+pub const AZURE_CVM_SNP: &str = "azure-cvm-snp";
 pub const MICROSOFT_UVM_DID: &str =
     "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2";
 pub const MAX_EVIDENCE_BYTES: usize = 1024 * 1024;
@@ -39,6 +41,9 @@ pub struct AppraisalPolicy {
     pub uvm: Vec<UvmIdentity>,
     #[serde(default)]
     pub uvm_endorsement_time_policy: UvmEndorsementTimePolicy,
+    /// HCL/vTPM constraints, required when azure-cvm-snp is active.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub azure_cvm: Option<cvm::AzureCvmPolicy>,
 }
 
 /// Fields are readable but cannot be constructed outside the verifier crate.
@@ -131,6 +136,10 @@ fn appraise_inner(
     policy: &AppraisalPolicy,
     now: u64,
 ) -> Result<VerifiedAppraisal, AttestationError> {
+    if profile == AZURE_CVM_SNP {
+        validate_profile_policy(policy, now, profile)?;
+        return cvm::appraise(evidence, spki_der, policy, now);
+    }
     if profile != AZURE_ACI_SNP {
         return Err(AttestationError::UnsupportedProfile);
     }
@@ -173,7 +182,15 @@ fn appraise_inner(
 }
 
 fn validate_policy(policy: &AppraisalPolicy, now: u64) -> Result<(), AttestationError> {
-    if !policy.active_profiles.contains(AZURE_ACI_SNP) {
+    validate_profile_policy(policy, now, AZURE_ACI_SNP)
+}
+
+fn validate_profile_policy(
+    policy: &AppraisalPolicy,
+    now: u64,
+    profile: &str,
+) -> Result<(), AttestationError> {
+    if !policy.active_profiles.contains(profile) {
         return Err(AttestationError::ProfileNotActive);
     }
     if now < policy.valid_from

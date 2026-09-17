@@ -19,7 +19,7 @@ const GENOA_V5_QUOTE: &[u8] = include_bytes!("../tests/fixtures/aci_ccf_genoa_v5
 const GENOA_V5_PEER: &[u8] = include_bytes!("../tests/fixtures/aci_ccf_genoa_v5_peer.der");
 const GENOA_V5_TIME: u64 = 1_789_285_320; // 2026-09-13 07:42 UTC, captured peer valid.
 
-fn genoa_v5_fixture() -> (cose::NativePayload, AppraisalPolicy) {
+pub(super) fn genoa_v5_fixture() -> (cose::NativePayload, AppraisalPolicy) {
     use base64::{Engine, engine::general_purpose::STANDARD};
     let quote: serde_json::Value = serde_json::from_slice(GENOA_V5_QUOTE).unwrap();
     let payload = cose::NativePayload {
@@ -193,6 +193,7 @@ fn policy() -> AppraisalPolicy {
         approved_measurements: [MEASUREMENT.into()].into(),
         approved_host_data: [HOST_DATA.into()].into(),
         uvm_endorsement_time_policy: UvmEndorsementTimePolicy::CurrentCertificate,
+        azure_cvm: None,
         uvm: vec![UvmIdentity {
             did: MICROSOFT_UVM_DID.into(),
             feed: "ContainerPlat-AMD-UVM".into(),
@@ -200,18 +201,18 @@ fn policy() -> AppraisalPolicy {
         }],
     }
 }
-fn encode(value: Value) -> Vec<u8> {
+pub(super) fn encode(value: Value) -> Vec<u8> {
     let mut out = Vec::new();
     ciborium::into_writer(&value, &mut out).unwrap();
     out
 }
-fn key() -> PKey<Private> {
+pub(super) fn key() -> PKey<Private> {
     PKey::from_ec_key(
         EcKey::generate(&EcGroup::from_curve_name(Nid::X9_62_PRIME256V1).unwrap()).unwrap(),
     )
     .unwrap()
 }
-fn signed(payload: &[u8], key: &PKey<Private>) -> Vec<u8> {
+pub(super) fn signed(payload: &[u8], key: &PKey<Private>) -> Vec<u8> {
     let envelope = CoseSign1Builder::new()
         .protected(
             HeaderBuilder::new()

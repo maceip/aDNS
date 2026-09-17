@@ -29,6 +29,30 @@ pub(crate) fn verify_amd_endorsements(
     encoded: &str,
     now: u64,
 ) -> Result<AmdEndorsements, AttestationError> {
+    let certs = amd_certificates(encoded)?;
+    let ark_spki = certs[2].public_key()?.public_key_to_der()?;
+    let product = [
+        ("Milan", include_bytes!("amd_milan_ark.pem").as_slice()),
+        ("Genoa", include_bytes!("amd_genoa_ark.pem").as_slice()),
+    ]
+    .into_iter()
+    .find_map(|(product, pem)| {
+        let expected = PKey::public_key_from_pem(pem)
+            .ok()?
+            .public_key_to_der()
+            .ok()?;
+        (ark_spki == expected).then_some(product)
+    })
+    .ok_or(AttestationError::UntrustedRoot)?;
+    let valid_until = verify_chain(&certs, now)?;
+    Ok(AmdEndorsements {
+        vcek: certs[0].clone(),
+        product: product.into(),
+        valid_until,
+    })
+}
+
+pub(crate) fn amd_certificates(encoded: &str) -> Result<Vec<X509>, AttestationError> {
     if encoded.len() > 128 * 1024 {
         return Err(AttestationError::Malformed("endorsements size"));
     }
@@ -56,26 +80,7 @@ pub(crate) fn verify_amd_endorsements(
     if certs.len() != 3 {
         return Err(AttestationError::Malformed("VCEK ASK ARK chain required"));
     }
-    let ark_spki = certs[2].public_key()?.public_key_to_der()?;
-    let product = [
-        ("Milan", include_bytes!("amd_milan_ark.pem").as_slice()),
-        ("Genoa", include_bytes!("amd_genoa_ark.pem").as_slice()),
-    ]
-    .into_iter()
-    .find_map(|(product, pem)| {
-        let expected = PKey::public_key_from_pem(pem)
-            .ok()?
-            .public_key_to_der()
-            .ok()?;
-        (ark_spki == expected).then_some(product)
-    })
-    .ok_or(AttestationError::UntrustedRoot)?;
-    let valid_until = verify_chain(&certs, now)?;
-    Ok(AmdEndorsements {
-        vcek: certs[0].clone(),
-        product: product.into(),
-        valid_until,
-    })
+    Ok(certs)
 }
 
 /// Verify exactly the supplied ordered path against its externally pinned root.

@@ -174,8 +174,11 @@ impl SnpAttestationReport {
         })
     }
     pub fn verify_security_policy(&self) -> Result<(), AttestationError> {
-        if self.vmpl != 0 {
-            return Err(AttestationError::ReportPolicyRejected("VMPL must be zero"));
+        self.verify_security_policy_at_vmpl(0)
+    }
+    pub(crate) fn verify_security_policy_at_vmpl(&self, vmpl: u32) -> Result<(), AttestationError> {
+        if vmpl > 3 || self.vmpl != vmpl {
+            return Err(AttestationError::ReportPolicyRejected("VMPL rejected"));
         }
         if self.policy & (1 << 19) != 0 {
             return Err(AttestationError::ReportPolicyRejected("debug enabled"));
