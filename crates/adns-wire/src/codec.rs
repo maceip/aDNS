@@ -1,4 +1,4 @@
-use crate::{DnsError, WireName};
+use crate::{DnsError, SvcParam, SvcbData, WireName};
 use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
@@ -38,6 +38,7 @@ code_enum!(
     Nsec3 = 50,
     Nsec3Param = 51,
     Tlsa = 52,
+    Svcb = 64,
     Tsig = 250,
     Ixfr = 251,
     Axfr = 252,
@@ -141,6 +142,7 @@ pub enum RData {
     Soa(SoaData),
     Mx(MxData),
     Txt(Vec<Vec<u8>>),
+    Svcb(SvcbData),
     Tlsa(TlsaData),
     Dnskey(DnskeyData),
     Ds(DsData),
@@ -163,6 +165,7 @@ impl RData {
             Self::Soa(_) => RecordType::Soa,
             Self::Mx(_) => RecordType::Mx,
             Self::Txt(_) => RecordType::Txt,
+            Self::Svcb(_) => RecordType::Svcb,
             Self::Tlsa(_) => RecordType::Tlsa,
             Self::Dnskey(_) => RecordType::Dnskey,
             Self::Ds(_) => RecordType::Ds,
@@ -358,6 +361,47 @@ impl<'a> PacketReader<'a> {
                 matching_type: self.u8()?,
                 certificate_association_data: self.tail(),
             }),
+            RecordType::Svcb => {
+                let priority = self.u16()?;
+                let start = self.position;
+                let mut cursor = start;
+                loop {
+                    let len = usize::from(
+                        *self
+                            .packet
+                            .get(cursor)
+                            .filter(|_| cursor < self.end)
+                            .ok_or(DnsError::UnexpectedEof)?,
+                    );
+                    if len > 63 {
+                        return Err(DnsError::InvalidRdata);
+                    }
+                    cursor += 1 + len;
+                    if cursor > self.end {
+                        return Err(DnsError::UnexpectedEof);
+                    }
+                    if len == 0 {
+                        break;
+                    }
+                }
+                let target = self.bytes(cursor - start)?.to_vec();
+                let mut params = Vec::new();
+                while self.remaining() > 0 {
+                    let key = self.u16()?;
+                    let n = usize::from(self.u16()?);
+                    params.push(SvcParam {
+                        key,
+                        value: self.bytes(n)?.to_vec(),
+                    });
+                }
+                let data = SvcbData {
+                    priority,
+                    target,
+                    params,
+                };
+                data.validate()?;
+                RData::Svcb(data)
+            }
             RecordType::Dnskey => RData::Dnskey(DnskeyData {
                 flags: self.u16()?,
                 protocol: self.u8()?,
@@ -609,6 +653,16 @@ impl PacketWriter {
             RData::Tlsa(t) => {
                 self.bytes(&[t.usage, t.selector, t.matching_type])?;
                 self.bytes(&t.certificate_association_data)?;
+            }
+            RData::Svcb(s) => {
+                s.validate()?;
+                self.u16(s.priority)?;
+                self.bytes(&s.target)?;
+                for p in &s.params {
+                    self.u16(p.key)?;
+                    self.u16(u16::try_from(p.value.len()).map_err(|_| DnsError::InvalidRdata)?)?;
+                    self.bytes(&p.value)?;
+                }
             }
             RData::Dnskey(k) => {
                 self.u16(k.flags)?;

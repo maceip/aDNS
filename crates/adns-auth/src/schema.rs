@@ -150,6 +150,7 @@ pub struct RegisterParameters {
 #[serde(rename_all = "UPPERCASE")]
 pub enum AttestedRecordType {
     Txt,
+    Svcb,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -175,6 +176,17 @@ impl AttestedRecord {
         }
         if !(60..=86400).contains(&self.ttl) {
             return Err(invalid("attested record TTL"));
+        }
+        if self.record_type == AttestedRecordType::Svcb {
+            if self.rdata_strings.len() > MAX_ATTESTED_RDATA_STRINGS
+                || self.rdata_strings.iter().map(String::len).sum::<usize>()
+                    > MAX_ATTESTED_RECORD_BYTES
+            {
+                return Err(invalid("attested SVCB size"));
+            }
+            adns_wire::SvcbData::from_tokens(&self.rdata_strings)
+                .map_err(|_| invalid("attested SVCB RDATA"))?;
+            return Ok(());
         }
         if self.rdata_strings.is_empty() || self.rdata_strings.len() > MAX_ATTESTED_RDATA_STRINGS {
             return Err(invalid("attested record string count"));

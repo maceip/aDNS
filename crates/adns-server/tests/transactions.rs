@@ -2464,3 +2464,173 @@ fn ksk_rollover_double_signs_then_swaps_only_after_hold_and_attested_ds() {
         "abort keeps the current key"
     );
 }
+
+#[test]
+fn attested_svcb_grant_scope_dnssec_and_withdrawal() {
+    let (db, signer, mut grant) = setup();
+    let mut p = params();
+    let record = AttestedRecord {
+        name: "_svc.example.".into(),
+        record_type: AttestedRecordType::Svcb,
+        ttl: 300,
+        rdata_strings: vec![
+            "1".into(),
+            "mail.example.".into(),
+            "alpn=h2".into(),
+            "port=8443".into(),
+        ],
+    };
+    p.evidence_profile = "azure-cvm-snp".into();
+    p.attested_records = vec![record];
+    let a = action(&signer, "cvm-svcb", ActionParameters::Register(p.clone()));
+    // Both exact name and type must be authorized independently.
+    assert!(authorize_action(&a, &grant, "ccf://test", 1000).is_err());
+    grant.attested_names.push("_svc.example.".into());
+    assert!(authorize_action(&a, &grant, "ccf://test", 1000).is_err());
+    grant.attested_record_types.push(AttestedRecordType::Svcb);
+    authorize_action(&a, &grant, "ccf://test", 1000).unwrap();
+    let mut tx = db.write().unwrap();
+    put_json(
+        &mut tx,
+        Collection::Grants,
+        grant.grant_id.as_bytes().to_vec(),
+        &grant,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    let r = seed_registration(&db, &grant);
+    let origin: WireName = "example.".parse().unwrap();
+    let mut tx = db.write().unwrap();
+    let contributions = attested_contributions(&p).unwrap();
+    assert_eq!(contributions[0].rtype, RecordType::Svcb);
+    for rr in contributions {
+        add_contribution(&mut tx, &origin, &r.registration_id, rr).unwrap();
+    }
+    resign_zone(&mut tx, &origin, 1000, true).unwrap();
+    tx.commit().unwrap();
+    let zone = zone_metadata(&db.read().unwrap(), &origin).unwrap();
+    verify_published_rrsets(&zone, 1000);
+    let rr = zone
+        .signed_records
+        .iter()
+        .find(|rr| rr.rtype == RecordType::Svcb)
+        .unwrap();
+    let message = Message {
+        answers: vec![rr.clone()],
+        ..Default::default()
+    };
+    let decoded = Message::parse(&message.to_wire().unwrap()).unwrap();
+    assert_eq!(decoded.answers[0], *rr);
+    assert!(
+        zone.signed_records
+            .iter()
+            .any(|rr| matches!(&rr.rdata,RData::Rrsig(s) if s.type_covered==RecordType::Svcb))
+    );
+    let withdraw = envelope(
+        &db,
+        &signer,
+        action(
+            &signer,
+            "withdraw-svcb",
+            ActionParameters::Deregister(DeregisterParameters {
+                registration_id: r.registration_id,
+                selected_ports: vec![],
+                withdraw_all: true,
+                reason: "key_rotation".into(),
+            }),
+        ),
+        1100,
+    );
+    let mut tx = db.write().unwrap();
+    mutate(
+        &mut tx,
+        "POST",
+        "/service/deregister",
+        &serde_json::to_vec(&withdraw).unwrap(),
+        1100,
+    )
+    .unwrap();
+    tx.commit().unwrap();
+    let zone = zone_metadata(&db.read().unwrap(), &origin).unwrap();
+    assert!(
+        !zone
+            .signed_records
+            .iter()
+            .any(|rr| rr.rtype == RecordType::Svcb)
+    );
+}
+
+#[test]
+fn azure_cvm_registration_dispatch_rejects_missing_policy_and_malformed_evidence_atomically() {
+    let (db, signer, _) = setup();
+    let raw = b"invalid COSE CVM envelope";
+    let mut p = params();
+    p.evidence_profile = adns_attest::AZURE_CVM_SNP.into();
+    p.evidence_digest = sha256_hex(raw);
+    let mut request = envelope(
+        &db,
+        &signer,
+        action(&signer, "cvm-invalid", ActionParameters::Register(p)),
+        1000,
+    );
+    request.evidence_payload = Some(encode_base64url(raw));
+    let mut policy = adns_attest::AppraisalPolicy {
+        policy_id: [3; 32],
+        release_id: "cvm-dispatch-test".into(),
+        active_profiles: [adns_attest::AZURE_CVM_SNP.into()].into(),
+        valid_from: 900,
+        valid_until: 2000,
+        max_appraisal_lifetime: 300,
+        ..Default::default()
+    };
+    for configured in [false, true] {
+        if configured {
+            policy.azure_cvm = Some(adns_attest::cvm::AzureCvmPolicy {
+                vmpl: 0,
+                allowed_ak_ca_subjects: [adns_attest::cvm::AZURE_AK_CA_25.into()].into(),
+                ak_root_sha256: ["00".repeat(32)].into(),
+            });
+        }
+        let mut tx = db.write().unwrap();
+        put_json(&mut tx, Collection::Policies, origin_wire(), &policy).unwrap();
+        tx.commit().unwrap();
+        let mut tx = db.write().unwrap();
+        let result = mutate(
+            &mut tx,
+            "POST",
+            "/service/register",
+            &serde_json::to_vec(&request).unwrap(),
+            1001,
+        );
+        if configured {
+            assert!(matches!(
+                result,
+                Err(AppError::Attestation(
+                    adns_attest::AttestationError::Malformed(_)
+                ))
+            ));
+        } else {
+            assert!(matches!(
+                result,
+                Err(AppError::Attestation(
+                    adns_attest::AttestationError::PolicyNotValid
+                ))
+            ));
+        }
+        drop(tx);
+        assert!(
+            db.read()
+                .unwrap()
+                .scan_prefix(Collection::Registrations, b"")
+                .unwrap()
+                .is_empty()
+        );
+        let zone = zone_metadata(&db.read().unwrap(), &"example.".parse().unwrap()).unwrap();
+        assert!(
+            !zone
+                .signed_records
+                .iter()
+                .any(|r| r.rtype == RecordType::Tlsa)
+        );
+    }
+}

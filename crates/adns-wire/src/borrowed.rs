@@ -13,6 +13,11 @@ pub enum RDataRef<'a> {
     Soa(SoaData),
     Mx(MxData),
     Txt(CharacterStrings<'a>),
+    Svcb {
+        priority: u16,
+        target: &'a [u8],
+        params: &'a [u8],
+    },
     Tlsa {
         usage: u8,
         selector: u8,
@@ -212,6 +217,19 @@ impl<'a> RecordView<'a> {
                 matching_type: r.u8()?,
                 certificate_association_data: r.borrowed_tail()?,
             },
+            RecordType::Svcb => {
+                // Reuse semantic validation; the returned values still borrow
+                // the packet. SVCB is not on the zero-allocation A/TXT hot path.
+                let start = r.position;
+                let RData::Svcb(data) = r.rdata(RecordType::Svcb)? else {
+                    return Err(DnsError::InvalidRdata);
+                };
+                RDataRef::Svcb {
+                    priority: data.priority,
+                    target: &self.packet[start + 2..start + 2 + data.target.len()],
+                    params: &self.packet[start + 2 + data.target.len()..r.position],
+                }
+            }
             RecordType::Dnskey => RDataRef::Dnskey {
                 flags: r.u16()?,
                 protocol: r.u8()?,

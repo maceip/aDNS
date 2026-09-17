@@ -681,3 +681,23 @@ fn renewal_rechecks_scope_without_requiring_register_permission() {
     owner.roles = vec!["changed-role".into()];
     assert!(authorize_registration_scope(&original, &owner).is_err());
 }
+
+#[test]
+fn azure_cvm_profile_and_attested_svcb_contract() {
+    let record: AttestedRecord = serde_json::from_value(serde_json::json!({
+        "name":"_svc.example.","type":"SVCB","ttl":300,
+        "rdata_strings":["1","svc.example.","alpn=h2","port=8443"]
+    }))
+    .unwrap();
+    record.validate("example.").unwrap();
+    assert_eq!(record.record_type, AttestedRecordType::Svcb);
+    assert!(record.validate("other.").is_err());
+    let mut bad = record.clone();
+    bad.rdata_strings.push("port=443".into());
+    assert!(bad.validate("example.").is_err());
+    let mut bad = record.clone();
+    bad.rdata_strings = vec!["1".into(), ".".into(), "mandatory=port".into()];
+    assert!(bad.validate("example.").is_err());
+    let json = serde_json::to_value(&record).unwrap();
+    assert_eq!(json["type"], "SVCB");
+}

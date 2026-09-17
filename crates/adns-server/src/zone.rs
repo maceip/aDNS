@@ -197,6 +197,11 @@ pub fn attested_contributions(
     for record in &parameters.attested_records {
         let owner: WireName = record.name.parse()?;
         match record.record_type {
+            adns_auth::AttestedRecordType::Svcb => out.push(ResourceRecord::new(
+                owner,
+                record.ttl,
+                RData::Svcb(SvcbData::from_tokens(&record.rdata_strings)?),
+            )?),
             adns_auth::AttestedRecordType::Txt => out.push(ResourceRecord::new(
                 owner,
                 record.ttl,

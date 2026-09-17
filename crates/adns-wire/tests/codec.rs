@@ -333,3 +333,114 @@ fn borrowed_typed_rdata_and_names_allocate_zero_bytes() {
     assert_eq!(info.count_total, 0);
     assert_eq!(info.bytes_total, 0);
 }
+
+#[test]
+fn svcb_rfc9460_roundtrip_and_uncompressed_target() {
+    let s = SvcbData::from_tokens(
+        &[
+            "1",
+            "svc.example.",
+            "mandatory=alpn,port",
+            "alpn=h2,h3",
+            "port=8443",
+            "ipv4hint=192.0.2.1",
+        ]
+        .map(str::to_owned),
+    )
+    .unwrap();
+    let rr = ResourceRecord::new(n("_svc.example."), 300, RData::Svcb(s)).unwrap();
+    assert_eq!(rr.rtype.code(), 64);
+    let raw = rr.rdata.to_wire().unwrap();
+    assert_eq!(
+        &raw[..15],
+        &[
+            0, 1, 3, b's', b'v', b'c', 7, b'e', b'x', b'a', b'm', b'p', b'l', b'e', 0
+        ]
+    );
+    let mut w = PacketWriter::new(true);
+    w.record(&rr).unwrap();
+    w.record(&rr).unwrap();
+    let bytes = w.into_bytes();
+    let mut reader = PacketReader::new(&bytes);
+    assert_eq!(reader.record().unwrap(), rr);
+    let view = reader.record_view().unwrap();
+    assert!(matches!(
+        view.typed().unwrap(),
+        RDataRef::Svcb { priority: 1, .. }
+    ));
+    assert_eq!(view.to_owned().unwrap(), rr);
+    // RFC 9460 Appendix D alias example.
+    let alias = SvcbData::from_tokens(&["0".into(), "foo.example.com.".into()]).unwrap();
+    assert_eq!(
+        hex_encode(&RData::Svcb(alias).to_wire().unwrap()),
+        "000003666f6f076578616d706c6503636f6d00"
+    );
+    SvcbData::from_tokens(&["0".into(), ".".into()]).unwrap();
+}
+#[test]
+fn svcb_rejects_duplicate_unsorted_mandatory_bad_values_and_compression() {
+    for tokens in [
+        vec!["1", ".", "alpn=h2", "alpn=h3"],
+        vec!["1", ".", "port=443", "alpn=h2"],
+        vec!["1", ".", "mandatory=port", "alpn=h2"],
+        vec!["1", ".", "no-default-alpn"],
+        vec!["1", ".", "key3=ff"],
+        vec!["1", ".", "alpn="],
+        vec!["1", ".", "ipv4hint=::1"],
+        vec!["0", "svc.example.", "port=443"],
+        vec!["1", ".", "key65535="],
+    ] {
+        assert!(
+            SvcbData::from_tokens(&tokens.into_iter().map(str::to_owned).collect::<Vec<_>>())
+                .is_err()
+        );
+    }
+    let mut w = PacketWriter::new(false);
+    // TargetName points to owner, prohibited even when the pointer is well formed.
+    let rr = ResourceRecord {
+        name: n("example."),
+        rclass: RecordClass::In,
+        rtype: RecordType::Svcb,
+        ttl: 300,
+        rdata: RData::Unknown(vec![0, 1, 0xc0, 0]),
+    };
+    w.record(&rr).unwrap();
+    let bytes = w.into_bytes();
+    assert!(PacketReader::new(&bytes).record().is_err());
+    // All malformed lengths must return errors, including through the borrowed API.
+    let good = SvcbData::from_tokens(&["1", ".", "port=443"].map(str::to_owned)).unwrap();
+    let data = RData::Svcb(good).to_wire().unwrap();
+    for end in [0, 1, 2, 4, 5, 6, 7, 8] {
+        let mut w = PacketWriter::new(false);
+        let mut bad = rr.clone();
+        bad.rdata = RData::Unknown(data[..end].to_vec());
+        w.record(&bad).unwrap();
+        let bytes = w.into_bytes();
+        let mut r = PacketReader::new(&bytes);
+        let view = r.record_view().unwrap();
+        assert!(view.to_owned().is_err());
+        assert!(view.typed().is_err());
+    }
+}
+
+#[test]
+fn svcb_target_case_is_preserved_for_dnssec_rfc3597() {
+    let lower =
+        SvcbData::from_tokens(&["1", "svc.example.", "port=443"].map(str::to_owned)).unwrap();
+    let mut mixed = lower.clone();
+    mixed.target[1] = b'S';
+    let rr = ResourceRecord::new(n("example."), 300, RData::Svcb(mixed)).unwrap();
+    let mut w = PacketWriter::new(false);
+    w.record(&rr).unwrap();
+    let bytes = w.into_bytes();
+    let decoded = PacketReader::new(&bytes).record().unwrap();
+    assert_eq!(decoded, rr);
+    assert_ne!(
+        decoded.rdata.to_wire().unwrap(),
+        RData::Svcb(lower).to_wire().unwrap()
+    );
+    assert_eq!(
+        decoded.canonical_wire().unwrap(),
+        rr.canonical_wire().unwrap()
+    );
+}

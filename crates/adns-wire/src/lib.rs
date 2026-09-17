@@ -4,9 +4,11 @@
 mod codec;
 mod encoding;
 mod name;
+mod svcb;
 pub use codec::*;
 pub use encoding::*;
 pub use name::*;
+pub use svcb::*;
 
 #[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
 pub enum DnsError {

@@ -24,6 +24,7 @@ dependencies = [
 name = "adns-auth"
 version = "0.1.0"
 dependencies = [
+ "adns-wire",
  "base64",
  "hex",
  "ring",
