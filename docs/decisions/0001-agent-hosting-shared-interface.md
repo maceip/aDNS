@@ -32,9 +32,10 @@ enforces the rules below; agent-hosting automates its side against them.
    committed via `adns_set_release_authority` at tx `2.330709` (svn 0).
    Constitution v0.2.0 (`1a05b637…`, adding `adns_ksk_rollover`) committed at tx `2.330731`.
 4. **Attested records.** Owner grants carry `attested_names` and
-   `attested_record_types`; a registration may publish TXT under exactly those
-   names as its own contributions (DKIM selector keys, receipt keys). SVCB is
-   not implemented (no wire codec); it is a follow-up, not a promise.
+   `attested_record_types`; a registration may publish TXT and SVCB under
+   exactly those names as its own contributions (DKIM selector keys, receipt
+   keys, service bindings). Type 64 wire encoding and registration ownership
+   are implemented; SVCB grants still require Agent A to update the constitution.
 5. **Anchors.** `POST /app/service/anchor` binds `(registration, subject,
    sequence, digest)` under an active registration's key with a receipt;
    sequences per subject only advance; the same digest may be re-anchored
@@ -59,3 +60,19 @@ enforces the rules below; agent-hosting automates its side against them.
 - Real multi-member consortium (item 4 of the end-state list).
 - Online KSK rollover (item 5): required before `agent.hosting.` is delegated.
 - D custody (item 9): mechanism is in place; the key is not.
+
+## Azure CVM evidence (Decision #11, 2026-09-16)
+
+`azure-cvm-snp` verifies the HCL SNP report directly with VCEK/ASK/ARK, pinned
+to AMD Genoa ARK DER SHA256
+`4c6598d19c18719c5dfd4a7d335f674e5bfe1d8f800cea2cf270c10d103db2f1`.
+The captured report binds SHA256(runtime JSON), which carries the vTPM AK. A
+TPM quote signed by that AK must bind SHA256(the registering workload SPKI);
+the ACI direct-SPKI assumption does not apply. Governed policy pins measurement,
+host data, all TCB floors, VMPL, AK CA subject and AK root certificate digest.
+See [the profile contract](../azure-cvm-snp.md) for formats and claim limits.
+
+This is code for the next primary image, not a deployed or successfully
+appraised mail/worker registration. The captures lack VCEKs and workload
+quotes; the worker HCL additionally has a length/hash mismatch. Governance
+activation and complete real-fixture acceptance remain blocked.

@@ -48,3 +48,19 @@ Recovery must preserve the current `ledger_N` chunk as well as closed `.committe
 Local tests set `CCF_PLATFORM_OVERRIDE=Virtual` strictly to test CCF consensus. They do not establish SNP hardware evidence or confidential deployment acceptance. Genuine Azure evidence and the hardware/container acceptance chain require the separately recorded isolated deployment test.
 
 CCF's release static archive and the application's Rust static library each embed a complete Rust standard library. Their strong unmangled exception personality names collide at link time. `ccf/namespace_rust_runtime.py` makes an isolated SDK archive copy and consistently renames only its `rust_eh_personality` definition, corresponding `DW.ref` definition and all references. It checks the expected symbol counts; it neither permits duplicate definitions nor substitutes one toolchain's runtime for another.
+
+## Azure CVM workload appraisal and attested SVCB
+
+The Rust dispatcher supports `azure-cvm-snp` alongside `azure-aci-snp`. CVM
+COSE evidence carries HCL, AMD chain, AK chain and an AK-signed TPM quote
+binding the workload SPKI. HCL report_data binds the original runtime JSON,
+not the workload key directly. [Profile format, policy and fixture limits](azure-cvm-snp.md)
+include the pinned Genoa ARK fingerprint and the `azure_cvm` policy fields.
+
+Attested `SVCB` uses wire type 64 and the same contribution ownership, DNSSEC
+signing and withdrawal as TXT. The constitution must separately accept
+`azure_cvm` in policy bodies and `SVCB` in owner grants; Agent A owns that
+change. Agent F changed no constitution files. Deployment rides the next
+primary image. Current captures cannot establish successful CVM registration;
+missing certificates/quotes and worker corruption are recorded in fixture
+provenance. No MAA or live-system access is needed by the offline verifier.

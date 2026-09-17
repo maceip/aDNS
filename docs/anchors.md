@@ -124,3 +124,11 @@ distinct from operator records.
 | 2026-09-16 | upgrade window closed with D-signed policy P(svn=4) | `3.359116` |
 | 2026-09-16 | re-issued owner grants for mail and worker CVMs | `3.359156` |
 | 2026-09-16 | receipted `/app/governance/anchors` verified live | `3.359743` |
+
+## Appraisal profiles
+
+`azure-aci-snp` (ACI UVM) and `azure-cvm-snp` (HCL/vTPM, [contract](azure-cvm-snp.md))
+are implemented in Rust. CVM deployment rides the next primary image; no CVM
+policy transaction or successful mail/worker appraisal is recorded. Agent A
+must extend the constitution schema before activation. Genoa ARK certificate
+DER SHA256: `4c6598d19c18719c5dfd4a7d335f674e5bfe1d8f800cea2cf270c10d103db2f1`.
