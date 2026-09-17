@@ -273,8 +273,10 @@ pub(crate) fn common_validity_time(chain: &[X509], now: u64) -> Result<u64, Atte
 #[cfg(test)]
 pub(crate) mod test_ark {
     use std::cell::RefCell;
+    /// (product, ARK SPKI DER, ARK certificate DER)
+    type TestRoot = (String, Vec<u8>, Vec<u8>);
     thread_local! {
-        static ARK: RefCell<Option<(String, Vec<u8>, Vec<u8>)>> = const { RefCell::new(None) };
+        static ARK: RefCell<Option<TestRoot>> = const { RefCell::new(None) };
     }
     /// Install (product, ARK SPKI DER, ARK certificate DER) for the current test thread.
     pub(crate) fn install(product: &str, ark_cert_pem: &[u8]) {
