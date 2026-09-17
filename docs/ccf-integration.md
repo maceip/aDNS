@@ -64,3 +64,17 @@ change. Agent F changed no constitution files. Deployment rides the next
 primary image. Current captures cannot establish successful CVM registration;
 missing certificates/quotes and worker corruption are recorded in fixture
 provenance. No MAA or live-system access is needed by the offline verifier.
+
+## Offline CVM evidence: `tools/mock-cvm`
+
+`tools/mock-cvm` (Go, `go-sev-guest` test AMD keys) writes a complete,
+internally consistent Azure confidential-VM evidence bundle to
+`crates/adns-attest/tests/fixtures/mock-cvm/`: HCL container, VCEK-signed SNP
+report with `report_data = SHA-256(runtime JSON)`, VCEK→ASK→ARK test chain with
+real-format hwID/TCB extensions, a vTPM AK certificate under a test
+"Azure Cloud Virtual TPM CA - 25", and the AK private key for the synthetic TPM
+quote. `crates/adns-attest/src/cvm/mock_tests.rs` appraises it end to end and
+rejects every single-field tampering. The test ARK is pinned only under
+`cfg(test)` (`certificates::test_ark`); production pins are unchanged, and the
+bundle carries `security_claim: false`. Regenerate with
+`cd tools/mock-cvm && go run . -out ../../crates/adns-attest/tests/fixtures/mock-cvm`.

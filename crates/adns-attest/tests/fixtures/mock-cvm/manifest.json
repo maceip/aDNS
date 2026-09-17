@@ -1,0 +1,19 @@
+{
+  "ak_ca_subject": "Azure Cloud Virtual TPM CA - 25",
+  "ak_root_sha256": "921b8a44520285abbf903d02ab8905ce4b7680878d2bdaff633e4e7c1557bef2",
+  "ark_cert_sha256": "bb1685628efaaf0f312763292b7c20913329665f43d3775cfc5b0024b932beed",
+  "chip_id_hex": "0b935bf58fc0be7f5ca01f44ae6aa9cb42606a4dcaf8f3e8457c34f26953b784e7076edd5f06f5252ff9758831abdbe9a45cb9d3de82c28bdc3a7052378699cb",
+  "generator": "tools/mock-cvm (go-sev-guest test keys)",
+  "host_data_hex": "2f2dd099020d965ee1b09df64ea26da804793368f921a6931ef74fcd18f56d19",
+  "measurement_hex": "450a1eb9b9c76df19d5ba257d1dc41573888aa4ac2034f49751a3f077243ea29ad1a16a627f255fb77405c499ac5de61",
+  "now_unix": 1789578000,
+  "product": "Genoa",
+  "report_data_hex": "d304f4df1b348ce2a7de37fc890be2808edb69284b0a61b6470e90c73072bb6e",
+  "security_claim": false,
+  "tcb": {
+    "boot_loader": 7,
+    "microcode": 72,
+    "snp": 14,
+    "tee": 0
+  }
+}

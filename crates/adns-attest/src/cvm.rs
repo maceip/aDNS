@@ -226,7 +226,14 @@ fn verify_platform(
     // Pin the certificate as well as the existing AMD SPKI pin. The chain helper
     // validates signatures, constraints, expiry and self-signed root offline.
     let supplied = certificates::amd_certificates(endorsements)?;
-    if supplied[2].to_der()? != X509::from_pem(GENOA_ARK_CERT)?.to_der()? {
+    let supplied_der = supplied[2].to_der()?;
+    #[allow(unused_mut)]
+    let mut pinned = supplied_der == X509::from_pem(GENOA_ARK_CERT)?.to_der()?;
+    #[cfg(test)]
+    {
+        pinned |= certificates::test_ark::cert_der().as_deref() == Some(supplied_der.as_slice());
+    }
+    if !pinned {
         return Err(AttestationError::UntrustedRoot);
     }
     hcl.report.verify_signature(hcl.raw_snp, &amd.vcek)?;
@@ -430,5 +437,7 @@ fn verify_quote(
     Ok(())
 }
 
+#[cfg(test)]
+mod mock_tests;
 #[cfg(test)]
 mod tests;

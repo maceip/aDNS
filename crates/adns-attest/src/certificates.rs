@@ -31,6 +31,15 @@ pub(crate) fn verify_amd_endorsements(
 ) -> Result<AmdEndorsements, AttestationError> {
     let certs = amd_certificates(encoded)?;
     let ark_spki = certs[2].public_key()?.public_key_to_der()?;
+    #[cfg(test)]
+    if let Some(product) = test_ark::product_for(&ark_spki) {
+        let valid_until = verify_chain(&certs, now)?;
+        return Ok(AmdEndorsements {
+            vcek: certs[0].clone(),
+            product,
+            valid_until,
+        });
+    }
     let product = [
         ("Milan", include_bytes!("amd_milan_ark.pem").as_slice()),
         ("Genoa", include_bytes!("amd_genoa_ark.pem").as_slice()),
@@ -256,4 +265,35 @@ pub(crate) fn common_validity_time(chain: &[X509], now: u64) -> Result<u64, Atte
         ));
     }
     Ok(first)
+}
+
+/// Test-only additional AMD root: lets the mock-CVM fixtures (go-sev-guest test
+/// keys) exercise the full signature and chain path. Never compiled into
+/// production; the real ARK pins above are unchanged.
+#[cfg(test)]
+pub(crate) mod test_ark {
+    use std::cell::RefCell;
+    thread_local! {
+        static ARK: RefCell<Option<(String, Vec<u8>, Vec<u8>)>> = const { RefCell::new(None) };
+    }
+    /// Install (product, ARK SPKI DER, ARK certificate DER) for the current test thread.
+    pub(crate) fn install(product: &str, ark_cert_pem: &[u8]) {
+        let cert = openssl::x509::X509::from_pem(ark_cert_pem).unwrap();
+        let spki = cert.public_key().unwrap().public_key_to_der().unwrap();
+        ARK.with(|a| *a.borrow_mut() = Some((product.into(), spki, cert.to_der().unwrap())));
+    }
+    pub(crate) fn clear() {
+        ARK.with(|a| *a.borrow_mut() = None);
+    }
+    pub(crate) fn product_for(spki: &[u8]) -> Option<String> {
+        ARK.with(|a| {
+            a.borrow()
+                .as_ref()
+                .filter(|(_, s, _)| s == spki)
+                .map(|(p, _, _)| p.clone())
+        })
+    }
+    pub(crate) fn cert_der() -> Option<Vec<u8>> {
+        ARK.with(|a| a.borrow().as_ref().map(|(_, _, d)| d.clone()))
+    }
 }
