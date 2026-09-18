@@ -66,6 +66,7 @@ def main():
              "zones": ["example.test."], "mailbox_domains": [], "service_hosts": [], "roles": [],
              "address_cidrs": [], "ports": [], "allowed_operations": ["operator_records"], "acme_names": [],
              "operator_names": sorted({name for name, _, _ in entries}), "operator_record_types": ["TXT", "CAA"],
+             "attested_names": [], "attested_record_types": [],
              "max_lease_seconds": 3600, "max_challenge_lifetime_seconds": 3600,
              "valid_from": now - 60, "valid_until": now + 3600, "revoked": False}
     governed = gov.propose([{"name": "adns_set_owner_grant", "args": {"grant": grant}}])

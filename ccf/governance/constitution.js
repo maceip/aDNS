@@ -1870,9 +1870,29 @@ function adnsWireName(name) {
 function adnsWrite(table, key, value) {ccf.kv[table].set(key, ccf.jsonCompatibleToBuf(value));}
 // Exact JSON identity: object order is irrelevant; array order and every
 // explicit field remain significant. Bounds apply before recursion/encoding.
+function adnsUnifiedQuote(uq) {
+  adnsObject(uq,["approved_value_x","approved_platforms","require_stage1_chain","accepted_eat_profiles","binding_suites"]);
+  adnsArray(uq.approved_value_x,v=>{if(typeof v!=="string"||!/^[0-9a-f]{96}$/.test(v))throw new Error("value_x hex48 required");});
+  adnsArray(uq.approved_platforms,v=>{if(!["nitro","sev-snp","tdx"].includes(v))throw new Error("unknown platform");});
+  if(typeof uq.require_stage1_chain!=="boolean")throw new Error("require_stage1_chain boolean");
+  adnsArray(uq.accepted_eat_profiles,v=>adnsString(v,256));
+  adnsArray(uq.binding_suites,v=>adnsInteger(v,0,65535));
+}
 function adnsPolicyIdentity(policy) {
   const fields=["policy_id","release_id","active_profiles","valid_from","valid_until","max_appraisal_lifetime","minimum_tcb","approved_measurements","approved_host_data","uvm"];
-  adnsObject(policy,Object.prototype.hasOwnProperty.call(policy || {},"uvm_endorsement_time_policy") ? [...fields,"uvm_endorsement_time_policy"] : fields);
+  if(Object.prototype.hasOwnProperty.call(policy || {},"uvm_endorsement_time_policy")) fields.push("uvm_endorsement_time_policy");
+  if(Object.prototype.hasOwnProperty.call(policy || {},"unified_quote")) fields.push("unified_quote");
+  if(Object.prototype.hasOwnProperty.call(policy || {},"azure_cvm")) fields.push("azure_cvm");
+  adnsObject(policy,fields);
+  if(Object.prototype.hasOwnProperty.call(policy,"unified_quote")) adnsUnifiedQuote(policy.unified_quote);
+  if(Object.prototype.hasOwnProperty.call(policy,"azure_cvm")) {
+    const cvm=policy.azure_cvm;
+    adnsObject(cvm,["vmpl","allowed_ak_ca_subjects","ak_root_sha256"]);
+    adnsInteger(cvm.vmpl,0,3);
+    adnsArray(cvm.allowed_ak_ca_subjects,v=>{if(typeof v!=="string"||!v.trim()||v.length>256||/[\x00-\x1f\x7f]/.test(v))throw new Error("invalid AK issuer");});
+    adnsArray(cvm.ak_root_sha256,adnsHex);
+    if(!cvm.allowed_ak_ca_subjects.length || !cvm.ak_root_sha256.length)throw new Error("Azure CVM requires AK issuer and root pins");
+  }
   if(!Array.isArray(policy.policy_id)||policy.policy_id.length!==32)throw new Error("policy_id must contain 32 bytes");
   policy.policy_id.forEach(v=>adnsInteger(v,0,255));
   if(policy.policy_id.every(v=>v===0))throw new Error("nonzero policy_id required");
@@ -1923,7 +1943,7 @@ function adnsGrant(grant) {
   const operations=["register","renew","deregister","acme_challenge_create","acme_challenge_delete","operator_records","anchor"];
   adnsArray(grant.allowed_operations,v=>{if(!operations.includes(v))throw new Error("unknown operation");});
   adnsArray(grant.operator_record_types,v=>{if(!["A","AAAA","NS","CNAME","MX","TXT","CAA"].includes(v))throw new Error("unknown operator type");});
-  adnsArray(grant.attested_record_types,v=>{if(!["TXT"].includes(v))throw new Error("unknown attested type");});
+  adnsArray(grant.attested_record_types,v=>{if(!["TXT","SVCB"].includes(v))throw new Error("unknown attested type");});
   if((grant.attested_names.length>0)!==(grant.attested_record_types.length>0))throw new Error("attested names and types go together");
   for (const key of ["max_lease_seconds","max_challenge_lifetime_seconds"]) adnsInteger(grant[key],1);
   adnsInteger(grant.valid_from);adnsInteger(grant.valid_until,grant.valid_from+1);

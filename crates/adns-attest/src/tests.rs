@@ -194,6 +194,7 @@ fn policy() -> AppraisalPolicy {
         approved_host_data: [HOST_DATA.into()].into(),
         uvm_endorsement_time_policy: UvmEndorsementTimePolicy::CurrentCertificate,
         azure_cvm: None,
+        unified_quote: None,
         uvm: vec![UvmIdentity {
             did: MICROSOFT_UVM_DID.into(),
             feed: "ContainerPlat-AMD-UVM".into(),
@@ -329,7 +330,7 @@ fn outer_signature_key_and_p1363_format_are_enforced() {
 }
 #[test]
 fn unsupported_and_inactive_profiles_fail_before_decoding() {
-    for profile in ["tdx", "nitro", "vtpm", "insecure_virtual", ""] {
+    for profile in ["tdx", "nitro", "vtpm", "insecure_virtual", "", UQ_EAT_V2] {
         assert!(matches!(
             appraise(profile, b"", b"", &policy(), HISTORICAL_TIME),
             Err(AttestationError::UnsupportedProfile)
@@ -347,6 +348,84 @@ fn unsupported_and_inactive_profiles_fail_before_decoding() {
         appraise(AZURE_ACI_SNP, b"", b"", &p, HISTORICAL_TIME),
         Err(AttestationError::PolicyNotValid)
     ));
+}
+
+#[test]
+fn unified_quote_policy_serde_defaults_and_roundtrip() {
+    let parsed: UnifiedQuotePolicy = serde_json::from_str(
+        r#"{
+            "approved_value_x": ["aa"],
+            "approved_platforms": ["nitro", "sev-snp", "tdx"]
+        }"#,
+    )
+    .unwrap();
+    assert_eq!(parsed.approved_value_x, ["aa".to_owned()].into());
+    assert_eq!(
+        parsed.approved_platforms,
+        [
+            UnifiedQuotePlatform::Nitro,
+            UnifiedQuotePlatform::SevSnp,
+            UnifiedQuotePlatform::Tdx
+        ]
+        .into()
+    );
+    assert!(parsed.require_stage1_chain);
+    assert_eq!(
+        parsed.accepted_eat_profiles,
+        ["https://uq.secure.build/eat/v2".to_owned()].into()
+    );
+    assert_eq!(parsed.binding_suites, [0].into());
+
+    let mut p = policy();
+    p.active_profiles.insert(UQ_EAT_V2.into());
+    p.unified_quote = Some(parsed);
+    let value = serde_json::to_value(&p).unwrap();
+    let back: AppraisalPolicy = serde_json::from_value(value).unwrap();
+    assert_eq!(back.unified_quote, p.unified_quote);
+
+    let fixture: AppraisalPolicy = serde_json::from_slice(include_bytes!(
+        "../tests/fixtures/aci_ccf_genoa_v5_policy.json"
+    ))
+    .unwrap();
+    assert!(fixture.unified_quote.is_none());
+
+    assert!(
+        serde_json::from_str::<UnifiedQuotePolicy>(
+            r#"{"approved_value_x":[],"approved_platforms":["nitro"],"extra":true}"#
+        )
+        .is_err()
+    );
+    assert!(
+        serde_json::from_str::<UnifiedQuotePolicy>(
+            r#"{"approved_value_x":[],"approved_platforms":["sgx"]}"#
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn uq_eat_v2_and_vendor_profiles_fail_closed_without_verifier() {
+    let mut p = policy();
+    p.active_profiles.insert(UQ_EAT_V2.into());
+    p.unified_quote = Some(UnifiedQuotePolicy {
+        approved_value_x: ["00".repeat(48)].into(),
+        approved_platforms: [
+            UnifiedQuotePlatform::Nitro,
+            UnifiedQuotePlatform::SevSnp,
+            UnifiedQuotePlatform::Tdx,
+        ]
+        .into(),
+        ..UnifiedQuotePolicy::default()
+    });
+    for profile in [UQ_EAT_V2, "nitro", "tdx"] {
+        assert!(
+            matches!(
+                appraise(profile, b"eat-bytes", b"spki", &p, HISTORICAL_TIME),
+                Err(AttestationError::UnsupportedProfile)
+            ),
+            "{profile}"
+        );
+    }
 }
 #[test]
 fn every_security_policy_and_tcb_component_is_enforced() {

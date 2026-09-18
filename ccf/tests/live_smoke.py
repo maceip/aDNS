@@ -57,8 +57,9 @@ def main():
     (work/"member_cert.pem").write_text(certpem)
     encryption=rsa.generate_private_key(public_exponent=65537,key_size=3072)
     (work/"member_enc_pubk.pem").write_bytes(encryption.public_key().public_bytes(serialization.Encoding.PEM,serialization.PublicFormat.SubjectPublicKeyInfo))
-    constitution="\n".join((pathlib.Path("/opt/ccf/bin")/name).read_text() for name in ["actions.js"])+"\n"+(ROOT/"ccf/governance/actions.js").read_text()+"\n"+"\n".join((pathlib.Path("/opt/ccf/bin")/name).read_text() for name in ["validate.js","apply.js","resolve.js"])
-    (work/"constitution.js").write_text(constitution)
+    sys.path.insert(0, str(ROOT / "tools"))
+    import packaged_constitution
+    (work/"constitution.js").write_bytes(packaged_constitution.load(ROOT))
     config=json.loads((ROOT/"ccf/node.example.json").read_text());config["command"]["start"]["constitution_files"]=[str(work/"constitution.js")]
     if "--quorum" in sys.argv:
         config["network"]["rpc_interfaces"]["primary_rpc_interface"]["enabled_operator_features"]=["SnapshotRead","LedgerChunkRead"]
@@ -96,7 +97,7 @@ def main():
         propose([{"name":"transition_service_to_open","args":{"next_service_identity":ca.read_text()}}])
         signer=ec.generate_private_key(ec.SECP256R1());spki=signer.public_key().public_bytes(serialization.Encoding.DER,serialization.PublicFormat.SubjectPublicKeyInfo)
         now=int(time.time())
-        grant={"grant_id":"smoke-operator","subject_spki_sha256":hashlib.sha256(spki).hexdigest(),"zones":["example.test."],"mailbox_domains":[],"service_hosts":[],"roles":[],"address_cidrs":[],"ports":[],"allowed_operations":["operator_records"],"acme_names":[],"operator_names":["example.test."],"operator_record_types":["TXT"],"max_lease_seconds":3600,"max_challenge_lifetime_seconds":1800,"valid_from":now-60,"valid_until":now+3600,"revoked":False}
+        grant={"grant_id":"smoke-operator","subject_spki_sha256":hashlib.sha256(spki).hexdigest(),"zones":["example.test."],"mailbox_domains":[],"service_hosts":[],"roles":[],"address_cidrs":[],"ports":[],"allowed_operations":["operator_records"],"acme_names":[],"operator_names":["example.test."],"operator_record_types":["TXT"],"attested_names":[],"attested_record_types":[],"max_lease_seconds":3600,"max_challenge_lifetime_seconds":1800,"valid_from":now-60,"valid_until":now+3600,"revoked":False}
         def rr(name,rtype,data):return {"name":name,"rclass":"In","rtype":rtype,"ttl":300,"rdata":{rtype:data}}
         base=[rr("example.test.","Soa",{"mname":"ns.example.test.","rname":"hostmaster.example.test.","serial":7,"refresh":60,"retry":30,"expire":600,"minimum":60}),rr("example.test.","Ns","ns.example.test."),rr("ns.example.test.","A","192.0.2.1")]
         metadata={"id":1,"origin":"example.test.","serial":7,"base_records":base,"signed_records":[],"signature_validity":600,"refresh_before":300,"last_signed_at":0,"earliest_signature_expiration":0,"maintenance_health":"initializing","ksk_dnskey_rdata":[]}

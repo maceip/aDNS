@@ -18,9 +18,62 @@ pub use uvm::{UvmEndorsementTimePolicy, UvmIdentity};
 
 pub const AZURE_ACI_SNP: &str = "azure-aci-snp";
 pub const AZURE_CVM_SNP: &str = "azure-cvm-snp";
+pub const UQ_EAT_V2: &str = "uq-eat-v2";
 pub const MICROSOFT_UVM_DID: &str =
     "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2";
 pub const MAX_EVIDENCE_BYTES: usize = 1024 * 1024;
+
+const DEFAULT_UQ_EAT_PROFILE: &str = "https://uq.secure.build/eat/v2";
+
+/// Platform ids inside a unified-quote EatToken (`1=nitro`, `2=sev-snp`, `3=tdx`).
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum UnifiedQuotePlatform {
+    Nitro,
+    SevSnp,
+    Tdx,
+}
+
+/// Optional pins for `uq-eat-v2`. Required nonempty `approved_value_x` when that
+/// profile is active; unused by azure-aci-snp / azure-cvm-snp.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct UnifiedQuotePolicy {
+    /// Lowercase hex of allowed EatToken `value_x` (48-byte pins).
+    pub approved_value_x: BTreeSet<String>,
+    pub approved_platforms: BTreeSet<UnifiedQuotePlatform>,
+    /// Default true: service registration must present a verified stage-1 chain.
+    #[serde(default = "default_require_stage1_chain")]
+    pub require_stage1_chain: bool,
+    #[serde(default = "default_accepted_eat_profiles")]
+    pub accepted_eat_profiles: BTreeSet<String>,
+    #[serde(default = "default_binding_suites")]
+    pub binding_suites: BTreeSet<u16>,
+}
+
+impl Default for UnifiedQuotePolicy {
+    fn default() -> Self {
+        Self {
+            approved_value_x: BTreeSet::new(),
+            approved_platforms: BTreeSet::new(),
+            require_stage1_chain: default_require_stage1_chain(),
+            accepted_eat_profiles: default_accepted_eat_profiles(),
+            binding_suites: default_binding_suites(),
+        }
+    }
+}
+
+fn default_require_stage1_chain() -> bool {
+    true
+}
+
+fn default_accepted_eat_profiles() -> BTreeSet<String> {
+    [DEFAULT_UQ_EAT_PROFILE.to_owned()].into()
+}
+
+fn default_binding_suites() -> BTreeSet<u16> {
+    [0].into()
+}
 
 /// This must come from committed governance state, never from the request.
 /// Empty allowlists fail closed. Hexadecimal digests must be lowercase.
@@ -44,6 +97,9 @@ pub struct AppraisalPolicy {
     /// HCL/vTPM constraints, required when azure-cvm-snp is active.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub azure_cvm: Option<cvm::AzureCvmPolicy>,
+    /// Unified-quote EatToken pins, required when uq-eat-v2 is active.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub unified_quote: Option<UnifiedQuotePolicy>,
 }
 
 /// Fields are readable but cannot be constructed outside the verifier crate.
@@ -140,9 +196,23 @@ fn appraise_inner(
         validate_profile_policy(policy, now, profile)?;
         return cvm::appraise(evidence, spki_der, policy, now);
     }
-    if profile != AZURE_ACI_SNP {
+    if profile == AZURE_ACI_SNP {
+        return appraise_azure_aci_snp(evidence, spki_der, policy, now);
+    }
+    // uq-eat-v2 is the reserved dispatcher arm. Fail closed until the verifier
+    // crate is wired; nitro/tdx are platforms inside EatToken, not profiles.
+    if profile == UQ_EAT_V2 {
         return Err(AttestationError::UnsupportedProfile);
     }
+    Err(AttestationError::UnsupportedProfile)
+}
+
+fn appraise_azure_aci_snp(
+    evidence: &[u8],
+    spki_der: &[u8],
+    policy: &AppraisalPolicy,
+    now: u64,
+) -> Result<VerifiedAppraisal, AttestationError> {
     validate_policy(policy, now)?;
     let payload = observe(Name::Cose, || {
         let envelope = cose::parse_sign1(evidence)?;

@@ -117,7 +117,7 @@ class Governance:
         signed = ccf.cose.create_cose_sign1(b"" if body is None else json.dumps(body).encode(), self.key, self.cert, headers)
         result = self.client.request("POST", path + "?api-version=2024-07-01", signed, "application/cose")
         if result["http_status"] not in (200, 204):
-            raise ValueError(f"signed governance request failed (HTTP {result['http_status']})")
+            raise ValueError(f"signed governance request failed (HTTP {result['http_status']}): {result.get('body')}")
         return self.client.require_committed(result)
 
     def ack(self):

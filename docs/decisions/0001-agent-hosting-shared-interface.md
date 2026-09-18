@@ -1,7 +1,8 @@
 # 0001 — Shared interface with agent-hosting
 
-Status: proposed 2026-09-16 (agentdns side). Accepted when agent-hosting's
-ADR 0024 and this document agree and both are merged.
+Status: **accepted** 2026-09-17 (pairs with agent-hosting ADR 0024).
+Amended 2026-09-17: register/evidence follows [0002](0002-unified-quote-appraisal.md)
+(`uq-eat-v2`). Choreography, recovery, D, grants, and anchors are unchanged.
 
 ## Decision
 
@@ -13,9 +14,13 @@ enforces the rules below; agent-hosting automates its side against them.
    `svn + 1`); governance commits it (`adns_set_appraisal_policy` with D's
    signature), which invalidates registrations under the old `policy_id`
    (`registration_authority_invalid`); the new instance registers with
-   evidence; both keys overlap; the old instance deregisters. For the primary
+   evidence under **`uq-eat-v2`** ([0002](0002-unified-quote-appraisal.md));
+   both keys overlap; the old instance deregisters. Mail-host and worker are
+   **separate measured builds** and separate registrations. For the primary
    itself the same rule applies through `adns_set_node_join_policy`
-   (`docs/upgrade-runbook.md`).
+   (`docs/upgrade-runbook.md`) — node-join is **not** `uq-eat-v2`.
+   Legacy `azure-aci-snp` / `azure-cvm-snp` remain implemented profiles; they
+   are not the hosting register path.
 2. **Recovery-chain acceptance.** After recovery agentdns serves receipts under
    both the previous and the new service identity. A consumer accepts the
    transition only when, for the same zone, receipts under each identity verify
@@ -54,6 +59,8 @@ enforces the rules below; agent-hosting automates its side against them.
   require a primary upgrade under the runbook above; until deployed the live
   primary serves the previous release.
 - Nothing here changes the public `agent.hosting` delegation.
+- Register/renew evidence for hosting workloads is **`uq-eat-v2`**
+  ([0002](0002-unified-quote-appraisal.md)), not ACI `REPORT_DATA` padding.
 
 ## Blockers this ADR does not remove
 
@@ -61,18 +68,18 @@ enforces the rules below; agent-hosting automates its side against them.
 - Online KSK rollover (item 5): required before `agent.hosting.` is delegated.
 - D custody (item 9): mechanism is in place; the key is not.
 
-## Azure CVM evidence (Decision #11, 2026-09-16)
+## Evidence profile (amended 2026-09-17)
 
-`azure-cvm-snp` verifies the HCL SNP report directly with VCEK/ASK/ARK, pinned
-to AMD Genoa ARK DER SHA256
-`4c6598d19c18719c5dfd4a7d335f674e5bfe1d8f800cea2cf270c10d103db2f1`.
-The captured report binds SHA256(runtime JSON), which carries the vTPM AK. A
-TPM quote signed by that AK must bind SHA256(the registering workload SPKI);
-the ACI direct-SPKI assumption does not apply. Governed policy pins measurement,
-host data, all TCB floors, VMPL, AK CA subject and AK root certificate digest.
-See [the profile contract](../azure-cvm-snp.md) for formats and claim limits.
+Hosting register/renew uses **`uq-eat-v2`**: raw unified-quote `EatToken` CBOR
+as `evidence_payload`. Binding is `tls_spki_hash == SHA256(signer_spki_der)`
+plus uq `binding_bytes()` in `report_data`. The ACI rule
+`REPORT_DATA = SHA256(SPKI) || 0^32` **must not** be applied to `uq-eat-v2`.
+See [0002](0002-unified-quote-appraisal.md).
 
-This is code for the next primary image, not a deployed or successfully
-appraised mail/worker registration. The captures lack VCEKs and workload
-quotes; the worker HCL additionally has a length/hash mismatch. Governance
-activation and complete real-fixture acceptance remain blocked.
+### Legacy Azure CVM (Decision #11, 2026-09-16) — not the hosting path
+
+`azure-cvm-snp` remains in `adns-attest` for HCL/vTPM captures. It verifies the
+HCL SNP report with VCEK/ASK/ARK (Genoa ARK DER SHA256
+`4c6598d19c18719c5dfd4a7d335f674e5bfe1d8f800cea2cf270c10d103db2f1`).
+That path is **legacy**. New mail/worker registrations follow 0002.
+Profile contract: [azure-cvm-snp.md](../azure-cvm-snp.md).
