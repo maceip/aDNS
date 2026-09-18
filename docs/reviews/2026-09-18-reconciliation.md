@@ -13,3 +13,9 @@ by aDNS. Preserve the Mac governance-request diagnostic patch.
 Validation: full Rust workspace/all-target tests, fmt and clippy; existing
 Azure mock/genuine evidence regressions. GitHub additionally exercises the CCF
 container path. Schema preservation is not attestation activation or cloud proof.
+
+CI uncovered an older extraction regression: two real-CCF harnesses still
+reconstructed the constitution from removed local actions.js. Both now load
+and digest-check the exact packaged Steward artifact. Operator fixture grants
+include the schema's required empty attested-record lists. No validators are
+relaxed and no CCF checks are skipped.

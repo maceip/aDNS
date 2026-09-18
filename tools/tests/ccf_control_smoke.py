@@ -21,7 +21,8 @@ def main():
     probe = '--probe' in sys.argv
     work = Path(tempfile.mkdtemp(prefix='control-smoke-', dir='/build'))
     constitution = work/'constitution.js'
-    constitution.write_text('\n'.join((Path('/opt/ccf/bin')/name).read_text() for name in ['actions.js']) + '\n' + (Path('/src/ccf/governance/actions.js')).read_text() + '\n' + '\n'.join((Path('/opt/ccf/bin')/name).read_text() for name in ['validate.js','apply.js','resolve.js']))
+    import packaged_constitution
+    constitution.write_bytes(packaged_constitution.load())
     import hashlib
     sys.argv = ['prepare_aci_control.py', str(work/'control'), '--constitution-sha256', hashlib.sha256(constitution.read_bytes()).hexdigest()]
     prepare_aci_control.main()
