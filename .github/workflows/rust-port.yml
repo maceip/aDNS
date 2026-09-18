@@ -24,6 +24,20 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Read packaged Steward revision
+        id: steward-source
+        run: echo "revision=$(python3 -c 'import json; print(json.load(open("ccf/governance/constitution.source.json"))["commit"])')" >> "$GITHUB_OUTPUT"
+      - name: Check out pinned Steward constitution source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: maceip/steward
+          ref: ${{ steps.steward-source.outputs.revision }}
+          path: .constitution-steward
+          persist-credentials: false
+      - name: Verify packaged constitution provenance
+        run: |
+          python3 .constitution-steward/steward/compose_constitution.py --output "$RUNNER_TEMP/constitution.js"
+          cmp ccf/governance/constitution.js "$RUNNER_TEMP/constitution.js"
       - name: Install tested compiler and Python test dependencies
         run: |
           rustup toolchain install 1.95.0 --profile minimal --component rustfmt,clippy
