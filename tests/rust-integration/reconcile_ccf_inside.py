@@ -81,6 +81,7 @@ def main():
         'zones':['example.test.'], 'mailbox_domains':[], 'service_hosts':[], 'roles':[],
         'address_cidrs':[], 'ports':[], 'allowed_operations':['operator_records'], 'acme_names':[],
         'operator_names':['reconcile.example.test.'], 'operator_record_types':['TXT'],
+        'attested_names':[], 'attested_record_types':[],
         'max_lease_seconds':3600, 'max_challenge_lifetime_seconds':3600,
         'valid_from':now-60, 'valid_until':now+3600, 'revoked':False}
     save('grant', grant)
