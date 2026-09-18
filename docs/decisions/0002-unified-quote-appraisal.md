@@ -235,7 +235,7 @@ Do **not** invent separate agentdns ids per cloud for the first cut (`uq-nitro`,
 
 Azure legacy profiles stay:
 
-- `azure-aci-snp` — unchanged COSE+UVM path  
+- `azure-aci-snp` — unchanged COSE+UVM path
 - `azure-cvm-snp` — unchanged HCL path (still constitution-incomplete)
 
 When Azure returns in ~72h, prefer **emitting uq EATs from Azure SNP nodes** (uq already does AMD-rooted Azure via vTPM) and admitting them under `uq-eat-v2` with `approved_platforms` including `sev-snp`. Keep `azure-aci-snp` only for old ACI captures, not as the long-term multi-cloud path.
@@ -251,11 +251,11 @@ When Azure returns in ~72h, prefer **emitting uq EATs from Azure SNP nodes** (uq
 | Key binding | `tls_spki_hash == SHA256(signer_spki)` + uq `binding_bytes` in `report_data` | same |
 | Honest claim | Provider-rooted enclave **image/code** | Silicon-rooted firmware launch; **kernel/workload not in MEASUREMENT alone** |
 
-**AWS SNP caveat (from uq docs):** SNP `MEASUREMENT` on EC2 often covers firmware launch, not kernel/initrd. Full coverage needs NitroTPM linkage (`REPORT_DATA` binds `sha256(nitrotpm_doc)`).  
+**AWS SNP caveat (from uq docs):** SNP `MEASUREMENT` on EC2 often covers firmware launch, not kernel/initrd. Full coverage needs NitroTPM linkage (`REPORT_DATA` binds `sha256(nitrotpm_doc)`).
 
-**72h rule:**  
-- If admitting **bare** `sev-snp` EATs: document that security-class claims do **not** cover guest kernel unless linked evidence is present and verified by uq.  
-- Prefer **Nitro** for the first AWS *workload* registration if the first goal is “image PCR0 matches what we built.”  
+**72h rule:**
+- If admitting **bare** `sev-snp` EATs: document that security-class claims do **not** cover guest kernel unless linked evidence is present and verified by uq.
+- Prefer **Nitro** for the first AWS *workload* registration if the first goal is “image PCR0 matches what we built.”
 - Prefer **SEV-SNP** (or linked SNP+NitroTPM) for the *agentdns primary* trust story when silicon root matters.
 
 Both may be in `approved_platforms` at once; that is intentional for the 72h Azure add-back.
@@ -294,9 +294,9 @@ Rationale (aligned with unified-quote `eat.rs`):
 
 ### Binding rules preserved
 
-1. **Digest gate:** tampering with EAT bytes fails `evidence_digest` before appraisal.  
-2. **SPKI gate:** `tls_spki_hash == SHA256(signer_spki_der)`; uq binding includes `tls_spki_hash`, so hardware signed that commitment.  
-3. **Freshness:** `eat_nonce` **must equal** the raw 32-byte agentdns registration nonce (§1.2). Reject reuse via existing nonce consume.  
+1. **Digest gate:** tampering with EAT bytes fails `evidence_digest` before appraisal.
+2. **SPKI gate:** `tls_spki_hash == SHA256(signer_spki_der)`; uq binding includes `tls_spki_hash`, so hardware signed that commitment.
+3. **Freshness:** `eat_nonce` **must equal** the raw 32-byte agentdns registration nonce (§1.2). Reject reuse via existing nonce consume.
 4. **Do not** apply ACI `report_data == SHA256(SPKI)‖0³²` to uq evidence — that would false-reject every real uq quote.
 
 ### Rejected alternative
@@ -309,17 +309,17 @@ COSE Sign1 wrapping the EAT “for consistency with ACI” — rejected: duplica
 
 Out of scope for the first AWS-capable appraisal cut. Do not let agents expand into these:
 
-1. **eat-pass / token economy** — no PoMFRIT, no attestation-gated unlinkable tokens, no spend API for DNS registration.  
-2. **Replacing DNSSEC / CCF** — uq appraisal admits registrations; it does not replace the ledger or zone signing.  
-3. **Rewriting `azure-aci-snp` / `azure-cvm-snp` into EAT** — leave legacy paths; new work is `uq-eat-v2` only.  
-4. **GCP / TDX production pins** — may appear in `approved_platforms` later; no GCP deploy required in 72h.  
-5. **Live Azure ACI bring-up** — blocked/irrelevant until billing; design must not depend on ACI.  
-6. **Public zone delegation / anycast MX / `security_claim: true` product flip** — separate ladder.  
-7. **Constitution settle on a dead primary** — code + unit tests + Virtual CCF may land; live `adns_set_appraisal_policy` waits for a durable AWS (or restored) hub.  
-8. **Full NitroTPM↔SNP linked appraisal policy UX** — may use uq’s linker if already in-crate; do not build a second linker in agentdns in 72h.  
-9. **Attested-TLS termination inside CCF** — registration evidence is enough; serving agentdns over attested-TLS is later.  
-10. **Vendor-neutrality theater** — one working AWS path + claim map beats three unfinished clouds.  
-11. **Attestation-level taxonomy / multi-tier labels** — shelved (§Shelved).  
+1. **eat-pass / token economy** — no PoMFRIT, no attestation-gated unlinkable tokens, no spend API for DNS registration.
+2. **Replacing DNSSEC / CCF** — uq appraisal admits registrations; it does not replace the ledger or zone signing.
+3. **Rewriting `azure-aci-snp` / `azure-cvm-snp` into EAT** — leave legacy paths; new work is `uq-eat-v2` only.
+4. **GCP / TDX production pins** — may appear in `approved_platforms` later; no GCP deploy required in 72h.
+5. **Live Azure ACI bring-up** — blocked/irrelevant until billing; design must not depend on ACI.
+6. **Public zone delegation / anycast MX / `security_claim: true` product flip** — separate ladder.
+7. **Constitution settle on a dead primary** — code + unit tests + Virtual CCF may land; live `adns_set_appraisal_policy` waits for a durable AWS (or restored) hub.
+8. **Full NitroTPM↔SNP linked appraisal policy UX** — may use uq’s linker if already in-crate; do not build a second linker in agentdns in 72h.
+9. **Attested-TLS termination inside CCF** — registration evidence is enough; serving agentdns over attested-TLS is later.
+10. **Vendor-neutrality theater** — one working AWS path + claim map beats three unfinished clouds.
+11. **Attestation-level taxonomy / multi-tier labels** — shelved (§Shelved).
 12. **AAMP header / profile surgery** — shelved (§Shelved).
 
 ### In scope for 72h (implementation follow-on, after this ADR)
@@ -348,9 +348,9 @@ Recorded so it is not lost; **out of scope until explicitly reopened.**
 
 ## References
 
-- `crates/adns-attest/src/lib.rs` — `AppraisalPolicy`, `VerifiedAppraisal`, profile dispatch  
-- `port.md` WS 3.5 — intentional Nitro/TDX stubs; AAMP/mail out of agentdns scope  
-- `docs/decisions/0001-agent-hosting-shared-interface.md` — grants, anchors, upgrade choreography  
-- agent-hosting `docs/decisions/0024-agentdns-shared-interface.md` — AAMP-Receipt, phases, `security_claim`  
-- https://github.com/maceip/unified-quote — `v2/src/eat.rs`, `v2/DESIGN.md`, `v2/src/tiers.rs`  
+- `crates/adns-attest/src/lib.rs` — `AppraisalPolicy`, `VerifiedAppraisal`, profile dispatch
+- `port.md` WS 3.5 — intentional Nitro/TDX stubs; AAMP/mail out of agentdns scope
+- `docs/decisions/0001-agent-hosting-shared-interface.md` — grants, anchors, upgrade choreography
+- agent-hosting `docs/decisions/0024-agentdns-shared-interface.md` — AAMP-Receipt, phases, `security_claim`
+- https://github.com/maceip/unified-quote — `v2/src/eat.rs`, `v2/DESIGN.md`, `v2/src/tiers.rs`
 - https://github.com/maceip/eat-pass — out of scope for DNS registration (72h); policy/tiers interaction shelved above
