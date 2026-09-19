@@ -1,0 +1,45 @@
+{
+  "template_sha256": "d1a54c28b6d72c2890b697d89a0acd0c457fea4005b6a35c47e4a9c73df992c6",
+  "cce_policy_sha256": "0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c",
+  "generated_policy_sha256": "58e3a47d0ad01d2ce6da608f982fca6d19339affc552ee1cba677f9dcf823a6a",
+  "deployed_policy_sha256": "366e4fdf131fb42a01d0e92b3b71829d1ad2b79b41602a6517f88578d5f18a28",
+  "global_policy_and_fragment_rules_unchanged": true,
+  "all_container_exec_lists_empty": true,
+  "all_container_signal_lists_empty": true,
+  "all_container_allow_elevated_false": true,
+  "capabilities_mounts_users_working_directories_preserved": true,
+  "primary_uvm_rule": {
+    "pattern": "^UVM_SECURITY_CONTEXT_DIR=/security-context[-a-zA-Z0-9]*$",
+    "required": false,
+    "strategy": "re2"
+  },
+  "secondary_tsig_rule": {
+    "pattern": "^AGENTDNS_TRANSFER_KEY_B64=[A-Za-z0-9+/]{43}=$",
+    "required": true,
+    "strategy": "re2"
+  },
+  "image_ids": {
+    "primary": "agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+    "secondary": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861"
+  },
+  "existing_policy_uvm_rule_present": false,
+  "existing_policy_tsig_rule_canonical": false,
+  "review_notes": [
+    "Generated container IDs changed from tag labels to corresponding immutable manifest references; image layers and commands remain generated constraints.",
+    "Loose optional TSIG environment pattern replaced with required canonical 32-byte standard-base64 pattern.",
+    "Original deployed CCE did not contain these two narrow environment constraints; all inherited global and fragment rules retained.",
+    "No runtime parameters or private keys were opened. Only public CCE was extracted from the saved deployed template.",
+    "Template starts an isolated fresh authority and retains emptyDir state; this review does not establish ledger continuity or durable production recovery.",
+    "Canonicalized the two secureString parameter type names; no parameter values or defaults changed.",
+    "The initial required UVM rule was an unsupported assumption. Live Azure candidate creation failed with missing required environment variable, so UVM is optional while its allowed path remains exact and bounded.",
+    "Authenticated Azure candidate-state.json also reports invalid env list: APP_IDENTITY_ENDPOINT. Only that exact environment name is admitted, optionally, with nonempty value bounded to 2048 characters; no claim about endpoint syntax is made.",
+    "APP_IDENTITY_ENDPOINT is untrusted platform metadata and is excluded from ccf/run.py runtime_environment for both CCF and its driver, so its value cannot select CCF attestation inputs.",
+    "Optional UVM presence does not permit different image layers, command, bootstrap manifest, native SNP configuration, or CCF_PLATFORM_OVERRIDE; native attestation evidence must still be verified live.",
+    "This update changes only primary environment compatibility rules; all other container and global restrictions and required canonical TSIG rule remain identical."
+  ],
+  "primary_app_identity_rule": {
+    "pattern": "^APP_IDENTITY_ENDPOINT=.{1,2048}$",
+    "required": false,
+    "strategy": "re2"
+  }
+}

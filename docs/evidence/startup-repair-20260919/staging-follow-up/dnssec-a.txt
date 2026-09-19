@@ -1,0 +1,4 @@
+; fully validated
+ns.example.test.	300	IN	A	192.0.2.1
+ns.example.test.	300	IN	RRSIG	A 14 3 300 20260919130354 20260919124854 23849 example.test. M2wgtGrU7ilY/t4lTwB3FmccFL/RiCywgdw0bVHeSuCv+VUuDez14fJK M8RZ4sFC0JJEJ+6C08+t6DIVdDUmpkqv6wuPbg91BDjXIeuMkj2/Xp6n f0KjzrdrRx/E0H65
+;; /proof/trust-anchor.conf:1: option 'trusted-keys' is deprecated

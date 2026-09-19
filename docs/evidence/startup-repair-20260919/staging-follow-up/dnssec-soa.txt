@@ -1,0 +1,4 @@
+; fully validated
+example.test.		300	IN	SOA	ns.example.test. hostmaster.example.test. 14 60 30 600 60
+example.test.		300	IN	RRSIG	SOA 14 2 300 20260919130354 20260919124854 23849 example.test. 2ls+nyDyBtq45YZS3SfH1+x8dH9WCatSWvVqMAmaQ8ilfGZfonfbt4UZ Gkkj3Sxt2mgO5BpHcLfiSlUk9oMRfSCpJZLmZhy/e0VDbTyXKIjRAAoO RGEc5jsIkjMBXDM+
+;; /proof/trust-anchor.conf:1: option 'trusted-keys' is deprecated

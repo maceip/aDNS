@@ -1,0 +1,70 @@
+{
+  "observed_at_utc": "2026-09-19T11:56:32.182945+00:00",
+  "resource": "agentdns-ccf-joiner/primary",
+  "live_log": {
+    "via": "az container attach",
+    "timestamp": "2026-09-19T11:52:07.590837Z",
+    "file": "CCF/src/host/run.cpp:1069",
+    "severity": "fatal",
+    "message": "PID file node.pid already exists. Exiting."
+  },
+  "latest_exit_code": 103,
+  "earlier_event_exit_code": 250,
+  "earlier_abort_interpretation": "Consistent with Python propagating SIGABRT as exit250; original abort cause not established.",
+  "configuration": {
+    "command": "Join",
+    "target_rpc_address": "agentdns.test:8000",
+    "supervisor_hardcoded_target_ip": "128.251.125.64",
+    "pid_file": "/state/node.pid",
+    "ledger": "/state/ledger",
+    "snapshots": "/state/snapshots"
+  },
+  "original_peer": {
+    "resource": "agentdns-ccf-validation",
+    "current_state": "Stopped",
+    "stopped_at": "2026-09-16T21:25:43.982380+00:00",
+    "source_retired_transaction": "2.359089"
+  },
+  "constraints": {
+    "exec_processes": [],
+    "signals": [],
+    "stdio": true,
+    "state_volume": "emptyDir",
+    "image_update_preserves_state": "not guaranteed by Azure"
+  },
+  "production_run_py_sha256": "1656f30f1199d5e6b293c5d45fb4562a10fb5521e6e260eda52bd81715161397",
+  "fix": {
+    "commit": "6b15e2e987ddbbce739868e17b81546595aea185",
+    "branch": "codex/adns-startup-20260919",
+    "run_py_sha256": "db08df37e3ad98809b76da02bf2c096313007fcd3314527e24ac17081551bad3",
+    "actual_ccf_tests": "21/21 passed in Docker; stale PID reproduces103 and guarded restart creates real node",
+    "independent_review": "passed"
+  },
+  "original_abort_investigation": {
+    "memory_peak_bytes": 57061376,
+    "memory_near_abort_bytes": 56446976,
+    "join_timeout_behavior": "CCF retries unreachable seed indefinitely; no10-hour join deadline",
+    "cause": "not established; missing original fatal log",
+    "avoid_inference": "Unavailable seed explains failed joining, not necessarily original SIGABRT"
+  },
+  "fixed_image": {
+    "tag": "agentdnsport20260913.azurecr.io/primary:20260919-pid-6b15e2e",
+    "digest": "sha256:bdebcf7735acd238f0e1282d713e9dec49d8f313b30eb2fdfbf38ebcaa1db46f",
+    "git_commit": "6b15e2e987ddbbce739868e17b81546595aea185",
+    "production_binary_tests": "21 passed, no skips",
+    "deployed": true
+  },
+  "fresh_candidate": {
+    "name": "agentdns-ccf-startup-20260919",
+    "state": "Running and service Open",
+    "startup_command": "Start",
+    "authority_identity": "new, separate from original group",
+    "template_sha256": "d1a54c28b6d72c2890b697d89a0acd0c457fea4005b6a35c47e4a9c73df992c6",
+    "cce_sha256": "0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c",
+    "platform_image_digest": "sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+    "old_group_untouched": true,
+    "production_dns_unchanged": true,
+    "ip": "20.166.175.47",
+    "proof": "live-proof/summary.json"
+  }
+}

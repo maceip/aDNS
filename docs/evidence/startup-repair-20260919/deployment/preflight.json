@@ -1,0 +1,60 @@
+{
+  "template_sha256": "d1a54c28b6d72c2890b697d89a0acd0c457fea4005b6a35c47e4a9c73df992c6",
+  "cce_policy_sha256": "0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c",
+  "bootstrap_manifest_sha256": "261d9690fd99b32df3c355ff7cc0dfa3d89e13cf44e986ad2f2a15bbeaef1ca0",
+  "containers": {
+    "primary": {
+      "image": "agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+      "archive_tag": "agentdnsport20260913.azurecr.io/primary:20260919-pid-6b15e2e",
+      "config_sha256": "34991a33f8e399aba2a1b3475850dd1b2dea29e8bccc5b2c6fbc7d097089cd92",
+      "layer_count": 7,
+      "oci_layer_sha256": [
+        "4f650cfe0ed9260faecb6d99a64a1b3dc31f9319a0c234d2d514ab5d80eae231",
+        "76726e328314bb2efea3f4ac6d33c2c250034913fbc67a8d5eb1cd446e13d72d",
+        "c858df27435131ba11c9385cb98630865fe47fc81db2174153691b21a838e1f9",
+        "44015aff9d7da21ea37689650c9c421c41b2f9e22b7028452aec5e6f21ad720b",
+        "c93d73a163252bd4244922ac95140f6f4b08c17261b19db4091b281e608c73f3",
+        "9ba1cc62b2763d01f8faa81d51e9190f292fc87909634c3c01369508400c1f4b",
+        "e532ffb6d3b593bec96c89a6b96209dfec1996cf05d0008afbcf4a6a7b4fa714"
+      ],
+      "verity_layer_sha256": [
+        "6c553f19cf80dd98a5d90486c57e8eaa093f3e085b12a892da9561e91f5cf6b3",
+        "6b0b5c4b7a0ab95c74bcc8211dd5b81cde97ba131f79b4f667854a36d3cc9cef",
+        "c0a612ef76f7180291e3868972487e248f778d637790f813eed51c5789375304",
+        "f6656d0e6c25a00c3cd41a7b4220ac3bdd6a7d7361f63a0d596869ed3605d4f5",
+        "0833b4387c2d162c06dd74523cc485c44f2818e5df704d3d20c48d4df0178e99",
+        "78e1194b01703013d3277933d4d8898396e72f3499494413fb961f32b9c44e76",
+        "324cf2bd9b100b537212b096eb69d7d1c061b2b62e7cc6f1d46a9fe56f8b20e5"
+      ]
+    },
+    "secondary": {
+      "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+      "archive_tag": "agentdnsport20260913.azurecr.io/secondary:20260913",
+      "config_sha256": "71afc3746bf8353dda4f8ea362266f6adc0a3a6d22b565fcafb4069e23c0f17d",
+      "layer_count": 3,
+      "oci_layer_sha256": [
+        "e51aee9c82ec5dd5ba2add49c45c6d85d460512757e2615b69bcdf9469c7cb58",
+        "6f0d74a4bd219be1a952ca63531a1401607de85d547c0a05f07c9abd475b2d53",
+        "1fa68d1c56d8c2509e493af68f6f5f0b0f3327f70311f9cb91578794b9f74e9f"
+      ],
+      "verity_layer_sha256": [
+        "ad7e8b43183eb7d3e25ebe7a49c2b5bdc10d8f0b070f0ca9d3ff1c07365d43e7",
+        "2994c1d662fc414d284aaa5c93da58133a704d691dd83d5e3e7d38a75ffc5823",
+        "e7909cbfde1bba404c2158e91ccae98a89cd47a59878b16ff4afdc5af3158ca3"
+      ]
+    }
+  },
+  "pause_layer_count": 1,
+  "telemetry": {
+    "configured": false
+  },
+  "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
+  "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight",
+  "checker": {
+    "source_path": "/Users/mac/.codex/worktrees/adns-startup-20260919/adns/tools/check_aci_template.py",
+    "source_sha256": "9af671bf92dbd9bf3d0fbeef0f225a8d5bcb2c4de23f0268a2d4583f6d67649c",
+    "adapted_sha256": "5cb77b454068cae8c2f4d54210597691e00b76daa1f73200b6517e85635ad752",
+    "only_adaptation": "require exact isolated candidate FQDN in published address and certificate SAN",
+    "candidate_fqdn": "agentdns-ccf-startup-20260919.northeurope.azurecontainer.io"
+  }
+}

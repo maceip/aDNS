@@ -1,0 +1,75 @@
+{
+  "image": {
+    "reference": "internetsystemsconsortium/bind9:9.20",
+    "id": "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+    "repo_digests": [
+      "internetsystemsconsortium/bind9@sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021"
+    ],
+    "architecture": "amd64",
+    "os": "linux",
+    "delv_version": "delv 9.20.27"
+  },
+  "queries": [
+    {
+      "owner": "example.test.",
+      "rrtype": "SOA",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:42.693135+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:43.556944+00:00",
+      "exit_code": 0,
+      "fully_validated": true,
+      "output": "dnssec-soa.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "example.test.",
+        "SOA"
+      ]
+    },
+    {
+      "owner": "ns.example.test.",
+      "rrtype": "A",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:43.557437+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:44.369668+00:00",
+      "exit_code": 0,
+      "fully_validated": true,
+      "output": "dnssec-a.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "ns.example.test.",
+        "A"
+      ]
+    }
+  ],
+  "prior_attempt": "Initial invocation used unsupported delv +time/+tries options and failed locally before querying; retained in initial-cli-rejection-* files. Corrected invocation removes those options; Python enforces a 40-second process timeout."
+}
