@@ -120,6 +120,131 @@ class SupervisorTest(unittest.TestCase):
         self.assertIsNone(directory);self.assertNotIn("AGENTDNS_TRACE_SOCKET",node)
 
 
+class SupervisorPidRecoveryTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary=tempfile.TemporaryDirectory(prefix="adns-pid-")
+        self.state=pathlib.Path(self.temporary.name)
+        self.pid=self.state/"node.pid"
+        self.config={"output_files":{"pid_file":"node.pid"}}
+        self.children=[]
+        # The CCF startup contract: refuse an existing PID, write its own PID,
+        # and leave it on disk if killed. This is a real process, not a PID mock.
+        self.child_code="""
+import os,pathlib,sys,time
+p=pathlib.Path(sys.argv[1])
+if p.exists():sys.exit(103)
+p.write_text(str(os.getpid()))
+print('ready',flush=True)
+time.sleep(30)
+"""
+
+    def tearDown(self):
+        for child in self.children:
+            if child.poll() is None:child.kill()
+            child.wait(timeout=3)
+            child.stdout.close();child.stderr.close()
+        self.temporary.cleanup()
+
+    def start_node(self):
+        child=subprocess.Popen([sys.executable,"-c",self.child_code,str(self.pid)],
+            stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        self.children.append(child)
+        self.assertTrue(select.select([child.stdout],[],[],3)[0])
+        self.assertEqual(child.stdout.readline(),"ready\n")
+        return child
+
+    def test_crashed_node_pid_blocks_ccf_until_guard_retires_it_and_preserves_ledger(self):
+        ledger=self.state/"ledger";ledger.mkdir()
+        committed=ledger/"ledger_1-7.committed";committed.write_bytes(b"preserve committed history")
+        child=self.start_node();child.kill();child.wait(timeout=3)
+        collision=subprocess.run([sys.executable,"-c",self.child_code,str(self.pid)],capture_output=True,timeout=3)
+        self.assertEqual(collision.returncode,103)
+        with supervisor.ccf_pid_guard(self.config,self.state):
+            replacement=self.start_node()
+            self.assertEqual(int(self.pid.read_text()),replacement.pid)
+            replacement.terminate();replacement.wait(timeout=3)
+        self.assertFalse(self.pid.exists())
+        self.assertEqual(committed.read_bytes(),b"preserve committed history")
+
+    @unittest.skipUnless(os.environ.get("ADNS_CCF_BINARY"),"set ADNS_CCF_BINARY for the real CCF startup regression")
+    def test_real_ccf_exit_103_and_supervised_restart(self):
+        key=ec.generate_private_key(ec.SECP256R1());now=datetime.datetime.now(datetime.timezone.utc)
+        subject=x509.Name([x509.NameAttribute(x509.NameOID.COMMON_NAME,"isolated PID regression")])
+        certificate=(x509.CertificateBuilder().subject_name(subject).issuer_name(subject).public_key(key.public_key())
+            .serial_number(124).not_valid_before(now-datetime.timedelta(minutes=1)).not_valid_after(now+datetime.timedelta(hours=1))
+            .add_extension(x509.BasicConstraints(ca=True,path_length=None),critical=True).sign(key,hashes.SHA256()))
+        ca=self.state/"service.pem";ca.write_bytes(certificate.public_bytes(serialization.Encoding.PEM))
+        config=json.loads((pathlib.Path(__file__).resolve().parents[1]/"node.example.json").read_text())
+        config["command"]={"type":"Join","service_certificate_file":str(ca),"join":{"target_rpc_address":"127.0.0.1:65530"}}
+        path=self.state/"node.json";path.write_text(json.dumps(config))
+        command=[os.environ["ADNS_CCF_BINARY"],"--config",str(path)]
+        # Explicitly local, unattested CCF execution; no cloud or external peer.
+        environment={"PATH":os.environ["PATH"],"CCF_PLATFORM_OVERRIDE":"Virtual"}
+        old=subprocess.Popen([sys.executable,"-c","pass"]);old.wait(timeout=3)
+        self.pid.write_text(str(old.pid))
+        failed=subprocess.run(command,cwd=self.state,env=environment,capture_output=True,text=True,timeout=10)
+        self.assertEqual(failed.returncode,103,failed.stdout+failed.stderr)
+        self.assertIn("PID file node.pid already exists",failed.stdout+failed.stderr)
+        with supervisor.ccf_pid_guard(config,self.state):
+            child=subprocess.Popen(command,cwd=self.state,env=environment,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+            self.children.append(child)
+            deadline=time.monotonic()+5
+            while not (self.state/"node.pem").exists() and child.poll() is None and time.monotonic()<deadline:time.sleep(.02)
+            if child.poll() is not None:self.fail("CCF did not start: "+child.communicate()[0])
+            self.assertTrue((self.state/"node.pem").exists(),"CCF did not reach node creation")
+            self.assertEqual(int(self.pid.read_text()),child.pid)
+            child.kill();child.wait(timeout=3)
+        self.assertFalse(self.pid.exists())
+
+    def test_live_pid_and_concurrent_supervisor_are_preserved(self):
+        child=self.start_node();before=self.pid.read_bytes()
+        with self.assertRaisesRegex(RuntimeError,"running process"):
+            with supervisor.ccf_pid_guard(self.config,self.state):self.fail("live node admitted")
+        self.assertEqual(self.pid.read_bytes(),before);self.assertIsNone(child.poll())
+        child.kill();child.wait(timeout=3)
+        with supervisor.ccf_pid_guard(self.config,self.state):
+            with self.assertRaisesRegex(RuntimeError,"another supervisor"):
+                with supervisor.ccf_pid_guard(self.config,self.state):self.fail("duplicate supervisor admitted")
+            with self.assertRaisesRegex(RuntimeError,"another supervisor"):
+                with supervisor.ccf_pid_guard({"output_files":{"pid_file":"recovery.pid"}},self.state):
+                    self.fail("same ledger admitted under an alternate PID filename")
+            replacement=self.start_node()
+        # If the supervisor exits before its child, its live PID must survive.
+        self.assertEqual(int(self.pid.read_text()),replacement.pid)
+        self.assertIsNone(replacement.poll())
+
+    def test_ambiguous_and_unsafe_pid_files_are_never_removed(self):
+        for body in [b"",b"0",b"-1",b"2147483648",b"unexpected",b"2\n3"]:
+            with self.subTest(body=body):
+                self.pid.write_bytes(body)
+                with self.assertRaisesRegex(RuntimeError,"invalid CCF PID"):
+                    with supervisor.ccf_pid_guard(self.config,self.state):pass
+                self.assertEqual(self.pid.read_bytes(),body)
+        self.pid.unlink();target=self.state/"preserve";target.write_text("unchanged")
+        self.pid.symlink_to(target)
+        with self.assertRaises(OSError):
+            with supervisor.ccf_pid_guard(self.config,self.state):pass
+        self.assertTrue(self.pid.is_symlink());self.assertEqual(target.read_text(),"unchanged")
+        self.pid.unlink();os.mkfifo(self.pid)
+        with self.assertRaisesRegex(RuntimeError,"unsafe CCF PID"):
+            with supervisor.ccf_pid_guard(self.config,self.state):pass
+        self.assertTrue(stat.S_ISFIFO(self.pid.stat().st_mode))
+
+    def test_inaccessible_process_and_replaced_file_are_preserved(self):
+        self.pid.write_text("12345")
+        with patch.object(supervisor.os,"kill",side_effect=PermissionError):
+            with self.assertRaisesRegex(RuntimeError,"inaccessible process"):
+                with supervisor.ccf_pid_guard(self.config,self.state):pass
+        self.assertEqual(self.pid.read_text(),"12345")
+        def replaced(*_):
+            self.pid.unlink();self.pid.write_text("replacement")
+            raise ProcessLookupError
+        with patch.object(supervisor.os,"kill",side_effect=replaced):
+            with self.assertRaisesRegex(RuntimeError,"changed during inspection"):
+                with supervisor.ccf_pid_guard(self.config,self.state):pass
+        self.assertEqual(self.pid.read_text(),"replacement")
+
+
 class SupervisorSocketRecoveryTests(unittest.TestCase):
     def setUp(self):
         self.temporary=tempfile.TemporaryDirectory(prefix="adns-sock-",dir="/tmp")
