@@ -1,0 +1,40 @@
+{
+  "runtime": "CPython3.12 Linuxx86_64 binary wheels in an isolated test-only PYTHONPATH",
+  "packages": [
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "metadata_sha256": "558bafb9093a8e790175d9ecff9688382981d744877dad86fd6770db0f4dc918"
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.1",
+      "metadata_sha256": "8e9b5570da4686848ee5c6bb83fffc224bcddf9793136731dd050ce0c05fffe2"
+    },
+    {
+      "name": "pycparser",
+      "version": "3.0",
+      "metadata_sha256": "f547a60b0ab54cc2f242213d1f87960ad80df7dd5dfeb98d17a444d48bfb6b93"
+    }
+  ],
+  "preparation": [
+    "python3",
+    "-m",
+    "pip",
+    "install",
+    "--target",
+    "/tmp/adns-pid-test-python",
+    "--platform",
+    "manylinux2014_x86_64",
+    "--python-version",
+    "3.12",
+    "--implementation",
+    "cp",
+    "--abi",
+    "cp312",
+    "--only-binary=:all:",
+    "cffi==2.1.1",
+    "cryptography==50.0.1",
+    "pycparser==3.0"
+  ]
+}

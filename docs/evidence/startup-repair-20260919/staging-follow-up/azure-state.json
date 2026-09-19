@@ -1,0 +1,42 @@
+{
+  "capture_started_at_utc": "2026-09-19T12:57:02.584846+00:00",
+  "capture_finished_at_utc": "2026-09-19T12:57:03.458416+00:00",
+  "exit_code": 0,
+  "query_scope": "Public resource and per-container image/state fields only",
+  "azure": {
+    "containers": [
+      {
+        "currentState": {
+          "detailStatus": "",
+          "exitCode": null,
+          "finishTime": null,
+          "startTime": "2026-09-19T12:17:20.499000+00:00",
+          "state": "Running"
+        },
+        "image": "agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+        "name": "primary",
+        "previousState": null,
+        "restartCount": 0
+      },
+      {
+        "currentState": {
+          "detailStatus": "",
+          "exitCode": null,
+          "finishTime": null,
+          "startTime": "2026-09-19T12:17:20.325000+00:00",
+          "state": "Running"
+        },
+        "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+        "name": "secondary",
+        "previousState": null,
+        "restartCount": 0
+      }
+    ],
+    "groupState": "Running",
+    "ip": "20.166.175.47",
+    "location": "northeurope",
+    "name": "agentdns-ccf-startup-20260919",
+    "provisioningState": "Succeeded",
+    "resourceGroup": "agentdns-port-validation-20260913"
+  }
+}

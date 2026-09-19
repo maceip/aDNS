@@ -1,0 +1,149 @@
+{
+  "started_at": "2026-09-19T12:56:35.201916+00:00",
+  "finished_at": "2026-09-19T12:56:38.528912+00:00",
+  "wall_seconds": 3.327,
+  "exit_code": 0,
+  "source_commit": "6b15e2e987ddbbce739868e17b81546595aea185",
+  "source_sha256": {
+    "ccf/run.py": "db08df37e3ad98809b76da02bf2c096313007fcd3314527e24ac17081551bad3",
+    "ccf/tests/test_supervisor.py": "fdf4b70b33c9d616224d9bbf1c3a70e67fc2bd20310ee840f7a5fe61ddfd16c4",
+    "ccf/node.example.json": "ac5cafbd31a319dee46a39bd65250671ebb21abdc892bc8a7dc31e8c0c676a14"
+  },
+  "tracked_test_inputs_clean": true,
+  "test_count": 21,
+  "unittest_seconds": 2.501,
+  "passed": 21,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "test_ambiguous_and_unsafe_pid_files_are_never_removed",
+      "class": "test_supervisor.SupervisorPidRecoveryTests.test_ambiguous_and_unsafe_pid_files_are_never_removed",
+      "result": "ok"
+    },
+    {
+      "name": "test_crashed_node_pid_blocks_ccf_until_guard_retires_it_and_preserves_ledger",
+      "class": "test_supervisor.SupervisorPidRecoveryTests.test_crashed_node_pid_blocks_ccf_until_guard_retires_it_and_preserves_ledger",
+      "result": "ok"
+    },
+    {
+      "name": "test_inaccessible_process_and_replaced_file_are_preserved",
+      "class": "test_supervisor.SupervisorPidRecoveryTests.test_inaccessible_process_and_replaced_file_are_preserved",
+      "result": "ok"
+    },
+    {
+      "name": "test_live_pid_and_concurrent_supervisor_are_preserved",
+      "class": "test_supervisor.SupervisorPidRecoveryTests.test_live_pid_and_concurrent_supervisor_are_preserved",
+      "result": "ok"
+    },
+    {
+      "name": "test_real_ccf_exit_103_and_supervised_restart",
+      "class": "test_supervisor.SupervisorPidRecoveryTests.test_real_ccf_exit_103_and_supervised_restart",
+      "result": "ok"
+    },
+    {
+      "name": "test_active_replacement_listener_is_preserved_after_old_child_death",
+      "class": "test_supervisor.SupervisorSocketRecoveryTests.test_active_replacement_listener_is_preserved_after_old_child_death",
+      "result": "ok"
+    },
+    {
+      "name": "test_actual_crash_leaves_socket_and_reaped_child_can_restart",
+      "class": "test_supervisor.SupervisorSocketRecoveryTests.test_actual_crash_leaves_socket_and_reaped_child_can_restart",
+      "result": "ok"
+    },
+    {
+      "name": "test_nonprivate_replaced_or_wrong_owner_parent_is_preserved",
+      "class": "test_supervisor.SupervisorSocketRecoveryTests.test_nonprivate_replaced_or_wrong_owner_parent_is_preserved",
+      "result": "ok"
+    },
+    {
+      "name": "test_regular_file_symlink_and_wrong_configured_path_are_never_removed",
+      "class": "test_supervisor.SupervisorSocketRecoveryTests.test_regular_file_symlink_and_wrong_configured_path_are_never_removed",
+      "result": "ok"
+    },
+    {
+      "name": "test_socket_path_limit_matches_receiver",
+      "class": "test_supervisor.SupervisorSocketRecoveryTests.test_socket_path_limit_matches_receiver",
+      "result": "ok"
+    },
+    {
+      "name": "test_child_environment_does_not_inherit_secret_values",
+      "class": "test_supervisor.SupervisorTest.test_child_environment_does_not_inherit_secret_values",
+      "result": "ok"
+    },
+    {
+      "name": "test_confidential_readonly_secret_volume_and_write_permissions",
+      "class": "test_supervisor.SupervisorTest.test_confidential_readonly_secret_volume_and_write_permissions",
+      "result": "ok"
+    },
+    {
+      "name": "test_disabled_or_unavailable_tracing_does_not_prevent_startup",
+      "class": "test_supervisor.SupervisorTest.test_disabled_or_unavailable_tracing_does_not_prevent_startup",
+      "result": "ok"
+    },
+    {
+      "name": "test_duplicate_manifest_key_rejected",
+      "class": "test_supervisor.SupervisorTest.test_duplicate_manifest_key_rejected",
+      "result": "ok"
+    },
+    {
+      "name": "test_exporter_credentials_never_enter_ccf_environment",
+      "class": "test_supervisor.SupervisorTest.test_exporter_credentials_never_enter_ccf_environment",
+      "result": "ok"
+    },
+    {
+      "name": "test_provisioning_requires_object_and_matching_committed_transaction",
+      "class": "test_supervisor.SupervisorTest.test_provisioning_requires_object_and_matching_committed_transaction",
+      "result": "ok"
+    },
+    {
+      "name": "test_tampered_file_manifest_and_missing_member_rejected",
+      "class": "test_supervisor.SupervisorTest.test_tampered_file_manifest_and_missing_member_rejected",
+      "result": "ok"
+    },
+    {
+      "name": "test_verified_bootstrap_is_frozen_before_input_can_change",
+      "class": "test_supervisor.SupervisorTest.test_verified_bootstrap_is_frozen_before_input_can_change",
+      "result": "ok"
+    },
+    {
+      "name": "test_real_tls_response_size_duplicate_header_and_success",
+      "class": "test_supervisor.SupervisorTlsBoundsTests.test_real_tls_response_size_duplicate_header_and_success",
+      "result": "ok"
+    },
+    {
+      "name": "test_real_tls_trickling_headers_and_body_have_one_absolute_deadline",
+      "class": "test_supervisor.SupervisorTlsBoundsTests.test_real_tls_trickling_headers_and_body_have_one_absolute_deadline",
+      "result": "ok"
+    },
+    {
+      "name": "test_unresponsive_tls_handshake_consumes_the_same_deadline",
+      "class": "test_supervisor.SupervisorTlsBoundsTests.test_unresponsive_tls_handshake_consumes_the_same_deadline",
+      "result": "ok"
+    }
+  ],
+  "real_ccf_oracle": {
+    "test": "SupervisorPidRecoveryTests.test_real_ccf_exit_103_and_supervised_restart",
+    "evidence_basis": "Assertions in unchanged test source at recorded commit and SHA256, with test reported ok in console.log",
+    "before": {
+      "pid_file": "node.pid containing PID of a real process that has exited and been reaped",
+      "actual_ccf_exit_code": 103,
+      "required_fatal_message": "PID file node.pid already exists"
+    },
+    "inside_guard": {
+      "actual_ccf_binary": "/usr/local/bin/agentdns",
+      "mode": "Virtual",
+      "command": "Join",
+      "peer": "127.0.0.1:65530 (no real peer)",
+      "assertions": [
+        "CCF process remains alive",
+        "node.pem created",
+        "node.pid matches actual child PID"
+      ]
+    },
+    "after_guard": {
+      "child_action": "kill, then wait/reap before guard exits",
+      "assertion": "node.pid no longer exists"
+    },
+    "scope": "Direct production CCF process under ccf_pid_guard. This does not invoke the complete supervisor CLI, open a CCF network, or prove hardware/cloud recovery."
+  }
+}

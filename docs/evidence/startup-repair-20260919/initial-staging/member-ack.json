@@ -1,0 +1,9 @@
+{
+  "http_status": 204,
+  "headers": {
+    "content-length": "0",
+    "x-ms-ccf-transaction-id": "2.5"
+  },
+  "body": null,
+  "confirmed_ccf_transaction_id": "2.5"
+}

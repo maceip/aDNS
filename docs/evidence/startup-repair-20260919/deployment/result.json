@@ -1,0 +1,15 @@
+{
+  "error": null,
+  "name": "startup-fix-20260919-retry",
+  "resources": [
+    {
+      "apiVersion": null,
+      "extension": null,
+      "id": "/subscriptions/1b191b4c-2968-420a-b275-5087e94bf355/resourceGroups/agentdns-port-validation-20260913/providers/Microsoft.ContainerInstance/containerGroups/agentdns-ccf-startup-20260919",
+      "identifiers": null,
+      "resourceGroup": "agentdns-port-validation-20260913",
+      "resourceType": "Microsoft.ContainerInstance/containerGroups"
+    }
+  ],
+  "state": "Succeeded"
+}

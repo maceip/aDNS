@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/node/network",
+    "method": "GET",
+    "capture_started_at_utc": "2026-09-19T12:57:47.447112+00:00",
+    "capture_finished_at_utc": "2026-09-19T12:57:48.926494+00:00",
+    "exit_code": 0,
+    "stdout": "{\"http_status\": 200, \"confirmed_ccf_transaction_id\": null, \"commit_status\": null, \"output\": \"/proof/network-response.json\"}\n",
+    "stderr": "",
+    "output": "network-response.json"
+  },
+  {
+    "path": "/app/zone/status?zone=example.test",
+    "method": "GET",
+    "capture_started_at_utc": "2026-09-19T12:57:48.926706+00:00",
+    "capture_finished_at_utc": "2026-09-19T12:57:51.553231+00:00",
+    "exit_code": 0,
+    "stdout": "{\"http_status\": 200, \"confirmed_ccf_transaction_id\": \"2.2710\", \"commit_status\": \"committed\", \"output\": \"/proof/zone-status.json\"}\n",
+    "stderr": "",
+    "output": "zone-status.json"
+  }
+]

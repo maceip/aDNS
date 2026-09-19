@@ -1,0 +1,23 @@
+{
+  "requested_image": "agentdns-ccf:20260916-v0.2.1",
+  "platform": "linux/amd64",
+  "manifest": {
+    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+    "digest": "sha256:302cea65f4272bd722d38bd3df18f5a06c2081d2d30bc3a5efc01737eb654802",
+    "size": 1436,
+    "platform": {
+      "architecture": "amd64",
+      "os": "linux"
+    }
+  },
+  "repo_digests": [
+    "agentdnsport20260913.azurecr.io/primary@sha256:bc6dd5d8523ad122296cc3bfde45ca4983216547d46f42726741eded6be4eb4b",
+    "agentdns-ccf@sha256:bc6dd5d8523ad122296cc3bfde45ca4983216547d46f42726741eded6be4eb4b"
+  ],
+  "files": {
+    "/usr/local/bin/agentdns": "7c1fc373c35dccf7158e14fa11c03d15ae297a9c08263d7c71a45efa1df0a203",
+    "/opt/agentdns/run.py": "1656f30f1199d5e6b293c5d45fb4562a10fb5521e6e260eda52bd81715161397",
+    "/opt/agentdns/governance/constitution.js": "6fd2190bfe90a9d603b44bf4e70ede3cd2d8b6991bd56c3f339845d00f16099b"
+  },
+  "platform_image_id": "sha256:302cea65f4272bd722d38bd3df18f5a06c2081d2d30bc3a5efc01737eb654802"
+}

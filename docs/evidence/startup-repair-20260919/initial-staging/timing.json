@@ -1,0 +1,10 @@
+{
+  "artifact": "initial-staging/container-state.json",
+  "container_start_utc": "2026-09-19T12:17:20Z",
+  "capture_completed_approx_utc": "2026-09-19T12:20:17Z",
+  "capture_time_basis": "Original file mtime and command execution; snapshot itself has no capture timestamp. Approximate, not independently signed.",
+  "summary_written_utc": "2026-09-19T12:21:43.864664Z",
+  "summary_time_is_not_capture_time": true,
+  "window": "approximately 2 minutes 57 seconds; not a soak test",
+  "zero_restarts_at_snapshot": true
+}

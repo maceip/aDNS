@@ -1,0 +1,11 @@
+{
+  "capture_started_at_utc": "2026-09-19T12:57:47.457573+00:00",
+  "capture_finished_at_utc": "2026-09-19T12:57:48.068188+00:00",
+  "exit_code": 0,
+  "stdout": "{\n  \"zone\": \"example.test.\",\n  \"key_tag\": 18744,\n  \"ds_sha256\": \"4d29d48b203d27f66e8011fd3d718f6d3de3b4ee8e5bb6fac1ddbd2f1b926b1f\",\n  \"claims_digest\": \"5e3b17114612203c074c29762faa6f595bc0a120dfc0c2786a3af082c06af128\",\n  \"tx_id\": \"2.39\"\n}\n",
+  "stderr": "",
+  "source": "Existing committed KSK receipt freshly verified against service CA from this live native audit",
+  "trust_anchor_exact_dnskey_match": true,
+  "receipt_sha256": "f2891d06e1c5c7c41c0a059515e636cd0ca1ee84b2f3a7498add6d265087f0f4",
+  "anchor_sha256": "9e33b8d2dac0215a14a5836c576d77c50c60846cdb9ce404e9e35ee85dd7a0cb"
+}
