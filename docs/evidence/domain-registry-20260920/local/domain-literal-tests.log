@@ -1,0 +1,11 @@
+test_all_central_ses_and_caa_values_are_checked_in_terraform_source (test_domain_literals.DomainLiteralTests.test_all_central_ses_and_caa_values_are_checked_in_terraform_source) ... ok
+test_current_needles_follow_registry_and_retired_names_are_explicit (test_domain_literals.DomainLiteralTests.test_current_needles_follow_registry_and_retired_names_are_explicit) ... ok
+test_exception_is_bound_to_exact_file_and_line_bytes (test_domain_literals.DomainLiteralTests.test_exception_is_bound_to_exact_file_and_line_bytes) ... ok
+test_live_harness_is_checked_while_explicit_fixed_fixtures_are_classified (test_domain_literals.DomainLiteralTests.test_live_harness_is_checked_while_explicit_fixed_fixtures_are_classified) ... ok
+test_own_canonical_registry_is_exempt_with_an_alternate_selected_registry (test_domain_literals.DomainLiteralTests.test_own_canonical_registry_is_exempt_with_an_alternate_selected_registry) ... ok
+test_tracked_and_new_operational_literals_fail_and_ignored_output_does_not (test_domain_literals.DomainLiteralTests.test_tracked_and_new_operational_literals_fail_and_ignored_output_does_not) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.246s
+
+OK

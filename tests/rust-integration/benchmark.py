@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 """Measured frontend throughput/latency on the real BIND secondary."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import json,pathlib,re,statistics,subprocess,time
 import dns.message,dns.query
 root=pathlib.Path('/work')
-queries=[('mail-good.example.test.','A'),('_25._tcp.mail-good.example.test.','TLSA'),('absent.branch.example.test.','A'),('missing.wild.example.test.','A')]
+queries=[(('mail-good.' + VALIDATION_DOMAIN + '.'),'A'),(('_25._tcp.mail-good.' + VALIDATION_DOMAIN + '.'),'TLSA'),(('absent.branch.' + VALIDATION_DOMAIN + '.'),'A'),(('missing.wild.' + VALIDATION_DOMAIN + '.'),'A')]
 (root/'dnsperf-queries.txt').write_text(''.join(n+' '+t+'\n' for n,t in queries))
 # Fixed-rate sustained load, not an inferred maximum throughput claim.
 p=subprocess.run(['dnsperf','-s','127.0.0.1','-p','1053','-d',str(root/'dnsperf-queries.txt'),'-l','30','-Q','10000','-q','1000'],capture_output=True,text=True,timeout=40)

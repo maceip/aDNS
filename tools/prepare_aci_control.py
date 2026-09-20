@@ -5,6 +5,7 @@ Run only against a new output directory. Private files are mode0600 and never
 printed; only public configuration/member material belongs in a launch image.
 """
 import argparse
+from domain_registry import get, registry_path, registry_sha256
 import base64
 import datetime
 import hashlib
@@ -76,13 +77,14 @@ def main():
     write(public / "member0_cert.pem", certificate.public_bytes(serialization.Encoding.PEM), 0o644)
     write(public / "member0_enc_pubk.pem", encryption.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo), 0o644)
     config = json.loads((Path(__file__).resolve().parents[1] / "ccf/node.example.json").read_text())
-    config["node_certificate"]["subject_alt_names"] = ["iPAddress:127.0.0.1", "dNSName:agentdns.test"]
-    config["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] = "agentdns.test:8000"
+    config["node_certificate"]["subject_alt_names"] = ["iPAddress:127.0.0.1", "dNSName:" + get("ccf_rpc_hostname")]
+    config["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] = get("ccf_rpc_hostname") + ":8000"
     config["node_certificate"]["initial_validity_days"] = 7
     config["command"]["start"]["initial_service_certificate_validity_days"] = 7
     if args.native_snp:
         config["attestation"] = native_attestation_configuration()
         config["network"]["rpc_interfaces"]["agentdns-internal"]["accepted_endpoints"] = native_internal_endpoints()
+    write(public / "domain-registry.json", registry_path().read_bytes(), 0o644)
     write(public / "node.json", json.dumps(config, sort_keys=True, indent=2) + "\n", 0o644)
     manifest = {"/config/" + path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                 for path in sorted(public.iterdir())}
@@ -90,13 +92,14 @@ def main():
     manifest_bytes = (json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n").encode()
     write(public / "manifest.json", manifest_bytes, 0o644)
     key = secrets.token_bytes(32)
-    provision = {"key_name": "agentdns-transfer.", "secret_base64url": base64.urlsafe_b64encode(key).rstrip(b"=").decode(), "zones": ["example.test."]}
+    provision = {"key_name": get("transfer_key_name"), "secret_base64url": base64.urlsafe_b64encode(key).rstrip(b"=").decode(), "zones": [get("validation_zone")]}
     write(private / "transfer-key.json", json.dumps(provision, separators=(",", ":")) + "\n")
     write(private / "transfer-key.b64", base64.b64encode(key) + b"\n")
     metadata = {"member_id": certificate.fingerprint(hashes.SHA256()).hex(),
                 "config_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+                "domain_registry_sha256": registry_sha256(),
                 "transfer_secret_sha256": hashlib.sha256(key).hexdigest(),
-                "transfer_key_name": "agentdns-transfer.", "secondary_endpoint": "127.0.0.1:53"}
+                "transfer_key_name": get("transfer_key_name"), "secondary_endpoint": "127.0.0.1:53"}
     write(public / "bootstrap-summary.json", json.dumps(metadata, indent=2) + "\n", 0o644)
     print(json.dumps(metadata, indent=2))
 

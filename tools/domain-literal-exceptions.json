@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "additional_domains": [
+    {
+      "domain": "marble.monster",
+      "reason": "Retired deployment hostname must not return to operational defaults."
+    },
+    {
+      "domain": "sidecar.axp.computer",
+      "reason": "Retired deployment hostname must not return to operational defaults."
+    }
+  ],
+  "path_exclusions": [
+    {
+      "pattern": "*.md",
+      "category": "documentation",
+      "reason": "Narrative documentation is reviewed separately; this guard covers executable source and configuration."
+    },
+    {
+      "pattern": "docs/evidence/*",
+      "category": "historical-evidence",
+      "reason": "Recorded immutable operational and cryptographic evidence, not runtime configuration."
+    },
+    {
+      "pattern": "docs/archive/*",
+      "category": "historical-evidence",
+      "reason": "Archived historical documentation and evidence."
+    },
+    {
+      "pattern": "**/vendor/*",
+      "category": "vendored-code",
+      "reason": "Unmodified third-party dependency sources."
+    },
+    {
+      "pattern": "3rdparty/*",
+      "category": "vendored-code",
+      "reason": "Pinned third-party dependency sources."
+    },
+    {
+      "pattern": "**/test_*.py",
+      "category": "unit-tests",
+      "reason": "Conventional isolated Python unit tests retain fixed synthetic and cryptographic vectors; live_* and other harnesses remain checked."
+    },
+    {
+      "pattern": "**/*_test.py",
+      "category": "unit-tests",
+      "reason": "Isolated Python unit-test files retain fixed input vectors."
+    },
+    {
+      "pattern": "**/*.test.js",
+      "category": "unit-tests",
+      "reason": "Isolated JavaScript test vectors and assertions."
+    },
+    {
+      "pattern": "**/*.test.mjs",
+      "category": "unit-tests",
+      "reason": "Isolated JavaScript test vectors and assertions."
+    },
+    {
+      "pattern": "**/*_test.go",
+      "category": "unit-tests",
+      "reason": "Isolated Go unit-test vectors."
+    },
+    {
+      "pattern": "**/tests.rs",
+      "category": "unit-tests",
+      "reason": "Isolated Rust test module vectors."
+    },
+    {
+      "pattern": "**/fixtures/*",
+      "category": "fixed-fixtures",
+      "reason": "Static test fixture payloads; these are not runtime routing configuration."
+    },
+    {
+      "pattern": "docs/reference/*",
+      "category": "historical-evidence",
+      "reason": "Dated readbacks, captured zones and reference results preserve original evidence."
+    },
+    {
+      "pattern": "docs/reviews/evidence/*",
+      "category": "historical-evidence",
+      "reason": "Historical review artifacts preserve source bytes."
+    },
+    {
+      "pattern": "**/*.tftest.hcl",
+      "category": "unit-tests",
+      "reason": "Terraform mock-provider test inputs and assertions."
+    },
+    {
+      "pattern": "crates/*/tests/*.rs",
+      "category": "unit-tests",
+      "reason": "Compiled Rust integration-contract tests use fixed signed and wire-format vectors, not live deployment endpoints."
+    }
+  ],
+  "line_exceptions": [
+    {
+      "path": "ccf/governance/constitution.js",
+      "sha256": "e8f6229a4d9578eb090de17c52691abee4e4dcddc85a6d19a4bead9dbe7ace27",
+      "category": "comment-or-branding",
+      "reason": "Comment in exact pinned constitution bytes; preserve composition hash."
+    },
+    {
+      "path": "crates/adns-attest/src/lib.rs",
+      "sha256": "0c1a48eccaff1e3f42ea4f51b5cea5a6b7844a91cf61df392c15721ec867cff2",
+      "category": "protocol-identifier",
+      "reason": "Immutable UQ claims profile URI identifies a signed wire contract, not a network endpoint."
+    }
+  ]
+}

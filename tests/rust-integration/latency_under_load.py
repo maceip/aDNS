@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 """Sample frontend latency concurrently with a fixed DNSSEC-enabled load."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import json,pathlib,re,statistics,subprocess,time
 import dns.message,dns.query
-root=pathlib.Path('/work');queries=[('mail-good.example.test.','A'),('_25._tcp.mail-good.example.test.','TLSA'),('absent.branch.example.test.','A'),('missing.wild.example.test.','A')]
+root=pathlib.Path('/work');queries=[(('mail-good.' + VALIDATION_DOMAIN + '.'),'A'),(('_25._tcp.mail-good.' + VALIDATION_DOMAIN + '.'),'TLSA'),(('absent.branch.' + VALIDATION_DOMAIN + '.'),'A'),(('missing.wild.' + VALIDATION_DOMAIN + '.'),'A')]
 log=open(root/'dnsperf-dnssec-under-load.log','w');load=subprocess.Popen(['dnsperf','-s','127.0.0.1','-p','1053','-d',str(root/'dnsperf-queries.txt'),'-l','30','-Q','1000','-q','100','-D'],stdout=log,stderr=log)
 start=time.perf_counter();start_unix=time.time();latencies=[];failures=0;memory=[]
 frontend_pid=int((root/'named-secondary.pid').read_text().strip())

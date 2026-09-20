@@ -22,6 +22,12 @@ COPY ccf/host_driver.py ccf/run.py ccf/telemetry.py /opt/agentdns/
 # Direct driver invocations (including the isolated CCF/BIND harness) use the
 # same image-owned SDK directory as supervisor-spawned exporters.
 ENV PYTHONPATH=/opt/agentdns/python
+# Build with --build-context domain-registry=<snapshot directory> from the
+# common hosting store. The snapshot is a build input, never a local default.
+COPY --from=domain-registry topology.json /etc/agent-hosting/domain-registry.json
+COPY tools/domain_registry.py /opt/agentdns/domain_registry.py
+RUN python3 /opt/agentdns/domain_registry.py json >/dev/null \
+ && sha256sum /etc/agent-hosting/domain-registry.json > /etc/agent-hosting/domain-registry.sha256
 WORKDIR /state
 EXPOSE 8000/tcp 8002/tcp 5353/tcp 5353/udp
 ENTRYPOINT ["python3","/opt/agentdns/run.py"]

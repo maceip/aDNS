@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
 """Keep exercising an external DNSSEC validator throughout real idle refresh."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse,json,pathlib,subprocess,time
 import dns.message,dns.query,dns.rdatatype
 parser=argparse.ArgumentParser();parser.add_argument('--seconds',type=int,default=1220);args=parser.parse_args()
 root=pathlib.Path('/work');first=json.loads((root/'idle-samples.json').read_text())[0];start=first['unix_seconds']-first['elapsed_seconds'];samples=json.loads((root/'frontend-idle-samples.json').read_text()) if (root/'frontend-idle-samples.json').exists() else []
 while True:
     now=int(time.time())
-    q=dns.message.make_query('example.test.','SOA',want_dnssec=True)
+    q=dns.message.make_query((VALIDATION_DOMAIN + '.'),'SOA',want_dnssec=True)
     a=dns.query.udp(q,'127.0.0.1',port=1053,timeout=3)
     soa=next(r for r in a.answer if r.rdtype==dns.rdatatype.SOA)[0]
     expiry=min(r.expiration for rr in a.answer if rr.rdtype==dns.rdatatype.RRSIG for r in rr if r.type_covered==dns.rdatatype.SOA)
     assert expiry>now,'secondary served expired SOA signature'
-    for name,kind in [('example.test.','SOA'),('absent.branch.example.test.','A')]:
-        p=subprocess.run(['delv','@127.0.0.1','-p','1053','-a','/work/trust-anchor.conf','+root=example.test.',name,kind],capture_output=True,text=True,timeout=5)
+    for name,kind in [((VALIDATION_DOMAIN + '.'),'SOA'),(('absent.branch.' + VALIDATION_DOMAIN + '.'),'A')]:
+        p=subprocess.run(['delv','@127.0.0.1','-p','1053','-a','/work/trust-anchor.conf',('+root=' + VALIDATION_DOMAIN + '.'),name,kind],capture_output=True,text=True,timeout=5)
         assert p.returncode==0 and 'fully validated' in p.stdout,p.stdout+p.stderr
     samples.append({'unix_seconds':now,'elapsed_seconds':now-start,'secondary_serial':soa.serial,'soa_signature_expiration':expiry,'external_positive_and_negative_validation':True})
     (root/'frontend-idle-samples.json.tmp').write_text(json.dumps(samples,indent=2)+'\n');(root/'frontend-idle-samples.json.tmp').replace(root/'frontend-idle-samples.json')

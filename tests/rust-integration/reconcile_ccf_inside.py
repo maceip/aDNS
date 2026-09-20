@@ -4,6 +4,14 @@
 This runs after the idle window. It governs one fresh operator key, keeps that
 key only in memory, and writes only public signed requests and responses.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import CCF_AUDIENCE, VALIDATION_DOMAIN
 import copy
 import hashlib
 import json
@@ -78,23 +86,23 @@ def main():
     now = int(time.time())
     grant_id = 'reconcile-'+uuid.uuid4().hex[:16]
     grant = {'grant_id':grant_id, 'subject_spki_sha256':hashlib.sha256(spki).hexdigest(),
-        'zones':['example.test.'], 'mailbox_domains':[], 'service_hosts':[], 'roles':[],
+        'zones':[(VALIDATION_DOMAIN + '.')], 'mailbox_domains':[], 'service_hosts':[], 'roles':[],
         'address_cidrs':[], 'ports':[], 'allowed_operations':['operator_records'], 'acme_names':[],
-        'operator_names':['reconcile.example.test.'], 'operator_record_types':['TXT'],
+        'operator_names':[('reconcile.' + VALIDATION_DOMAIN + '.')], 'operator_record_types':['TXT'],
         'attested_names':[], 'attested_record_types':[],
         'max_lease_seconds':3600, 'max_challenge_lifetime_seconds':3600,
         'valid_from':now-60, 'valid_until':now+3600, 'revoked':False}
     save('grant', grant)
     govern('grant-created', grant)
-    state = request('state-before', 'GET', '/app/zone/status?zone=example.test.')['body']['committed_state']
+    state = request('state-before', 'GET', ('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))['body']['committed_state']
     # The preceding operator mutation signs a fresh zone. Avoid manufacturing a
     # stale-serial failure by attempting this sequence across a scheduled refresh.
     if state['earliest_rrsig_expiration']-time.time() < 390:
         raise ValueError('reconciliation requires at least 90 seconds before scheduled refresh')
     action = {'operation':'operator_records', 'request_id':uuid.uuid4().hex,
-        'audience':'ccf://agentdns.test', 'grant_id':grant_id, 'zone':'example.test.',
+        'audience':(CCF_AUDIENCE), 'grant_id':grant_id, 'zone':(VALIDATION_DOMAIN + '.'),
         'signer_spki_der':b64(spki), 'parameters':{'expected_serial':state['serial'],
-        'mutations':[{'action':'replace', 'name':'reconcile.example.test.', 'type':'TXT',
+        'mutations':[{'action':'replace', 'name':('reconcile.' + VALIDATION_DOMAIN + '.'), 'type':'TXT',
             'ttl':60, 'rdata_strings':['durable authenticated request reconciliation']} ]}}
     nonce = request('nonce', 'POST', '/app/service/nonce', {'action':action})['body']
     envelope = sign(key, {'action':action, 'nonce':nonce['nonce'],
@@ -147,7 +155,7 @@ def main():
     signed_digest = hashlib.sha256(canonical({k:v for k,v in envelope.items() if k != 'client_signature'})).hexdigest()
     if latest.get('http_status') != 403 or latest.get('signed_message_digest') != signed_digest or not latest.get('error'):
         raise ValueError('authenticated failed request details were not persisted')
-    before_retry = request('state-after-failure', 'GET', '/app/zone/status?zone=example.test.')['body']['committed_state']
+    before_retry = request('state-after-failure', 'GET', ('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))['body']['committed_state']
     if before_retry['serial'] != state['serial']:
         raise ValueError('failed request altered the zone or the sequence crossed a refresh')
     govern('grant-restored', grant)
@@ -159,7 +167,7 @@ def main():
             raise ValueError('historical committed request result changed')
     if result['body']['zone_serial'] != (state['serial']+1) % 2**32:
         raise ValueError('restored exact request did not produce exactly one serial increment')
-    save('expected-records', [['reconcile.example.test.', 'TXT', 'durable authenticated request reconciliation']])
+    save('expected-records', [[('reconcile.' + VALIDATION_DOMAIN + '.'), 'TXT', 'durable authenticated request reconciliation']])
     summary = {'status':'passed', 'scope':'real signed operator request; no native registration claim',
         'request_id':action['request_id'], 'grant_id':grant_id, 'pending_observation_committed':True,
         'authenticated_failure_durable':True, 'failure_http_status':failed['http_status'],

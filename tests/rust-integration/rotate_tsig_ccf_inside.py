@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Govern/provision/revoke only the isolated runner's reserved TSIG identities."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_DOMAIN
 import argparse
 import base64
 import copy
@@ -12,7 +20,7 @@ import secrets
 import sys
 import time
 
-OLD = 'agentdns-transfer.'
+OLD = (TRANSFER_KEY_NAME)
 NEW = 'agentdns-transfer-replacement.'
 
 
@@ -104,13 +112,13 @@ def main():
         secret = secrets.token_bytes(32)
         encoded = base64.b64encode(secret)
         provision = {'key_name':NEW, 'secret_base64url':base64.urlsafe_b64encode(secret).rstrip(b'=').decode(),
-                     'zones':['example.test.']}
+                     'zones':[(VALIDATION_DOMAIN + '.')]}
         for name, data in [('replacement-transfer-key.b64', encoded+b'\n'),
                            ('replacement-transfer-key.json', json.dumps(provision).encode()+b'\n')]:
             descriptor = os.open(private/name, os.O_WRONLY|os.O_CREAT|os.O_EXCL, 0o600)
             with os.fdopen(descriptor, 'wb') as stream:
                 stream.write(data)
-        arguments = {'key_name':NEW, 'endpoint':'127.0.0.1:1053', 'zones':['example.test.'],
+        arguments = {'key_name':NEW, 'endpoint':'127.0.0.1:1053', 'zones':[(VALIDATION_DOMAIN + '.')],
                      'secret_sha256':hashlib.sha256(secret).hexdigest()}
         save('configuration', arguments)
         result = governor.propose([{'name':'adns_set_transfer', 'args':arguments}])

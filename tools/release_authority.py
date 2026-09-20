@@ -7,6 +7,7 @@ Signatures over canonical JSON {"svn": svn, "payload": payload} use raw 64-byte 
 base64url-encoded without padding.
 """
 import argparse
+from domain_registry import get
 import base64
 import datetime
 import hashlib
@@ -45,7 +46,7 @@ def mint_d(priv_path: Path, cert_path: Path, valid_years=10):
     
     now = datetime.datetime.now(datetime.timezone.utc)
     subject = x509.Name([
-        x509.NameAttribute(x509.NameOID.COMMON_NAME, "agent.hosting-release-authority")
+        x509.NameAttribute(x509.NameOID.COMMON_NAME, get("release_authority_common_name"))
     ])
     cert = (
         x509.CertificateBuilder()
@@ -73,7 +74,7 @@ def mint_d(priv_path: Path, cert_path: Path, valid_years=10):
     cert_path.write_bytes(cert_bytes)
     
     fp = base64.urlsafe_b64encode(hashlib.sha256(cert_der).digest()).decode().rstrip("=")
-    did = f"did:x509:0:sha256:{fp}::subject:CN:agent.hosting-release-authority"
+    did = get_did(cert_path)
     spki_pem = pub.public_bytes(
         serialization.Encoding.PEM,
         serialization.PublicFormat.SubjectPublicKeyInfo
@@ -92,7 +93,10 @@ def get_did(cert_path: Path):
     cert = x509.load_pem_x509_certificate(cert_path.read_bytes())
     cert_der = cert.public_bytes(serialization.Encoding.DER)
     fp = base64.urlsafe_b64encode(hashlib.sha256(cert_der).digest()).decode().rstrip("=")
-    return f"did:x509:0:sha256:{fp}::subject:CN:agent.hosting-release-authority"
+    common_names = cert.subject.get_attributes_for_oid(x509.NameOID.COMMON_NAME)
+    if len(common_names) != 1 or any(char in common_names[0].value for char in (":", "%", "\n", "\r")):
+        raise ValueError("release certificate must have one unambiguous common name")
+    return f"did:x509:0:sha256:{fp}::subject:CN:{common_names[0].value}"
 
 
 def sign_payload(priv_path: Path, cert_path: Path, svn: int, payload: dict):

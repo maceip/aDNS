@@ -1,4 +1,12 @@
 """Real three-node CCF failure test. Virtual nodes test consensus, not hardware."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import base64
 import datetime
 import hashlib
@@ -93,8 +101,8 @@ def exercise(work, config, public, internal, ca, propose, signer, template, prim
     def wire(name):return b"".join(bytes([len(label)])+label.encode() for label in name.rstrip(".").split("."))+b"\x00"
 
     def tsig_query(qtype):
-        packet=struct.pack("!6H",321,0,1,0,0,0)+wire("example.test.")+struct.pack("!HH",qtype,1)
-        clock=int(time.time()).to_bytes(6,"big");algorithm=wire("hmac-sha256.");name=wire("quorum.example.test.")
+        packet=struct.pack("!6H",321,0,1,0,0,0)+wire((VALIDATION_DOMAIN + '.'))+struct.pack("!HH",qtype,1)
+        clock=int(time.time()).to_bytes(6,"big");algorithm=wire("hmac-sha256.");name=wire(('quorum.' + VALIDATION_DOMAIN + '.'))
         variables=name+struct.pack("!HI",255,0)+algorithm+clock+struct.pack("!HHH",300,0,0)
         mac=hmac.new(bytes([71])*32,packet+variables,hashlib.sha256).digest()
         rdata=algorithm+clock+struct.pack("!HH",300,len(mac))+mac+struct.pack("!HHH",321,0,0)
@@ -126,7 +134,7 @@ def exercise(work, config, public, internal, ca, propose, signer, template, prim
             client=Client(base,ca)
             for _ in range(200):
                 try:
-                    status,_,value=client.request("GET","/app/zone/status?zone=example.test.")
+                    status,_,value=client.request("GET",('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
                     if status==200:break
                 except OSError:pass
                 time.sleep(.1)
@@ -135,16 +143,16 @@ def exercise(work, config, public, internal, ca, propose, signer, template, prim
         import importlib.util
         spec=importlib.util.spec_from_file_location("supervisor",pathlib.Path(__file__).resolve().parents[1]/"run.py")
         supervisor=importlib.util.module_from_spec(spec);spec.loader.exec_module(supervisor)
-        provision=json.dumps({"key_name":"quorum.example.test.","secret_base64url":b64(bytes([71])*32),"zones":["example.test."]}).encode()
+        provision=json.dumps({"key_name":('quorum.' + VALIDATION_DOMAIN + '.'),"secret_base64url":b64(bytes([71])*32),"zones":[(VALIDATION_DOMAIN + '.')]}).encode()
         assert not supervisor.provision_transfer_secret("127.0.0.1:8001",ca,provision)
-        propose([{"name":"adns_set_transfer","args":{"key_name":"quorum.example.test.","endpoint":"127.0.0.1:55353","zones":["example.test."],"secret_sha256":hashlib.sha256(bytes([71])*32).hexdigest()}}])
+        propose([{"name":"adns_set_transfer","args":{"key_name":('quorum.' + VALIDATION_DOMAIN + '.'),"endpoint":"127.0.0.1:55353","zones":[(VALIDATION_DOMAIN + '.')],"secret_sha256":hashlib.sha256(bytes([71])*32).hexdigest()}}])
         for _ in range(100):
-            status,_,result=internal.request("POST","/app/internal/transfer-key",{"key_name":"quorum.example.test.","secret_base64url":b64(bytes([71])*32),"zones":["example.test."]})
+            status,_,result=internal.request("POST","/app/internal/transfer-key",{"key_name":('quorum.' + VALIDATION_DOMAIN + '.'),"secret_base64url":b64(bytes([71])*32),"zones":[(VALIDATION_DOMAIN + '.')]})
             if status==200:break
             time.sleep(.05)
         assert status==200,(status,result)
         assert supervisor.provision_transfer_secret("127.0.0.1:8001",ca,provision)
-        status,_,original_ksk=public.request("GET","/app/governance/ksk-receipt?zone=example.test.")
+        status,_,original_ksk=public.request("GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'))
         assert status==200
         first=signed_action(8,"quorum-restored")
         rejected=signed_action(999,"authenticated-failure-quorum")
@@ -157,8 +165,8 @@ def exercise(work, config, public, internal, ca, propose, signer, template, prim
         # for global commitment; no tentative result/diagnostic may escape.
         reads=[
             Pending(public,"GET","/app/service/request?grant_id=smoke-operator&request_id="+first["action"]["request_id"]),
-            Pending(public,"GET","/app/zone/status?zone=example.test."),
-            Pending(public,"GET","/app/governance/ksk-receipt?zone=example.test."),
+            Pending(public,"GET",('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.')),
+            Pending(public,"GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.')),
             Pending(public,"POST","/app/dns-query",tsig_query(6),"application/dns-message"),
             Pending(internal,"POST","/app/internal/axfr",tsig_query(252),"application/dns-message"),
             Pending(internal,"POST","/app/internal/udp",tsig_query(6),"application/dns-message"),
@@ -209,13 +217,13 @@ def exercise(work, config, public, internal, ca, propose, signer, template, prim
         assert status==200 and missing["status"]=="pending" and missing["phase"]=="awaiting_committed_result",(status,missing)
         status,_,rolled_failure=replacement.request("GET","/app/service/request?grant_id=smoke-operator&request_id="+failed_rollback["action"]["request_id"])
         assert status==200 and rolled_failure["status"]=="pending" and "signed_message_digest" not in rolled_failure["latest_observation"],(status,rolled_failure)
-        status,_,state=replacement.request("GET","/app/zone/status?zone=example.test.")
+        status,_,state=replacement.request("GET",('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
         assert status==200 and state["committed_state"]["serial"]==9,(status,state)
         # The nonce consumed by the discarded write is still available in the
         # surviving history, and exact retry can commit once on the new leader.
         status,headers,result=replacement.request("POST","/app/zone/operator/records",rolled_back)
         assert status==200 and result["zone_serial"]==10 and headers.get("x-agentdns-commit-status")=="committed",(status,result)
-        status,_,recovered_ksk=replacement.request("GET","/app/governance/ksk-receipt?zone=example.test.")
+        status,_,recovered_ksk=replacement.request("GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'))
         assert status==200 and recovered_ksk["dnskey_rdata_hex"]==original_ksk["dnskey_rdata_hex"],"KSK changed across primary loss"
         import verify_ksk_receipt
         verify_ksk_receipt.verify(recovered_ksk,ca.read_bytes())

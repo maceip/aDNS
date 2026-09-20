@@ -8,6 +8,7 @@ its temporary PEM through anonymous Linux memfd descriptors only.
 from __future__ import annotations
 
 import base64
+from domain_registry import get
 from datetime import datetime, timedelta, timezone
 import hashlib
 import hmac
@@ -41,7 +42,7 @@ MAX_EVIDENCE_BYTES = 1024 * 1024
 MAX_SAFE_INTEGER = (1 << 53) - 1
 PROFILE = "azure-aci-snp"
 COLLECTOR = "/usr/local/bin/get-snp-report"
-TLS_SERVER_NAME = "agentdns-capture.test"
+TLS_SERVER_NAME = get("capture_tls_hostname")
 HTTP_DEADLINE_SECONDS = 30
 CCF_DEADLINE_SECONDS = 30
 

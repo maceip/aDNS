@@ -14,6 +14,11 @@ fn rr(name: &str, data: RData) -> ResourceRecord {
 }
 fn main() -> Result<(), Box<dyn Error>> {
     let mut rest = std::env::args().skip(1);
+    if rest.next().as_deref() != Some("--caa-issuer") {
+        return Err("usage: export --caa-issuer <registry-selected-domain> [output] [apex] [primary-ns] [extra-ns]".into());
+    }
+    let caa_issuer = rest.next().ok_or("missing --caa-issuer value")?;
+    let _: WireName = caa_issuer.parse()?;
     let path = PathBuf::from(
         rest.next()
             .unwrap_or_else(|| "/tmp/agentdns-wire-validation".into()),
@@ -78,7 +83,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             RData::Caa(CaaData {
                 flags: 0,
                 tag: b"issue".to_vec(),
-                value: b"letsencrypt.org".to_vec(),
+                value: caa_issuer.as_bytes().to_vec(),
             }),
         ),
     ]);

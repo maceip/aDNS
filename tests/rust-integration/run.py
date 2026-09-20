@@ -5,6 +5,15 @@ This starts only development MemoryStorage, never a production CCF service.
 Private fixtures remain in the disposable output directory; publish only the
 explicit public result/log allowlist documented in README.md.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
+from domain_registry import registry_path
 import argparse,hashlib,json,pathlib,platform,shutil,subprocess,tempfile,time,urllib.request
 
 REPO=pathlib.Path(__file__).resolve().parents[2]
@@ -107,12 +116,14 @@ def main():
             runtime=subprocess.Popen([str(run_binary),str(root/'config.json')],stdout=log,stderr=log)
         for _ in range(100):
             if runtime.poll() is not None:raise RuntimeError('runtime failed: '+(root/'runtime.log').read_text())
-            try:urllib.request.urlopen('http://127.0.0.1:18080/zone/status?zone=example.test.',timeout=1);break
+            try:urllib.request.urlopen(('http://127.0.0.1:18080/zone/status?zone=' + VALIDATION_DOMAIN + '.'),timeout=1);break
             except OSError:time.sleep(.1)
         else:raise RuntimeError('runtime did not become ready')
         host_gateway=['--add-host','host.docker.internal:host-gateway'] if platform.system()=='Linux' else []
         phase='container-startup'
-        container.start('-d',*host_gateway,'--publish','127.0.0.1:1053:1053/tcp','--publish','127.0.0.1:1053:1053/udp','--volume',str(root)+':/work','--volume',str(SUITE)+':/suite:ro','agentdns-mail-validation:local','python3','/suite/inside-start.py')
+        container.start('-d',*host_gateway,
+            '--volume',str(REPO/'tools')+':/tools:ro',
+            '--volume',str(registry_path())+':/etc/agent-hosting/domain-registry.json:ro','--publish','127.0.0.1:1053:1053/tcp','--publish','127.0.0.1:1053:1053/udp','--volume',str(root)+':/work','--volume',str(SUITE)+':/suite:ro','agentdns-mail-validation:local','python3','/suite/inside-start.py')
         phase='fixture-readiness'
         wait_container(root,name)
         phase='initial-dnssec'

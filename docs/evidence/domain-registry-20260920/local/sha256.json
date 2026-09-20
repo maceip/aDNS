@@ -1,0 +1,17 @@
+{
+  "alternate-registry.json": "a1a3bc78046384f414c88a22c9009e72c9b5ea9de3ba379697ca5ddb4ac0d8f1",
+  "domain-literal-audit.json": "65ffb4cc8ba8b91ab7f04211ca66694104d8a6965f4d3bf998e3cc367feebd40",
+  "domain-literal-tests.log": "34b16c3eadc2aa45643f3118007104f6b9eaef5026fd9079ab5e02248cb1ff98",
+  "exporter-build.log": "9a7cd6af73ee2a4a583f823d5967a99372e65b96dccc26f6e4e75fcd2ed935ce",
+  "exporter-nsec.zone": "da4ebb6114056bf9d0f10ad2079b8cb9e7ad11d37f643a105988333f599f3618",
+  "exporter-nsec3.zone": "b254d96b7107cc9704ba6a854cd985baa7868c29382a97ddd9497cc7251ccf5e",
+  "exporter-result.json": "7e80062afe07e66dfc26cb923b6b4bb66ee115997d4e7432a71c11641936cc08",
+  "integration-tests.log": "1649aad7a10f6d21dc3848ab31bfd2a330bd8a9cf410d563cb43631a38fbb86c",
+  "results.json": "0b5136787db71f5aa1c705cb18208fa5fb887873f3ab3718acc41a75626cf491",
+  "secondary-build.json": "fa87d107c86c76f83a660bdd234c08a66b79fb8e742982e684bf639a7670ba16",
+  "secondary-build.log": "96d15c269f9e653afb680c5e58fe4c39f0de85a449e528ada0e661a9dcb90153",
+  "secondary-runtime-check.py": "38d54f8b5fbf149b98823340ef0958d0f21b1a88b897c5de1db2d296fb4fc1a2",
+  "secondary-runtime.json": "4b14db35a541a17df7a8443e9c2e377b8e55db47a42744228132fb82bfd7aeef",
+  "supervisor-tests.log": "53d72c42e8e371cb3efc63013802345a121eda2f99476edd77747c69679c5963",
+  "tools-tests.log": "296697f7a77daf109f0da312dbe51fc611abc3ef002c4e563a18f6451c43b6c0"
+}

@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Launch authoritative BIND secondary and controlled TLS peers in one container."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_DOMAIN
 import json,pathlib,socket,subprocess,time
 from bind_workspace import workspace,launch
 
@@ -11,7 +19,7 @@ def main():
 include "{directory}/key.conf";
 options {{ directory "{directory}"; listen-on port 1053 {{ any; }}; listen-on-v6 {{ none; }}; recursion no; dnssec-validation no; pid-file "{directory}/named.pid"; session-keyfile "{directory}/session.key"; }};
 controls {{ }};
-zone "example.test" {{ type secondary; primaries {{ {master} port 18535 key "agentdns-transfer."; }}; file "example.test.zone"; masterfile-format text; allow-notify {{ key "agentdns-transfer."; }}; allow-transfer {{ key "agentdns-transfer."; }}; }};
+zone "{VALIDATION_DOMAIN}" {{ type secondary; primaries {{ {master} port 18535 key "{TRANSFER_KEY_NAME}"; }}; file "{VALIDATION_DOMAIN}.zone"; masterfile-format text; allow-notify {{ key "{TRANSFER_KEY_NAME}"; }}; allow-transfer {{ key "{TRANSFER_KEY_NAME}"; }}; }};
 '''
     children={}
     try:

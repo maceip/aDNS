@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Container-side phases for the isolated Virtual CCF+BIND runner only."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import CCF_AUDIENCE, VALIDATION_NS_HOSTNAME, VALIDATION_DOMAIN
 import argparse
 import base64
 import importlib.util
@@ -65,31 +73,31 @@ def main():
             'args':{'next_service_identity':certificate.read_text()}}])
         def rr(name, kind, value):
             return {'name':name, 'rclass':'In', 'rtype':kind, 'ttl':60, 'rdata':{kind:value}}
-        records = [rr('example.test.','Soa',{'mname':'ns.example.test.','rname':'hostmaster.example.test.',
+        records = [rr((VALIDATION_DOMAIN + '.'),'Soa',{'mname':(VALIDATION_NS_HOSTNAME + '.'),'rname':('hostmaster.' + VALIDATION_DOMAIN + '.'),
             'serial':7,'refresh':60,'retry':30,'expire':600,'minimum':60}),
-            rr('example.test.','Ns','ns.example.test.'), rr('ns.example.test.','A','192.0.2.1'),
-            rr('example.test.','Txt',[list(b'Virtual CCF governed initial test zone; no attested registration')])]
+            rr((VALIDATION_DOMAIN + '.'),'Ns',(VALIDATION_NS_HOSTNAME + '.')), rr((VALIDATION_NS_HOSTNAME + '.'),'A','192.0.2.1'),
+            rr((VALIDATION_DOMAIN + '.'),'Txt',[list(b'Virtual CCF governed initial test zone; no attested registration')])]
         for index in range(240):
-            records.append(rr(f'bulk-{index:04}.example.test.','Txt',[list((f'{index:04}:'+160*'x').encode())]))
-        metadata = {'id':1,'origin':'example.test.','serial':7,'base_records':records,'signed_records':[],
+            records.append(rr(f'bulk-{index:04}.{VALIDATION_DOMAIN}.','Txt',[list((f'{index:04}:'+160*'x').encode())]))
+        metadata = {'id':1,'origin':(VALIDATION_DOMAIN + '.'),'serial':7,'base_records':records,'signed_records':[],
             'signature_validity':600,'refresh_before':300,'last_signed_at':0,
             'earliest_signature_expiration':0,'maintenance_health':'initializing','ksk_dnskey_rdata':[]}
         bootstrap = json.loads((public/'bootstrap-summary.json').read_text())
         configured = governance.propose([
-            {'name':'adns_set_configuration','args':{'audience':'ccf://agentdns.test','epoch':1,'last_time':int(time.time())}},
+            {'name':'adns_set_configuration','args':{'audience':(CCF_AUDIENCE),'epoch':1,'last_time':int(time.time())}},
             {'name':'adns_create_zone','args':{'metadata':metadata}},
             {'name':'adns_set_transfer','args':{'key_name':bootstrap['transfer_key_name'],
-                'endpoint':'127.0.0.1:53','zones':['example.test.'],'secret_sha256':bootstrap['transfer_secret_sha256']}}])
+                'endpoint':'127.0.0.1:53','zones':[(VALIDATION_DOMAIN + '.')],'secret_sha256':bootstrap['transfer_secret_sha256']}}])
         result = {'platform':'Virtual; local CCF protocol test only','member_ack_tx_id':ack['confirmed_ccf_transaction_id'],
             'service_open_tx_id':opened['confirmed_ccf_transaction_id'],'configuration_tx_id':configured['confirmed_ccf_transaction_id'],
-            'zone':'example.test.','initial_serial':7,'base_records':len(records),
+            'zone':(VALIDATION_DOMAIN + '.'),'initial_serial':7,'base_records':len(records),
             'signature_validity_seconds':600,'refresh_before_seconds':300,
             'service_registration_created':False,'hardware_appraisal_claimed':False}
         (results/'governance.json').write_text(json.dumps(result,indent=2)+'\n')
     elif args.phase == 'ready':
         deadline = time.monotonic()+420
         while True:
-            response = client.request('GET','/app/zone/status?zone=example.test.')
+            response = client.request('GET',('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
             body = response.get('body')
             (results/'latest-readiness.json').write_text(json.dumps(response,indent=2)+'\n')
             if response['http_status']==200 and response['headers'].get('x-agentdns-commit-status')=='committed':
@@ -105,17 +113,17 @@ def main():
             time.sleep(2)
     else:
         import verify_ksk_receipt
-        response=client.request('GET','/app/governance/ksk-receipt?zone=example.test.')
+        response=client.request('GET',('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'))
         if response['headers'].get('x-agentdns-commit-status')!='committed':
             raise ValueError('KSK receipt response is not committed')
         client.require_committed(response)
         receipt=response['body']
-        verify_ksk_receipt.verify(receipt,certificate.read_bytes(),expected_zone='example.test.')
+        verify_ksk_receipt.verify(receipt,certificate.read_bytes(),expected_zone=(VALIDATION_DOMAIN + '.'))
         (results/'ksk-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
         rdata=bytes.fromhex(receipt['dnskey_rdata_hex'])
         text=f'{int.from_bytes(rdata[:2],"big")} {rdata[2]} {rdata[3]} "{base64.b64encode(rdata[4:]).decode()}"'
-        (results/'trust-anchor.conf').write_text(f'trust-anchors {{ "example.test." static-key {text}; }};\n')
-        (results/'trusted-dnskey.txt').write_text('example.test. IN DNSKEY '+text.replace('"','')+'\n')
+        (results/'trust-anchor.conf').write_text(f'trust-anchors {{ "{VALIDATION_DOMAIN}." static-key {text}; }};\n')
+        (results/'trusted-dnskey.txt').write_text((VALIDATION_DOMAIN + '. IN DNSKEY ')+text.replace('"','')+'\n')
         (results/'receipt-verification.json').write_text(json.dumps({'independently_verified':True,
             'externally_selected_identity':'public certificate copied from this controlled local Virtual node',
             'tx_id':receipt['tx_id'],'hardware_identity_established':False},indent=2)+'\n')

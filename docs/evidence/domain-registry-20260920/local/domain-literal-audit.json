@@ -1,0 +1,30 @@
+{
+  "checked_files": 200,
+  "excluded_files": {
+    "binary-assets": 22,
+    "documentation": 98,
+    "fixed-fixtures": 22,
+    "historical-evidence": 2047,
+    "registry-or-guard-configuration": 1,
+    "unit-tests": 36,
+    "vendored-code": 15
+  },
+  "managed_keys": [
+    "domain",
+    "public_dns_host",
+    "ccf_rpc_hostname",
+    "mail_relay_host",
+    "secondary_registry",
+    "anycast_validation_domain",
+    "ses_feedback_host",
+    "ses_spf_host",
+    "ses_dkim_primary_host",
+    "ses_dkim_secondary_host",
+    "ses_dkim_tertiary_host",
+    "caa_primary_domain",
+    "caa_secondary_domain"
+  ],
+  "violations": [],
+  "used_line_exceptions": 2,
+  "unused_line_exceptions": []
+}

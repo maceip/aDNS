@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "domain": "alternate.invalid",
+  "services": {
+    "operator": {
+      "label": "grafana",
+      "host": "monitor"
+    },
+    "mail": {
+      "label": "mail",
+      "host": "mail"
+    },
+    "apex": {
+      "label": "@",
+      "host": "mail"
+    },
+    "www": {
+      "label": "www",
+      "host": "mail"
+    }
+  },
+  "hosts": {
+    "monitor": {
+      "provider": "azure",
+      "resource_group": "siemxx",
+      "vm_name": "sidecar",
+      "location": "westus2",
+      "site_id": "azure-westus2"
+    },
+    "worker": {
+      "provider": "azure",
+      "resource_group": "siemxx",
+      "vm_name": "sidecar-cvm",
+      "location": "westus",
+      "site_id": "azure-westus",
+      "source_id": "westus-worker",
+      "source_label": "West US worker"
+    },
+    "mail": {
+      "provider": "azure",
+      "resource_group": "siemxx",
+      "vm_name": "coprocessor-cvm",
+      "location": "westus",
+      "site_id": "azure-westus"
+    }
+  },
+  "sites": [
+    {
+      "id": "azure-westus2",
+      "label": "Azure West US 2",
+      "latitude": 47.233,
+      "longitude": -119.852,
+      "role": "monitor"
+    },
+    {
+      "id": "azure-westus",
+      "label": "Azure West US",
+      "latitude": 37.783,
+      "longitude": -122.417,
+      "role": "worker"
+    }
+  ],
+  "naming": {
+    "mail_host": "${service_mail_host}",
+    "worker_host": "${worker_label}.${domain}",
+    "operator_host": "${service_operator_host}",
+    "website_host": "${service_apex_host}",
+    "www_host": "${service_www_host}",
+    "work_address": "work@${domain}",
+    "projector_address": "projector@${domain}",
+    "operator_email": "${work_address}",
+    "steward_email": "steward@${domain}",
+    "canary_address": "check@${domain}",
+    "public_dns_host": "secure.build",
+    "ccf_rpc_hostname": "ccf.alternate.test",
+    "ccf_rpc_url": "https://${ccf_rpc_hostname}:8000",
+    "ccf_audience": "ccf://${ccf_rpc_hostname}",
+    "validation_domain": "alternate.test",
+    "validation_zone": "${validation_domain}.",
+    "validation_authority_hostname": "${ccf_rpc_hostname}",
+    "capture_tls_hostname": "capture.alternate.test",
+    "transfer_key_name": "transfer.alternate.test.",
+    "secondary_registry": "agentdnsport20260913.azurecr.io",
+    "release_authority_common_name": "${domain}-release-authority",
+    "uq_eat_profile_url": "https://uq.secure.build/eat/v2",
+    "mail_relay_host": "mail.stare.network",
+    "native_relay_audience": "aamp://${native_relay_domain}/smtp-relay",
+    "doh_url": "https://cloudflare-dns.com/dns-query",
+    "native_relay_domain": "attestation.${domain}",
+    "native_relay_zone": "${native_relay_domain}.",
+    "acme_contact_email": "ops@${domain}",
+    "anycast_validation_domain": "anycast.test",
+    "anycast_validation_mail_host": "mx.${anycast_validation_domain}",
+    "ses_feedback_host": "feedback-smtp.eu-west-1.amazonses.com",
+    "ses_spf_host": "amazonses.com",
+    "ses_dkim_primary_host": "aktew5yblqncq22advqufoncin2rrxwc.dkim.amazonses.com",
+    "ses_dkim_secondary_host": "nei6mthpelhrbp2yhiza6vndx5wchjkd.dkim.amazonses.com",
+    "ses_dkim_tertiary_host": "zzcf2ams5tncllfpvpawbfnu533tihag.dkim.amazonses.com",
+    "caa_primary_domain": "ca.alternate.test",
+    "caa_secondary_domain": "sectigo.com",
+    "worker_label": "worker"
+  }
+}

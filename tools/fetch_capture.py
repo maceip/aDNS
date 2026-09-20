@@ -6,6 +6,7 @@ on the saved evidence/SPKI and a separately reviewed policy before trusting the
 saved certificate for subsequent requests. The actual TLS peer key must match.
 """
 import argparse
+from domain_registry import get
 import base64
 import hashlib
 import http.client
@@ -46,10 +47,10 @@ def main():
     try:
         raw = socket.create_connection((str(args.ip), args.port), timeout=15)
         raw.settimeout(max(0.001, deadline - time.monotonic()))
-        connection.sock = context.wrap_socket(raw, server_hostname="agentdns-capture.test")
+        connection.sock = context.wrap_socket(raw, server_hostname=get("capture_tls_hostname"))
         with SocketDeadline(connection.sock, deadline):
             peer = connection.sock.getpeercert(binary_form=True)
-            connection.request("GET", "/capture", headers={"Host": "agentdns-capture.test"})
+            connection.request("GET", "/capture", headers={"Host": get("capture_tls_hostname")})
             response = connection.getresponse()
             body = read_bounded(response, 2 * 1024 * 1024, deadline)
             if response.status != 200:

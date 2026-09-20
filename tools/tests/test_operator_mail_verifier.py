@@ -16,6 +16,13 @@ spec.loader.exec_module(verifier)
 
 
 class OperatorOwnerTests(unittest.TestCase):
+    def test_caa_matches_committed_rdata_instead_of_a_fixed_issuer(self):
+        records = list(dns.rrset.from_text("example.test.", 300, "IN", "CAA", '0 issue "ca.alternate.test"'))
+        self.assertTrue(verifier.caa_matches(records, '0 issue "ca.alternate.test"'))
+        for changed in ['0 issue "other.test"', '128 issue "ca.alternate.test"', '0 issuewild "ca.alternate.test"']:
+            with self.subTest(changed=changed):
+                self.assertFalse(verifier.caa_matches(records, changed))
+
     def test_alias_target_with_matching_bytes_does_not_prove_governed_owner(self):
         owner = "selector1._domainkey.example.test."
         response = dns.message.make_response(dns.message.make_query(owner, "TXT"))

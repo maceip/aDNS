@@ -88,7 +88,8 @@ Additional real TLS tests trickle both incoming request headers/body and outgoin
 ## Local validation and remaining evidence
 
 ```sh
-docker build --platform linux/amd64 -f containers/capture.Dockerfile -t agentdns-capture:local .
+python3 tools/domain_registry.py snapshot .domain-registry/topology.json
+docker build --platform linux/amd64 --build-context domain-registry=.domain-registry -f containers/capture.Dockerfile -t agentdns-capture:local .
 docker run --rm --platform linux/amd64 -v "$PWD:/work" --entrypoint python3 agentdns-capture:local -m unittest discover -s /work/tools/tests -p test_capture_aci.py -v
 cargo run -p adns-attest --example appraise -- azure-aci-snp evidence.cose spki.der governed-policy.json UNIX_TIME
 ```

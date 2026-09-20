@@ -1,0 +1,10 @@
+{
+  "zone": "alternate.test",
+  "key_name": "transfer.alternate.test.",
+  "named_checkconf": "passed",
+  "registry_sha256": "a1a3bc78046384f414c88a22c9009e72c9b5ea9de3ba379697ca5ddb4ac0d8f1",
+  "image_files_sha256": {
+    "/app/secondary_aci.py": "6849ce9815ca3db7cdfb35f50cf022f0e8a2c2d7e63cce02eec99efe59ef9a4d",
+    "/app/domain_registry.py": "15e0e27ae77e5a89cbd950440574a1c834e33579f6968c4af06006de1404796e"
+  }
+}

@@ -34,7 +34,8 @@ docker run --rm --platform linux/amd64 \
   -v "$PWD:/src:ro" -v agentdns-ccf-build:/build -v agentdns-ccf-cargo:/root/.cargo \
   agentdns-ccf-toolchain:7.0.15 sh -c \
   'cmake -S /src/ccf -B /build -GNinja -DCMAKE_BUILD_TYPE=Release && cmake --build /build -j4 && python3 /src/ccf/tests/live_smoke.py'
-docker build --platform linux/amd64 -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:7.0.15 .
+python3 tools/domain_registry.py snapshot .domain-registry/topology.json
+docker build --platform linux/amd64 --build-context domain-registry=.domain-registry -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:7.0.15 .
 ```
 
 The smoke test creates a real CCF network, opens governance, installs an Owner Grant, initialises a zone, submits a genuinely signed operator action and verifies original transaction reconciliation. It checks public/internal interface isolation, content types, genuine KSK receipts and tampered owner/RDATA/proof/transaction negatives, and both DoH methods. Public evidence is in `docs/evidence/ccf`; member keys, node state and the private ledger remain in the test volume and are not exported.

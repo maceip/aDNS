@@ -6,6 +6,7 @@ identity is used; registry tokens stay in memory or a temporary Docker config.
 This frontend receives signed zones and never receives DNSSEC private keys.
 """
 import argparse
+from domain_registry import get
 import base64
 import hashlib
 import http.client
@@ -21,7 +22,7 @@ import threading
 import time
 import urllib.parse
 
-REGISTRY = "agentdnsport20260913.azurecr.io"
+REGISTRY = get("secondary_registry")
 IMAGE = REGISTRY + "/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861"
 NAME = "agentdns-secondary"
 ROOT = Path("/opt/agentdns-secondary")
@@ -115,11 +116,11 @@ options {{
     session-keyfile "/run/agentdns/session.key";
 }};
 controls {{ }};
-zone "example.test" {{
+zone "{get("validation_domain")}" {{
     type secondary;
-    primaries {{ {primary} port 5353 key "agentdns-transfer."; }};
-    allow-notify {{ key "agentdns-transfer."; }};
-    file "example.test.zone";
+    primaries {{ {primary} port 5353 key "{get("transfer_key_name")}"; }};
+    allow-notify {{ key "{get("transfer_key_name")}"; }};
+    file "{get("validation_domain")}.zone";
     masterfile-format text;
 }};
 '''
@@ -157,7 +158,7 @@ def main():
         path = ROOT / name
         path.mkdir(mode=0o700, exist_ok=True)
         os.chown(path, uid, gid)
-    for name, content in (("named.conf", configuration(args.primary)), ("transfer.key", 'key "agentdns-transfer." { algorithm hmac-sha256; secret "' + secret + '"; };\n')):
+    for name, content in (("named.conf", configuration(args.primary)), ("transfer.key", 'key "' + get('transfer_key_name') + '" { algorithm hmac-sha256; secret "' + secret + '"; };\n')):
         path = ROOT / "config" / name
         with path.open("x") as stream:
             stream.write(content)

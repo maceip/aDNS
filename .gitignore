@@ -39,6 +39,7 @@ __pycache__
 build
 build_*
 !tools/build_aci_template.py
+!tools/build_images.py
 vbuild*
 logs
 node_modules
@@ -52,3 +53,6 @@ scripts/env
 /.validation/
 
 /tests/leakcheck/target/
+
+# Derived snapshot of the external authoritative hosting topology.
+/.domain-registry/

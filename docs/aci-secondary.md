@@ -12,7 +12,8 @@ Supply exactly one of the following through a secure ACI environment value or mo
 The entrypoint removes secret environment fields before starting BIND, disables core dumps, and writes a mode0600 configuration owned by the unprivileged `bind` user on the container's ephemeral filesystem. BIND drops privileges to that user. Configuration fixes authoritative service on53, disables recursion, accepts NOTIFY only authenticated by the governed TSIG, and prohibits downstream AXFR. There is no control-channel listener, zone-update API, image-baked key, inline signing or DNSSEC signing policy.
 
 ```sh
-docker build --platform linux/amd64 -f containers/secondary.Dockerfile -t agentdns-secondary:local .
+python3 tools/domain_registry.py snapshot .domain-registry/topology.json
+docker build --platform linux/amd64 --build-context domain-registry=.domain-registry -f containers/secondary.Dockerfile -t agentdns-secondary:local .
 docker run --rm --platform linux/amd64 -v "$PWD:/work" --entrypoint python3 agentdns-secondary:local -m unittest discover -s /work/tools/tests -p test_secondary_aci.py -v
 ```
 

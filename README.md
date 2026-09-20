@@ -10,6 +10,34 @@ Every client and autonomous agent gets cacheable, hardware-rooted endpoint disco
 
 ---
 
+## Shared domain registry
+
+Operational DNS names come from `agent-hosting/infra/production/topology.json`.
+Set `AH_DOMAIN_REGISTRY` to that file for local work, or fetch the coordinated
+revision declared in `domain-registry.source.json`:
+
+```sh
+python3 tools/domain_registry.py fetch
+python3 tools/domain_registry.py get ccf_rpc_url
+python3 tools/build_images.py secondary --tag agentdns-secondary:local --provenance .validation/secondary-build.json
+```
+
+The loader fails if the selected registry is missing or invalid. Runtime images
+receive a snapshot through a BuildKit named context and record its SHA256;
+there is no repository-owned fallback list of names. For direct Docker builds,
+run `python3 tools/domain_registry.py snapshot .domain-registry/topology.json`
+and pass `--build-context domain-registry=.domain-registry`. ACI preparation
+includes the exact registry bytes in its pinned bootstrap manifest and mounts
+that same public snapshot into the secondary. Regenerate control material when
+the registry changes; template checks reject drift. Join targets use configured
+DNS resolution; the supervisor no longer writes a retired seed into `/etc/hosts`.
+
+Executable acceptance harnesses derive their names from this store and freeze
+its bytes with their source snapshot. Historical evidence, static wire and
+cryptographic test vectors, vendor endpoints, and versioned protocol identifiers
+retain their original values. A registry edit does not change committed CCF
+governance or the identity of an existing authority certificate.
+
 ## The Pitch: Why Hardware-Attested DNS?
 
 When coordinating fleets of autonomous AI agents, microservices, or secure workloads, clients must verify two things before transacting:

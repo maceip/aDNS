@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Stock-library TSIG replacement continuity and revoked-key denial checks."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_DOMAIN
 import argparse
 import base64
 import ipaddress
@@ -16,9 +24,9 @@ import dns.rcode
 import dns.tsigkeyring
 import dns.zone
 
-OLD = 'agentdns-transfer.'
+OLD = (TRANSFER_KEY_NAME)
 NEW = 'agentdns-transfer-replacement.'
-ZONE = 'example.test.'
+ZONE = (VALIDATION_DOMAIN + '.')
 
 
 def main():

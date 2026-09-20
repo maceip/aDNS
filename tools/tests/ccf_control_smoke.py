@@ -4,6 +4,14 @@
 Run in the pinned toolchain with /src read-only and an existing /build binary.
 No Virtual quote is accepted as hardware evidence. All state is disposable.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import CCF_RPC_HOSTNAME, VALIDATION_DOMAIN
 import json
 import importlib.util
 import os
@@ -31,7 +39,7 @@ def main():
     config['network']['node_to_node_interface']['bind_address'] = '127.0.0.1:18002'
     for name, port in [('primary_rpc_interface',18000),('agentdns-internal',18001)]:
         config['network']['rpc_interfaces'][name]['bind_address'] = f'127.0.0.1:{port}'
-    config['network']['rpc_interfaces']['primary_rpc_interface']['published_address'] = 'agentdns.test:18000'
+    config['network']['rpc_interfaces']['primary_rpc_interface']['published_address'] = (CCF_RPC_HOSTNAME + ':18000')
     config['command']['start']['constitution_files'] = [str(constitution)]
     config['command']['start']['members'] = [{'certificate_file':str(public/'member0_cert.pem'),'encryption_public_key_file':str(public/'member0_enc_pubk.pem')}]
     (work/'node.json').write_text(json.dumps(config))
@@ -42,7 +50,7 @@ def main():
                 if process.poll() is not None: raise RuntimeError((work/'node.log').read_text())
                 if (work/'service_cert.pem').exists(): break
                 time.sleep(.1)
-            client = ccf_control.Client('https://agentdns.test:18000','127.0.0.1',work/'service_cert.pem')
+            client = ccf_control.Client(('https://' + CCF_RPC_HOSTNAME + ':18000'),'127.0.0.1',work/'service_cert.pem')
             for _ in range(100):
                 try:
                     if client.request('GET','/node/state')['http_status']==200: break
@@ -65,7 +73,7 @@ def main():
             provision=(private/'transfer-key.json').read_bytes()
             assert not supervisor.provision_transfer_secret('127.0.0.1:18001',work/'service_cert.pem',provision)
             summary=json.loads((public/'bootstrap-summary.json').read_text())
-            transfer=gov.propose([{'name':'adns_set_transfer','args':{'key_name':summary['transfer_key_name'],'endpoint':summary['secondary_endpoint'],'zones':['example.test.'],'secret_sha256':summary['transfer_secret_sha256']}}])
+            transfer=gov.propose([{'name':'adns_set_transfer','args':{'key_name':summary['transfer_key_name'],'endpoint':summary['secondary_endpoint'],'zones':[(VALIDATION_DOMAIN + '.')],'secret_sha256':summary['transfer_secret_sha256']}}])
             assert transfer['body']['proposalState']=='Accepted'
             assert supervisor.provision_transfer_secret('127.0.0.1:18001',work/'service_cert.pem',provision)
             assert supervisor.provision_transfer_secret('127.0.0.1:18001',work/'service_cert.pem',provision)
@@ -90,18 +98,18 @@ def main():
             assert revoked['body']['proposalState']=='Accepted'
             revoked_provision_rejected()
             gov.propose([{'name':'adns_revoke_transfer','args':{'key_name':summary['transfer_key_name']}}])
-            rejected([{'name':'adns_set_transfer','args':{'key_name':summary['transfer_key_name'],'endpoint':summary['secondary_endpoint'],'zones':['example.test.'],'secret_sha256':summary['transfer_secret_sha256']}}])
+            rejected([{'name':'adns_set_transfer','args':{'key_name':summary['transfer_key_name'],'endpoint':summary['secondary_endpoint'],'zones':[(VALIDATION_DOMAIN + '.')],'secret_sha256':summary['transfer_secret_sha256']}}])
             revoked_provision_rejected()
             import base64
             replacement_secret=os.urandom(32)
-            replacement_name='replacement.example.test.'
-            replacement=gov.propose([{'name':'adns_set_transfer','args':{'key_name':replacement_name,'endpoint':summary['secondary_endpoint'],'zones':['example.test.'],'secret_sha256':hashlib.sha256(replacement_secret).hexdigest()}}])
-            replacement_body=json.dumps({'key_name':replacement_name,'zones':['example.test.'],'secret_base64url':base64.urlsafe_b64encode(replacement_secret).decode().rstrip('=')}).encode()
+            replacement_name=('replacement.' + VALIDATION_DOMAIN + '.')
+            replacement=gov.propose([{'name':'adns_set_transfer','args':{'key_name':replacement_name,'endpoint':summary['secondary_endpoint'],'zones':[(VALIDATION_DOMAIN + '.')],'secret_sha256':hashlib.sha256(replacement_secret).hexdigest()}}])
+            replacement_body=json.dumps({'key_name':replacement_name,'zones':[(VALIDATION_DOMAIN + '.')],'secret_base64url':base64.urlsafe_b64encode(replacement_secret).decode().rstrip('=')}).encode()
             assert supervisor.provision_transfer_secret('127.0.0.1:18001',work/'service_cert.pem',replacement_body)
 
             policy={'policy_id':[1]*32,'release_id':'control-smoke','active_profiles':['azure-aci-snp'],'valid_from':1,'valid_until':2000000000,'max_appraisal_lifetime':600,'minimum_tcb':{},'approved_measurements':['ab'*48],'approved_host_data':['cd'*32],'uvm':[]}
             def policy_action(value):
-                return [{'name':'adns_set_appraisal_policy','args':{'zone':'example.test.','policy':value}}]
+                return [{'name':'adns_set_appraisal_policy','args':{'zone':(VALIDATION_DOMAIN + '.'),'policy':value}}]
             installed=gov.propose(policy_action(policy))
             repeated=gov.propose(policy_action(dict(reversed(list(policy.items())))))
             changed={**policy,'approved_host_data':['ef'*32]}
