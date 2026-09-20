@@ -7,6 +7,7 @@ and compare the generated policy's commands and layer counts. Verity roots are
 not OCI digests: this guard does not independently recompute dm-verity trees.
 """
 import argparse
+from domain_registry import get, registry_sha256
 import base64
 import hashlib
 import json
@@ -237,6 +238,10 @@ def check(template_path, archives, mappings):
     for name, data in public.items():
         if name != "manifest.json" and sha(data) != manifest["/config/"+name]:
             raise ValueError("embedded public file differs from manifest")
+    if sha(public["domain-registry.json"]) != registry_sha256():
+        raise ValueError("embedded domain registry differs from selected shared store")
+    if {"name": "public-config", "mountPath": "/etc/agent-hosting", "readOnly": True} not in containers["secondary"].get("volumeMounts", []):
+        raise ValueError("secondary must use the same read-only bootstrap domain registry")
     command = containers["primary"]["command"]
     if command != ["python3", "/opt/agentdns/run.py", "--config", "/config/node.json", "--config-manifest", "/config/manifest.json", "--config-manifest-sha256", sha(public["manifest.json"]), "--provision-tsig-file", "/secrets/transfer-key.json"]:
         raise ValueError("primary launch command does not bind the bootstrap manifest")
@@ -244,7 +249,7 @@ def check(template_path, archives, mappings):
     if node.get("attestation") != native_attestation_configuration():
         raise ValueError("native ACI bootstrap requires explicit SNP collateral and UVM configuration")
     validate_native_internal_readiness(node)
-    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != "agentdns.test:8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:agentdns.test" not in node["node_certificate"]["subject_alt_names"]:
+    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != get("ccf_rpc_hostname") + ":8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:" + get("ccf_rpc_hostname") not in node["node_certificate"]["subject_alt_names"]:
         raise ValueError("public TLS name or internal interface differs")
     otel=validate_otel(template,containers,volumes,policies)
     if volumes["transfer-secret"]["secret"] != {"transfer-key.json":"[base64(parameters('transferKeyJson'))]"} or containers["secondary"]["environmentVariables"] != [{"name":"AGENTDNS_TRANSFER_KEY_B64","secureValue":"[parameters('transferKeyB64')]"}]:
@@ -254,6 +259,7 @@ def check(template_path, archives, mappings):
         raise ValueError("transfer environment policy must constrain a key pattern, never embed a literal key")
     return {"template_sha256": sha(raw), "cce_policy_sha256": sha(policy),
             "bootstrap_manifest_sha256": sha(public["manifest.json"]),
+            "domain_registry_sha256": sha(public["domain-registry.json"]),
             "containers": summaries, "pause_layer_count": 1,
             "telemetry":otel,
             "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",

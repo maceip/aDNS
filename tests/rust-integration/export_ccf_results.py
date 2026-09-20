@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Export only explicitly named public CCF-runner evidence; never private work."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_NS_HOSTNAME, VALIDATION_DOMAIN
 import argparse
 import errno
 import hashlib
@@ -28,10 +36,10 @@ PUBLIC_FILES = (
     'operator/summary.json', 'operator/grant.json', 'operator/expected-records.json',
     'operator/signed-request.json', 'operator/result.json', 'operator/retry.json',
     'operator/der-rejection.json', 'operator/conflict.json',
-    'operator-frontend/results.json', 'operator-frontend/example.test.TXT.log',
-    'operator-frontend/selector1._domainkey.example.test.TXT.log',
-    'operator-frontend/_dmarc.example.test.TXT.log',
-    'operator-frontend/_smtp._tls.example.test.TXT.log', 'operator-frontend/example.test.CAA.log',
+    'operator-frontend/results.json', ('operator-frontend/' + VALIDATION_DOMAIN + '.TXT.log'),
+    ('operator-frontend/selector1._domainkey.' + VALIDATION_DOMAIN + '.TXT.log'),
+    ('operator-frontend/_dmarc.' + VALIDATION_DOMAIN + '.TXT.log'),
+    ('operator-frontend/_smtp._tls.' + VALIDATION_DOMAIN + '.TXT.log'), ('operator-frontend/' + VALIDATION_DOMAIN + '.CAA.log'),
     'reconciliation-phase.log', 'ready-after-reconciliation-phase.log', 'reconciliation-frontend-phase.log',
     'reconciliation/http-history.json', 'reconciliation/grant.json', 'reconciliation/grant-created.json',
     'reconciliation/state-before.json', 'reconciliation/nonce.json', 'reconciliation/signed-request.json',
@@ -41,7 +49,7 @@ PUBLIC_FILES = (
     'reconciliation/grant-restored.json', 'reconciliation/committed-retry.json',
     'reconciliation/committed-reconciliation.json', 'reconciliation/identical-retry.json',
     'reconciliation/expected-records.json', 'reconciliation/summary.json',
-    'reconciliation-frontend/results.json', 'reconciliation-frontend/reconcile.example.test.TXT.log',
+    'reconciliation-frontend/results.json', ('reconciliation-frontend/reconcile.' + VALIDATION_DOMAIN + '.TXT.log'),
     'reconciliation-frontend/response.txt',
     'rotation-create-phase.log', 'rotation-provision-phase.log', 'rotation-revoke-phase.log',
     'rotation-work-phase.log', 'rotation-before-phase.log', 'rotation-after-phase.log',
@@ -55,8 +63,8 @@ PUBLIC_FILES = (
     'rotation/after/ldns-verify-zone.log', 'rotation/after/negative-observations.json',
 )
 TRANSFER_FILES = ('results.json', 'transferred.zone', 'ldns-verify-zone.log',
-                  'delv-example.test.SOA.log', 'delv-example.test.DNSKEY.log',
-                  'delv-example.test.TXT.log', 'delv-definitely-absent-agentdns.example.test.A.log')
+                  ('delv-' + VALIDATION_DOMAIN + '.SOA.log'), ('delv-' + VALIDATION_DOMAIN + '.DNSKEY.log'),
+                  ('delv-' + VALIDATION_DOMAIN + '.TXT.log'), ('delv-definitely-absent-agentd' + VALIDATION_NS_HOSTNAME + '.A.log'))
 
 
 def read_public_artifact(root, name, *, max_bytes=64*1024*1024):

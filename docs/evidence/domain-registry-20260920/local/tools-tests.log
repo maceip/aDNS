@@ -1,0 +1,184 @@
+test_absent_data_is_unavailable (test_aci_metrics.AciMetricsTests.test_absent_data_is_unavailable) ... ok
+test_actual_zero_is_preserved_missing_points_are_not_zero (test_aci_metrics.AciMetricsTests.test_actual_zero_is_preserved_missing_points_are_not_zero) ... ok
+test_missing_container_or_changed_units_are_rejected (test_aci_metrics.AciMetricsTests.test_missing_container_or_changed_units_are_rejected) ... ok
+test_aci_port_numbers_unique_across_protocols_and_containers (test_aci_preflight.ArchivePreflightTests.test_aci_port_numbers_unique_across_protocols_and_containers) ... ok
+test_combined_archive_and_wrong_platform_manifest_rejected (test_aci_preflight.ArchivePreflightTests.test_combined_archive_and_wrong_platform_manifest_rejected) ... ok
+test_distinct_single_image_archive_and_actual_layer_digest (test_aci_preflight.ArchivePreflightTests.test_distinct_single_image_archive_and_actual_layer_digest) ... ok
+test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes (test_aci_preflight.ArchivePreflightTests.test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes) ... ok
+test_two_names_cannot_alias_one_archive_even_via_hardlink (test_aci_preflight.ArchivePreflightTests.test_two_names_cannot_alias_one_archive_even_via_hardlink) ... ok
+test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected (test_aci_preflight.TelemetryPreflightTests.test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected) ... ok
+test_optional_public_only_preflight_and_ordinary_template (test_aci_preflight.TelemetryPreflightTests.test_optional_public_only_preflight_and_ordinary_template) ... ok
+test_changed_peer_rejected_before_any_http_request (test_audit_ccf_node.BootstrapTests.test_changed_peer_rejected_before_any_http_request) ... ok
+test_failed_native_audit_never_fetches_or_trusts_service_certificate (test_audit_ccf_node.BootstrapTests.test_failed_native_audit_never_fetches_or_trusts_service_certificate) ... ok
+test_matching_peer_allows_only_public_get_and_bounded_response (test_audit_ccf_node.BootstrapTests.test_matching_peer_allows_only_public_get_and_bounded_response) ... ok
+test_tls_handshake_shares_the_absolute_bootstrap_deadline (test_audit_ccf_node.BootstrapTests.test_tls_handshake_shares_the_absolute_bootstrap_deadline) ... ok
+test_trickled_headers_and_body_cannot_hold_bootstrap_open (test_audit_ccf_node.BootstrapTests.test_trickled_headers_and_body_cannot_hold_bootstrap_open) ... ok
+test_ccf_trickled_response_headers_and_body_hit_absolute_deadline (test_capture_aci.CaptureTests.test_ccf_trickled_response_headers_and_body_hit_absolute_deadline) ... ok
+test_config_cannot_change_zone_operation_or_destination (test_capture_aci.CaptureTests.test_config_cannot_change_zone_operation_or_destination) ... ok
+test_https_api_exposes_public_capture_and_only_fixed_signing (test_capture_aci.CaptureTests.test_https_api_exposes_public_capture_and_only_fixed_signing) ... capture-http "GET /capture HTTP/1.1" 200 -
+capture-http "GET /cert.pem HTTP/1.1" 200 -
+capture-http "GET /cert.der HTTP/1.1" 200 -
+capture-http "POST /signed-request HTTP/1.1" 401 -
+capture-http "POST /signed-request HTTP/1.1" 400 -
+capture-http "POST /signed-request HTTP/1.1" 200 -
+capture-http "POST /lifecycle/action HTTP/1.1" 401 -
+capture-http "POST /lifecycle/action HTTP/1.1" 200 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 401 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 400 -
+capture-http "POST /lifecycle/signed-request HTTP/1.1" 200 -
+ok
+test_https_trickled_headers_and_body_hit_absolute_deadline (test_capture_aci.CaptureTests.test_https_trickled_headers_and_body_hit_absolute_deadline) ... capture-http "GET /health HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59928)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/src/tools/capture_aci.py", line 743, in do_GET
+    self.send(200, {"status": "captured_not_appraised", "profile": PROFILE})
+  File "/src/tools/capture_aci.py", line 737, in send
+    self.end_headers()
+  File "/usr/lib/python3.12/http/server.py", line 538, in end_headers
+    self.flush_headers()
+  File "/usr/lib/python3.12/http/server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+  File "/usr/lib/python3.12/ssl.py", line 1214, in sendall
+    return super().sendall(data, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+capture-http "GET /health HTTP/1.1" 200 -
+capture-http "POST /signed-request HTTP/1.1" 400 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59948)
+Traceback (most recent call last):
+  File "/src/tools/capture_aci.py", line 776, in do_POST
+    raise ValueError("truncated request")
+ValueError: truncated request
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/src/tools/capture_aci.py", line 788, in do_POST
+    self.send(400, {"error": "INVALID_REQUEST", "detail": str(error)})
+  File "/src/tools/capture_aci.py", line 737, in send
+    self.end_headers()
+  File "/usr/lib/python3.12/http/server.py", line 538, in end_headers
+    self.flush_headers()
+  File "/usr/lib/python3.12/http/server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+  File "/usr/lib/python3.12/ssl.py", line 1214, in sendall
+    return super().sendall(data, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+capture-http "GET /health HTTP/1.1" 200 -
+ok
+test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox (test_capture_aci.CaptureTests.test_implicit_mail_tls_binds_key_checks_hostname_and_has_no_mailbox) ... ok
+test_json_rejects_duplicate_keys_and_noncanonical_types (test_capture_aci.CaptureTests.test_json_rejects_duplicate_keys_and_noncanonical_types) ... ok
+test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration (test_capture_aci.CaptureTests.test_lifecycle_renew_and_withdraw_are_bound_to_issued_registration) ... ok
+test_lifecycle_scope_overrides_and_unknown_fields_are_rejected (test_capture_aci.CaptureTests.test_lifecycle_scope_overrides_and_unknown_fields_are_rejected) ... ok
+test_mail_fixture_rejects_oversized_protocol_lines (test_capture_aci.CaptureTests.test_mail_fixture_rejects_oversized_protocol_lines) ... ok
+test_native_collector_rejects_wrong_binding_or_diagnostics (test_capture_aci.CaptureTests.test_native_collector_rejects_wrong_binding_or_diagnostics) ... ok
+test_outer_cose_signature_and_exact_key_binding (test_capture_aci.CaptureTests.test_outer_cose_signature_and_exact_key_binding) ... ok
+test_prepared_lifecycle_action_memory_is_bounded (test_capture_aci.CaptureTests.test_prepared_lifecycle_action_memory_is_bounded) ... ok
+test_signed_request_fixed_scope_and_signature (test_capture_aci.CaptureTests.test_signed_request_fixed_scope_and_signature) ... ok
+test_starttls_smtp_uses_attested_key_and_refuses_mail (test_capture_aci.CaptureTests.test_starttls_smtp_uses_attested_key_and_refuses_mail) ... ok
+test_tls_anonymous_descriptors_close_after_success_and_failure (test_capture_aci.CaptureTests.test_tls_anonymous_descriptors_close_after_success_and_failure) ... ok
+test_tls_certificate_uses_exact_attested_key_and_bounded_validity (test_capture_aci.CaptureTests.test_tls_certificate_uses_exact_attested_key_and_bounded_validity) ... ok
+test_two_acme_orders_and_only_issued_challenge_deletion (test_capture_aci.CaptureTests.test_two_acme_orders_and_only_issued_challenge_deletion) ... ok
+test_uncertain_submission_retries_identical_request (test_capture_aci.CaptureTests.test_uncertain_submission_retries_identical_request) ... ok
+test_actual_result_preserved_only_after_exact_reconciliation (test_ccf_measurements.MeasurementTests.test_actual_result_preserved_only_after_exact_reconciliation) ... ok
+test_duplicate_nonfinite_and_nonobject_json_rejected (test_ccf_measurements.MeasurementTests.test_duplicate_nonfinite_and_nonobject_json_rejected) ... ok
+test_http_success_requires_exact_global_commit_identity (test_ccf_measurements.MeasurementTests.test_http_success_requires_exact_global_commit_identity) ... ok
+test_only_exact_signing_diagnostic_events_are_measured (test_ccf_measurements.MeasurementTests.test_only_exact_signing_diagnostic_events_are_measured) ... ok
+test_duplicate_commitment_headers_and_oversized_body_rejected (test_ccf_measurements.MeasurementTlsTests.test_duplicate_commitment_headers_and_oversized_body_rejected) ... ok
+test_numeric_override_preserves_dns_sni_host_and_certificate_checks (test_ccf_measurements.MeasurementTlsTests.test_numeric_override_preserves_dns_sni_host_and_certificate_checks) ... ok
+test_real_tls_header_and_body_trickle_hit_absolute_deadline (test_ccf_measurements.MeasurementTlsTests.test_real_tls_header_and_body_trickle_hit_absolute_deadline) ... ok
+test_codeql_covers_current_production_languages_without_legacy_sdk (test_ci_workflows.WorkflowPolicyTests.test_codeql_covers_current_production_languages_without_legacy_sdk) ... ok
+test_public_artifact_patterns_exclude_private_fixture_material (test_ci_workflows.WorkflowPolicyTests.test_public_artifact_patterns_exclude_private_fixture_material) ... ok
+test_untrusted_changes_run_on_hosted_workers_with_immutable_actions (test_ci_workflows.WorkflowPolicyTests.test_untrusted_changes_run_on_hosted_workers_with_immutable_actions) ... ok
+test_digest_construction_matches_rust_vector (test_claims_receipt.ClaimsReceiptChecks.test_digest_construction_matches_rust_vector) ... ok
+test_policy_and_anchors_documents_use_claims_field (test_claims_receipt.ClaimsReceiptChecks.test_policy_and_anchors_documents_use_claims_field) ... ok
+test_tampered_claims_or_wrong_type_or_wrong_identity_fail (test_claims_receipt.ClaimsReceiptChecks.test_tampered_claims_or_wrong_type_or_wrong_identity_fail) ... ok
+test_valid_anchor_receipt (test_claims_receipt.ClaimsReceiptChecks.test_valid_anchor_receipt) ... ok
+test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected (test_control_tools.BootstrapTemplateTests.test_changed_manifest_input_and_mismatched_transfer_pair_are_rejected) ... ok
+test_local_virtual_control_omits_native_attestation_but_cannot_deploy_as_aci (test_control_tools.BootstrapTemplateTests.test_local_virtual_control_omits_native_attestation_but_cannot_deploy_as_aci) ... ok
+test_optional_otel_preserves_bootstrap_and_separates_secret_from_public_policy (test_control_tools.BootstrapTemplateTests.test_optional_otel_preserves_bootstrap_and_separates_secret_from_public_policy) ... ok
+test_otel_endpoint_labels_and_public_ca_are_strict (test_control_tools.BootstrapTemplateTests.test_otel_endpoint_labels_and_public_ca_are_strict) ... ok
+test_otel_private_configuration_rejects_wrong_endpoint_auth_and_permissions_without_values (test_control_tools.BootstrapTemplateTests.test_otel_private_configuration_rejects_wrong_endpoint_auth_and_permissions_without_values) ... ok
+test_prepared_files_are_pinned_and_private_files_are_owner_only (test_control_tools.BootstrapTemplateTests.test_prepared_files_are_pinned_and_private_files_are_owner_only) ... ok
+test_public_template_contains_only_secure_parameter_references (test_control_tools.BootstrapTemplateTests.test_public_template_contains_only_secure_parameter_references) ... ok
+test_invalid_mismatched_and_malformed_status_are_not_commitment (test_control_tools.CommitmentTests.test_invalid_mismatched_and_malformed_status_are_not_commitment) ... ok
+test_noncanonical_txids_and_conflicting_application_identity_are_rejected (test_control_tools.CommitmentTests.test_noncanonical_txids_and_conflicting_application_identity_are_rejected) ... ok
+test_pending_status_cannot_extend_polling_deadline (test_control_tools.CommitmentTests.test_pending_status_cannot_extend_polling_deadline) ... ok
+test_preopen_node_endpoint_and_original_application_tx_id (test_control_tools.CommitmentTests.test_preopen_node_endpoint_and_original_application_tx_id) ... ok
+test_absolute_deadline_interrupts_trickling_headers_and_body (test_control_tools.HttpBoundaryTests.test_absolute_deadline_interrupts_trickling_headers_and_body) ... ok
+test_byte_limit_and_total_read_deadline (test_control_tools.HttpBoundaryTests.test_byte_limit_and_total_read_deadline) ... ok
+test_untrusted_capture_decoding_is_bounded_and_canonical (test_control_tools.HttpBoundaryTests.test_untrusted_capture_decoding_is_bounded_and_canonical) ... ok
+test_legacy_tls_offer_is_rejected_before_http (test_control_tools.PinnedTlsTests.test_legacy_tls_offer_is_rejected_before_http) ... ok
+test_numeric_connection_preserves_authenticated_dns_sni (test_control_tools.PinnedTlsTests.test_numeric_connection_preserves_authenticated_dns_sni) ... ok
+test_wrong_tls_name_fails_before_http_bytes (test_control_tools.PinnedTlsTests.test_wrong_tls_name_fails_before_http_bytes) ... ok
+test_cxx_and_cxx_build_share_one_locked_version (test_cxx_lock.CxxLockTests.test_cxx_and_cxx_build_share_one_locked_version) ... ok
+test_authority_mint_uses_registry_but_existing_certificate_keeps_identity (test_domain_consumers.DomainConsumerTests.test_authority_mint_uses_registry_but_existing_certificate_keeps_identity) ... ok
+test_image_builder_supplies_same_snapshot_and_records_digest (test_domain_consumers.DomainConsumerTests.test_image_builder_supplies_same_snapshot_and_records_digest) ... ok
+test_one_registry_drives_pinned_ccf_and_transfer_configuration (test_domain_consumers.DomainConsumerTests.test_one_registry_drives_pinned_ccf_and_transfer_configuration) ... ok
+test_runtime_secondary_and_acceptance_names_follow_same_registry (test_domain_consumers.DomainConsumerTests.test_runtime_secondary_and_acceptance_names_follow_same_registry) ... ok
+test_altered_claim_path_signature_and_untrusted_identity_fail (test_ksk_receipt.ReceiptChecks.test_altered_claim_path_signature_and_untrusted_identity_fail) ... ok
+test_verifies_valid_crypto_chain (test_ksk_receipt.ReceiptChecks.test_verifies_valid_crypto_chain) ... ok
+test_ambiguous_json_and_noncanonical_base64_are_rejected (test_native_ccf_quote.NodeQuoteGuards.test_ambiguous_json_and_noncanonical_base64_are_rejected) ... ok
+test_fixed_binding_rejects_nonzero_upper_half (test_native_ccf_quote.NodeQuoteGuards.test_fixed_binding_rejects_nonzero_upper_half) ... ok
+test_reserved_and_signature_padding_cannot_be_treated_as_vectors (test_native_ccf_quote.NodeQuoteGuards.test_reserved_and_signature_padding_cannot_be_treated_as_vectors) ... ok
+test_security_flags_vmpl_and_reserved_tcb_are_checked (test_native_ccf_quote.NodeQuoteGuards.test_security_flags_vmpl_and_reserved_tcb_are_checked) ... ok
+test_unsupported_layout_is_never_silently_treated_as_v5 (test_native_ccf_quote.NodeQuoteGuards.test_unsupported_layout_is_never_silently_treated_as_v5) ... ok
+test_v3_has_no_mitigation_vectors_and_reserves_all_504_onward (test_native_ccf_quote.NodeQuoteGuards.test_v3_has_no_mitigation_vectors_and_reserves_all_504_onward) ... ok
+test_v5_vectors_are_independent_unsigned_little_endian (test_native_ccf_quote.NodeQuoteGuards.test_v5_vectors_are_independent_unsigned_little_endian) ... ok
+test_acme_coexistence_requires_both_exact_values (test_native_dns_verifier.NativeDnsVerifierTests.test_acme_coexistence_requires_both_exact_values) ... ok
+test_alias_target_or_unexpected_type_is_not_exact_owner_proof (test_native_dns_verifier.NativeDnsVerifierTests.test_alias_target_or_unexpected_type_is_not_exact_owner_proof) ... ok
+test_delv_absence_must_match_owner_and_type (test_native_dns_verifier.NativeDnsVerifierTests.test_delv_absence_must_match_owner_and_type) ... ok
+test_delv_must_validate_same_exact_keys_not_a_later_different_set (test_native_dns_verifier.NativeDnsVerifierTests.test_delv_must_validate_same_exact_keys_not_a_later_different_set) ... ok
+test_exact_two_native_keys_pass (test_native_dns_verifier.NativeDnsVerifierTests.test_exact_two_native_keys_pass) ... ok
+test_lifecycle_expectations_reject_other_scopes_and_duplicate_sets (test_native_dns_verifier.NativeDnsVerifierTests.test_lifecycle_expectations_reject_other_scopes_and_duplicate_sets) ... ok
+test_missing_key_and_additional_key_fail (test_native_dns_verifier.NativeDnsVerifierTests.test_missing_key_and_additional_key_fail) ... ok
+test_unauthoritative_absent_and_wrong_rcode_fail (test_native_dns_verifier.NativeDnsVerifierTests.test_unauthoritative_absent_and_wrong_rcode_fail) ... ok
+test_withdrawal_requires_absence_and_nsec3_not_alias_or_empty_error (test_native_dns_verifier.NativeDnsVerifierTests.test_withdrawal_requires_absence_and_nsec3_not_alias_or_empty_error) ... ok
+test_alias_target_with_matching_bytes_does_not_prove_governed_owner (test_operator_mail_verifier.OperatorOwnerTests.test_alias_target_with_matching_bytes_does_not_prove_governed_owner) ... ok
+test_caa_matches_committed_rdata_instead_of_a_fixed_issuer (test_operator_mail_verifier.OperatorOwnerTests.test_caa_matches_committed_rdata_instead_of_a_fixed_issuer) ... ok
+test_changed_artifact_or_source_digest_is_rejected (test_packaged_constitution.PackagedConstitutionTests.test_changed_artifact_or_source_digest_is_rejected) ... ok
+test_repository_artifact_matches_its_provenance (test_packaged_constitution.PackagedConstitutionTests.test_repository_artifact_matches_its_provenance) ... ok
+test_exact_fixed_fixture_passes (test_reconciliation_verifier.ReconciliationVerifierTests.test_exact_fixed_fixture_passes) ... ok
+test_matching_alias_target_does_not_prove_owner (test_reconciliation_verifier.ReconciliationVerifierTests.test_matching_alias_target_does_not_prove_owner) ... ok
+test_wrong_ttl_extra_record_and_wrong_bytes_fail (test_reconciliation_verifier.ReconciliationVerifierTests.test_wrong_ttl_extra_record_and_wrong_bytes_fail) ... ok
+test_fixed_authoritative_scope_and_no_zone_signer (test_secondary_aci.SecondaryTests.test_fixed_authoritative_scope_and_no_zone_signer) ... ok
+test_secret_rejects_malformed_noncanonical_or_injected_values (test_secondary_aci.SecondaryTests.test_secret_rejects_malformed_noncanonical_or_injected_values) ... ok
+test_configuration_cannot_escape_fixed_dns_scope (test_secondary_vm.SecondaryVmTests.test_configuration_cannot_escape_fixed_dns_scope) ... ok
+test_oversized_or_noncanonical_secret_rejected (test_secondary_vm.SecondaryVmTests.test_oversized_or_noncanonical_secret_rejected) ... ok
+test_private_canonical_secret_and_rejected_metadata (test_secondary_vm.SecondaryVmTests.test_private_canonical_secret_and_rejected_metadata) ... ok
+test_changed_actual_peer_is_closed_without_posting_token (test_sign_capture_client.SigningClientTests.test_changed_actual_peer_is_closed_without_posting_token) ... ok
+test_failed_appraisal_does_not_even_open_token_file (test_sign_capture_client.SigningClientTests.test_failed_appraisal_does_not_even_open_token_file) ... ok
+
+----------------------------------------------------------------------
+Ran 101 tests in 8.887s
+
+OK

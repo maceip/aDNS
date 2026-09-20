@@ -9,6 +9,7 @@ tamper rejection. Exits nonzero on the first failure; always stops the server.
 """
 
 import argparse
+from domain_registry import get
 import base64
 import json
 import pathlib
@@ -46,7 +47,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--binary", required=True)
     p.add_argument("--work", required=True)
-    p.add_argument("--zone", default="doh.example.")
+    p.add_argument("--zone", default=get("validation_zone"))
     p.add_argument("--port", type=int, default=18053)
     a = p.parse_args()
     zone = a.zone if a.zone.endswith(".") else a.zone + "."

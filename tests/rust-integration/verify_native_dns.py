@@ -5,6 +5,14 @@ Only DNS queries and an authenticated AXFR are sent. The TSIG file is an input
 secret and is never included in any artifact. Hardware and admission provenance
 must be supplied separately; this verifier checks the actual served DNS data.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_DOMAIN
 import argparse
 import base64
 import copy
@@ -81,7 +89,7 @@ def validate_delv_output(text, owner, kind, expected=None, negative=None):
         return
     if not text.startswith('; fully validated\n'):
         raise ValueError('stock delv did not validate a positive answer')
-    parsed = dns.zone.from_text(text,origin='example.test.',relativize=False,check_origin=False)
+    parsed = dns.zone.from_text(text,origin=(VALIDATION_DOMAIN + '.'),relativize=False,check_origin=False)
     wanted_name,wanted_type = dns.name.from_text(owner),dns.rdatatype.from_text(kind)
     records = []
     for name,node in parsed.nodes.items():
@@ -168,7 +176,7 @@ def main():
     if not all(1 <= port <= 65535 for port in (args.primary_port, args.secondary_port)) or not 1 <= len(args.spki) <= 2:
         parser.error('bounded ports and one or two appraised SPKI files required')
     args.output.mkdir(parents=True, exist_ok=False)
-    origin, host, key_name = 'example.test.', 'mail.example.test.', 'agentdns-transfer.'
+    origin, host, key_name = (VALIDATION_DOMAIN + '.'), ('mail.' + VALIDATION_DOMAIN + '.'), (TRANSFER_KEY_NAME)
     receipt = bounded_json(args.receipt)
     positive, negatives = receipt_checks(receipt, args.service_cert.read_text(), origin)
     (args.output/'receipt-verification.json').write_text(json.dumps({'verified':positive,'negative_variants':negatives},indent=2)+'\n')
@@ -228,11 +236,11 @@ def main():
         checked_sets.append({'owner':owner,'type':kind,'exact_rdata':expected})
     checks = [(origin,'SOA','positive'),(origin,'DNSKEY','positive'),
         *[(owner,kind,'positive') for owner,kind,_ in expected_sets],
-        ('absent.branch.example.test.','A','nxdomain'),
-        ('branch.example.test.','A','nodata'),
+        (('absent.branch.' + VALIDATION_DOMAIN + '.'),'A','nxdomain'),
+        (('branch.' + VALIDATION_DOMAIN + '.'),'A','nodata'),
         (host,'HINFO','nodata'),
-        ('fresh.wild.example.test.','A','wildcard-positive'),
-        ('fresh.wild.example.test.','AAAA','wildcard-nodata')]
+        (('fresh.wild.' + VALIDATION_DOMAIN + '.'),'A','wildcard-positive'),
+        (('fresh.wild.' + VALIDATION_DOMAIN + '.'),'AAAA','wildcard-nodata')]
     validations = []
     for owner,kind,meaning in checks:
         answer = query(str(args.secondary),args.secondary_port,owner,kind)

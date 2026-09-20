@@ -6,6 +6,7 @@ actual pinned TLS peer certificate matches the appraised SPKI. It never submits
 the signed operation to CCF; the caller submits and reconciles that envelope.
 """
 import argparse
+from domain_registry import get
 import hashlib
 import http.client
 import ipaddress
@@ -56,12 +57,12 @@ def main():
     context.minimum_version = ssl.TLSVersion.TLSv1_2
     context.set_alpn_protocols(["http/1.1"])
     deadline = time.monotonic() + 30
-    connection = http.client.HTTPConnection("agentdns-capture.test", args.port, timeout=30)
+    connection = http.client.HTTPConnection(get("capture_tls_hostname"), args.port, timeout=30)
     raw = None
     try:
         raw = socket.create_connection((str(args.ip), args.port), timeout=30)
         raw.settimeout(max(.001, deadline-time.monotonic()))
-        connection.sock = context.wrap_socket(raw, server_hostname="agentdns-capture.test")
+        connection.sock = context.wrap_socket(raw, server_hostname=get("capture_tls_hostname"))
         if connection.sock.getpeercert(binary_form=True) != peer:
             raise ValueError("TLS peer changed after appraisal")
         with SocketDeadline(connection.sock, deadline):

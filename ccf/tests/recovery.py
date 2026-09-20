@@ -1,4 +1,12 @@
 """Exercise CCF disaster recovery from disk using an actual member share."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import base64
 import hashlib
 import hmac
@@ -19,14 +27,14 @@ from cryptography.hazmat.primitives.asymmetric import ec, padding, utils
 def exercise(work,config,public,internal,ca,propose,signer,template,primary,member_key_pem,member_cert_pem,member_id,encryption,original_request,original_result):
     from live_smoke import Client,b64,jcs
     import verify_ksk_receipt
-    secret=bytes([83])*32;key_name="recovery.example.test."
-    propose([{"name":"adns_set_transfer","args":{"key_name":key_name,"endpoint":"127.0.0.1:55354","zones":["example.test."],"secret_sha256":hashlib.sha256(secret).hexdigest()}}])
+    secret=bytes([83])*32;key_name=('recovery.' + VALIDATION_DOMAIN + '.')
+    propose([{"name":"adns_set_transfer","args":{"key_name":key_name,"endpoint":"127.0.0.1:55354","zones":[(VALIDATION_DOMAIN + '.')],"secret_sha256":hashlib.sha256(secret).hexdigest()}}])
     for _ in range(100):
-        status,_,body=internal.request("POST","/app/internal/transfer-key",{"key_name":key_name,"secret_base64url":b64(secret),"zones":["example.test."]})
+        status,_,body=internal.request("POST","/app/internal/transfer-key",{"key_name":key_name,"secret_base64url":b64(secret),"zones":[(VALIDATION_DOMAIN + '.')]})
         if status==200:break
         time.sleep(.05)
     assert status==200,(status,body)
-    status,_,before=public.request("GET","/app/governance/ksk-receipt?zone=example.test.");assert status==200
+    status,_,before=public.request("GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'));assert status==200
     verify_ksk_receipt.verify(before,ca.read_bytes())
     pending_action=json.loads(json.dumps(template));pending_action["request_id"]=str(uuid.uuid4())
     pending_action["parameters"]["expected_serial"]=8;pending_action["parameters"]["mutations"][0]["rdata_strings"]=["after-disk-recovery"]
@@ -94,7 +102,7 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
         assert status==200 and result["submittedCount"]==1,(status,result)
         del share
         for _ in range(300):
-            status,_,state=client.request("GET","/app/zone/status?zone=example.test.")
+            status,_,state=client.request("GET",('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
             if status==200:break
             time.sleep(.1)
         assert status==200 and state["committed_state"]["serial"]==8,(status,state)
@@ -105,7 +113,7 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
         (work/"recovered-request-observation.json").write_text(json.dumps(recovered_failure,indent=2)+"\n")
         status,_,history=client.request("POST","/app/zone/operator/records",original_request)
         assert status==200 and history==original_result,(status,history,original_result)
-        status,_,after=client.request("GET","/app/governance/ksk-receipt?zone=example.test.")
+        status,_,after=client.request("GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'))
         assert status==200 and after["dnskey_rdata_hex"]==before["dnskey_rdata_hex"],(status,after)
         verify_ksk_receipt.verify(after,current_ca.read_bytes())
         status,headers,result=client.request("POST","/app/zone/operator/records",pending)
@@ -113,7 +121,7 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
         status,_,retry=client.request("POST","/app/zone/operator/records",pending)
         assert status==200 and retry==result,"recovered nonce retry changed the committed result"
         def wire(name):return b"".join(bytes([len(label)])+label.encode() for label in name.rstrip(".").split("."))+b"\x00"
-        query=struct.pack("!6H",401,0,1,0,0,0)+wire("example.test.")+struct.pack("!HH",252,1)
+        query=struct.pack("!6H",401,0,1,0,0,0)+wire((VALIDATION_DOMAIN + '.'))+struct.pack("!HH",252,1)
         clock=int(time.time()).to_bytes(6,"big");algorithm=wire("hmac-sha256.");name=wire(key_name)
         variables=name+struct.pack("!HI",255,0)+algorithm+clock+struct.pack("!HHH",300,0,0)
         mac=hmac.new(secret,query+variables,hashlib.sha256).digest()

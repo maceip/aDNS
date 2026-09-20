@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Independently verify CCF TSIG transfer and stock BIND against a verified KSK."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_NS_HOSTNAME, VALIDATION_DOMAIN
 import argparse
 import base64
 import ipaddress
@@ -30,7 +38,7 @@ def main():
     secret = base64.b64decode(encoded, validate=True)
     if len(secret) != 32 or base64.b64encode(secret) != encoded:
         raise ValueError("expected canonical 32-byte TSIG secret file")
-    origin, name = "example.test.", "agentdns-transfer."
+    origin, name = (VALIDATION_DOMAIN + '.'), (TRANSFER_KEY_NAME)
     keyring = dns.tsigkeyring.from_text({name: encoded.decode("ascii")})
     messages, transfer_bytes = [], 0
     for message in dns.query.xfr(str(args.server), origin, port=5353, keyring=keyring,
@@ -69,9 +77,9 @@ def main():
             unauthorized.close()
     validations = []
     for owner, kind in [(origin, "SOA"), (origin, "DNSKEY"), (origin, "TXT"),
-                        ("definitely-absent-agentdns.example.test.", "A")]:
+                        (('definitely-absent-agentd' + VALIDATION_NS_HOSTNAME + '.'), "A")]:
         check = subprocess.run(["delv", "@" + str(args.server), "-p", "53", "-a", str(args.anchor),
-                                "+root=example.test.", owner, kind], capture_output=True,
+                                ('+root=' + VALIDATION_DOMAIN + '.'), owner, kind], capture_output=True,
                                text=True, timeout=15)
         (args.output / ("delv-" + owner + kind + ".log")).write_text(check.stdout + check.stderr)
         if check.returncode != 0 or "fully validated" not in check.stdout:

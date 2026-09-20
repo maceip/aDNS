@@ -192,7 +192,7 @@ class BootstrapTemplateTests(unittest.TestCase):
 
     def test_prepared_files_are_pinned_and_private_files_are_owner_only(self):
         public,summary,standard,raw=template.validated_control(self.control)
-        self.assertEqual(len(public),4)
+        self.assertEqual(set(public),set(template.PUBLIC_FILES))
         self.assertEqual(summary['transfer_secret_sha256'],hashlib.sha256(base64.b64decode(standard)).hexdigest())
         for path in (self.control/'private').iterdir():self.assertEqual(path.stat().st_mode & 0o777,0o600)
         self.assertNotIn('PRIVATE KEY',b''.join(public.values()).decode())

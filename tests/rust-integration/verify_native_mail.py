@@ -5,6 +5,14 @@ Run only inside a disposable Linux test container with NET_ADMIN. This changes
 packet destination routing inside that container, never DNS answers or TLS.
 No mutation signature, bearer token, private attested key or AXFR key is needed.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse
 import base64
 from contextlib import contextmanager
@@ -165,9 +173,9 @@ def main():
     parser.add_argument('--dns-port', type=int, default=53)
     parser.add_argument('--connection-address', required=True)
     parser.add_argument('--published-address', default='192.0.2.1')
-    parser.add_argument('--zone', default='example.test.')
-    parser.add_argument('--mailbox-domain', default='example.test.')
-    parser.add_argument('--service-host', default='mail.example.test.')
+    parser.add_argument('--zone', default=(VALIDATION_DOMAIN + '.'))
+    parser.add_argument('--mailbox-domain', default=(VALIDATION_DOMAIN + '.'))
+    parser.add_argument('--service-host', default=('mail.' + VALIDATION_DOMAIN + '.'))
     parser.add_argument('--anchor', required=True, type=Path)
     parser.add_argument('--certificate', required=True, type=Path)
     parser.add_argument('--spki', required=True, type=Path)

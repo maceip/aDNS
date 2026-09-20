@@ -1,0 +1,124 @@
+{
+  "recorded_at_utc": "2026-09-20T09:50:22.369146+00:00",
+  "source_base_commit": "b8535f17504ed20ff40a8a60e1b7f580aeb428a7",
+  "source_changes_uncommitted": true,
+  "canonical_registry_locator": {
+    "schema_version": 1,
+    "repository": "https://github.com/maceip/agent-hosting.git",
+    "ref": "a1c44f4a2f467e24b5eada11019ff590144e339e",
+    "path": "infra/production/topology.json"
+  },
+  "validation_image": "sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc65615",
+  "test_results": {
+    "linux_tools": {
+      "run": 101,
+      "passed": 101,
+      "skipped": 0
+    },
+    "linux_integration_guards": {
+      "run": 34,
+      "passed": 34,
+      "skipped": 0
+    },
+    "host_supervisor": {
+      "run": 21,
+      "passed": 20,
+      "skipped": 1,
+      "skip_reason": "opt-in real CCF binary regression not requested in this naming refactor"
+    },
+    "domain_literal_guard": {
+      "run": 6,
+      "passed": 6,
+      "skipped": 0
+    }
+  },
+  "source_sha256": {
+    ".github/workflows/rust-port.yml": "324ab734e26eada1ca8e6e4668272c829e40ff4d1560414e41070938490bd470",
+    "ccf/run.py": "066a0c718e336930d9b96d38339dceb252a2e0d6a1825e79e064c77586c08b4d",
+    "ccf/tests/operator_mail.py": "42ccf8302a11462f4649ee0cb438c579e43f66ad83c8b68d6892f579985a5473",
+    "ccf/tests/verify_operator_mail.py": "9937bf8ebef41874a30d46c05d9cbde7007c03519dd4e08638b275ef4ba2b699",
+    "containers/agentdns-ccf.Dockerfile": "02478240fe9250e92e20d7e38efc4db7689456e398067ec19d2ef2623b4f03b1",
+    "containers/capture.Dockerfile": "27ede419c3596b4c9941025bb2cced80b5fc30eff5147ef1c9aae858c13bfc62",
+    "containers/secondary.Dockerfile": "87e0706dd03cb592534def438d5bb737253e2f25a134fa1c84e3ff04217d7a15",
+    "crates/adns-dnssec/examples/export.rs": "4d052f6d3261417f7b0e5e949f9568f631c879b13a09127d4bd12ba01926c624",
+    "domain-registry.source.json": "3965419c95da75ce117401ec7ce0c02c4a93e75b5ece878d691fe15b9b4b47d6",
+    "tools/build_aci_template.py": "56f3ab1c318b01f044de36da79cfd00a3e5c6f4bfdbc765e72e87c89688e2bb0",
+    "tools/build_images.py": "ab7fbed91b24798a974cd45b9b62dd28bce0d0f862c95bf61f0780e3086e7d7c",
+    "tools/check_aci_template.py": "4c0d04d35be0dabd8542650ea69d914ee6948927f67dcad1c04b8e800f50addf",
+    "tools/check_domain_literals.py": "f839306a3c9c0a46e086f0db854025fe783c302cf232e82e0a099c3a048359c4",
+    "tools/domain-literal-exceptions.json": "dd2f2e34fd3ef326d997a3c5461caacf2814d05758bde1723d0fbdf8de6d3351",
+    "tools/domain_registry.py": "15e0e27ae77e5a89cbd950440574a1c834e33579f6968c4af06006de1404796e",
+    "tools/prepare_aci_control.py": "616fe506b2e933531e587948addc9f2fb9b5fdf32b7a80722c89725bbd56606c",
+    "tools/secondary_aci.py": "6849ce9815ca3db7cdfb35f50cf022f0e8a2c2d7e63cce02eec99efe59ef9a4d",
+    "tools/secondary_vm.py": "24b1cd822ea6312aabfef2b2da0c2b3bb26a105368ff28de5cbb41be786c3e84",
+    "tools/test_domain_literals.py": "06465c236fb6c674052fc072c02ab533a4bf549c12ae38f7da4c084bb6a1a968",
+    "tools/tests/test_domain_consumers.py": "1f28167b1d5ae76d3c66f5199b40c38fc93d05cf60fbd63ae2bc262a1e229545",
+    "tools/tests/test_operator_mail_verifier.py": "6b431b9f893f0e4ee63d1878aec42f9215d2cddcc22a4c88c8c8a862d74043cc",
+    "tools/validate_live_zone.sh": "50e1539b3ac2f257aad029010072c1d79c2295a91049323bc4086101eed3579c",
+    "tools/validation_names.py": "8869077ca50bc352f0afb0ebc5e160e25e0680b343072c56a166311f93141a10"
+  },
+  "build_invocation": [
+    "env",
+    "AH_DOMAIN_REGISTRY=/tmp/adns-alternate-domain-registry.json",
+    "python3",
+    "tools/build_images.py",
+    "secondary",
+    "--tag",
+    "agentdns-secondary:alternate-domain-validation",
+    "--provenance",
+    "/tmp/adns-alternate-secondary-build.json"
+  ],
+  "runtime_assertions": [
+    "image registry digest matches build provenance",
+    "configured alternate zone and transfer key",
+    "stock named-checkconf exits0",
+    "image secondary and reader bytes match final worktree sources"
+  ],
+  "test_environment": {
+    "network": "none",
+    "root_filesystem": "read-only",
+    "writable_scratch": "tmpfs /tmp",
+    "public_source_and_registry": "read-only bind mounts",
+    "test_only_python_packages": [
+      "cbor2==5.6.5",
+      "PyYAML pure Python copied from host"
+    ]
+  },
+  "scope": "Local tests, image packaging and BIND configuration only. No image push, cloud deployment, public DNS, CCF governance, failover or hardware attestation proof.",
+  "alternate_registry": {
+    "derived_from_commit": "a1c44f4a2f467e24b5eada11019ff590144e339e",
+    "base_registry_sha256": "e2441e6fcacbfe62989b1c1fc47e8b6b6746b1ae92708652a910d461c84280c6",
+    "changed_fields": {
+      "domain": "alternate.invalid",
+      "naming.validation_domain": "alternate.test",
+      "naming.transfer_key_name": "transfer.alternate.test.",
+      "naming.ccf_rpc_hostname": "ccf.alternate.test",
+      "naming.capture_tls_hostname": "capture.alternate.test",
+      "naming.caa_primary_domain": "ca.alternate.test"
+    }
+  },
+  "runtime_invocation": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--platform",
+    "linux/amd64",
+    "--network",
+    "none",
+    "--read-only",
+    "--tmpfs",
+    "/tmp",
+    "--entrypoint",
+    "python3",
+    "agentdns-secondary:alternate-domain-validation",
+    "-"
+  ],
+  "runtime_stdin": "secondary-runtime-check.py",
+  "exporter": {
+    "invocation": "cargo run --locked -p adns-dnssec --example export -- --caa-issuer \"$(AH_DOMAIN_REGISTRY=/tmp/adns-alternate-domain-registry.json python3 tools/domain_registry.py get caa_primary_domain)\" /tmp/adns-final-exporter-zones",
+    "binary_sha256": "97375f385cd875098eba9d3fc6ee4d84d15bdb49a59e1c63f9ef4fef6367ce47",
+    "result": "exporter-result.json",
+    "signature_validation": "dnspython validated CAA RRSIG against generated DNSKEYs in both exported zones"
+  }
+}

@@ -24,6 +24,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Fetch the common domain registry at the declared source revision
+        env:
+          DOMAIN_REGISTRY_SSH_KEY: ${{ secrets.DOMAIN_REGISTRY_SSH_KEY }}
+        run: python3 tools/fetch_domain_registry_ci.py
+      - name: Reject managed-domain literals in operational source
+        run: |
+          python3 tools/check_domain_literals.py
+          python3 -B -m unittest discover -s tools -p 'test_*.py' -v
       - name: Read packaged Steward revision
         id: steward-source
         run: echo "revision=$(python3 -c 'import json; print(json.load(open("ccf/governance/constitution.source.json"))["commit"])')" >> "$GITHUB_OUTPUT"
@@ -57,7 +65,7 @@ jobs:
           cargo clippy --locked --workspace --all-targets -- -D warnings
           cargo build --locked -p adns-wire --example parse_wire
           /usr/bin/python3 tools/differential_wire.py --binary target/debug/examples/parse_wire --cases 2000 --seed 20260914
-          cargo run --locked -p adns-dnssec --example export -- .validation/packet-fixtures
+          cargo run --locked -p adns-dnssec --example export -- --caa-issuer "$(python3 tools/domain_registry.py get caa_primary_domain)" .validation/packet-fixtures
           /usr/bin/python3 crates/adns-dnssec/tests/validate_packets.py .validation/packet-fixtures
           /usr/bin/python3 -m unittest discover -s tools/tests -v
           .validation/ci-python/bin/python -m unittest discover -s ccf -p 'test_*.py' -v
@@ -85,26 +93,30 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Fetch the common domain registry at the declared source revision
+        env:
+          DOMAIN_REGISTRY_SSH_KEY: ${{ secrets.DOMAIN_REGISTRY_SSH_KEY }}
+        run: python3 tools/fetch_domain_registry_ci.py
       - name: Build the pinned CCF SDK and Rust application
         run: |
           docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
           docker volume create agentdns-ci-build
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'cmake -S /src/ccf -B /build -GNinja -DCMAKE_BUILD_TYPE=Release && cmake --build /build -j4'
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'cmake -S /src/ccf -B /build -GNinja -DCMAKE_BUILD_TYPE=Release && cmake --build /build -j4'
       - name: Real CCF governance, commitment and independent receipt verification
         run: |
           mkdir -p .validation/ci-public
           set -o pipefail
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/tools/tests/ccf_control_smoke.py | tee .validation/ci-public/ccf-control-smoke.log
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --quorum | tee .validation/ci-public/ccf-smoke.log
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --recovery | tee .validation/ci-public/ccf-recovery.log
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/tools/tests/ccf_control_smoke.py | tee .validation/ci-public/ccf-control-smoke.log
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --quorum | tee .validation/ci-public/ccf-smoke.log
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 python3 /src/ccf/tests/live_smoke.py --recovery | tee .validation/ci-public/ccf-recovery.log
       - name: Bounded native telemetry transport and dead-consumer regression
         run: |
           set -o pipefail
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'clang++ -std=c++23 -O2 -pthread -I/src/ccf -I/opt/ccf/include -I/opt/ccf/include/3rdparty /src/ccf/tests/telemetry_fixture.cpp /src/ccf/telemetry.cpp -o /build/telemetry_fixture && python3 /src/ccf/tests/verify_native_telemetry.py /build/telemetry_fixture' | tee .validation/ci-public/ccf-telemetry-transport.log
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'clang++ -std=c++23 -O2 -pthread -I/src/ccf -I/opt/ccf/include -I/opt/ccf/include/3rdparty /src/ccf/tests/telemetry_fixture.cpp /src/ccf/telemetry.cpp -o /build/telemetry_fixture && python3 /src/ccf/tests/verify_native_telemetry.py /build/telemetry_fixture' | tee .validation/ci-public/ccf-telemetry-transport.log
       - name: Real CCF quorum and recovery through the telemetry SDK
         run: |
           set -o pipefail
-          docker run --rm --platform linux/amd64 -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'python3 -m pip install --no-cache-dir --target /build/otel-test-python -r /src/ccf/requirements-otel.txt && PYTHONPATH=/build/otel-test-python:/opt/agentdns-test-python python3 /src/ccf/tests/live_telemetry.py --output /build/otel-proof' | tee .validation/ci-public/ccf-telemetry-live.log
+          docker run --rm --platform linux/amd64 -e AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json -v "$PWD:/src:ro" -v agentdns-ci-build:/build agentdns-ccf-toolchain:7.0.15 sh -c 'python3 -m pip install --no-cache-dir --target /build/otel-test-python -r /src/ccf/requirements-otel.txt && PYTHONPATH=/build/otel-test-python:/opt/agentdns-test-python python3 /src/ccf/tests/live_telemetry.py --output /build/otel-proof' | tee .validation/ci-public/ccf-telemetry-live.log
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
@@ -120,6 +132,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Fetch the common domain registry at the declared source revision
+        env:
+          DOMAIN_REGISTRY_SSH_KEY: ${{ secrets.DOMAIN_REGISTRY_SSH_KEY }}
+        run: python3 tools/fetch_domain_registry_ci.py
       - name: Install tested compiler
         run: |
           rustup toolchain install 1.95.0 --profile minimal
@@ -163,11 +179,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Fetch the common domain registry at the declared source revision
+        env:
+          DOMAIN_REGISTRY_SSH_KEY: ${{ secrets.DOMAIN_REGISTRY_SSH_KEY }}
+        run: python3 tools/fetch_domain_registry_ci.py
       - name: Build CCF primary, stock secondary and independent validators
         run: |
           docker build --platform linux/amd64 -f containers/ccf-toolchain.Dockerfile -t agentdns-ccf-toolchain:7.0.15 .
-          docker build --platform linux/amd64 -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:7.0.15 .
-          docker build --platform linux/amd64 -f containers/secondary.Dockerfile -t agentdns-secondary:local .
+          docker build --platform linux/amd64 --build-context domain-registry=.domain-registry -f containers/agentdns-ccf.Dockerfile -t agentdns-ccf:7.0.15 .
+          docker build --platform linux/amd64 --build-context domain-registry=.domain-registry -f containers/secondary.Dockerfile -t agentdns-secondary:local .
           docker build --platform linux/amd64 -f containers/validation.Dockerfile -t agentdns-validation:local .
       - name: Verify private helper ownership with Linux UID1001
         run: |
@@ -184,6 +204,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import os
           import subprocess
           import sys
           destination = Path('.validation/ci-ccf-public')
@@ -191,7 +212,8 @@ jobs:
               exporter = results.parent / 'source/tests/rust-integration/export_ccf_results.py'
               subprocess.run([sys.executable, str(exporter),
                               str(results), str(destination / results.parent.name)],
-                             check=True, timeout=60)
+                             check=True, timeout=60,
+                             env=dict(os.environ, AH_DOMAIN_REGISTRY=str((results.parent / 'source/.domain-registry/topology.json').resolve())))
           PY
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()

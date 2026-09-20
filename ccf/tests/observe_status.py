@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Record committed zone status during an idle CCF/BIND acceptance interval."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse
 import http.client
 import json
@@ -37,7 +45,7 @@ def main():
             deadline = time.monotonic() + 5
             conn.connect()
             with SocketDeadline(conn.sock, deadline):
-                conn.request("GET", "/app/zone/status?zone=example.test.")
+                conn.request("GET", ('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
                 response = conn.getresponse()
                 raw = read_bounded(response, 65536, deadline)
                 sample.update({"http_status": response.status, "body": json.loads(raw),

@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Verify the exact one-record reconciliation fixture on stock BIND."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse
 import ipaddress
 import json
@@ -13,7 +21,7 @@ import dns.query
 import dns.rcode
 import dns.rdatatype
 
-OWNER = 'reconcile.example.test.'
+OWNER = ('reconcile.' + VALIDATION_DOMAIN + '.')
 VALUE = 'durable authenticated request reconciliation'
 
 
@@ -42,7 +50,7 @@ def main():
     (args.output/'response.txt').write_text(response.to_text()+'\n')
     validate_response(response)
     check = subprocess.run(['delv', '@'+str(args.server), '-p', '53', '-a', str(args.anchor),
-        '+root=example.test.', OWNER, 'TXT'], capture_output=True, text=True, timeout=15)
+        ('+root=' + VALIDATION_DOMAIN + '.'), OWNER, 'TXT'], capture_output=True, text=True, timeout=15)
     (args.output/(OWNER+'TXT.log')).write_text(check.stdout+check.stderr)
     if check.returncode or 'fully validated' not in check.stdout:
         raise ValueError('reconciliation TXT did not pass independent DNSSEC validation')

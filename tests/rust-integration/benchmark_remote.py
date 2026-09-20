@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Measure public authoritative DNS under a fixed, non-mutating DO=1 load."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_NS_HOSTNAME, VALIDATION_DOMAIN
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import ipaddress
@@ -96,8 +104,8 @@ def main():
     if not 1 <= args.qps <= 10000 or not 1 <= args.samples_per_second <= 100:
         parser.error("offered rate or sampling rate outside bounds")
     args.output.mkdir(parents=True, exist_ok=True)
-    queries = [("example.test.", "SOA"), ("example.test.", "DNSKEY"),
-               ("example.test.", "NS"), ("definitely-absent-agentdns.example.test.", "A")]
+    queries = [((VALIDATION_DOMAIN + '.'), "SOA"), ((VALIDATION_DOMAIN + '.'), "DNSKEY"),
+               ((VALIDATION_DOMAIN + '.'), "NS"), (('definitely-absent-agentd' + VALIDATION_NS_HOSTNAME + '.'), "A")]
     query_file = args.output / "dnsperf-queries.txt"
     query_file.write_text("".join(f"{name} {kind}\n" for name, kind in queries))
     log_path = args.output / "dnsperf.log"

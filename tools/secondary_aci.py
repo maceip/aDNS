@@ -2,9 +2,10 @@
 """Stock authoritative BIND frontend for the isolated CCF ACI acceptance group.
 
 CCF is the sole zone signer. This process receives only a transfer TSIG secret;
-its primary and zone are deliberately fixed for the reserved validation scope.
+its primary is local and its reserved validation zone comes from the shared registry.
 """
 import base64
+from domain_registry import get
 import binascii
 import os
 from pathlib import Path
@@ -12,8 +13,8 @@ import pwd
 import resource
 import subprocess
 
-ZONE = "example.test"
-KEY_NAME = "agentdns-transfer."
+ZONE = get("validation_domain")
+KEY_NAME = get("transfer_key_name")
 PRIMARY = "127.0.0.1"
 PRIMARY_PORT = 5353
 
@@ -51,7 +52,7 @@ zone "{ZONE}" {{
     type secondary;
     primaries {{ {PRIMARY} port {PRIMARY_PORT} key "{KEY_NAME}"; }};
     allow-notify {{ key "{KEY_NAME}"; }};
-    file "example.test.zone";
+    file "{ZONE}.zone";
     masterfile-format text;
 }};
 '''

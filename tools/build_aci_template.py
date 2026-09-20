@@ -7,6 +7,7 @@ ACI public port numbers are unique regardless of protocol: this auxiliary BIND
 exposes UDP53; a separate frontend must supply ordinary TCP+UDP53 service.
 """
 import argparse
+from domain_registry import get, registry_sha256
 import base64
 import json
 import hashlib
@@ -21,7 +22,7 @@ from cryptography.hazmat.primitives import hashes
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
 
 
-PUBLIC_FILES = ("node.json", "manifest.json", "member0_cert.pem", "member0_enc_pubk.pem")
+PUBLIC_FILES = ("node.json", "manifest.json", "member0_cert.pem", "member0_enc_pubk.pem", "domain-registry.json")
 OTEL_CA_PATH = "/otel/exporter-ca.pem"
 OTEL_HEADER_PARAMETER = "otelExporterHeaders"
 _B64_ATOM = r"(?:[A-Za-z0-9]|%2B|%2F)"
@@ -62,7 +63,7 @@ def validated_control(directory):
     public = {name: read_small(directory / "public" / name) for name in PUBLIC_FILES}
     summary = strict_json(read_small(directory / "public/bootstrap-summary.json"))
     manifest = strict_json(public["manifest.json"])
-    expected = {"/config/node.json", "/config/member0_cert.pem", "/config/member0_enc_pubk.pem", "/opt/agentdns/governance/constitution.js"}
+    expected = {"/config/" + name for name in PUBLIC_FILES if name != "manifest.json"} | {"/opt/agentdns/governance/constitution.js"}
     if not isinstance(manifest, dict) or set(manifest) != expected or any(not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None for digest in manifest.values()):
         raise ValueError("bootstrap manifest paths or digests are invalid")
     if not isinstance(summary, dict) or hashlib.sha256(public["manifest.json"]).hexdigest() != summary.get("config_manifest_sha256"):
@@ -70,6 +71,8 @@ def validated_control(directory):
     for name in PUBLIC_FILES:
         if name != "manifest.json" and hashlib.sha256(public[name]).hexdigest() != manifest["/config/" + name]:
             raise ValueError("public bootstrap file does not match its pinned manifest")
+    if hashlib.sha256(public["domain-registry.json"]).hexdigest() != registry_sha256() or summary.get("domain_registry_sha256") != registry_sha256():
+        raise ValueError("bootstrap domain registry differs from the selected shared store; regenerate control")
     certificate = x509.load_pem_x509_certificate(public["member0_cert.pem"])
     if certificate.fingerprint(hashes.SHA256()).hex() != summary.get("member_id"):
         raise ValueError("bootstrap member identity mismatch")
@@ -78,15 +81,15 @@ def validated_control(directory):
         raise ValueError("native ACI bootstrap requires explicit SNP collateral and UVM configuration (--native-snp)")
     validate_native_internal_readiness(node)
     interfaces = node["network"]["rpc_interfaces"]
-    if interfaces["primary_rpc_interface"]["bind_address"] != "0.0.0.0:8000" or interfaces["primary_rpc_interface"].get("published_address") != "agentdns.test:8000" or interfaces["agentdns-internal"]["bind_address"] != "127.0.0.1:8001":
+    if interfaces["primary_rpc_interface"]["bind_address"] != "0.0.0.0:8000" or interfaces["primary_rpc_interface"].get("published_address") != get("ccf_rpc_hostname") + ":8000" or interfaces["agentdns-internal"]["bind_address"] != "127.0.0.1:8001":
         raise ValueError("validation CCF interface addresses are inconsistent")
-    if any(interface.get("app_protocol", "HTTP1") != "HTTP1" for interface in interfaces.values()) or not {"iPAddress:127.0.0.1", "dNSName:agentdns.test"}.issubset(node["node_certificate"]["subject_alt_names"]):
+    if any(interface.get("app_protocol", "HTTP1") != "HTTP1" for interface in interfaces.values()) or not {"iPAddress:127.0.0.1", "dNSName:" + get("ccf_rpc_hostname")}.issubset(node["node_certificate"]["subject_alt_names"]):
         raise ValueError("validation CCF TLS names or commitment protocol are inconsistent")
     if node["command"]["type"] != "Start" or node["command"]["start"]["constitution_files"] != ["/opt/agentdns/governance/constitution.js"] or node["command"]["start"]["members"] != [{"certificate_file":"/config/member0_cert.pem", "encryption_public_key_file":"/config/member0_enc_pubk.pem"}]:
         raise ValueError("validation bootstrap references are inconsistent")
     raw_json = read_small(directory / "private/transfer-key.json")
     provision = strict_json(raw_json)
-    if not isinstance(provision, dict) or set(provision) != {"key_name", "secret_base64url", "zones"} or provision["key_name"] != "agentdns-transfer." or provision["zones"] != ["example.test."]:
+    if not isinstance(provision, dict) or set(provision) != {"key_name", "secret_base64url", "zones"} or provision["key_name"] != get("transfer_key_name") or provision["zones"] != [get("validation_zone")]:
         raise ValueError("validation transfer scope is inconsistent")
     encoded = provision["secret_base64url"]
     if not isinstance(encoded, str) or len(encoded) != 43:
@@ -228,7 +231,8 @@ def main():
     secondary = {"name": "secondary", "properties": {
         "image": args.secondary_image, "command": ["python3", "/app/secondary_aci.py"],
         "ports": ports_dns, "resources": {"requests": {"cpu": 2, "memoryInGB": 4}},
-        "environmentVariables": [{"name": "AGENTDNS_TRANSFER_KEY_B64", "secureValue": "[parameters('transferKeyB64')]"}]}}
+        "environmentVariables": [{"name": "AGENTDNS_TRANSFER_KEY_B64", "secureValue": "[parameters('transferKeyB64')]"}],
+        "volumeMounts": [{"name": "public-config", "mountPath": "/etc/agent-hosting", "readOnly": True}]}}
     properties = {"sku": "Confidential", "osType": "Linux", "restartPolicy": "Always",
                   "confidentialComputeProperties": {"ccePolicy": ""},
                   "imageRegistryCredentials": [{"server": args.primary_image.split("/")[0], "identity": args.pull_identity}],

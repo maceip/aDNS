@@ -1,0 +1,18 @@
+{
+  "issuer": "ca.alternate.test",
+  "zones": {
+    "nsec": {
+      "caa": [
+        "0 issue \"ca.alternate.test\""
+      ],
+      "caa_signature_validation": "passed"
+    },
+    "nsec3": {
+      "caa": [
+        "0 issue \"ca.alternate.test\""
+      ],
+      "caa_signature_validation": "passed"
+    }
+  },
+  "missing_caa_argument_exit_code": 1
+}

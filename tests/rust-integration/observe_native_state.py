@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Bounded read-only observation of exact lifecycle RRsets on public BIND."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse
 import ipaddress
 import json
@@ -24,9 +32,9 @@ def validate_expectations(value):
         if not isinstance(item,dict) or set(item) != {'owner','type','rdata'}:
             raise ValueError('exact owner/type/rdata expectation schema required')
         name = dns.name.from_text(item['owner'])
-        if (not name.is_subdomain(dns.name.from_text('example.test.')) or name.to_text() != item['owner']
+        if (not name.is_subdomain(dns.name.from_text((VALIDATION_DOMAIN + '.'))) or name.to_text() != item['owner']
                 or len(item['owner']) > 255 or any(not re.fullmatch('[a-z0-9_-]{1,63}',label) for label in item['owner'][:-1].split('.'))):
-            raise ValueError('fixture owner must be canonical and inside example.test.')
+            raise ValueError(('fixture owner must be canonical and inside ' + VALIDATION_DOMAIN + '.'))
         if item['type'] not in ('A','AAAA','MX','TLSA','TXT','CAA'):
             raise ValueError('unsupported fixture record type')
         identity = (item['owner'],item['type'])
@@ -66,8 +74,8 @@ def main():
     while True:
         sample = {'unix_seconds':time.time(),'elapsed_seconds':time.monotonic()-started,'matches':False}
         try:
-            answer = query(str(args.server),args.port,'example.test.','SOA')
-            serial = exact_records(answer,'example.test.','SOA')[0].serial
+            answer = query(str(args.server),args.port,(VALIDATION_DOMAIN + '.'),'SOA')
+            serial = exact_records(answer,(VALIDATION_DOMAIN + '.'),'SOA')[0].serial
             sample['serial'] = serial
             if (serial-args.minimum_serial) % 2**32 >= 2**31:
                 raise ValueError('secondary has not served the committed minimum serial')
@@ -95,7 +103,7 @@ def main():
         name = item['owner']+item['type']
         (args.output/(name+'.txt')).write_text(answer.to_text()+'\n')
         check = subprocess.run(['delv','@'+str(args.server),'-p',str(args.port),'-a',str(args.anchor),
-            '+root=example.test.',item['owner'],item['type']],capture_output=True,text=True,timeout=15)
+            ('+root=' + VALIDATION_DOMAIN + '.'),item['owner'],item['type']],capture_output=True,text=True,timeout=15)
         (args.output/(name+'.delv.log')).write_text(check.stdout+check.stderr)
         if check.returncode or 'fully validated' not in check.stdout:
             raise ValueError('stock delv rejected observed lifecycle RRset')

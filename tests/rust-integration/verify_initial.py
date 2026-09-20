@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Independent dnspython AXFR and BIND-delv/ldns validation, then DANE setup."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import TRANSFER_KEY_NAME, VALIDATION_DOMAIN
 import base64,json,pathlib,socket,subprocess,time
 import dns.dnssec,dns.flags,dns.message,dns.query,dns.rdatatype,dns.tsigkeyring,dns.zone
 from bind_workspace import workspace,launch
-root=pathlib.Path('/work');master=(root/'container-ready').read_text().strip() if (root/'container-ready').exists() else socket.gethostbyname('host.docker.internal');origin='example.test.'
-keyname='agentdns-transfer.';keyring=dns.tsigkeyring.from_text({keyname:base64.b64encode((root/'tsig.key').read_bytes()).decode()})
+root=pathlib.Path('/work');master=(root/'container-ready').read_text().strip() if (root/'container-ready').exists() else socket.gethostbyname('host.docker.internal');origin=(VALIDATION_DOMAIN + '.')
+keyname=(TRANSFER_KEY_NAME);keyring=dns.tsigkeyring.from_text({keyname:base64.b64encode((root/'tsig.key').read_bytes()).decode()})
 messages=list(dns.query.xfr(master,origin,port=18535,keyring=keyring,keyname=keyname,keyalgorithm='hmac-sha256',timeout=10,lifetime=30,relativize=False))
 assert len(messages)>1,'must exercise multi-message TSIG chaining'
 assert all(m.had_tsig for m in messages),'every stream message must authenticate'
@@ -37,8 +45,8 @@ anchor=f'trust-anchors {{ "{origin}" static-key {ksk.flags} {ksk.protocol} {ksk.
 check=subprocess.run(['ldns-verify-zone','-k',str(root/'trusted.key'),str(root/'transferred.zone')],capture_output=True,text=True)
 (root/'ldns-verify-zone.log').write_text(check.stdout+check.stderr)
 assert check.returncode==0,check.stdout+check.stderr
-for name,kind in [('example.test.','SOA'),('mail-good.example.test.','A'),('absent.branch.example.test.','A'),('mail-good.example.test.','TXT'),('missing.wild.example.test.','A')]:
-    check=subprocess.run(['delv','@127.0.0.1','-p','1053','-a',str(root/'trust-anchor.conf'),'+root=example.test.',name,kind],capture_output=True,text=True)
+for name,kind in [((VALIDATION_DOMAIN + '.'),'SOA'),(('mail-good.' + VALIDATION_DOMAIN + '.'),'A'),(('absent.branch.' + VALIDATION_DOMAIN + '.'),'A'),(('mail-good.' + VALIDATION_DOMAIN + '.'),'TXT'),(('missing.wild.' + VALIDATION_DOMAIN + '.'),'A')]:
+    check=subprocess.run(['delv','@127.0.0.1','-p','1053','-a',str(root/'trust-anchor.conf'),('+root=' + VALIDATION_DOMAIN + '.'),name,kind],capture_output=True,text=True)
     (root/('delv-'+name+kind+'.log')).write_text(check.stdout+check.stderr)
     assert check.returncode==0 and ('fully validated' in check.stdout or 'negative response, fully validated' in check.stdout),check.stdout+check.stderr
 result['external_dnssec_validated']=True
@@ -48,7 +56,7 @@ configuration=f'''
 {anchor}
 options {{ directory "{resolver}"; listen-on port 53 {{ 127.0.0.1; }}; listen-on-v6 {{ none; }}; recursion yes; allow-recursion {{ 127.0.0.1; }}; dnssec-validation yes; empty-zones-enable no; pid-file "{resolver}/named.pid"; session-keyfile "{resolver}/session.key"; }};
 controls {{ }};
-zone "example.test" {{ type forward; forward only; forwarders {{ 127.0.0.1 port 1053; }}; }};
+zone "{VALIDATION_DOMAIN}" {{ type forward; forward only; forwarders {{ 127.0.0.1 port 1053; }}; }};
 '''
 launch(root,resolver,'resolver',configuration,detached=True)
 for _ in range(50):

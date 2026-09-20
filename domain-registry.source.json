@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/maceip/agent-hosting.git",
+  "ref": "99e0e572bd2db18d8240debc7bd7a74b2170b4f0",
+  "path": "infra/production/topology.json"
+}

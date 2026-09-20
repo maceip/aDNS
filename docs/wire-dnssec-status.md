@@ -31,7 +31,7 @@ The ASAN-instrumented `cargo-fuzz` harness completed **7,370,945 executions in 6
 ```sh
 cargo test -p adns-wire -p adns-dnssec --offline
 cargo clippy -p adns-wire -p adns-dnssec --all-targets --offline -- -D warnings
-cargo run -p adns-dnssec --example export -- docs/evidence/dnssec
+cargo run -p adns-dnssec --example export -- --caa-issuer "$(python3 tools/domain_registry.py get caa_primary_domain)" docs/evidence/dnssec
 docker run --rm -v "$PWD:/work" agentdns-validation:local ldns-verify-zone /work/docs/evidence/dnssec/nsec.zone
 docker run --rm -v "$PWD:/work" agentdns-validation:local ldns-verify-zone /work/docs/evidence/dnssec/nsec3.zone
 docker run --rm -v "$PWD:/work" agentdns-validation:local python3 /work/crates/adns-dnssec/tests/validate_packets.py /work/docs/evidence/dnssec

@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 """Observe real idle refresh across 1200 elapsed seconds without mutations."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse,json,pathlib,time,urllib.request,subprocess
 p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--seconds',type=int,default=1200);a=p.parse_args();root=pathlib.Path(a.directory)
-first=json.loads(urllib.request.urlopen('http://127.0.0.1:18080/zone/status?zone=example.test.',timeout=5).read())
+first=json.loads(urllib.request.urlopen(('http://127.0.0.1:18080/zone/status?zone=' + VALIDATION_DOMAIN + '.'),timeout=5).read())
 samples=json.loads((root/'idle-samples.json').read_text()) if (root/'idle-samples.json').exists() else []
 start=samples[0]['unix_seconds']-samples[0]['elapsed_seconds'] if samples else first['committed_state']['rrsig_inception']+300
 last_serial=None;refresh_due_since=None
 while True:
-    now=int(time.time());status=json.loads(urllib.request.urlopen('http://127.0.0.1:18080/zone/status?zone=example.test.',timeout=5).read())
+    now=int(time.time());status=json.loads(urllib.request.urlopen(('http://127.0.0.1:18080/zone/status?zone=' + VALIDATION_DOMAIN + '.'),timeout=5).read())
     pid=int(subprocess.check_output(['lsof','-tiTCP:18080','-sTCP:LISTEN']).decode().split()[0])
     rss=int(subprocess.check_output(['ps','-o','rss=','-p',str(pid)]).decode().strip())
     state=status['committed_state'];sample={'unix_seconds':now,'elapsed_seconds':now-start,'serial':state['serial'],'earliest_rrsig_expiration':state['earliest_rrsig_expiration'],'health':state['maintenance_health'],'rss_kib':rss,'runtime_pid':pid,'secondaries':status['frontend_propagation']['secondaries']}

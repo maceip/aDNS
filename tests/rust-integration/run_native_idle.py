@@ -4,6 +4,15 @@
 Run only after admissions and an explicit mutation-free window are confirmed.
 Public CCF status uses its authenticated service certificate and fixed DNS SNI.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import CCF_RPC_HOSTNAME, CCF_RPC_URL
+from domain_registry import registry_path
 import argparse
 import hashlib
 import importlib.util
@@ -21,7 +30,8 @@ VALIDATOR = 'sha256:448109ffddaab856945aed9d1d121e6f302db57e7f50dba917c5ba20bcc6
 FILES = ('tests/rust-integration/run_native_idle.py','tests/rust-integration/run_ccf.py',
     'tests/rust-integration/export_ccf_results.py',
     'tests/rust-integration/monitor_remote.py','tests/rust-integration/benchmark_remote.py',
-    'ccf/tests/observe_status.py','tools/http_limits.py')
+    'ccf/tests/observe_status.py','tools/http_limits.py',
+    'tools/domain_registry.py','tools/validation_names.py')
 
 
 def load_frozen_guard(source):
@@ -64,6 +74,12 @@ def main():
         destination = source/name;destination.parent.mkdir(parents=True,exist_ok=True)
         destination.write_bytes(data);destination.chmod(0o444)
         hashes[name] = hashlib.sha256(data).hexdigest()
+    registry = registry_path().read_bytes()
+    registry_file = source/'.domain-registry/topology.json'
+    registry_file.parent.mkdir()
+    registry_file.write_bytes(registry)
+    registry_file.chmod(0o444)
+    hashes['.domain-registry/topology.json'] = hashlib.sha256(registry).hexdigest()
     public_hashes = {}
     for name,path in [('service_cert.pem',args.service_cert),('trust-anchor.conf',args.anchor)]:
         with path.open('rb') as stream:
@@ -91,7 +107,7 @@ def main():
     signal.signal(signal.SIGTERM,interrupted)
     try:
         jobs = [
-            ('status',['/src/ccf/tests/observe_status.py','--url','https://agentdns.test:8000',
+            ('status',['/src/ccf/tests/observe_status.py','--url',(CCF_RPC_URL),
                 '--service-cert','/public/service_cert.pem','--seconds','1250','--output','/results']),
             ('dnssec',['/src/tests/rust-integration/monitor_remote.py','--server',str(args.secondary),
                 '--port','53','--anchor','/public/trust-anchor.conf','--seconds','1250','--output','/results']),
@@ -101,7 +117,8 @@ def main():
             directory = results/label;directory.mkdir()
             name = stem+'-'+label
             log = (results/(label+'.log')).open('wb')
-            args_run = ['docker','run','--rm','--name',name,'--add-host','agentdns.test:'+str(args.primary),
+            args_run = ['docker','run','--rm','--name',name,
+                '-e','AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json','--add-host',(CCF_RPC_HOSTNAME + ':')+str(args.primary),
                 '-v',str(source)+':/src:ro','-v',str(public)+':/public:ro','-v',str(directory)+':/results',
                 '--entrypoint','python3',VALIDATOR,*command]
             process = subprocess.Popen(args_run,stdout=log,stderr=log)

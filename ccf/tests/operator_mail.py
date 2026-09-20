@@ -2,9 +2,16 @@
 """Exercise all five outbound mail policy records through real signed CCF APIs.
 
 Run against an explicitly selected, already opened validation service. This
-governs one ephemeral operator key and mutates the reserved example.test zone.
-No private key is written or exported. Do not run during an idle-only window.
+governs one ephemeral operator key and mutates the registry-selected validation
+zone. No private key is written or exported. Do not run during an idle-only window.
 """
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import CAA_ISSUER, CCF_AUDIENCE, VALIDATION_DOMAIN
 import argparse
 import base64
 import copy
@@ -54,16 +61,16 @@ def main():
     spki = key.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
     dkim = rsa.generate_private_key(public_exponent=65537, key_size=2048).public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
     entries = [
-        ("example.test.", "TXT", "v=spf1 -all"),
-        ("selector1._domainkey.example.test.", "TXT", "v=DKIM1; k=rsa; p=" + base64.b64encode(dkim).decode()),
-        ("_dmarc.example.test.", "TXT", "v=DMARC1; p=reject; rua=mailto:dmarc@example.test"),
-        ("_smtp._tls.example.test.", "TXT", "v=TLSRPTv1; rua=mailto:tlsrpt@example.test"),
-        ("example.test.", "CAA", '0 issue "letsencrypt.org"'),
+        ((VALIDATION_DOMAIN + '.'), "TXT", "v=spf1 -all"),
+        (('selector1._domainkey.' + VALIDATION_DOMAIN + '.'), "TXT", "v=DKIM1; k=rsa; p=" + base64.b64encode(dkim).decode()),
+        (('_dmarc.' + VALIDATION_DOMAIN + '.'), "TXT", ('v=DMARC1; p=reject; rua=mailto:dmarc@' + VALIDATION_DOMAIN)),
+        (('_smtp._tls.' + VALIDATION_DOMAIN + '.'), "TXT", ('v=TLSRPTv1; rua=mailto:tlsrpt@' + VALIDATION_DOMAIN)),
+        ((VALIDATION_DOMAIN + '.'), "CAA", f'0 issue "{CAA_ISSUER}"'),
     ]
     now = int(time.time())
     grant_id = "mail-policy-" + uuid.uuid4().hex[:16]
     grant = {"grant_id": grant_id, "subject_spki_sha256": hashlib.sha256(spki).hexdigest(),
-             "zones": ["example.test."], "mailbox_domains": [], "service_hosts": [], "roles": [],
+             "zones": [(VALIDATION_DOMAIN + '.')], "mailbox_domains": [], "service_hosts": [], "roles": [],
              "address_cidrs": [], "ports": [], "allowed_operations": ["operator_records"], "acme_names": [],
              "operator_names": sorted({name for name, _, _ in entries}), "operator_record_types": ["TXT", "CAA"],
              "attested_names": [], "attested_record_types": [],
@@ -81,9 +88,9 @@ def main():
 
     result = None
     for attempt in range(3):
-        state = committed("GET", "/app/zone/status?zone=example.test.")["body"]
-        action = {"operation": "operator_records", "request_id": uuid.uuid4().hex, "audience": "ccf://agentdns.test",
-                  "grant_id": grant_id, "zone": "example.test.", "signer_spki_der": b64(spki),
+        state = committed("GET", ('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))["body"]
+        action = {"operation": "operator_records", "request_id": uuid.uuid4().hex, "audience": (CCF_AUDIENCE),
+                  "grant_id": grant_id, "zone": (VALIDATION_DOMAIN + '.'), "signer_spki_der": b64(spki),
                   "parameters": {"expected_serial": state["committed_state"]["serial"],
                                  "mutations": [{"action": "replace", "name": name, "type": kind, "ttl": 300,
                                                 "rdata_strings": [value]} for name, kind, value in entries]}}

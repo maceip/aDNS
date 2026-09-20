@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Verify committed operator mail policy on a real authoritative secondary."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import argparse
 import ipaddress
 import json
@@ -10,6 +18,8 @@ import dns.flags
 import dns.message
 import dns.name
 import dns.query
+import dns.rdata
+import dns.rdataclass
 import dns.rcode
 import dns.rdatatype
 
@@ -21,6 +31,11 @@ def records_at_owner(response, name, kind):
     return [record for rrset in response.answer
             if rrset.name == owner and rrset.rdtype == record_type
             for record in rrset]
+
+
+def caa_matches(records, expected):
+    """Compare with the policy actually committed, including flags and tag."""
+    return dns.rdata.from_text(dns.rdataclass.IN, dns.rdatatype.CAA, expected) in records
 
 
 def main():
@@ -48,11 +63,11 @@ def main():
             if name.startswith("selector1.") and chunks < 2:
                 raise ValueError("long DKIM value did not exercise multiple DNS character strings")
         else:
-            if not any(record.flags == 0 and record.tag == b"issue" and record.value == b"letsencrypt.org" for record in records):
+            if not caa_matches(records, value):
                 raise ValueError("served CAA differs from the committed policy")
             chunks = None
         check = subprocess.run(["delv", "@" + str(args.server), "-p", "53", "-a", str(args.anchor),
-                                "+root=example.test.", name, kind], capture_output=True, text=True, timeout=15)
+                                ('+root=' + VALIDATION_DOMAIN + '.'), name, kind], capture_output=True, text=True, timeout=15)
         (args.output / (name + kind + ".log")).write_text(check.stdout + check.stderr)
         if check.returncode != 0 or "fully validated" not in check.stdout:
             raise ValueError("operator policy failed independent DNSSEC validation")

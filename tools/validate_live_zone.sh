@@ -37,7 +37,7 @@ trap cleanup EXIT
 docker rm -f "$VALID_C" "$SERVER_C" >/dev/null 2>&1 || true
 
 echo "== export $MODE zone from our signer"
-cargo run --quiet --locked -p adns-dnssec --example export -- "$WORK/zones"
+cargo run --quiet --locked -p adns-dnssec --example export -- --caa-issuer "$(python3 "$ROOT/tools/domain_registry.py" get caa_primary_domain)" "$WORK/zones"
 ZONE="$WORK/zones/$MODE.zone"
 KEYFILE="$WORK/zones/$MODE.key"
 

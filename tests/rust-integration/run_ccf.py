@@ -18,6 +18,7 @@ import time
 import uuid
 
 from export_ccf_results import read_public_artifact
+from domain_registry import registry_path
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 SOURCES = (
@@ -32,6 +33,7 @@ SOURCES = (
     'tests/rust-integration/verify_tsig_rotation.py',
     'ccf/tests/observe_process.py',
     'tools/ccf_control.py', 'tools/prepare_aci_control.py',
+    'tools/domain_registry.py', 'tools/validation_names.py',
     'tools/verify_ksk_receipt.py', 'tools/http_limits.py',
     'ccf/node.example.json', 'ccf/tests/verify_live_transfer.py',
     'ccf/tests/observe_status.py', 'ccf/tests/operator_mail.py',
@@ -115,11 +117,17 @@ def snapshot_sources(destination):
         path.write_bytes(data)
         path.chmod(0o444)
         result[name] = hashlib.sha256(data).hexdigest()
+    registry = registry_path().read_bytes()
+    path = destination/'.domain-registry/topology.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(registry)
+    path.chmod(0o444)
+    result['.domain-registry/topology.json'] = hashlib.sha256(registry).hexdigest()
     return result
 
 
 def helper_mounts(work, source, results, access):
-    options = ['-v', str(source)+':/src:ro']
+    options = ['-v', str(source)+':/src:ro', '-e', 'AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json']
     if access == 'control':
         # prepare_aci_control creates /work/control itself. Keep that bootstrap
         # parent writable, but mask the second alias to the copied source too.
@@ -319,6 +327,7 @@ def main():
         containers.append(secondary)
         execute(['docker', 'run', '-d', '--platform', 'linux/amd64', '--name', secondary,
             '--network', 'container:'+node, '-e', 'AGENTDNS_TRANSFER_KEY_FILE=/config/key.b64',
+            '-v', str(work/'control/public')+':/etc/agent-hosting:ro',
             '-v', str(work/'control/private/transfer-key.b64')+':/config/key.b64:ro', images['secondary']], stdout=subprocess.DEVNULL)
         phase('bind-ready', 'ccf')
         containers.append(driver)
@@ -352,7 +361,8 @@ def main():
                 arguments += ['--network', network]
             if pid_container:
                 arguments += ['--pid', 'container:'+pid_container]
-            arguments += ['-v', str(source)+':/src:ro', '-v', str(results)+':/results',
+            arguments += ['-e', 'AH_DOMAIN_REGISTRY=/src/.domain-registry/topology.json',
+                '-v', str(source)+':/src:ro', '-v', str(results)+':/results',
                 images['validator'], 'python3', *command]
             log = (results/(label+'.log')).open('wb')
             monitors.append((label, subprocess.Popen(arguments, stdout=log, stderr=log), log))

@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """Controlled SMTP STARTTLS and implicit TLS peers; never delivers mail."""
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_DOMAIN
 import concurrent.futures, pathlib, socket, ssl, threading, time
 root=pathlib.Path('/work')
 context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER);context.load_cert_chain(root/'mail.pem',root/'mail.key')
@@ -15,10 +23,10 @@ def line(sock):
     raise RuntimeError('oversized SMTP command')
 
 def smtp(sock):
-    sock.settimeout(10);sock.sendall(b'220 mail-good.example.test ESMTP acceptance fixture\r\n')
+    sock.settimeout(10);sock.sendall((b'220 mail-good.' + VALIDATION_DOMAIN.encode("ascii") + b' ESMTP acceptance fixture\r\n'))
     while True:
         command=line(sock).upper()
-        if command.startswith((b'EHLO',b'HELO')):sock.sendall(b'250-mail-good.example.test\r\n250-STARTTLS\r\n250 SIZE 1024\r\n')
+        if command.startswith((b'EHLO',b'HELO')):sock.sendall((b'250-mail-good.' + VALIDATION_DOMAIN.encode("ascii") + b'\r\n250-STARTTLS\r\n250 SIZE 1024\r\n'))
         elif command.startswith(b'STARTTLS'):
             sock.sendall(b'220 Go ahead\r\n');sock=context.wrap_socket(sock,server_side=True)
         elif command.startswith(b'QUIT'):sock.sendall(b'221 Bye\r\n');return

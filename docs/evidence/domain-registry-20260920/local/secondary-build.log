@@ -1,0 +1,64 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from secondary.Dockerfile
+#1 transferring dockerfile: 999B done
+#1 DONE 0.0s
+
+#2 [context domain-registry] load .dockerignore
+#2 transferring domain-registry: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 155B done
+#4 DONE 0.0s
+
+#5 [stage-0 1/6] FROM docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61
+#5 resolve docker.io/library/ubuntu:24.04@sha256:a61567bd31828687156d735ea8eb01ba4e37636e225dd6a48ba94136a70d9d61 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 113B done
+#6 DONE 0.0s
+
+#7 [context domain-registry] load from client
+#7 transferring domain-registry: 3.33kB done
+#7 DONE 0.1s
+
+#8 [stage-0 2/6] RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends bind9 bind9-utils python3 ca-certificates && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [stage-0 3/6] COPY tools/secondary_aci.py /app/secondary_aci.py
+#9 CACHED
+
+#10 [stage-0 4/6] COPY --from=domain-registry topology.json /etc/agent-hosting/domain-registry.json
+#10 DONE 0.1s
+
+#11 [stage-0 5/6] COPY tools/domain_registry.py /app/domain_registry.py
+#11 DONE 0.1s
+
+#12 [stage-0 6/6] RUN python3 /app/domain_registry.py json >/dev/null  && sha256sum /etc/agent-hosting/domain-registry.json > /etc/agent-hosting/domain-registry.sha256
+#12 DONE 0.3s
+
+#13 exporting to image
+#13 exporting layers 0.1s done
+#13 exporting manifest sha256:19c5219e9365113a02b816bf9c85346952c00d0ce70bd3f9e79df96ce019673c
+#13 exporting manifest sha256:19c5219e9365113a02b816bf9c85346952c00d0ce70bd3f9e79df96ce019673c done
+#13 exporting config sha256:baf53cef1fea37a1cc9ac981af3ab7ebbe8f6a240d8d5c54b152a0167286fada done
+#13 exporting attestation manifest sha256:6dd0dbb379fff652d5ee20f6ae326b0ddc72a48d7a379042932799a1cc68ad97 0.0s done
+#13 exporting manifest list sha256:854070d1ee64cfeedab051d4b063131835a123673461494bd3830cd5207420fc done
+#13 naming to docker.io/library/agentdns-secondary:alternate-domain-validation done
+#13 DONE 0.2s
+{
+  "image": "agentdns-secondary:alternate-domain-validation",
+  "image_id": "sha256:854070d1ee64cfeedab051d4b063131835a123673461494bd3830cd5207420fc",
+  "domain_registry": {
+    "schema_version": 1,
+    "source": "/private/tmp/adns-alternate-domain-registry.json",
+    "sha256": "a1a3bc78046384f414c88a22c9009e72c9b5ea9de3ba379697ca5ddb4ac0d8f1"
+  },
+  "dockerfile": "containers/secondary.Dockerfile",
+  "dockerfile_sha256": "87e0706dd03cb592534def438d5bb737253e2f25a134fa1c84e3ff04217d7a15"
+}

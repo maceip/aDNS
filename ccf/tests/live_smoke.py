@@ -5,6 +5,14 @@ No virtual quote is admitted as hardware evidence. This test uses a governed
 operator grant to test the shared transaction boundary and exact signature path.
 Run in the pinned CCF toolchain image, with /build writable and /src read-only.
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+for _parent in _Path(__file__).resolve().parents:
+    if (_parent / "tools/domain_registry.py").is_file():
+        _sys.path.insert(0, str(_parent / "tools"))
+        break
+from validation_names import VALIDATION_NS_HOSTNAME, VALIDATION_DOMAIN
 import base64
 import datetime
 import hashlib
@@ -97,10 +105,10 @@ def main():
         propose([{"name":"transition_service_to_open","args":{"next_service_identity":ca.read_text()}}])
         signer=ec.generate_private_key(ec.SECP256R1());spki=signer.public_key().public_bytes(serialization.Encoding.DER,serialization.PublicFormat.SubjectPublicKeyInfo)
         now=int(time.time())
-        grant={"grant_id":"smoke-operator","subject_spki_sha256":hashlib.sha256(spki).hexdigest(),"zones":["example.test."],"mailbox_domains":[],"service_hosts":[],"roles":[],"address_cidrs":[],"ports":[],"allowed_operations":["operator_records"],"acme_names":[],"operator_names":["example.test."],"operator_record_types":["TXT"],"attested_names":[],"attested_record_types":[],"max_lease_seconds":3600,"max_challenge_lifetime_seconds":1800,"valid_from":now-60,"valid_until":now+3600,"revoked":False}
+        grant={"grant_id":"smoke-operator","subject_spki_sha256":hashlib.sha256(spki).hexdigest(),"zones":[(VALIDATION_DOMAIN + '.')],"mailbox_domains":[],"service_hosts":[],"roles":[],"address_cidrs":[],"ports":[],"allowed_operations":["operator_records"],"acme_names":[],"operator_names":[(VALIDATION_DOMAIN + '.')],"operator_record_types":["TXT"],"attested_names":[],"attested_record_types":[],"max_lease_seconds":3600,"max_challenge_lifetime_seconds":1800,"valid_from":now-60,"valid_until":now+3600,"revoked":False}
         def rr(name,rtype,data):return {"name":name,"rclass":"In","rtype":rtype,"ttl":300,"rdata":{rtype:data}}
-        base=[rr("example.test.","Soa",{"mname":"ns.example.test.","rname":"hostmaster.example.test.","serial":7,"refresh":60,"retry":30,"expire":600,"minimum":60}),rr("example.test.","Ns","ns.example.test."),rr("ns.example.test.","A","192.0.2.1")]
-        metadata={"id":1,"origin":"example.test.","serial":7,"base_records":base,"signed_records":[],"signature_validity":600,"refresh_before":300,"last_signed_at":0,"earliest_signature_expiration":0,"maintenance_health":"initializing","ksk_dnskey_rdata":[]}
+        base=[rr((VALIDATION_DOMAIN + '.'),"Soa",{"mname":(VALIDATION_NS_HOSTNAME + '.'),"rname":('hostmaster.' + VALIDATION_DOMAIN + '.'),"serial":7,"refresh":60,"retry":30,"expire":600,"minimum":60}),rr((VALIDATION_DOMAIN + '.'),"Ns",(VALIDATION_NS_HOSTNAME + '.')),rr((VALIDATION_NS_HOSTNAME + '.'),"A","192.0.2.1")]
+        metadata={"id":1,"origin":(VALIDATION_DOMAIN + '.'),"serial":7,"base_records":base,"signed_records":[],"signature_validity":600,"refresh_before":300,"last_signed_at":0,"earliest_signature_expiration":0,"maintenance_health":"initializing","ksk_dnskey_rdata":[]}
         propose([{"name":"adns_set_configuration","args":{"audience":"ccf://smoke","epoch":1,"last_time":now}},{"name":"adns_set_owner_grant","args":{"grant":grant}},{"name":"adns_create_zone","args":{"metadata":metadata}}])
         for _ in range(200):
             status,headers,body=internal.request("POST","/app/internal/maintenance",{})
@@ -111,7 +119,7 @@ def main():
         assert headers.get("x-agentdns-commit-status")=="committed" and body["status"]=="committed",(headers,body)
         for path in ["maintenance","transfer-key","secondary/requests","secondary/response","axfr","udp"]:
             status,_,body=public.request("POST","/app/internal/"+path,{});assert status==403,(path,status,body)
-        action={"operation":"operator_records","request_id":str(uuid.uuid4()),"audience":"ccf://smoke","grant_id":"smoke-operator","zone":"example.test.","signer_spki_der":b64(spki),"parameters":{"expected_serial":7,"mutations":[{"action":"replace","name":"example.test.","type":"TXT","ttl":300,"rdata_strings":["ccf-atomic-smoke"]}]}}
+        action={"operation":"operator_records","request_id":str(uuid.uuid4()),"audience":"ccf://smoke","grant_id":"smoke-operator","zone":(VALIDATION_DOMAIN + '.'),"signer_spki_der":b64(spki),"parameters":{"expected_serial":7,"mutations":[{"action":"replace","name":(VALIDATION_DOMAIN + '.'),"type":"TXT","ttl":300,"rdata_strings":["ccf-atomic-smoke"]}]}}
         status,_,nonce=public.request("POST","/app/service/nonce",{"action":action});assert status==200,(status,nonce)
         signed={"action":action,"nonce":nonce["nonce"],"nonce_expires_at":nonce["expires_at"],"intent_hash":nonce["intent_hash"]}
         signature=signer.sign(jcs(signed),ec.ECDSA(hashes.SHA256()));r,s=utils.decode_dss_signature(signature)
@@ -129,7 +137,7 @@ def main():
         status,_,failed_state=public.request("GET",lookup)
         assert status==200 and failed_state["status"]=="failed" and failed_state["latest_observation"]["nonce"]==signed["nonce"],(status,failed_state)
         assert failed_state["latest_observation"]["signed_message_digest"]==hashlib.sha256(jcs({k:v for k,v in signed.items() if k!="client_signature"})).hexdigest()
-        status,_,unchanged=public.request("GET","/app/zone/status?zone=example.test.")
+        status,_,unchanged=public.request("GET",('/app/zone/status?zone=' + VALIDATION_DOMAIN + '.'))
         assert status==200 and unchanged["committed_state"]["serial"]==7,(status,unchanged)
         (work/"request-observations.json").write_text(json.dumps({"pending":pending_state,"failed_submit":failure,"failed_query":failed_state,"unchanged_serial":7},indent=2)+"\n")
         propose([{"name":"adns_set_owner_grant","args":{"grant":grant}}])
@@ -144,7 +152,7 @@ def main():
         r,s=utils.decode_dss_signature(signer.sign(jcs(payload),ec.ECDSA(hashes.SHA256())));altered["client_signature"]=b64(r.to_bytes(32,"big")+s.to_bytes(32,"big"))
         status,_,conflict=public.request("POST","/app/zone/operator/records",altered);assert status==409,(status,conflict)
         status,_,media=public.request("POST","/app/service/nonce",{},"text/plain");assert status==415,(status,media)
-        status,headers,receipt=public.request("GET","/app/governance/ksk-receipt?zone=example.test.");assert status==200,(status,receipt)
+        status,headers,receipt=public.request("GET",('/app/governance/ksk-receipt?zone=' + VALIDATION_DOMAIN + '.'));assert status==200,(status,receipt)
         assert headers.get("x-agentdns-commit-status")=="committed"; (work/"ksk-receipt.json").write_text(json.dumps(receipt,indent=2))
         sys.path.insert(0,str(ROOT/"tools"));import verify_ksk_receipt
         verify_ksk_receipt.verify(receipt,ca.read_bytes())
