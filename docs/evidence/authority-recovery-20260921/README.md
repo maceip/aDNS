@@ -4,7 +4,7 @@ The current [v5 declaration](../../../infra/authority/azure/20260921-v5/README.m
 
 ## Failure cause and impact
 
-The operator supplied the original September 13 TSIG secret (SHA256 `f16ad9f7845bc158e5b1bde89a92103af2896e0ce71b6567b5782d434fdecd5a`) to the v3 Join candidate. September 21 restoration had already governed and installed a different existing key (`85b474fbaf68cf15b01a2689e69824bb5555527d9ebb91fadc2b3bd7134209e7`) under the same name and scope. The operator did not compare the input against that current governed digest before Trust. This was an input-verification error, not evidence that CCF Join cannot replicate the service.
+The deployment agent supplied the original September 13 TSIG secret (SHA256 `f16ad9f7845bc158e5b1bde89a92103af2896e0ce71b6567b5782d434fdecd5a`) to the v3 Join candidate. September 21 restoration had already governed and installed a different existing key (`85b474fbaf68cf15b01a2689e69824bb5555527d9ebb91fadc2b3bd7134209e7`) under the same name and scope. The deployment agent did not compare the input against that current governed digest before Trust. This was an input-verification error, not evidence that CCF Join cannot replicate the service.
 
 Trust committed at `6.52383`. The packaged launcher attempted redundant private TSIG provisioning, received HTTP 400, raised an exception and terminated the candidate process at 20:14:57 UTC. It logged only the status, not the response body; the digest mismatch is independently established from the retained parameter files and governed transfer action. The old primary remained alive but the committed two-node configuration lost quorum; its last committed transaction was `6.52384`. The direct-binary Virtual tests had not exercised the packaged launcher with this input.
 
