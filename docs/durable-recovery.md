@@ -199,6 +199,64 @@ member acceptance/share and continuity functions with real CCF 7.0.15. It also
 checks TSIG, committed request history and pending nonce continuity. Virtual CCF
 testing does not replace the Azure Files/SNP/runtime exercise.
 
+## Recurring copies while the authority is online
+
+`tools/committed_backup.py` is a separate byte-copy helper for a live source or a
+downloaded immutable source snapshot. It selects only canonical `.committed`
+ledger chunks and snapshots, rejects declared history gaps/overlaps, excludes
+mutable files and snapshots whose evidence sequence is beyond the closed chunks,
+then hashes the selected source files twice and independently reads back the
+destination. The completion manifest is written last. A partial output without
+that manifest is not a backup. Outputs are private and never overwritten.
+
+```sh
+python3 tools/committed_backup.py copy \
+  --source "$ADNS_COMMITTED_SOURCE" --output "$ADNS_NEW_BACKUP" \
+  --service-cert "$ADNS_AUTHENTICATED_SERVICE_CERT" \
+  --receipt "$ADNS_VERIFIED_KSK_RECEIPT" --zone "$ADNS_ZONE" \
+  --provenance "$ADNS_COPY_PROVENANCE" --previous "$ADNS_PREVIOUS_BACKUP"
+python3 tools/committed_backup.py verify --backup "$ADNS_NEW_BACKUP"
+python3 tools/committed_backup.py report --backup "$ADNS_NEW_BACKUP" \
+  --max-age-seconds 900
+```
+
+Use `--initial` instead of `--previous` only for the first copy. Retain the previous
+verified manifest and all its committed ledger chunks on recurring runs: missing
+or changed prior history is rejected. Copying unchanged chunks again preserves
+the original content-progress timestamp, so a healthy timer cannot hide stalled
+ledger rotation. The example 900-second limit is an operator-selected freshness
+threshold, not a demonstrated recovery-point guarantee.
+
+The trusted certificate and KSK receipt are verified and retained, but a receipt
+does **not** prove that its transaction occurs in the copied ledger bytes. Chunk
+names establish only declared ranges. The manifest therefore always records
+`transaction_inclusion_verified: false` and `recovery_exercised: false`. This
+format is deliberately distinct from the complete stopped-state archive. It must
+not be passed to the stopped-state recovery helper as though it were equivalent.
+
+The `report` command verifies bytes before producing JSON. Exit 1 means invalid
+or missing evidence; exit 2 means stale copying or no observed ledger progress;
+exit 3 means fresh copied bytes with recovery coverage still unverified. It never
+returns a green recoverability verdict. A monitor should retain the last report,
+check its timestamp independently even if the timer stops, and alert on exits 1
+or 2. Display fresh byte copies separately from an isolated, member-authorized
+Recover proof. Missing signed ledger-coverage verification remains visible until
+that additional proof exists.
+
+The deployment runner must use read-only source access and independently retained
+backup storage, preserve the previous-manifest chain, and schedule authorized
+`trigger_ledger_chunk` governance actions to bound delay before transactions reach
+closed chunks. Periodic `trigger_snapshot` can shorten recovery, but does not by
+itself close that ledger gap. Wait for the resulting committed files before
+declaring the copy cycle complete. Read Azure file sizes from per-file snapshot
+properties, not directory listings. Keep the service certificate, source identity
+and protected recovery-member custody references alongside the copies; never put
+keys or shares in public manifests. The helper does not install a timer, invoke
+governance, modify cloud resources or establish unattended recovery on its own.
+
+The normal live-copy contract follows [CCF 7.0.15 data persistence](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/data_persistence.rst)
+and [ledger/snapshot management](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/ledger_snapshot.rst).
+
 References: [Azure Files snapshots](https://learn.microsoft.com/en-us/rest/api/storageservices/snapshot-share),
 [ACI Azure Files persistence](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-volume-azure-files),
 [CCF 7.0.15 recovery](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/recovery.rst).
