@@ -289,7 +289,7 @@ def main():
     (args.output / "public").mkdir()
     for name, value in public.items():
         (args.output / "public" / name).write_bytes(value)
-    print(json.dumps(summary, indent=2))
+    print("Prepared offline candidate public templates and summary; no resources or keys created.")
 
 
 if __name__ == "__main__":

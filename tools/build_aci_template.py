@@ -267,6 +267,9 @@ def main():
     if otel is not None:
         write_output(args.output / "otel-public-summary.json",json.dumps(otel_summary,indent=2)+"\n",0o644)
         write_output(args.output / "otel-env-rules.json",json.dumps(otel_policy_rules(environment),indent=2)+"\n",0o644)
+    else:
+        write_output(args.output / "otel-public-summary.json",json.dumps({"trace_export_enabled":False,"mode":"explicitly_disabled"},indent=2)+"\n",0o644)
+        write_output(args.output / "otel-env-rules.json",json.dumps([OTEL_DISABLED_RULE],indent=2)+"\n",0o644)
     print("Prepared public template and separate secure parameters; CCE policy generation and review are still required.")
 
 

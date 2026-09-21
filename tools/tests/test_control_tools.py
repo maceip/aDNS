@@ -235,6 +235,8 @@ class BootstrapTemplateTests(unittest.TestCase):
         self.assertEqual(config['resources'][0]['properties']['containers'][1]['properties']['environmentVariables'][0]['secureValue'],"[parameters('transferKeyB64')]")
         properties=config['resources'][0]['properties']
         self.assertEqual(properties['containers'][0]['properties']['environmentVariables'],template.OTEL_DISABLED_ENVIRONMENT)
+        self.assertEqual(json.loads((output/'otel-env-rules.json').read_text()),[template.OTEL_DISABLED_RULE])
+        self.assertFalse(json.loads((output/'otel-public-summary.json').read_text())['trace_export_enabled'])
         self.assertEqual(properties['ipAddress']['ports'],[
             {'port':8000,'protocol':'TCP'}, {'port':5353,'protocol':'TCP'}, {'port':53,'protocol':'UDP'}])
         self.assertEqual(properties['containers'][1]['properties']['ports'],[{'port':53,'protocol':'UDP'}])
