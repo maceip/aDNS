@@ -1,0 +1,11 @@
+{
+  "base_image": "agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+  "diagnostic_source_commit": "39d854d3fe8d7139aa5fe029c1a9762605956f83",
+  "diagnostic_source_file": "ccf/host_driver.py",
+  "diagnostic_sha256": "556e94623e886719a95ca11c90f70fdcd39c7a93af63ee478040327f19981f08",
+  "oci_index_sha256": "7c265139c8fc8e91dbbc77656216de43dbd189f042bf74053ea7a21c6cfe8184",
+  "linux_amd64_manifest_sha256": "f180a8a8e316ded2c8ccc7603e46bc18ded4446fafe2118f6038105fb7debcf4",
+  "source_scope": "One added layer copies only host_driver.py. Other binaries, scripts, dependencies and inherited image labels are unchanged from immutable base; this is not a full rebuild at diagnostic_source_commit.",
+  "cce_sha256": "6665a4273c40036ed1f3e8c125458463beaa00eb472d39c0e4efd008876e896c",
+  "declaration_sha256": "badb38ce5024b0122f54bcf0fd8872945f449c9fbeb2d08c6ac11be6431bf3ba"
+}

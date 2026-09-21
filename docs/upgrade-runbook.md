@@ -19,7 +19,7 @@ release authority last signed and a retired release cannot rejoin.
    security policy; record `host_data = SHA256(CCE)`, the UVM endorsement
    `{did, feed, svn}` from the target ACI platform, and the minimum TCB.
    Independently review the CCE. Reproduce the source manifest from the tagged
-   commit (`tools/check_aci_template.py`, `docs/ccf-measurements.md`).
+   commit (`tools/check_aci_template.py`, `docs/acceptance-ccf-measurements.md`).
 2. **D signs the node join policy** `P(svn = current + 1)` listing *only* the
    measurements/host data/UVM endorsements that may join after the upgrade
    (normally: the new release, plus the current release for the overlap
@@ -32,8 +32,10 @@ release authority last signed and a retired release cannot rejoin.
    must equal `P.svn`.
 4. **Start the new node** as a joiner (`ccf/run.py` join configuration, ACI
    template from `tools/build_aci_template.py`) against the current primary.
-   It is admitted only if its quote matches `P`. Wait for it to be trusted and
-   caught up (`/node/network`, `/node/state`).
+   The existing primary verifies its quote against `P` before recording Pending.
+   Use `transition_node_to_trusted` for the reviewed node identity, then perform
+   the independent TLS/SNP audit immediately after its service certificate is
+   issued. Wait for private-ledger catchup (`/node/network`, `/node/state`).
 5. **Verify on the new node**: `tools/audit_ccf_node.py` against `P`'s
    measurement (a bootstrap-only audit), `tools/verify_ksk_receipt.py` for
    each zone, `tools/verify_claims_receipt.py` on `/app/governance/anchors`,
@@ -43,7 +45,10 @@ release authority last signed and a retired release cannot rejoin.
    connect to against the pinned service identity and the *new* node policy;
    agent-hosting updates `infra/trust/pins.json node_policy` via a reviewed
    commit after verifying the policy receipt.
-7. **Retire the old node**: `remove_node` proposal, then stop its container.
+7. **Retire the old node**: `remove_node` proposal, then wait for
+   `/node/network/removable_nodes` to confirm globally committed retirement
+   before stopping its container. Prove the successor commits renewals and
+   authenticated transfers.
 8. **Close the window.** D signs `P'(svn + 1)` listing only the new release;
    propose it. From now on the retired measurement cannot rejoin even with a
    valid quote.
@@ -65,3 +70,5 @@ code. Recovery from ledger loss is `operations.md`, not this document.
   the current state signed and SVN-gated without changing it).
 - The consortium is more than one member; otherwise every step above is one
   person's decision, whatever the ledger says.
+
+The reviewed [Azure replacement declaration](../infra/authority/azure/20260921-v3/README.md) records the existing read-only snapshot bootstrap, exact image/CCE policy, and separate writable authority state. Its static Join configuration is for initial admission; sole-authority process recovery requires the existing governed Recover flow and updated service-identity pins.

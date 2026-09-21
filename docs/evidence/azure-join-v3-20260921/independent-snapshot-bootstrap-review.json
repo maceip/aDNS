@@ -1,0 +1,25 @@
+{
+  "reviewed_at": "2026-09-21T19:58:43.015043+00:00",
+  "result": "passed source and measured declaration review; native admission and snapshot catchup pending",
+  "supersedes_candidate_cce": "896519c842b72ededb8b7273644b3b915cc17d651d2db551af5ccb09b239c6f7",
+  "declaration_sha256": "badb38ce5024b0122f54bcf0fd8872945f449c9fbeb2d08c6ac11be6431bf3ba",
+  "cce_sha256": "6665a4273c40036ed1f3e8c125458463beaa00eb472d39c0e4efd008876e896c",
+  "manifest_sha256": "13d4c47222b339a1465e48ac7d7709b95055d9efad19cce2f3883119d707b662",
+  "primary_changed_fields": [
+    "command",
+    "id",
+    "layers",
+    "mounts"
+  ],
+  "other_containers_and_framework_unchanged": true,
+  "old_share_bootstrap_read_only_at_volume_mount_and_policy": true,
+  "separate_writable_candidate_share": true,
+  "join_snapshot_fetch": false,
+  "snapshot_source": "read_only_directory",
+  "successor_operator_features": [
+    "SnapshotRead"
+  ],
+  "node_policy_constraints_unchanged": true,
+  "service_ca_unchanged": true,
+  "boundary": "Old share is mounted read-only, not copied or altered; live CCF must authenticate its snapshot and replicate private state before old authority can be retired."
+}
