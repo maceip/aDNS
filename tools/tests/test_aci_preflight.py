@@ -18,16 +18,17 @@ import check_aci_template as preflight
 import build_aci_template as builder
 
 
-def archive_fixture(path, *, combined=False, damage=False):
+def archive_fixture(path, *, combined=False, damage=False, omit_platform=False, architecture="amd64"):
     files={}
     def blob(value):
         raw=json.dumps(value,separators=(',',':')).encode() if isinstance(value,dict) else value
         digest=hashlib.sha256(raw).hexdigest();name='blobs/sha256/'+digest;files[name]=raw
         return {'digest':'sha256:'+digest,'size':len(raw)}
     layer=blob(b'layer bytes for fixture')
-    config=blob({'architecture':'amd64','os':'linux'})
+    config=blob({'architecture':architecture,'os':'linux'})
     manifest=blob({'schemaVersion':2,'config':config,'layers':[layer]})
     descriptor={**manifest,'platform':{'architecture':'amd64','os':'linux'}}
+    if omit_platform:descriptor.pop('platform')
     index=blob({'schemaVersion':2,'manifests':[descriptor]})
     files['index.json']=json.dumps({'manifests':[index]}).encode()
     docker={'Config':'blobs/sha256/'+config['digest'][7:],'RepoTags':['example.azurecr.io/primary:test'],'Layers':['blobs/sha256/'+layer['digest'][7:]]}
@@ -40,6 +41,15 @@ def archive_fixture(path, *, combined=False, damage=False):
 
 
 class ArchivePreflightTests(unittest.TestCase):
+    def test_optional_oci_descriptor_platform_uses_verified_image_config(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'primary.tar'
+            image=archive_fixture(path,omit_platform=True)
+            self.assertEqual(preflight.archive_image(path,image,'example.azurecr.io/primary:test')['layer_count'],1)
+            image=archive_fixture(path,omit_platform=True,architecture='arm64')
+            with self.assertRaisesRegex(ValueError,'linux/amd64 manifest'):
+                preflight.archive_image(path,image,'example.azurecr.io/primary:test')
+
     def test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes(self):
         def node(endpoints):
             return {'network': {'rpc_interfaces': {'agentdns-internal': {'accepted_endpoints': endpoints}}}}

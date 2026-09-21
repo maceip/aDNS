@@ -17,6 +17,7 @@ from build_aci_template import (PUBLIC_FILES, read_small, strict_json,
     OTEL_HEADER_PARAMETER, otel_environment, otel_policy_rules,
     validate_otel_ca)
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
+from prepare_aci_durable_candidate import STORAGE_KEY_PARAMETER, validate_durable_candidate
 
 HEX = r"[0-9a-f]{64}"
 
@@ -72,6 +73,12 @@ def archive_image(path, image, expected_tag):
                     visit(child, depth + 1)
                 elif descriptor.get("platform") == {"architecture": "amd64", "os": "linux"}:
                     found.add(digest)
+                elif descriptor.get("platform") is None and "config" in child:
+                    # OCI permits a direct manifest descriptor without a
+                    # platform. Verify its content-addressed image config.
+                    actual_platform = blob(child["config"]["digest"])
+                    if actual_platform.get("architecture") == "amd64" and actual_platform.get("os") == "linux":
+                        found.add(digest)
 
         visit(index)
         if found != {expected_digest}:
@@ -130,6 +137,8 @@ def validate_ports(properties):
 def validate_otel(template, containers, volumes, policies):
     """Validate only public configuration; never open runtime parameters."""
     expected_parameters={"transferKeyB64":{"type":"secureString"},"transferKeyJson":{"type":"secureString"}}
+    if "durable-state" in volumes:
+        expected_parameters[STORAGE_KEY_PARAMETER]={"type":"secureString"}
     primary=containers["primary"]
     raw_environment=primary.get("environmentVariables",[])
     configured=any(isinstance(item,dict) and str(item.get("name","")).startswith("OTEL_") for item in raw_environment)
@@ -244,7 +253,13 @@ def check(template_path, archives, mappings):
     if node.get("attestation") != native_attestation_configuration():
         raise ValueError("native ACI bootstrap requires explicit SNP collateral and UVM configuration")
     validate_native_internal_readiness(node)
-    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != "agentdns.test:8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:agentdns.test" not in node["node_certificate"]["subject_alt_names"]:
+    durable={"configured":False}
+    expected_name="agentdns.test"
+    if "durable-state" in volumes:
+        durable=validate_durable_candidate(template,containers,volumes,node,policies)
+        resource=template["resources"][0]
+        expected_name=resource["name"]+"."+resource["location"]+".azurecontainer.io"
+    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != expected_name+":8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:"+expected_name not in node["node_certificate"]["subject_alt_names"]:
         raise ValueError("public TLS name or internal interface differs")
     otel=validate_otel(template,containers,volumes,policies)
     if volumes["transfer-secret"]["secret"] != {"transfer-key.json":"[base64(parameters('transferKeyJson'))]"} or containers["secondary"]["environmentVariables"] != [{"name":"AGENTDNS_TRANSFER_KEY_B64","secureValue":"[parameters('transferKeyB64')]"}]:
@@ -256,6 +271,7 @@ def check(template_path, archives, mappings):
             "bootstrap_manifest_sha256": sha(public["manifest.json"]),
             "containers": summaries, "pause_layer_count": 1,
             "telemetry":otel,
+            "durable_state":durable,
             "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
             "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight"}
 
