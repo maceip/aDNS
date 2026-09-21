@@ -1,23 +1,24 @@
 """Exercise CCF disaster recovery from disk using an actual member share."""
+import base64
 import hashlib
 import hmac
 import json
 import os
 import pathlib
+import shutil
 import struct
 import subprocess
 import time
 import uuid
 
+import ccf.cose
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import ec, utils
+from cryptography.hazmat.primitives.asymmetric import ec, padding, utils
 
 
 def exercise(work,config,public,internal,ca,propose,signer,template,primary,member_key_pem,member_cert_pem,member_id,encryption,original_request,original_result):
     from live_smoke import Client,b64,jcs
     import verify_ksk_receipt
-    import durable_recovery
-    import ccf_control
     secret=bytes([83])*32;key_name="recovery.example.test."
     propose([{"name":"adns_set_transfer","args":{"key_name":key_name,"endpoint":"127.0.0.1:55354","zones":["example.test."],"secret_sha256":hashlib.sha256(secret).hexdigest()}}])
     for _ in range(100):
@@ -43,14 +44,16 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
     assert status==409 and headers.get("x-agentdns-commit-status")=="committed",(status,failure)
     # CCF has confirmed the nonce is globally committed before disk recovery.
     primary.terminate();primary.wait(timeout=15)
-    # Exercise the operator helper on the complete stopped ledger, including
-    # the unsuffixed current chunk; never recover against the backup itself.
-    backup=work.parent/(work.name+"-durable-backup")
-    durable_recovery.archive(work,backup,ca.read_bytes(),before,"example.test.",
-        {"kind":"stopped-local-CCF-test","returncode":primary.returncode})
-    recovered=work/"disk-recovered"
-    durable_recovery.restore_copy(backup,recovered)
-    cfg=durable_recovery.recovery_config(config,str(backup/"previous-service.pem"),"ledger","snapshots")
+    recovered=work/"disk-recovered";recovered.mkdir()
+    # The current ledger chunk can contain globally committed transactions
+    # without a .committed filename until rotation. Read-only archive paths
+    # intentionally ignore that open chunk, so recover the complete stopped
+    # node ledger into the new writable ledger directory.
+    shutil.copytree(work/"ledger",recovered/"ledger")
+    shutil.copytree(work/"snapshots",recovered/"snapshots")
+    cfg=json.loads(json.dumps(config))
+    cfg["command"]={"type":"Recover","service_certificate_file":"service_cert.pem","recover":{"previous_service_identity_file":str(ca),"initial_service_certificate_validity_days":1}}
+    cfg["ledger"]["read_only_directories"]=[]
     (recovered/"node.json").write_text(json.dumps(cfg));log=open(recovered/"node.log","wb")
     node=subprocess.Popen(["/build/agentdns","--config",str(recovered/"node.json")],cwd=recovered,stdout=log,stderr=subprocess.STDOUT,env={**os.environ,"CCF_PLATFORM_OVERRIDE":"Virtual"})
     try:
@@ -68,11 +71,28 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
             except OSError:pass
             time.sleep(.1)
         assert status==200 and state["state"]=="PartOfPublicNetwork",(status,state)
-        recovery_client=ccf_control.Client("https://127.0.0.1:8000",None,current_ca)
-        recovery_governance=ccf_control.Governance(recovery_client,work/"member_key.pem",work/"member_cert.pem")
-        durable_recovery.accept_recovery(recovery_client,recovery_governance,ca.read_bytes(),current_ca.read_bytes())
-        submitted=durable_recovery.submit_share(recovery_client,recovery_governance,encryption)
-        assert submitted["submittedCount"]==1
+        def gov(path,body,kind,proposal=None):
+            headers={"ccf.gov.msg.type":kind,"ccf.gov.msg.created_at":int(time.time())}
+            if proposal:headers["ccf.gov.msg.proposal_id"]=proposal
+            signed=ccf.cose.create_cose_sign1(b"" if body is None else json.dumps(body).encode(),member_key_pem,member_cert_pem,headers)
+            return client.request("POST",path+"?api-version=2024-07-01",signed,"application/cose")
+        status,_,digest=gov(f"/gov/members/state-digests/{member_id}:update",None,"state_digest");assert status==200,(status,digest)
+        status,_,body=gov(f"/gov/members/state-digests/{member_id}:ack",digest,"ack");assert status==204,(status,body)
+        transition={"actions":[{"name":"transition_service_to_open","args":{"previous_service_identity":ca.read_text(),"next_service_identity":current_ca.read_text()}}]}
+        status,_,proposal=gov("/gov/members/proposals:create",transition,"proposal");assert status==200,(status,proposal)
+        if proposal["proposalState"]!="Accepted":
+            identifier=proposal["proposalId"]
+            status,_,body=gov(f"/gov/members/proposals/{identifier}/ballots/{member_id}:submit",{"ballot":"export function vote() { return true; }"},"ballot",identifier)
+            assert status==200 and body["proposalState"]=="Accepted",(status,body)
+        status,_,encrypted=client.request("GET",f"/gov/recovery/encrypted-shares/{member_id}?api-version=2024-07-01");assert status==200,(status,encrypted)
+        share=encryption.decrypt(base64.b64decode(encrypted["encryptedShare"],validate=True),padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
+        for _ in range(100):
+            status,_,result=gov(f"/gov/recovery/members/{member_id}:recover",{"share":base64.b64encode(share).decode()},"recovery_share")
+            if status==200:break
+            assert status==403 and result["error"]["code"]=="ServiceNotWaitingForRecoveryShares",(status,result)
+            time.sleep(.1)
+        assert status==200 and result["submittedCount"]==1,(status,result)
+        del share
         for _ in range(300):
             status,_,state=client.request("GET","/app/zone/status?zone=example.test.")
             if status==200:break
@@ -87,9 +107,7 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
         assert status==200 and history==original_result,(status,history,original_result)
         status,_,after=client.request("GET","/app/governance/ksk-receipt?zone=example.test.")
         assert status==200 and after["dnskey_rdata_hex"]==before["dnskey_rdata_hex"],(status,after)
-        continuity=durable_recovery.verify_continuity(before,ca.read_bytes(),after,current_ca.read_bytes(),"example.test.")
-        assert continuity["exact_dnskey_rdata_preserved"]
-        durable_recovery.verify_archive(backup)
+        verify_ksk_receipt.verify(after,current_ca.read_bytes())
         status,headers,result=client.request("POST","/app/zone/operator/records",pending)
         assert status==200 and result["zone_serial"]==9 and headers.get("x-agentdns-commit-status")=="committed",(status,result)
         status,_,retry=client.request("POST","/app/zone/operator/records",pending)
@@ -105,7 +123,7 @@ def exercise(work,config,public,internal,ca,propose,signer,template,primary,memb
         assert status==200 and headers.get("x-agentdns-commit-status")=="committed" and isinstance(frames,bytes) and len(frames)>2,"TSIG secret not recovered"
         (work/"recovery-ksk-receipt.json").write_text(json.dumps(after,indent=2)+"\n")
         (work/"recovery-service-cert.pem").write_bytes(current_ca.read_bytes())
-        return {"method":"durable_recovery helper: immutable complete ledger/snapshot archive, copied Recover process, actual member acceptance and RSA-decrypted share","ksk":"exact DNSKEY RDATA preserved; new identity receipt verified","tsig":"original private key authenticates AXFR after recovery","history":"original committed result and transaction ID preserved", "failed_observation":"globally committed authenticated rejection and its live nonce survive disk recovery","nonce":"pre-recovery unconsumed nonce commits exactly once after recovery","original_tx_id":original_result["tx_id"],"recovered_receipt_tx_id":after["tx_id"],"post_recovery_tx_id":result["tx_id"]}
+        return {"method":"new CCF Recover process, disk ledger/snapshot, real RSA-decrypted member share","ksk":"exact DNSKEY RDATA preserved; new identity receipt verified","tsig":"original private key authenticates AXFR after recovery","history":"original committed result and transaction ID preserved", "failed_observation":"globally committed authenticated rejection and its live nonce survive disk recovery","nonce":"pre-recovery unconsumed nonce commits exactly once after recovery","original_tx_id":original_result["tx_id"],"recovered_receipt_tx_id":after["tx_id"],"post_recovery_tx_id":result["tx_id"]}
     finally:
         node.terminate()
         try:node.wait(timeout=15)
