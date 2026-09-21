@@ -221,6 +221,11 @@ python3 tools/differential_wire.py \
 ./tools/validate_live_zone.sh --mode nsec3
 ```
 
+The [September 19 startup repair report](docs/reviews/2026-09-19-adns-startup-repair.md)
+documents the stale-PID failure, reproducible before/after regression, and isolated
+Azure validation. Its [public evidence bundle](docs/evidence/startup-repair-20260919/README.md)
+includes test output, immutable deployment inputs, native attestation and DNSSEC proof.
+
 ---
 
 ## License

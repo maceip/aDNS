@@ -1,0 +1,5 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+;; /proof/trust-anchor.conf:1: option 'trusted-keys' is deprecated
+; fully validated
+example.test.		300	IN	SOA	ns.example.test. hostmaster.example.test. 7 60 30 600 60
+example.test.		300	IN	RRSIG	SOA 14 2 300 20260919122853 20260919121353 23849 example.test. EmkeBCi0JGEd/wdP+bk8nHUJXo445aKUL6WOku0o4Lx2ZLwxzE7MfVTb e+HGQaI63N3fwV6/FvQ3nHN5vv7mUTe3kyrTuuYtylXaHBAt7q0egPjN p8X0AbkH/LJFK+aJ

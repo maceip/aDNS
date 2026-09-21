@@ -1,0 +1,47 @@
+{
+  "status": "ready; attempt 2 reviewed local CCE pinned",
+  "purpose": "ccf-node-tls-bootstrap-only; does not authorize governance or DNS delegation",
+  "created_utc": "2026-09-19T12:11:22+00:00",
+  "valid_until_utc": "2026-09-19T14:11:22+00:00",
+  "source_repository": "/Users/mac/.codex/worktrees/reconcile-20260918/adns",
+  "source_commit": "ad9e2f6a09fd73cfa6d25ef9190211c226b1ad0b",
+  "trusted_policy": {
+    "path": "/Users/mac/.codex/worktrees/reconcile-20260918/adns/docs/evidence/native-primary-ready-independent-20260913/node-policy.json",
+    "sha256": "df4a434b945c06b2b83f4d0b63673a4c68901e18e30cc48f3a47bf996b7f3a7f",
+    "policy_id": "c2d82e217eff29621df71c10983fcc5a2512fc199b83c799c78cf1d29de2db20"
+  },
+  "independent_audit": {
+    "path": "/Users/mac/.codex/worktrees/reconcile-20260918/adns/docs/evidence/native-primary-ready-independent-20260913/independent-crypto.json",
+    "sha256": "bb1f74b7f93959bde5883227cf29fb7c46a798f9955b79ef8677a8a8e50c9353"
+  },
+  "pinned_amd_genoa_ark": {
+    "path": "/Users/mac/.codex/worktrees/reconcile-20260918/adns/docs/evidence/native-primary-ready-independent-20260913/amd_genoa_ark.pem",
+    "sha256": "ac73dc98bd03d1e8e5f7e6189b138eb861a6730614a1933758dc58b7166ce476"
+  },
+  "preserved_pins": [
+    "active_profiles",
+    "minimum_tcb",
+    "approved_measurements",
+    "uvm",
+    "uvm_endorsement_time_policy"
+  ],
+  "uvm_time_policy_review": "Preserves existing explicit approved_release choice: exact approved immutable UVM measurement and release endorsement may be validated at certificate-path issuance time. Same release publisher certificate expired 2026-05-15; strict current_certificate rejects it. Current AMD endorsement validity is still checked.",
+  "limits": [
+    "These preapproved pins do not prove a new Azure runtime matches. Any runtime/measurement/UVM/TCB difference must fail closed and be reviewed independently.",
+    "A node audit proves attested TLS bootstrap only; candidate service opening and DNS function remain separate checks."
+  ],
+  "ready_policy_path": "/Users/mac/.codex/recovery/2026-09-19-adns-startup/candidate-node-policy.json",
+  "ready_policy_sha256": "f1141710e7f088cac25445cc6545144570119200d73a1c99d1f42a1a85d9f157",
+  "ready_policy_id": "4c53b82333a097543dfe5111f590eecbee482ef36ad0a8e2b348355726726400",
+  "reviewed_local_cce": {
+    "path": "/Users/mac/.codex/recovery/2026-09-19-adns-startup/fresh-authority-candidate.cce.rego",
+    "sha256": "0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c",
+    "bytes": 12880
+  },
+  "reviewed_local_template": {
+    "path": "/Users/mac/.codex/recovery/2026-09-19-adns-startup/fresh-authority-candidate.template.json",
+    "sha256": "d1a54c28b6d72c2890b697d89a0acd0c457fea4005b6a35c47e4a9c73df992c6"
+  },
+  "previous_attempt_policy": "/Users/mac/.codex/recovery/2026-09-19-adns-startup/attempt1/candidate-node-policy.json",
+  "revision_scope": "Only approved_host_data and policy_id changed; all hardware/UVM pins and validity remain identical."
+}

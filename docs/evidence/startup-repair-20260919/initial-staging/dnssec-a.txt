@@ -1,0 +1,5 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+;; /proof/trust-anchor.conf:1: option 'trusted-keys' is deprecated
+; fully validated
+ns.example.test.	300	IN	A	192.0.2.1
+ns.example.test.	300	IN	RRSIG	A 14 3 300 20260919122853 20260919121353 23849 example.test. ZZsMjO4NaQCIF6GIrQFBrB9smmrz5cfKtpW+Wcg1Mq3VZEhgLvZ9xU2h CUq+OSnVPTUjvIR6dgQayf+SLAxuG0YaFUxP/v0bdW8K8w4wSaJ3N4LG HT20coY0diw47y9i

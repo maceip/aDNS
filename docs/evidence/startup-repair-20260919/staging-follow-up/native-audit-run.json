@@ -1,0 +1,10 @@
+{
+  "capture_started_at_utc": "2026-09-19T12:57:02.578494+00:00",
+  "capture_finished_at_utc": "2026-09-19T12:57:04.208887+00:00",
+  "exit_code": 0,
+  "policy_sha256": "f1141710e7f088cac25445cc6545144570119200d73a1c99d1f42a1a85d9f157",
+  "tool_sha256": "1e7908741adb762906a88bc47b17cf029b11d2268e74507b470081da6d4fcf33",
+  "verifier_sha256": "5c0052edc600c9f036f2ee81c3b1c886cc1edf78e968bb16951c51accb86fd0f",
+  "stdout": "{\n  \"purpose\": \"ccf-node-tls-bootstrap-only\",\n  \"node_spki_sha256\": \"5d319a1e354d4081d68d016a960d124e42060adf5777df80616263efd22d26f4\",\n  \"quote_sha256\": \"7eec36b3cf8b3a80343920671b903c45e09f7c277069f86e2a3c29ec191c4b74\",\n  \"measurement\": \"dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866\",\n  \"host_data\": \"0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c\",\n  \"product\": \"Genoa\",\n  \"policy_id\": \"4c53b82333a097543dfe5111f590eecbee482ef36ad0a8e2b348355726726400\",\n  \"uvm_did\": \"did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2\",\n  \"uvm_feed\": \"ContainerPlat-AMD-UVM\",\n  \"uvm_svn\": 104,\n  \"valid_until\": 1789824423,\n  \"actual_tls_peer_certificate_sha256\": \"336f855c2e84c0d733bb5346690d413587d27cb47961ae5d089210f3f0cc0681\",\n  \"authenticated_service_certificate_sha256\": \"68c0cbab2cbb3a67619bc1ba208fbb86e22211d057ef8f0b2fbc1e8048b06fb1\",\n  \"audited_at\": 1789822623\n}\n",
+  "stderr": ""
+}

@@ -1,0 +1,22 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "397",
+    "content-type": "application/json",
+    "x-ms-ccf-transaction-id": "2.9"
+  },
+  "body": {
+    "ballotCount": 1,
+    "ballotSubmitters": [
+      "207d257b393956325a67de6608c80fbb3f355fd0f58a33e1848ec3fad9de938d"
+    ],
+    "finalVotes": {
+      "207d257b393956325a67de6608c80fbb3f355fd0f58a33e1848ec3fad9de938d": true
+    },
+    "proposalId": "0c391539ea4cd2db20e148466af7913c6c6d6b4a988771f3f137dfec58a8e5f8",
+    "proposalState": "Accepted",
+    "proposerId": "207d257b393956325a67de6608c80fbb3f355fd0f58a33e1848ec3fad9de938d",
+    "voteFailures": {}
+  },
+  "confirmed_ccf_transaction_id": "2.9"
+}

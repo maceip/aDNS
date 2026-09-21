@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "scope": "Read-only follow-up of isolated Azure startup candidate and example.test zone",
+  "observation_window_utc": {
+    "start": "2026-09-19T12:57:02.578494+00:00",
+    "end": "2026-09-19T12:58:44.369668+00:00",
+    "duration_seconds": 101.791174
+  },
+  "resource": "agentdns-ccf-startup-20260919",
+  "ip": "20.166.175.47",
+  "source_commit": "6b15e2e987ddbbce739868e17b81546595aea185",
+  "checks": {
+    "azure_running_zero_restarts": true,
+    "native_snp_tls_bootstrap": true,
+    "authenticated_network_open": true,
+    "authenticated_zone_status_globally_committed": true,
+    "zone_maintenance_ok": true,
+    "secondary_in_sync": true,
+    "ksk_receipt_and_anchor": true,
+    "dnssec_soa_and_a": true
+  },
+  "containers": [
+    {
+      "currentState": {
+        "detailStatus": "",
+        "exitCode": null,
+        "finishTime": null,
+        "startTime": "2026-09-19T12:17:20.499000+00:00",
+        "state": "Running"
+      },
+      "image": "agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401",
+      "name": "primary",
+      "previousState": null,
+      "restartCount": 0
+    },
+    {
+      "currentState": {
+        "detailStatus": "",
+        "exitCode": null,
+        "finishTime": null,
+        "startTime": "2026-09-19T12:17:20.325000+00:00",
+        "state": "Running"
+      },
+      "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+      "name": "secondary",
+      "previousState": null,
+      "restartCount": 0
+    }
+  ],
+  "seconds_since_reported_container_start_at_azure_snapshot": {
+    "primary": 2382.959416,
+    "secondary": 2383.133416
+  },
+  "native_audit": {
+    "purpose": "ccf-node-tls-bootstrap-only",
+    "node_spki_sha256": "5d319a1e354d4081d68d016a960d124e42060adf5777df80616263efd22d26f4",
+    "quote_sha256": "7eec36b3cf8b3a80343920671b903c45e09f7c277069f86e2a3c29ec191c4b74",
+    "measurement": "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866",
+    "host_data": "0b9f3597e1bcf9b2299daac52915e67301cf0116712f90e8d9e70355f926353c",
+    "product": "Genoa",
+    "policy_id": "4c53b82333a097543dfe5111f590eecbee482ef36ad0a8e2b348355726726400",
+    "uvm_did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+    "uvm_feed": "ContainerPlat-AMD-UVM",
+    "uvm_svn": 104,
+    "valid_until": 1789824423,
+    "actual_tls_peer_certificate_sha256": "336f855c2e84c0d733bb5346690d413587d27cb47961ae5d089210f3f0cc0681",
+    "authenticated_service_certificate_sha256": "68c0cbab2cbb3a67619bc1ba208fbb86e22211d057ef8f0b2fbc1e8048b06fb1",
+    "audited_at": 1789822623
+  },
+  "zone": {
+    "committed_state": {
+      "ccf_tx_id": "2.2710",
+      "earliest_rrsig_expiration": 1789823034,
+      "maintenance_health": "ok",
+      "rrsig_inception": 1789822134,
+      "serial": 14
+    },
+    "frontend_propagation": {
+      "secondaries": [
+        {
+          "endpoint": "127.0.0.1:53",
+          "in_sync": true,
+          "last_notified_serial": 14,
+          "last_observed_at": 1789822666,
+          "last_observed_serial": 14
+        }
+      ]
+    },
+    "ksk_key_tag": 18744,
+    "ksk_rollover": null,
+    "tx_id": "2.2710",
+    "zone": "example.test."
+  },
+  "dnssec": [
+    {
+      "owner": "example.test.",
+      "rrtype": "SOA",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:42.693135+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:43.556944+00:00",
+      "exit_code": 0,
+      "fully_validated": true,
+      "output": "dnssec-soa.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "example.test.",
+        "SOA"
+      ]
+    },
+    {
+      "owner": "ns.example.test.",
+      "rrtype": "A",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:43.557437+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:44.369668+00:00",
+      "exit_code": 0,
+      "fully_validated": true,
+      "output": "dnssec-a.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "ns.example.test.",
+        "A"
+      ]
+    }
+  ],
+  "ksk_receipt_transaction": "2.39",
+  "operational_scope": {
+    "azure_mutations": false,
+    "governance_mutations": false,
+    "dns_record_or_delegation_mutations": false,
+    "private_keys_copied": false
+  },
+  "limits": [
+    "This 102-second observation is a snapshot follow-up, not a continuous 40-minute probe or long-duration soak. Azure reports the containers started about 40 minutes earlier with zero restarts.",
+    "Isolated fresh authority and example.test only; no production cutover, previous authority recovery, multi-cloud failover or crash-restart exercise is claimed.",
+    "Native audit uses independently supplied approved_release UVM policy; report/service pins were not learned from the endpoint.",
+    "An initial delv invocation failed locally on unsupported +time/+tries options. The corrected queries both validated; rejected invocations are retained separately."
+  ]
+}

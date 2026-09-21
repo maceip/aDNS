@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Supervise the CCF process and autonomous peering driver inside one SNP image."""
 import argparse
+import contextlib
 import errno
+import fcntl
 import hashlib
 import http.client
 import json
@@ -35,6 +37,67 @@ def strict_object(pairs):
         if key in result:raise ValueError("duplicate configuration field")
         result[key]=value
     return result
+
+
+def retire_stale_pid(directory, name):
+    """Remove only an unchanged CCF PID file whose process no longer exists."""
+    try:descriptor=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=directory)
+    except FileNotFoundError:return
+    with os.fdopen(descriptor,"rb") as stream:
+        original=os.fstat(stream.fileno())
+        if not stat.S_ISREG(original.st_mode) or original.st_uid!=os.getuid() or original.st_mode & 0o022:
+            raise RuntimeError("unsafe CCF PID file; refusing to remove it")
+        body=stream.read(33)
+    if not re.fullmatch(rb"[1-9][0-9]{0,9}\n?",body) or int(body)>2147483647:
+        raise RuntimeError("invalid CCF PID file; refusing to remove it")
+    try:os.kill(int(body),0)
+    except ProcessLookupError:pass
+    except PermissionError:
+        raise RuntimeError("CCF PID belongs to an inaccessible process; refusing to start") from None
+    else:raise RuntimeError("CCF PID still belongs to a running process; refusing to start")
+    current=os.stat(name,dir_fd=directory,follow_symlinks=False)
+    identity=lambda item:(item.st_dev,item.st_ino,item.st_mode,item.st_uid,item.st_ctime_ns)
+    if identity(current)!=identity(original):
+        raise RuntimeError("CCF PID file changed during inspection; refusing to remove it")
+    os.unlink(name,dir_fd=directory)
+
+
+@contextlib.contextmanager
+def ccf_pid_guard(config, state):
+    """Serialize supervisors and retain every live or ambiguous PID file.
+
+    CCF exits with FileError (103) when its PID file survives a crash. The lock
+    stays open until CCF is reaped; no ledger or snapshot paths are touched.
+    """
+    state=state.resolve()
+    path=pathlib.Path(config.get("output_files",{}).get("pid_file","my_node.pid"))
+    if not path.is_absolute():path=state/path
+    if ".." in path.parts or not path.is_relative_to(state):
+        raise RuntimeError("CCF PID file must be within the state directory")
+    state_directory=os.open(state,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+    directory=None;lock=None
+    try:
+        directory=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        # One writer per state directory, even when a recovery config chooses
+        # a different PID filename for the same ledger and snapshots.
+        lock=os.open(".agentdns-supervisor.lock",os.O_RDWR|os.O_CREAT|os.O_NOFOLLOW|os.O_NONBLOCK,0o600,dir_fd=state_directory)
+        metadata=os.fstat(lock)
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_uid!=os.getuid() or metadata.st_mode & 0o022:
+            raise RuntimeError("unsafe CCF supervisor lock")
+        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise RuntimeError("another supervisor owns this CCF state directory") from None
+        retire_stale_pid(directory,path.name)
+        try:yield
+        finally:
+            # A child that survived shutdown, an inaccessible/reused PID, or an
+            # unexpected replacement is preserved. Never mask the child's error.
+            try:retire_stale_pid(directory,path.name)
+            except (OSError,RuntimeError):pass
+    finally:
+        if lock is not None:os.close(lock)
+        if directory is not None:os.close(directory)
+        os.close(state_directory)
 
 
 def pinned_configuration(config_path, manifest_path, expected_digest, state):
@@ -277,13 +340,18 @@ def main():
     if args.config_manifest:
         config_path,config=pinned_configuration(config_path,args.config_manifest,args.config_manifest_sha256,state)
     else:config=json.loads(read_regular(config_path,1024*1024),object_pairs_hook=strict_object)
+    with ccf_pid_guard(config,state):
+        return supervise(config_path,config,state,args)
+
+
+def supervise(config_path,config,state,args):
     interfaces=config["network"]["rpc_interfaces"]
     internal=interfaces["agentdns-internal"]
     address=internal["bind_address"]
     if not (address.startswith("127.0.0.1:") or address.startswith("[::1]:")):
-        parser.error("agentdns-internal must bind loopback")
+        raise ValueError("agentdns-internal must bind loopback")
     if any(interface.get("app_protocol","HTTP1")!="HTTP1" for interface in interfaces.values()):
-        parser.error("CCF commitment gate requires HTTP1 on all interfaces")
+        raise ValueError("CCF commitment gate requires HTTP1 on all interfaces")
     certificate=pathlib.Path(config["command"]["service_certificate_file"])
     if not certificate.is_absolute():certificate=state/certificate
     provision_body=load_transfer_secret(args.provision_tsig_file) if args.provision_tsig_file else None

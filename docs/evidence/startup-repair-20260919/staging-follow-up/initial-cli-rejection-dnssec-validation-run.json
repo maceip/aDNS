@@ -1,0 +1,77 @@
+{
+  "image": {
+    "reference": "internetsystemsconsortium/bind9:9.20",
+    "id": "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+    "repo_digests": [
+      "internetsystemsconsortium/bind9@sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  "queries": [
+    {
+      "owner": "example.test.",
+      "rrtype": "SOA",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:17.259753+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:17.594654+00:00",
+      "exit_code": 1,
+      "fully_validated": false,
+      "output": "dnssec-soa.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "example.test.",
+        "SOA",
+        "+time=10",
+        "+tries=1"
+      ]
+    },
+    {
+      "owner": "ns.example.test.",
+      "rrtype": "A",
+      "resolver": "20.166.175.47:53",
+      "capture_started_at_utc": "2026-09-19T12:58:17.594943+00:00",
+      "capture_finished_at_utc": "2026-09-19T12:58:17.924300+00:00",
+      "exit_code": 1,
+      "fully_validated": false,
+      "output": "dnssec-a.txt",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--mount",
+        "type=bind,src=/Users/mac/.codex/worktrees/adns-startup-20260919/adns/docs/evidence/startup-repair-20260919/staging-follow-up,dst=/proof,readonly",
+        "--entrypoint",
+        "delv",
+        "sha256:a5c5fc5227be83dca0001ad72e2398be2aeb183c6ddf7e2ed41dba63c84e0021",
+        "@20.166.175.47",
+        "-p",
+        "53",
+        "-a",
+        "/proof/trust-anchor.conf",
+        "+root=example.test.",
+        "ns.example.test.",
+        "A",
+        "+time=10",
+        "+tries=1"
+      ]
+    }
+  ]
+}
