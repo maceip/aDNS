@@ -1,6 +1,10 @@
 import importlib.util
 import pathlib
+import socket
+import threading
 import unittest
+from contextlib import contextmanager
+from unittest.mock import Mock, patch
 
 spec = importlib.util.spec_from_file_location("host_driver", pathlib.Path(__file__).with_name("host_driver.py"))
 driver = importlib.util.module_from_spec(spec)
@@ -26,6 +30,72 @@ class BoundaryTests(unittest.TestCase):
         for bad in ("example.org:53", "127.0.0.1:0", "127.0.0.1:65536", "::1"):
             with self.assertRaises(ValueError):
                 driver.endpoint(bad)
+
+
+class TransferDiagnosticTests(unittest.TestCase):
+    @contextmanager
+    def connection(self, *, response=None, error=None):
+        enclave = Mock()
+        enclave.post.return_value = response
+        enclave.post.side_effect = error
+        with patch.object(driver, "MAX_CONNECTION_SECONDS", 0.5), \
+                driver.TransferServer(("127.0.0.1", 0), enclave) as server:
+            thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.01})
+            thread.start()
+            try:
+                with socket.create_connection(server.server_address, timeout=2) as client:
+                    yield client, enclave
+            finally:
+                server.shutdown()
+                thread.join(timeout=2)
+
+    def test_silent_client_timeout_keeps_warning_with_peer_and_zero_bytes(self):
+        with self.assertLogs(driver.LOG, level="WARNING") as logged:
+            with self.connection() as (client, enclave):
+                peer = client.getsockname()
+                self.assertEqual(client.recv(1), b"")
+                enclave.post.assert_not_called()
+        self.assertIn(f"peer={peer}", logged.output[0])
+        self.assertIn("stage=request_length completed_requests=0", logged.output[0])
+        self.assertIn("received=0 expected=2", logged.output[0])
+
+    def test_partial_frame_timeout_reports_received_bytes(self):
+        for packet, stage, received, expected in (
+                (b"\0", "request_length", 1, 2),
+                (b"\0\x0cabc", "request_body", 3, 12)):
+            with self.subTest(stage=stage), self.assertLogs(driver.LOG, level="WARNING") as logged:
+                with self.connection() as (client, enclave):
+                    client.sendall(packet)
+                    self.assertEqual(client.recv(1), b"")
+                    enclave.post.assert_not_called()
+            self.assertIn(f"stage={stage}", logged.output[0])
+            self.assertIn(f"received={received} expected={expected}", logged.output[0])
+
+    def test_backend_timeout_is_distinct_from_client_read_timeout(self):
+        with self.assertLogs(driver.LOG, level="WARNING") as logged:
+            with self.connection(error=TimeoutError("backend stalled")) as (client, enclave):
+                client.sendall(b"\0\x0c" + bytes(12))
+                self.assertEqual(client.recv(1), b"")
+                enclave.post.assert_called_once()
+        self.assertIn("stage=authority_request completed_requests=0", logged.output[0])
+        self.assertIn("backend stalled", logged.output[0])
+
+    def test_valid_reply_then_idle_preserves_transfer_and_reports_completed_request(self):
+        frame = b"\0\x0c" + bytes(12)
+        with self.assertLogs(driver.LOG, level="WARNING") as logged:
+            with self.connection(response=frame) as (client, enclave):
+                client.sendall(frame)
+                response = bytearray()
+                while len(response) < len(frame):
+                    part = client.recv(len(frame) - len(response))
+                    self.assertTrue(part, "connection closed before the complete DNS response")
+                    response.extend(part)
+                self.assertEqual(bytes(response), frame)
+                self.assertEqual(client.recv(1), b"")
+                enclave.post.assert_called_once_with("axfr", bytes(12), "application/dns-message", binary=True)
+        self.assertIn("stage=request_length completed_requests=1", logged.output[0])
+        self.assertIn("received=0 expected=2", logged.output[0])
+
 
 class ResourceTests(unittest.TestCase):
     def test_transfer_frame_count_is_bounded(self):

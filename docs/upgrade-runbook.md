@@ -43,7 +43,7 @@ release authority last signed and a retired release cannot rejoin.
    connect to against the pinned service identity and the *new* node policy;
    agent-hosting updates `infra/trust/pins.json node_policy` via a reviewed
    commit after verifying the policy receipt.
-7. **Retire the old node**: `retire_node` proposal, then stop its container.
+7. **Retire the old node**: `remove_node` proposal, then stop its container.
 8. **Close the window.** D signs `P'(svn + 1)` listing only the new release;
    propose it. From now on the retired measurement cannot rejoin even with a
    valid quote.
@@ -51,7 +51,7 @@ release authority last signed and a retired release cannot rejoin.
 ## Rollback
 
 Before step 8 the old release is still admissible: stop the new node and
-propose `retire_node` for it. After step 8 a rollback is a *new* signed policy
+propose `remove_node` for it. After step 8 a rollback is a *new* signed policy
 with `svn + 1` that re-lists the old measurement; anti-rollback is about the
 policy sequence, not about forbidding a deliberate, signed decision to run older
 code. Recovery from ledger loss is `operations.md`, not this document.

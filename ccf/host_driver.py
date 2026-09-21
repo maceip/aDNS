@@ -272,9 +272,12 @@ def exact(stream, size, deadline=None):
         if deadline is not None:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
-                raise TimeoutError("DNS connection deadline exceeded")
+                raise TimeoutError(f"DNS connection deadline exceeded received={len(data)} expected={size}")
             stream.settimeout(min(10, remaining))
-        block = stream.recv(size - len(data))
+        try:
+            block = stream.recv(size - len(data))
+        except TimeoutError as error:
+            raise TimeoutError(f"DNS TCP read timed out received={len(data)} expected={size}") from error
         if not block:
             if not data:
                 return None
@@ -286,19 +289,24 @@ def exact(stream, size, deadline=None):
 class TransferHandler(socketserver.BaseRequestHandler):
     def handle(self):
         tracer = tracer_for(self.server.enclave)
+        stage = "request_length"
+        completed = 0
         try:
             deadline = time.monotonic() + MAX_CONNECTION_SECONDS
             for _ in range(MAX_REQUESTS_PER_CONNECTION):
+                stage = "request_length"
                 length = exact(self.request, 2, deadline)
                 if length is None:
                     return
                 length = int.from_bytes(length, "big")
                 if length < 12:
                     raise ValueError("short DNS request")
+                stage = "request_body"
                 packet = exact(self.request, length, deadline)
                 if packet is None:
                     raise EOFError("missing DNS request")
                 with tracer.span("driver.dns.axfr",dict(dns_metadata(packet),**{"network.transport":"tcp"}),kind="SERVER") as span:
+                    stage = "authority_request"
                     signed_frames = self.server.enclave.post("axfr", packet, "application/dns-message", binary=True)
                     transferred = {}
                     if span is not None:
@@ -309,12 +317,14 @@ class TransferHandler(socketserver.BaseRequestHandler):
                     remaining = deadline - time.monotonic()
                     if remaining <= 0:
                         raise TimeoutError("DNS connection deadline exceeded")
+                    stage = "response_send"
                     self.request.settimeout(min(10, remaining))
                     self.request.sendall(signed_frames)
+                    completed += 1
                     if span is not None and 'dns.zone.serial' in transferred:
                         tracer.cache.put(('zone_serial',transferred['dns.zone'],transferred['dns.zone.serial']),context_of(span))
         except (OSError, ValueError, RuntimeError, EOFError, http.client.HTTPException) as error:
-            LOG.warning("transfer rejected: %s", error)
+            LOG.warning("transfer rejected peer=%s stage=%s completed_requests=%d: %s", self.client_address, stage, completed, error)
 
 
 class AdmissionBoundMixin:
