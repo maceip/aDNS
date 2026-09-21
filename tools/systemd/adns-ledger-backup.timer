@@ -1,0 +1,12 @@
+[Unit]
+Description=Refresh aDNS committed ledger copies every five minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+RandomizedDelaySec=15s
+Persistent=true
+Unit=adns-ledger-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,17 @@
+{
+  "account": "adnsrecovery20260921",
+  "share": "ccf-recovery-20260921-v2",
+  "object_id": "a1b25f23-c78f-4337-a840-71d7e687c2fa",
+  "backup_root": "/var/lib/agent-hosting/adns-backups",
+  "service_cert": "/etc/agent-hosting/adns-backup/service.pem",
+  "receipt": "/etc/agent-hosting/adns-backup/ksk-receipt.json",
+  "zone": "agent.hosting.",
+  "max_age_seconds": 900,
+  "max_file_bytes": 1073741824,
+  "max_total_bytes": 4294967296,
+  "rotation": {
+    "url": "https://REPLACE-WITH-APPRAISED-AUTHORITY:8000",
+    "member_key": "/var/lib/agentdns-steward/member_privk.pem",
+    "member_cert": "/var/lib/agentdns-steward/member_cert.pem"
+  }
+}

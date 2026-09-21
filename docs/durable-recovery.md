@@ -257,6 +257,80 @@ governance, modify cloud resources or establish unattended recovery on its own.
 The normal live-copy contract follows [CCF 7.0.15 data persistence](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/data_persistence.rst)
 and [ledger/snapshot management](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/ledger_snapshot.rst).
 
+### Azure monitor runner
+
+`tools/azure_files_backup.py` downloads only the selected committed files with
+GET/HEAD requests to the configured Azure Files account and share. It obtains a
+Storage token from the VM's explicitly selected IMDS identity (`object_id` or
+`client_id`, never both), keeps
+it only in memory, disables proxies and credentialed redirects, follows every
+directory continuation marker, and checks per-file length and ETag before and
+after downloading. Directory-listing lengths are never used for copying. The
+source identity needs the existing Azure `Storage File Data Privileged Reader`
+permission at the intended scope; the script cannot assign roles and never reads
+an account key. Azure Files OAuth requires the explicit backup-intent header,
+which the reader supplies.
+
+Install the audited tools modules under
+`/usr/local/lib/agent-hosting/adns-backup/tools`. The supplied service uses the
+existing Steward virtual environment at `/opt/steward/venv/bin/python`, including
+its CCF COSE signing dependency; `cryptography` and `cbor2` must remain available.
+Copy `tools/systemd/adns-ledger-backup.example.json` to
+`/etc/agent-hosting/adns-backup/config.json` and set the intended source share,
+externally authenticated service certificate and verified receipt paths. Keep
+configuration root-owned and readable by `agenthost`; the source example points
+only to the replacement v2 share and the existing ops system identity. Pin that
+identity explicitly on a VM with multiple identities. Create
+`/var/lib/agent-hosting/adns-backups` owned by `agenthost` with mode 0700. An operator
+must supply/update the public CA and receipt from the actual native-appraised
+authority; their presence does not establish their present-day freshness. They
+are historical identity evidence, not proof of current ledger coverage.
+
+The example service runs `backup_rotate.py` as a separate `ExecStartPre` under the
+existing `agenthost` Steward user. It reads the retained member key in place and
+permits only `trigger_snapshot` followed by `trigger_ledger_chunk`. Between those
+actions it captures a fresh committed KSK receipt, and it requires the configured
+CA to be the currently Open service's identity. It neither acknowledges a new
+member nor changes permissions. Set the explicit appraised authority URL (and
+optional `connect_ip`) in `rotation`; the example's placeholder must be replaced.
+Rotation failures prevent the reader from starting and publish a sanitized
+failure status. The reader rejects rotation evidence older than 180 seconds and
+waits up to 120 seconds for corresponding new committed file names before copying.
+Those observed names still do not prove cryptographic transaction inclusion.
+
+Run the initial cycle explicitly as `agenthost` before enabling the units:
+
+```sh
+/opt/steward/venv/bin/python /usr/local/lib/agent-hosting/adns-backup/tools/backup_rotate.py \
+  --config /etc/agent-hosting/adns-backup/config.json
+/opt/steward/venv/bin/python /usr/local/lib/agent-hosting/adns-backup/tools/azure_files_backup.py \
+  --config /etc/agent-hosting/adns-backup/config.json --initial
+```
+
+The runner takes an exclusive local lock. Each attempt gets a new private
+directory; a completed byte-verified backup atomically advances `latest.json`.
+Failures retain the prior pointer and publish a sanitized `status.json` containing
+the error type rather than a provider response or token. Partial copies remain
+unreferenced and are never treated as successful. There is no automatic retention
+or deletion of completed archives. Configured byte limits and a disk reserve fail
+closed; capacity/retention policy remains an explicit operator responsibility.
+
+The service/timer examples run every five minutes as `agenthost`, with a four-minute
+deadline and write access restricted to that backup directory. Exit 3 is accepted
+as a successful **copy job**, while its JSON still says coverage is unverified.
+The authority monitor must read `status.json`, check `evaluated_at` against its
+own clock (including after kill/disk-full failures), and expose these independent
+states: latest job failure, stale job/report, non-advancing committed content,
+and unverified recovery coverage. A successful systemd unit is not sufficient.
+No role assignment, timer installation, live permission test or monitor hookup
+is implied by these source templates. Test the configured identity and source,
+verify actual destination bytes, and record that deployment separately.
+
+Provider contracts: [Azure Files OAuth](https://learn.microsoft.com/en-us/azure/storage/files/authorize-oauth-rest),
+[directory pagination and stale lengths](https://learn.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files),
+[per-file properties](https://learn.microsoft.com/en-us/rest/api/storageservices/get-file-properties),
+and [VM managed identity tokens](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-to-use-vm-token).
+
 References: [Azure Files snapshots](https://learn.microsoft.com/en-us/rest/api/storageservices/snapshot-share),
 [ACI Azure Files persistence](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-volume-azure-files),
 [CCF 7.0.15 recovery](https://github.com/microsoft/CCF/blob/ccf-7.0.15/doc/operations/recovery.rst).
