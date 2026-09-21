@@ -67,7 +67,15 @@ automatic restart or rollback to `Start`.
 
 Verify the snapshot's recursive file inventory with `az storage file list
 --num-results '*' --snapshot <timestamp>` for every directory. This avoids the
-default 5000-entry limit. Compare all downloaded names/sizes. Download-batch may
+default 5000-entry limit. Use listings to enumerate names, then obtain **per-file
+properties from that same snapshot** (`az storage file show --share-name <share>
+--path <file> --snapshot <timestamp>`, or SDK `get_file_properties`) to verify each
+downloaded size. Do not trust directory-listing lengths or omit a file because a
+listing reports zero bytes. In the 2026-09-21 Azure exercise the immutable snapshot
+listing reported `ledger_19` as zero bytes, while its per-file properties and
+download both contained 323264 bytes. Preserve such discrepancies as evidence;
+require the full download to agree with per-file properties before sealing it.
+Compare every filename and hash the downloaded content. Download-batch may
 omit empty directories: confirm an empty snapshot directory remotely before
 creating its corresponding empty local directory. Do not infer that an omitted
 directory was empty. Keep the full snapshot download private.
