@@ -24,6 +24,8 @@ from prepare_aci_control import native_attestation_configuration, validate_nativ
 PUBLIC_FILES = ("node.json", "manifest.json", "member0_cert.pem", "member0_enc_pubk.pem")
 OTEL_CA_PATH = "/otel/exporter-ca.pem"
 OTEL_HEADER_PARAMETER = "otelExporterHeaders"
+OTEL_DISABLED_ENVIRONMENT = [{"name": "OTEL_SDK_DISABLED", "value": "true"}]
+OTEL_DISABLED_RULE = {"pattern": "OTEL_SDK_DISABLED=true", "required": True, "strategy": "string"}
 _B64_ATOM = r"(?:[A-Za-z0-9]|%2B|%2F)"
 # The secret is standard percent-encoded HTTP Basic authorization. Only the
 # encoding shape is public; never put one concrete credential in the CCE policy.
@@ -257,6 +259,8 @@ def main():
         properties["volumes"].append({"name":"otel-public-ca","secret":{"exporter-ca.pem":base64.b64encode(ca).decode()}})
         template["parameters"][OTEL_HEADER_PARAMETER]={"type":"secureString"}
         parameters["parameters"][OTEL_HEADER_PARAMETER]={"value":header}
+    else:
+        primary["properties"]["environmentVariables"] = list(OTEL_DISABLED_ENVIRONMENT)
     args.output.mkdir(mode=0o700, parents=True, exist_ok=True)
     write_output(args.output / "ccf.template.json", json.dumps(template, indent=2) + "\n", 0o644)
     write_output(args.output / "ccf.parameters.json", json.dumps(parameters) + "\n", 0o600)

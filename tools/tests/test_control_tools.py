@@ -234,6 +234,7 @@ class BootstrapTemplateTests(unittest.TestCase):
         self.assertEqual((output/'ccf.parameters.json').stat().st_mode & 0o777,0o600)
         self.assertEqual(config['resources'][0]['properties']['containers'][1]['properties']['environmentVariables'][0]['secureValue'],"[parameters('transferKeyB64')]")
         properties=config['resources'][0]['properties']
+        self.assertEqual(properties['containers'][0]['properties']['environmentVariables'],template.OTEL_DISABLED_ENVIRONMENT)
         self.assertEqual(properties['ipAddress']['ports'],[
             {'port':8000,'protocol':'TCP'}, {'port':5353,'protocol':'TCP'}, {'port':53,'protocol':'UDP'}])
         self.assertEqual(properties['containers'][1]['properties']['ports'],[{'port':53,'protocol':'UDP'}])

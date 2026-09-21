@@ -132,7 +132,25 @@ class TelemetryPreflightTests(unittest.TestCase):
         values=self.fixture();result=preflight.validate_otel(*values)
         self.assertTrue(result['configured']);self.assertEqual(result['public_ca_sha256'],hashlib.sha256(self.ca).hexdigest())
         template={'parameters':{'transferKeyB64':{'type':'secureString'},'transferKeyJson':{'type':'secureString'}}}
-        self.assertEqual(preflight.validate_otel(template,{'primary':{},'secondary':{}},{},{}),{'configured':False})
+        containers={'primary':{'environmentVariables':copy.deepcopy(builder.OTEL_DISABLED_ENVIRONMENT)},'secondary':{}}
+        policy={'primary':{'env_rules':[copy.deepcopy(builder.OTEL_DISABLED_RULE)]}}
+        self.assertEqual(preflight.validate_otel(template,containers,{},policy),
+                         {'configured':False,'trace_export_enabled':False,'mode':'explicitly_disabled'})
+
+    def test_disabled_export_requires_exact_measured_environment_and_no_mixed_settings(self):
+        for change in ('implicit','false','mixed','optional','absent-rule','broad','unused-secret'):
+            template={'parameters':{'transferKeyB64':{'type':'secureString'},'transferKeyJson':{'type':'secureString'}}}
+            containers={'primary':{'environmentVariables':copy.deepcopy(builder.OTEL_DISABLED_ENVIRONMENT)},'secondary':{}}
+            policy={'primary':{'env_rules':[copy.deepcopy(builder.OTEL_DISABLED_RULE)]}}
+            if change=='implicit':containers['primary']['environmentVariables']=[]
+            elif change=='false':containers['primary']['environmentVariables'][0]['value']='false'
+            elif change=='mixed':containers['primary']['environmentVariables'].append({'name':'OTEL_EXPORTER_OTLP_ENDPOINT','value':'https://unexpected:443'})
+            elif change=='optional':policy['primary']['env_rules'][0]['required']=False
+            elif change=='absent-rule':policy['primary']['env_rules']=[]
+            elif change=='broad':policy['primary']['env_rules'].append({'pattern':'.*=.*','strategy':'re2','required':False})
+            else:template['parameters']['otelExporterHeaders']={'type':'secureString'}
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                preflight.validate_otel(template,containers,{},policy)
 
     def test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected(self):
         for change in ('literal','parameter-default','duplicate','http','broad-policy','literal-policy','policy-mount','mount','extra-label','ca'):

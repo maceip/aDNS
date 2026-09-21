@@ -76,3 +76,13 @@ and packaged constitution plus the supervisor PID guard. It does not imply
 that current-source CVM/SVCB features are deployed. Frontend/consumer wiring,
 governance, DNSSEC receipts, native log readback and backup/recovery acceptance
 are deployment work; passing these offline checks does not claim restoration.
+
+The default builder now emits `OTEL_SDK_DISABLED=true` when no complete OTLP
+endpoint/CA/credential configuration is supplied. This setting is required as an
+exact string in the measured CCE environment. Preflight rejects omitted, mixed,
+optional or wildcard-overridable disabled settings. This avoids the packaged
+exporter's implicit localhost:4318 fallback when no collector is present.
+Creation-time retained ACI stdout/stderr and events remain mandatory for the
+durable candidate. Disabled tracing is reported explicitly; retained logs do not
+constitute distributed trace delivery. The existing complete HTTPS OTLP mode
+remains available with its separate public CA and secure header parameter.

@@ -18,7 +18,7 @@ from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from build_aci_template import PUBLIC_FILES, read_small, strict_json, write_output
+from build_aci_template import PUBLIC_FILES, OTEL_DISABLED_ENVIRONMENT, OTEL_DISABLED_RULE, read_small, strict_json, write_output
 
 
 STORAGE_KEY_PARAMETER = "durableStorageAccountKey"
@@ -165,6 +165,12 @@ def finalize_policy(candidate_template, confcom_template):
     if len(entries) != 3 or set(policies) != {"primary", "secondary", "pause-container"}:
         raise ValueError("unexpected generated containers")
     primary = policies["primary"]["env_rules"]
+    disabled = next(c["properties"] for c in expected_properties["containers"] if c["name"] == "primary").get("environmentVariables") == OTEL_DISABLED_ENVIRONMENT
+    if disabled:
+        matches = [i for i, rule in enumerate(primary) if rule["pattern"].lstrip("^").startswith("OTEL_")]
+        if len(matches) != 1 or primary[matches[0]] != {**OTEL_DISABLED_RULE, "required": False}:
+            raise ValueError("unexpected generated disabled trace export rule")
+        primary[matches[0]] = copy.deepcopy(OTEL_DISABLED_RULE)
     if any(rule["pattern"].lstrip("^").startswith(("UVM_SECURITY_CONTEXT_DIR=", "APP_IDENTITY_ENDPOINT=")) for rule in primary):
         raise ValueError("unexpected preexisting platform environment rule")
     primary.extend(copy.deepcopy(PLATFORM_ENV_RULES))
@@ -177,7 +183,7 @@ def finalize_policy(candidate_template, confcom_template):
     result = copy.deepcopy(candidate_template)
     result["resources"][0]["properties"]["confidentialComputeProperties"]["ccePolicy"] = base64.b64encode(final.encode()).decode()
     return result, {"generated_policy_sha256": digest(raw.encode()), "final_policy_sha256": digest(final.encode()),
-                    "delta": "only primary optional UVM/APP_IDENTITY rules retained from tested startup policy, secondary TSIG pattern narrowed; generated mounts/layers/default infrastructure fragments unchanged"}
+                    "delta": "primary optional UVM/APP_IDENTITY rules retained; explicit disabled trace rule made required when configured; secondary TSIG pattern narrowed; generated mounts/layers/default infrastructure fragments unchanged"}
 
 
 def prepare(baseline, member_certificate, member_encryption_key, date):
@@ -214,6 +220,8 @@ def prepare(baseline, member_certificate, member_encryption_key, date):
     properties["ipAddress"]["dnsNameLabel"] = name
     properties["confidentialComputeProperties"]["ccePolicy"] = ""
     properties["diagnostics"] = retained_logging_configuration()
+    if not containers["primary"].get("environmentVariables"):
+        containers["primary"]["environmentVariables"] = copy.deepcopy(OTEL_DISABLED_ENVIRONMENT)
     template["parameters"].update(copy.deepcopy(LOGGING_PARAMETERS))
     node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] = fqdn + ":8000"
     node["node_certificate"]["subject_alt_names"] = ["iPAddress:127.0.0.1", "dNSName:" + fqdn]

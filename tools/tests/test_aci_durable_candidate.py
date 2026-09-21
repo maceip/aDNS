@@ -59,7 +59,9 @@ class DurableCandidateTests(unittest.TestCase):
         template = self.fixture()[0]
         properties, containers, volumes, node = self.inspect(template)
         self.assertTrue(candidate.validate_retained_logging(template)["configured"])
-        self.assertEqual(preflight.validate_otel(template, containers, volumes, {}), {"configured": False})
+        policy={"primary":{"env_rules":[preflight.OTEL_DISABLED_RULE]}}
+        self.assertEqual(preflight.validate_otel(template, containers, volumes, policy),
+                         {"configured":False,"trace_export_enabled":False,"mode":"explicitly_disabled"})
         for change in ("missing", "literal-key", "literal-id", "key-default", "id-default", "key-string", "extra-setting"):
             with self.subTest(change=change):
                 invalid = copy.deepcopy(template)
@@ -102,6 +104,7 @@ class DurableCandidateTests(unittest.TestCase):
             container["properties"]["image"] = container["properties"]["image"].split("@")[0] + ":offline-tag"
         entries = [{"name": name, "layers": [name], "mounts": [], "exec_processes": [], "signals": [], "env_rules": []}
                    for name in ("primary", "secondary", "pause-container")]
+        entries[0]["env_rules"]=[{**candidate.OTEL_DISABLED_RULE,"required":False}]
         entries[1]["env_rules"] = [{"pattern": "AGENTDNS_TRANSFER_KEY_B64=.*", "required": False, "strategy": "re2"}]
         raw = "package policy\ncontainers := " + json.dumps(entries) + "\nallow_all := false\n"
         generated["resources"][0]["properties"]["confidentialComputeProperties"]["ccePolicy"] = base64.b64encode(raw.encode()).decode()
@@ -111,7 +114,7 @@ class DurableCandidateTests(unittest.TestCase):
         self.assertTrue(body.endswith("\nallow_all := false\n"))
         self.assertEqual(result[0]["layers"], entries[0]["layers"])
         self.assertEqual(result[0]["mounts"], entries[0]["mounts"])
-        self.assertEqual(result[0]["env_rules"], candidate.PLATFORM_ENV_RULES)
+        self.assertEqual(result[0]["env_rules"], [candidate.OTEL_DISABLED_RULE]+candidate.PLATFORM_ENV_RULES)
         self.assertNotEqual(review["generated_policy_sha256"], review["final_policy_sha256"])
         generated["resources"][0]["properties"]["restartPolicy"] = "Always"
         with self.assertRaisesRegex(ValueError, "differs beyond"):
