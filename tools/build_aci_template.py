@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Prepare isolated two-container ACI validation from reviewed immutable images.
 
-The public template has secure parameter references, never literal TSIG keys.
+Initial Start/genesis validation only, not the current authority's lifecycle
+owner or a Join/Recover generator. The public template has secure parameter
+references, never literal TSIG keys.
 The separate parameter file is private. This does not deploy Azure resources.
 ACI public port numbers are unique regardless of protocol: this auxiliary BIND
 exposes UDP53; a separate frontend must supply ordinary TCP+UDP53 service.
