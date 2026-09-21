@@ -1,0 +1,31 @@
+{
+  "reviewed_at": "2026-09-21T20:30:26.140047+00:00",
+  "result": "PASS conditioned on provider-confirmed v4 writer stopped before v5 mounted RW",
+  "declaration_sha256": "af019b116a733dfbf965adbd2bf710256ad8362a99ec069c01e4a45035f5be50",
+  "cce_sha256": "60a71e408fecbdb60b5609f77a1ddace8d8e1806a6aaff8c58d0269778e5dc2c",
+  "manifest_sha256": "89e5aa0d1af5d699ae283af524059813c57ebe3ba27ff7acd317a3499c81669b",
+  "previous_service_identity_sha256": "225f53f50bc4a9d7c2a708c5b9bb65f9cc47c89632344206ba542c178b42dec0",
+  "policy_delta_from_v4": [
+    "primary command manifest digest only"
+  ],
+  "remaining_CCE_fields_and_framework_identical": true,
+  "private_parameter_delta": [
+    "transferKeyB64 only"
+  ],
+  "existing_governed_transfer_secret_sha256": "85b474fbaf68cf15b01a2689e69824bb5555527d9ebb91fadc2b3bd7134209e7",
+  "existing_key_source": "/Users/mac/.codex/recovery/2026-09-21-adns-restoration/v2/recover.parameters.private.json",
+  "image_and_constitution_unchanged": true,
+  "no_tsig_reprovisioning": true,
+  "no_new_key_or_rotation": true,
+  "same_durable_share": "ccf-recovery-20260921-v2",
+  "restart_policy": "Never",
+  "expected_SVN": 10,
+  "acceptance_pending": [
+    "v4 writer stopped",
+    "actual native SNP appraisal exact60a71 policy",
+    "governed Recover with existing member and original ledger",
+    "all3DNSKEY/DS preserved with receipt verification",
+    "correct-key authenticated AXFR + secondary in_sync",
+    "real workload renewal and both gateway publication ready"
+  ]
+}

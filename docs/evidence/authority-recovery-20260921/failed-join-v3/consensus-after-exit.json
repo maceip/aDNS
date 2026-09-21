@@ -1,0 +1,37 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "622",
+    "content-type": "application/json"
+  },
+  "body": {
+    "details": {
+      "acks": {
+        "9e8bd7740225ab7ee238d99e4968edf7cb8662aad9c7ee25a9f23cc4ec292753": {
+          "last_received_ms": 0,
+          "seqno": 52385
+        }
+      },
+      "configs": [
+        {
+          "idx": 52383,
+          "nodes": {
+            "3d545f8e8fb34bebb7bfb46b47692df61d265270ef96205b53f41054ca360243": {
+              "address": "agentdns-ccf-startup-20260919.northeurope.azurecontainer.io:8002"
+            },
+            "9e8bd7740225ab7ee238d99e4968edf7cb8662aad9c7ee25a9f23cc4ec292753": {
+              "address": "agentdns-ccf-join-20260921-v3.northeurope.azurecontainer.io:8002"
+            }
+          },
+          "rid": 52383
+        }
+      ],
+      "current_view": 6,
+      "leadership_state": "PreVoteCandidate",
+      "membership_state": "Active",
+      "primary_id": null,
+      "reconfiguration_type": "OneTransaction",
+      "ticking": true
+    }
+  }
+}

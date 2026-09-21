@@ -1,0 +1,15 @@
+{
+  "http_status": 200,
+  "headers": {
+    "content-length": "159",
+    "content-type": "application/json",
+    "x-ms-ccf-transaction-id": "10.52611"
+  },
+  "body": {
+    "fullKeySubmitted": false,
+    "message": "1/1 recovery shares successfully submitted\nEnd of recovery procedure initiated",
+    "recoveryThreshold": 1,
+    "submittedCount": 1
+  },
+  "confirmed_ccf_transaction_id": "10.52611"
+}

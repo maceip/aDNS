@@ -1,0 +1,27 @@
+2026-09-21 20:32:47,471 WARNING transfer rejected peer=('10.92.0.10', 54228) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:32:47,711 WARNING transfer rejected peer=('10.92.0.9', 56916) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:02,471 WARNING transfer rejected peer=('10.92.0.10', 54254) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:02,707 WARNING transfer rejected peer=('10.92.0.9', 56935) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:17,487 WARNING transfer rejected peer=('10.92.0.10', 54279) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:17,719 WARNING transfer rejected peer=('10.92.0.9', 56955) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:32,491 WARNING transfer rejected peer=('10.92.0.10', 54305) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:32,731 WARNING transfer rejected peer=('10.92.0.9', 56970) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:47,491 WARNING transfer rejected peer=('10.92.0.10', 54334) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:47,735 WARNING transfer rejected peer=('10.92.0.9', 56989) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:33:55,408 WARNING transfer rejected peer=('127.0.0.1', 45649) stage=authority_request completed_requests=0: CCF axfr returned HTTP 404
+2026-09-21 20:34:02,507 WARNING transfer rejected peer=('10.92.0.10', 54360) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:02,739 WARNING transfer rejected peer=('10.92.0.9', 57007) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:17,515 WARNING transfer rejected peer=('10.92.0.10', 54384) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:17,747 WARNING transfer rejected peer=('10.92.0.9', 57026) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:32,531 WARNING transfer rejected peer=('10.92.0.10', 54409) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:32,751 WARNING transfer rejected peer=('10.92.0.9', 57043) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:47,531 WARNING transfer rejected peer=('10.92.0.10', 54426) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:34:47,768 WARNING transfer rejected peer=('10.92.0.9', 57071) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:02,535 WARNING transfer rejected peer=('10.92.0.10', 54451) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:02,783 WARNING transfer rejected peer=('10.92.0.9', 57092) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:06,668 WARNING transfer rejected peer=('10.92.0.10', 54469) stage=authority_request completed_requests=0: CCF axfr returned HTTP 400
+2026-09-21 20:35:07,008 WARNING transfer rejected peer=('10.92.0.10', 54470) stage=authority_request completed_requests=0: CCF axfr returned HTTP 400
+2026-09-21 20:35:17,551 WARNING transfer rejected peer=('10.92.0.10', 54472) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:17,795 WARNING transfer rejected peer=('10.92.0.9', 57111) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:32,571 WARNING transfer rejected peer=('10.92.0.10', 54494) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2
+2026-09-21 20:35:32,815 WARNING transfer rejected peer=('10.92.0.9', 57127) stage=request_length completed_requests=0: DNS TCP read timed out received=0 expected=2

@@ -31,7 +31,13 @@ release authority last signed and a retired release cannot rejoin.
    `GET /app/governance/anchors` and verify its receipt: `node_join_policy.svn`
    must equal `P.svn`.
 4. **Start the new node** as a joiner (`ccf/run.py` join configuration, ACI
-   template from `tools/build_aci_template.py`) against the current primary.
+   reviewed declaration) against the current primary. The generic Start-only
+   template helper is not a complete Join validator. Before admission, compare
+   the existing TSIG key digest, name and scope with current governed transfer
+   configuration and prove a signed transfer. Omit `--provision-tsig-file` for
+   Join/Recover; private key material must come from replicated/recovered state.
+   Exercise the packaged launcher and exact configuration before Trust; a
+   direct-binary Virtual consensus test does not establish launcher behavior.
    The existing primary verifies its quote against `P` before recording Pending.
    Use `transition_node_to_trusted` for the reviewed node identity, then perform
    the independent TLS/SNP audit immediately after its service certificate is
@@ -55,8 +61,10 @@ release authority last signed and a retired release cannot rejoin.
 
 ## Rollback
 
-Before step 8 the old release is still admissible: stop the new node and
-propose `remove_node` for it. After step 8 a rollback is a *new* signed policy
+Before step 8 the old release is still admissible: propose `remove_node`
+while the new node is still alive, confirm committed retirement through
+`/node/network/removable_nodes`, then stop it. Two trusted nodes require both
+for quorum; once a peer exits, removal may be unable to commit. After step 8 a rollback is a *new* signed policy
 with `svn + 1` that re-lists the old measurement; anti-rollback is about the
 policy sequence, not about forbidding a deliberate, signed decision to run older
 code. Recovery from ledger loss is `operations.md`, not this document.
@@ -71,4 +79,4 @@ code. Recovery from ledger loss is `operations.md`, not this document.
 - The consortium is more than one member; otherwise every step above is one
   person's decision, whatever the ledger says.
 
-The reviewed [Azure replacement declaration](../infra/authority/azure/20260921-v3/README.md) records the existing read-only snapshot bootstrap, exact image/CCE policy, and separate writable authority state. Its static Join configuration is for initial admission; sole-authority process recovery requires the existing governed Recover flow and updated service-identity pins.
+The [current Azure recovery declaration](../infra/authority/azure/20260921-v5/README.md) records the exact live inputs and the [failed Join and subsequent recovery](evidence/authority-recovery-20260921/README.md). Its prior-identity input describes the completed recovery; another sole-authority recovery requires the then-current service CA and coordinated consumer pins.

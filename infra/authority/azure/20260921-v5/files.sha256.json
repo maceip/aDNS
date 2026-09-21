@@ -1,0 +1,12 @@
+{
+  "cce-policy.rego": "60a71e408fecbdb60b5609f77a1ddace8d8e1806a6aaff8c58d0269778e5dc2c",
+  "current_service_cert.pem": "4ae663e625729cc434f5dc9f45adb86d06b9e520826d835d897659abca57efb4",
+  "diagnostic.Dockerfile": "43e5b94377d0964ddbb341d4e742708971fec61a41e1a8d280c95b8c29015c24",
+  "image-provenance.json": "abd9232389afc99d1d2efc3e98ca62b191de17f07565e9f06b320f7a1e4a73fc",
+  "manifest.json": "89e5aa0d1af5d699ae283af524059813c57ebe3ba27ff7acd317a3499c81669b",
+  "node-appraisal-policy.json": "c5247746db80fe2ae5ffb9e30dc6265486599a328010f3f1682c555b0a1fb185",
+  "node-join-policy.actions.json": "4098aa0dd615fc7ea418cb3aad2b6951935b55a960b560b76de60822c22adb2d",
+  "node.json": "a768ba57a251f47d9d365246054c2b5d67d5246c5aa2ae48761b5d50c08a0be3",
+  "previous_service_identity.pem": "0150e665b684e69905dfdc39af7ec96b2888cbd05d91e371c0c5b2a2b45067fe",
+  "recover.template.json": "af019b116a733dfbf965adbd2bf710256ad8362a99ec069c01e4a45035f5be50"
+}

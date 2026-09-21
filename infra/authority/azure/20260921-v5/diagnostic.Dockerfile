@@ -1,0 +1,2 @@
+FROM agentdnsport20260913.azurecr.io/primary@sha256:9bd3f7246333ecb6098dace3e6e1abf6da3cad3f02247a66c897944e457f1401
+COPY ccf/host_driver.py /opt/agentdns/host_driver.py
