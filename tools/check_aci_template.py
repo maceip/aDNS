@@ -14,9 +14,11 @@ from pathlib import Path
 import re
 import tarfile
 from build_aci_template import (PUBLIC_FILES, read_small, strict_json,
-    OTEL_HEADER_PARAMETER, otel_environment, otel_policy_rules,
+    OTEL_HEADER_PARAMETER, OTEL_DISABLED_ENVIRONMENT, OTEL_DISABLED_RULE, otel_environment, otel_policy_rules,
     validate_otel_ca)
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
+from prepare_aci_durable_candidate import (STORAGE_KEY_PARAMETER, LOGGING_PARAMETERS,
+    validate_durable_candidate, validate_retained_logging)
 
 HEX = r"[0-9a-f]{64}"
 
@@ -72,6 +74,12 @@ def archive_image(path, image, expected_tag):
                     visit(child, depth + 1)
                 elif descriptor.get("platform") == {"architecture": "amd64", "os": "linux"}:
                     found.add(digest)
+                elif descriptor.get("platform") is None and "config" in child:
+                    # OCI permits a direct manifest descriptor without a
+                    # platform. Verify its content-addressed image config.
+                    actual_platform = blob(child["config"]["digest"])
+                    if actual_platform.get("architecture") == "amd64" and actual_platform.get("os") == "linux":
+                        found.add(digest)
 
         visit(index)
         if found != {expected_digest}:
@@ -130,13 +138,27 @@ def validate_ports(properties):
 def validate_otel(template, containers, volumes, policies):
     """Validate only public configuration; never open runtime parameters."""
     expected_parameters={"transferKeyB64":{"type":"secureString"},"transferKeyJson":{"type":"secureString"}}
+    if "durable-state" in volumes:
+        expected_parameters[STORAGE_KEY_PARAMETER]={"type":"secureString"}
+    if validate_retained_logging(template)["configured"]:
+        expected_parameters.update(LOGGING_PARAMETERS)
     primary=containers["primary"]
     raw_environment=primary.get("environmentVariables",[])
     configured=any(isinstance(item,dict) and str(item.get("name","")).startswith("OTEL_") for item in raw_environment)
     if not configured:
+        raise ValueError("trace export must be explicitly configured or disabled")
+    if raw_environment == OTEL_DISABLED_ENVIRONMENT:
         if template["parameters"]!=expected_parameters or "otel-public-ca" in volumes:
-            raise ValueError("unexpected optional OTLP parameter or CA volume")
-        return {"configured":False}
+            raise ValueError("disabled trace export must not carry OTLP parameters or CA")
+        rules=policies.get("primary",{}).get("env_rules",[])
+        otel_rules=[rule for rule in rules if rule["pattern"].lstrip("^").startswith("OTEL_")]
+        if otel_rules != [OTEL_DISABLED_RULE]:
+            raise ValueError("CCE must require the exact disabled trace export setting")
+        for rule in rules:
+            if rule["strategy"] == "re2" and any(re.search(rule["pattern"], value) for value in
+                    ("OTEL_SDK_DISABLED=false", "OTEL_EXPORTER_OTLP_ENDPOINT=https://unexpected:443")):
+                raise ValueError("CCE must not permit alternate trace export settings")
+        return {"configured":False,"trace_export_enabled":False,"mode":"explicitly_disabled"}
     expected_parameters[OTEL_HEADER_PARAMETER]={"type":"secureString"}
     if template["parameters"]!=expected_parameters:
         raise ValueError("OTLP headers must be a secureString parameter without defaults")
@@ -183,7 +205,7 @@ def validate_otel(template, containers, volumes, policies):
     policy_mounts=[item for item in policies["primary"]["mounts"] if item["destination"]=="/otel"]
     if len(policy_mounts)!=1 or policy_mounts[0]!={"destination":"/otel","options":["rbind","rshared","ro"],"source":"sandbox:///tmp/atlas/secretsVolume/.+","type":"bind"}:
         raise ValueError("CCE must constrain the read-only public OTLP CA mount")
-    return {"configured":True,"endpoint":expected["OTEL_EXPORTER_OTLP_ENDPOINT"],
+    return {"configured":True,"trace_export_enabled":True,"endpoint":expected["OTEL_EXPORTER_OTLP_ENDPOINT"],
             "public_ca_sha256":ca_sha256,"resource_labels":labels,
             "credential_policy":"secureString reference and bounded nonliteral percent-encoded Basic authorization"}
 
@@ -244,7 +266,13 @@ def check(template_path, archives, mappings):
     if node.get("attestation") != native_attestation_configuration():
         raise ValueError("native ACI bootstrap requires explicit SNP collateral and UVM configuration")
     validate_native_internal_readiness(node)
-    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != "agentdns.test:8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:agentdns.test" not in node["node_certificate"]["subject_alt_names"]:
+    durable={"configured":False}
+    expected_name="agentdns.test"
+    if "durable-state" in volumes:
+        durable=validate_durable_candidate(template,containers,volumes,node,policies)
+        resource=template["resources"][0]
+        expected_name=resource["name"]+"."+resource["location"]+".azurecontainer.io"
+    if node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] != expected_name+":8000" or node["network"]["rpc_interfaces"]["agentdns-internal"]["bind_address"] != "127.0.0.1:8001" or "dNSName:"+expected_name not in node["node_certificate"]["subject_alt_names"]:
         raise ValueError("public TLS name or internal interface differs")
     otel=validate_otel(template,containers,volumes,policies)
     if volumes["transfer-secret"]["secret"] != {"transfer-key.json":"[base64(parameters('transferKeyJson'))]"} or containers["secondary"]["environmentVariables"] != [{"name":"AGENTDNS_TRANSFER_KEY_B64","secureValue":"[parameters('transferKeyB64')]"}]:
@@ -256,6 +284,8 @@ def check(template_path, archives, mappings):
             "bootstrap_manifest_sha256": sha(public["manifest.json"]),
             "containers": summaries, "pause_layer_count": 1,
             "telemetry":otel,
+            "retained_logging":validate_retained_logging(template),
+            "durable_state":durable,
             "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
             "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight"}
 

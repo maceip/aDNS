@@ -1,0 +1,22 @@
+[Unit]
+Description=Rotate and copy committed aDNS ledger
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=agenthost
+Group=agenthost
+UMask=0077
+ExecStartPre=/opt/steward/venv/bin/python /usr/local/lib/agent-hosting/adns-backup/tools/backup_rotate.py --config /etc/agent-hosting/adns-backup/config.json
+ExecStart=/opt/steward/venv/bin/python /usr/local/lib/agent-hosting/adns-backup/tools/azure_files_backup.py --config /etc/agent-hosting/adns-backup/config.json
+# 3 is a verified byte copy with transaction coverage explicitly unverified.
+SuccessExitStatus=3
+TimeoutStartSec=240
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/agent-hosting/adns-backups
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=

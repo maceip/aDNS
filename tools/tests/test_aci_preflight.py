@@ -18,16 +18,17 @@ import check_aci_template as preflight
 import build_aci_template as builder
 
 
-def archive_fixture(path, *, combined=False, damage=False):
+def archive_fixture(path, *, combined=False, damage=False, omit_platform=False, architecture="amd64"):
     files={}
     def blob(value):
         raw=json.dumps(value,separators=(',',':')).encode() if isinstance(value,dict) else value
         digest=hashlib.sha256(raw).hexdigest();name='blobs/sha256/'+digest;files[name]=raw
         return {'digest':'sha256:'+digest,'size':len(raw)}
     layer=blob(b'layer bytes for fixture')
-    config=blob({'architecture':'amd64','os':'linux'})
+    config=blob({'architecture':architecture,'os':'linux'})
     manifest=blob({'schemaVersion':2,'config':config,'layers':[layer]})
     descriptor={**manifest,'platform':{'architecture':'amd64','os':'linux'}}
+    if omit_platform:descriptor.pop('platform')
     index=blob({'schemaVersion':2,'manifests':[descriptor]})
     files['index.json']=json.dumps({'manifests':[index]}).encode()
     docker={'Config':'blobs/sha256/'+config['digest'][7:],'RepoTags':['example.azurecr.io/primary:test'],'Layers':['blobs/sha256/'+layer['digest'][7:]]}
@@ -40,6 +41,15 @@ def archive_fixture(path, *, combined=False, damage=False):
 
 
 class ArchivePreflightTests(unittest.TestCase):
+    def test_optional_oci_descriptor_platform_uses_verified_image_config(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'primary.tar'
+            image=archive_fixture(path,omit_platform=True)
+            self.assertEqual(preflight.archive_image(path,image,'example.azurecr.io/primary:test')['layer_count'],1)
+            image=archive_fixture(path,omit_platform=True,architecture='arm64')
+            with self.assertRaisesRegex(ValueError,'linux/amd64 manifest'):
+                preflight.archive_image(path,image,'example.azurecr.io/primary:test')
+
     def test_native_readiness_acl_does_not_deny_probe_or_broaden_node_routes(self):
         def node(endpoints):
             return {'network': {'rpc_interfaces': {'agentdns-internal': {'accepted_endpoints': endpoints}}}}
@@ -122,7 +132,25 @@ class TelemetryPreflightTests(unittest.TestCase):
         values=self.fixture();result=preflight.validate_otel(*values)
         self.assertTrue(result['configured']);self.assertEqual(result['public_ca_sha256'],hashlib.sha256(self.ca).hexdigest())
         template={'parameters':{'transferKeyB64':{'type':'secureString'},'transferKeyJson':{'type':'secureString'}}}
-        self.assertEqual(preflight.validate_otel(template,{'primary':{},'secondary':{}},{},{}),{'configured':False})
+        containers={'primary':{'environmentVariables':copy.deepcopy(builder.OTEL_DISABLED_ENVIRONMENT)},'secondary':{}}
+        policy={'primary':{'env_rules':[copy.deepcopy(builder.OTEL_DISABLED_RULE)]}}
+        self.assertEqual(preflight.validate_otel(template,containers,{},policy),
+                         {'configured':False,'trace_export_enabled':False,'mode':'explicitly_disabled'})
+
+    def test_disabled_export_requires_exact_measured_environment_and_no_mixed_settings(self):
+        for change in ('implicit','false','mixed','optional','absent-rule','broad','unused-secret'):
+            template={'parameters':{'transferKeyB64':{'type':'secureString'},'transferKeyJson':{'type':'secureString'}}}
+            containers={'primary':{'environmentVariables':copy.deepcopy(builder.OTEL_DISABLED_ENVIRONMENT)},'secondary':{}}
+            policy={'primary':{'env_rules':[copy.deepcopy(builder.OTEL_DISABLED_RULE)]}}
+            if change=='implicit':containers['primary']['environmentVariables']=[]
+            elif change=='false':containers['primary']['environmentVariables'][0]['value']='false'
+            elif change=='mixed':containers['primary']['environmentVariables'].append({'name':'OTEL_EXPORTER_OTLP_ENDPOINT','value':'https://unexpected:443'})
+            elif change=='optional':policy['primary']['env_rules'][0]['required']=False
+            elif change=='absent-rule':policy['primary']['env_rules']=[]
+            elif change=='broad':policy['primary']['env_rules'].append({'pattern':'.*=.*','strategy':'re2','required':False})
+            else:template['parameters']['otelExporterHeaders']={'type':'secureString'}
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                preflight.validate_otel(template,containers,{},policy)
 
     def test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected(self):
         for change in ('literal','parameter-default','duplicate','http','broad-policy','literal-policy','policy-mount','mount','extra-label','ca'):
