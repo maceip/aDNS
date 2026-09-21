@@ -10,6 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 import prepare_aci_durable_candidate as candidate
+import check_aci_template as preflight
 
 
 class DurableCandidateTests(unittest.TestCase):
@@ -54,12 +55,40 @@ class DurableCandidateTests(unittest.TestCase):
                 elif change == "tfstate": volumes["durable-state"]["azureFile"]["storageAccountName"] = "ahtfstate"
                 with self.assertRaises(ValueError): candidate.validate_durable_candidate(template, containers, volumes, node)
 
+    def test_retained_logging_is_required_and_workspace_secrets_stay_references(self):
+        template = self.fixture()[0]
+        properties, containers, volumes, node = self.inspect(template)
+        self.assertTrue(candidate.validate_retained_logging(template)["configured"])
+        self.assertEqual(preflight.validate_otel(template, containers, volumes, {}), {"configured": False})
+        for change in ("missing", "literal-key", "literal-id", "key-default", "id-default", "key-string", "extra-setting"):
+            with self.subTest(change=change):
+                invalid = copy.deepcopy(template)
+                props, cs, vs, ns = self.inspect(invalid)
+                if change == "missing": del props["diagnostics"]
+                elif change == "literal-key": props["diagnostics"]["logAnalytics"]["workspaceKey"] = "private-fixture-secret"
+                elif change == "literal-id": props["diagnostics"]["logAnalytics"]["workspaceId"] = "unreviewed-workspace"
+                elif change == "key-default": invalid["parameters"]["logAnalyticsWorkspaceKey"]["defaultValue"] = "private-fixture-secret"
+                elif change == "id-default": invalid["parameters"]["logAnalyticsWorkspaceId"]["defaultValue"] = "unreviewed-workspace"
+                elif change == "key-string": invalid["parameters"]["logAnalyticsWorkspaceKey"]["type"] = "string"
+                else: props["diagnostics"]["logAnalytics"]["metadata"] = {"unexpected": "value"}
+                with self.assertRaises(ValueError) as rejected:
+                    candidate.validate_durable_candidate(invalid, cs, vs, ns)
+                self.assertNotIn("private-fixture-secret", str(rejected.exception))
+
+    def test_retained_workspace_contract_supports_creation_time_collection(self):
+        workspace = candidate.logging_workspace_template("northeurope")["resources"][0]
+        self.assertEqual(workspace["name"], "adns-authority-logs")
+        self.assertEqual(workspace["location"], "northeurope")
+        self.assertEqual(workspace["properties"]["retentionInDays"], 30)
+        self.assertFalse(workspace["properties"]["features"]["disableLocalAuth"])
+        self.assertEqual(workspace["properties"]["publicNetworkAccessForIngestion"], "Enabled")
+
     def test_confidential_policy_rejects_new_exec_signal_or_mount_authority(self):
         template = self.fixture()[0]
         _, containers, volumes, node = self.inspect(template)
-        policies = {"primary": {"env_rules": copy.deepcopy(candidate.PLATFORM_ENV_RULES), "mounts": [{"destination": "/durable", "options": ["rbind", "rshared", "rw"], "source": "sandbox:///tmp/atlas/azureFileVolume/.+", "type": "bind"}]}, "secondary": {"mounts": []}}
+        policies = {"primary": {"allow_stdio_access": True, "env_rules": copy.deepcopy(candidate.PLATFORM_ENV_RULES), "mounts": [{"destination": "/durable", "options": ["rbind", "rshared", "rw"], "source": "sandbox:///tmp/atlas/azureFileVolume/.+", "type": "bind"}]}, "secondary": {"allow_stdio_access": True, "mounts": []}}
         candidate.validate_durable_candidate(template, containers, volumes, node, policies)
-        for field, value in (("exec_processes", [{"command": ["sh"]}]), ("signals", [9]), ("allow_elevated", True)):
+        for field, value in (("exec_processes", [{"command": ["sh"]}]), ("signals", [9]), ("allow_elevated", True), ("allow_stdio_access", False)):
             invalid = copy.deepcopy(policies)
             invalid["primary"][field] = value
             with self.assertRaises(ValueError): candidate.validate_durable_candidate(template, containers, volumes, node, invalid)

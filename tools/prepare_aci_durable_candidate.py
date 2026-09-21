@@ -22,6 +22,8 @@ from build_aci_template import PUBLIC_FILES, read_small, strict_json, write_outp
 
 
 STORAGE_KEY_PARAMETER = "durableStorageAccountKey"
+LOGGING_PARAMETERS = {"logAnalyticsWorkspaceId": {"type": "string"},
+                      "logAnalyticsWorkspaceKey": {"type": "secureString"}}
 RESTART_CONTRACT = "one-shot-new-genesis; subsequent startup requires live-peer Join or member-authorized Recover"
 PLATFORM_ENV_RULES = [
     {"pattern": r"^UVM_SECURITY_CONTEXT_DIR=/security-context[-a-zA-Z0-9]*$", "required": False, "strategy": "re2"},
@@ -33,10 +35,50 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def retained_logging_configuration():
+    return {"logAnalytics": {
+        "workspaceId": "[parameters('logAnalyticsWorkspaceId')]",
+        "workspaceKey": "[parameters('logAnalyticsWorkspaceKey')]"}}
+
+
+def logging_workspace_template(location):
+    """Public foundation resource; deployment and credential retrieval are separate."""
+    return {"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0", "resources": [{
+                "type": "Microsoft.OperationalInsights/workspaces", "apiVersion": "2023-09-01",
+                "name": "adns-authority-logs", "location": location,
+                "tags": {"project": "agentdns", "purpose": "authority-recovery"},
+                "properties": {"sku": {"name": "PerGB2018"}, "retentionInDays": 30,
+                               "publicNetworkAccessForIngestion": "Enabled",
+                               "publicNetworkAccessForQuery": "Enabled",
+                               "features": {"disableLocalAuth": False}}}]}
+
+
+def validate_retained_logging(template, *, required=False):
+    """Validate creation-time collection without opening workspace credentials."""
+    resources = template.get("resources", [])
+    properties = resources[0]["properties"] if resources else {}
+    configured = "diagnostics" in properties
+    parameters = template["parameters"]
+    if not configured:
+        if required or any(name in parameters for name in LOGGING_PARAMETERS):
+            raise ValueError("creation-time retained logging is required")
+        return {"configured": False}
+    if properties["diagnostics"] != retained_logging_configuration():
+        raise ValueError("retained logging must use exact workspace parameter references")
+    if any(parameters.get(name) != spec for name, spec in LOGGING_PARAMETERS.items()):
+        raise ValueError("workspace ID and secure key parameters must have no defaults")
+    return {"configured": True, "collection": "ACI stdout/stderr and container events from creation",
+            "workspace_id_parameter": "logAnalyticsWorkspaceId",
+            "workspace_key_parameter": "logAnalyticsWorkspaceKey",
+            "acceptance": "verify native startup logs and events in the selected retained workspace after deployment"}
+
+
 def validate_durable_candidate(template, containers, volumes, node, policies=None):
     """Reject unsafe path, writer, startup, secret and CCE mount substitutions."""
     resource = template["resources"][0]
     properties = resource["properties"]
+    validate_retained_logging(template, required=True)
     if re.fullmatch(r"agentdns-ccf-replacement-[0-9]{8}", resource["name"]) is None:
         raise ValueError("distinct replacement group name required")
     if properties.get("restartPolicy") != "Never" or node["command"]["type"] != "Start":
@@ -85,6 +127,8 @@ def validate_durable_candidate(template, containers, volumes, node, policies=Non
         for policy in policies.values():
             if policy.get("exec_processes") or policy.get("signals") or policy.get("allow_elevated"):
                 raise ValueError("candidate CCE must not permit exec, signals or elevation")
+            if policy.get("allow_stdio_access") is not True:
+                raise ValueError("candidate CCE must permit stdout/stderr collection")
         for expected_rule in PLATFORM_ENV_RULES:
             actual_rules = [rule for rule in policies["primary"]["env_rules"] if rule["pattern"].lstrip("^").startswith(expected_rule["pattern"].lstrip("^").split("=", 1)[0] + "=")]
             if actual_rules != [expected_rule]:
@@ -169,6 +213,8 @@ def prepare(baseline, member_certificate, member_encryption_key, date):
     properties["restartPolicy"] = "Never"
     properties["ipAddress"]["dnsNameLabel"] = name
     properties["confidentialComputeProperties"]["ccePolicy"] = ""
+    properties["diagnostics"] = retained_logging_configuration()
+    template["parameters"].update(copy.deepcopy(LOGGING_PARAMETERS))
     node["network"]["rpc_interfaces"]["primary_rpc_interface"]["published_address"] = fqdn + ":8000"
     node["node_certificate"]["subject_alt_names"] = ["iPAddress:127.0.0.1", "dNSName:" + fqdn]
     node["ledger"]["directory"] = "/durable/ledger"
@@ -208,6 +254,7 @@ def prepare(baseline, member_certificate, member_encryption_key, date):
                "member_certificate_not_after": (certificate.not_valid_after_utc if hasattr(certificate, "not_valid_after_utc") else certificate.not_valid_after.replace(tzinfo=datetime.timezone.utc)).isoformat(),
                "config_manifest_sha256": digest(public["manifest.json"]), "constitution_sha256": manifest["/opt/agentdns/governance/constitution.js"],
                "fqdn": fqdn, "durable_state": durable, "resource_name_availability": "not checked",
+               "retained_logging": validate_retained_logging(template, required=True),
                "secrets": "none read or generated; template placeholders only"}
     return template, parameter_template, storage, public, summary
 
@@ -229,6 +276,8 @@ def main():
     template, parameters, storage, public, summary = values
     for name, value in (("ccf.template.json", template), ("ccf.parameters.TEMPLATE.json", parameters), ("storage.template.json", storage), ("candidate-summary.json", summary)):
         write_output(args.output / name, json.dumps(value, indent=2) + "\n", 0o644)
+    write_output(args.output / "logging-workspace.template.json",
+                 json.dumps(logging_workspace_template(template["resources"][0]["location"]), indent=2) + "\n", 0o644)
     (args.output / "public").mkdir()
     for name, value in public.items():
         (args.output / "public" / name).write_bytes(value)

@@ -17,7 +17,8 @@ from build_aci_template import (PUBLIC_FILES, read_small, strict_json,
     OTEL_HEADER_PARAMETER, otel_environment, otel_policy_rules,
     validate_otel_ca)
 from prepare_aci_control import native_attestation_configuration, validate_native_internal_readiness
-from prepare_aci_durable_candidate import STORAGE_KEY_PARAMETER, validate_durable_candidate
+from prepare_aci_durable_candidate import (STORAGE_KEY_PARAMETER, LOGGING_PARAMETERS,
+    validate_durable_candidate, validate_retained_logging)
 
 HEX = r"[0-9a-f]{64}"
 
@@ -139,6 +140,8 @@ def validate_otel(template, containers, volumes, policies):
     expected_parameters={"transferKeyB64":{"type":"secureString"},"transferKeyJson":{"type":"secureString"}}
     if "durable-state" in volumes:
         expected_parameters[STORAGE_KEY_PARAMETER]={"type":"secureString"}
+    if validate_retained_logging(template)["configured"]:
+        expected_parameters.update(LOGGING_PARAMETERS)
     primary=containers["primary"]
     raw_environment=primary.get("environmentVariables",[])
     configured=any(isinstance(item,dict) and str(item.get("name","")).startswith("OTEL_") for item in raw_environment)
@@ -271,6 +274,7 @@ def check(template_path, archives, mappings):
             "bootstrap_manifest_sha256": sha(public["manifest.json"]),
             "containers": summaries, "pause_layer_count": 1,
             "telemetry":otel,
+            "retained_logging":validate_retained_logging(template),
             "durable_state":durable,
             "checks": "unique ACI port numbers; distinct single-image archives; OCI metadata and layer hashes; policy commands/counts; bootstrap manifest; TLS name; secure parameter references",
             "limitation": "dm-verity roots are confcom output, not independently recomputed by this preflight"}
