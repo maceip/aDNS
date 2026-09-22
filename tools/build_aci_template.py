@@ -29,11 +29,11 @@ OTEL_HEADER_PARAMETER = "otelExporterHeaders"
 OTEL_DISABLED_ENVIRONMENT = [{"name": "OTEL_SDK_DISABLED", "value": "true"}]
 OTEL_DISABLED_RULE = {"pattern": "OTEL_SDK_DISABLED=true", "required": True, "strategy": "string"}
 _B64_ATOM = r"(?:[A-Za-z0-9]|%2B|%2F)"
-# The secret is standard percent-encoded HTTP Basic authorization. Only the
+# The secret is standard percent-encoded Basic or scoped Bearer authorization. Only the
 # encoding shape is public; never put one concrete credential in the CCE policy.
-OTEL_HEADER_ENV_PATTERN = (r"^OTEL_EXPORTER_OTLP_HEADERS=authorization=Basic%20"
+OTEL_HEADER_ENV_PATTERN = (r"^OTEL_EXPORTER_OTLP_HEADERS=authorization=(?:Basic%20"
     + r"(?:" + _B64_ATOM + r"{4}){0,106}(?:" + _B64_ATOM + r"{4}|"
-    + _B64_ATOM + r"{2}%3D%3D|" + _B64_ATOM + r"{3}%3D)$")
+    + _B64_ATOM + r"{2}%3D%3D|" + _B64_ATOM + r"{3}%3D)|Bearer%20[A-Za-z0-9_-]{32,256})$")
 OTEL_LABEL_KEYS = ("deployment.environment", "service.namespace", "service.instance.id")
 
 
@@ -113,15 +113,16 @@ def write_output(path, content, mode):
 
 def validate_otel_endpoint(endpoint):
     if not isinstance(endpoint,str) or len(endpoint)>512:
-        raise ValueError("bounded HTTPS OTLP origin required")
+        raise ValueError("bounded HTTPS OTLP origin or scoped gateway prefix required")
     try:
         parsed=urlsplit(endpoint)
         valid=(parsed.scheme=="https" and parsed.hostname is not None
             and re.fullmatch(r"[A-Za-z0-9.-]{1,253}",parsed.hostname) is not None
-            and parsed.port is not None and 1<=parsed.port<=65535
-            and endpoint==f"https://{parsed.hostname}:{parsed.port}")
+            and (parsed.port is None or 1<=parsed.port<=65535)
+            and (not parsed.path or re.fullmatch(r"/_ops/telemetry/[a-z][a-z0-9-]{0,39}",parsed.path) is not None)
+            and endpoint==f"https://{parsed.hostname}"+(f":{parsed.port}" if parsed.port is not None else "")+parsed.path)
     except ValueError:valid=False
-    if not valid:raise ValueError("canonical HTTPS OTLP origin with explicit port required")
+    if not valid:raise ValueError("canonical HTTPS OTLP origin or scoped gateway prefix required")
     return endpoint
 
 
@@ -172,11 +173,13 @@ def load_otel_settings(endpoint, ca_path, secret_path, labels):
             raise ValueError()
         if secret["endpoint"]!=endpoint or secret["header_name"].lower()!="authorization":raise ValueError()
         value=secret["header_value"]
-        if not isinstance(value,str) or not value.startswith("Basic ") or len(value)>512:raise ValueError()
-        token=value[6:];decoded=base64.b64decode(token,validate=True)
-        if base64.b64encode(decoded).decode()!=token:raise ValueError()
-        user,password=decoded.split(b":",1)
-        if not 1<=len(user)<=64 or not 1<=len(password)<=256 or not all(33<=byte<=126 for byte in decoded):raise ValueError()
+        if not isinstance(value,str) or len(value)>512:raise ValueError()
+        if value.startswith("Basic "):
+            token=value[6:];decoded=base64.b64decode(token,validate=True)
+            if base64.b64encode(decoded).decode()!=token:raise ValueError()
+            user,password=decoded.split(b":",1)
+            if not 1<=len(user)<=64 or not 1<=len(password)<=256 or not all(33<=byte<=126 for byte in decoded):raise ValueError()
+        elif re.fullmatch(r"Bearer [A-Za-z0-9_-]{32,256}",value) is None:raise ValueError()
         encoded=secret["OTEL_EXPORTER_OTLP_HEADERS"]
         if not isinstance(encoded,str) or len(encoded)>2048:raise ValueError()
         name,supplied=encoded.split("=",1)
@@ -184,7 +187,7 @@ def load_otel_settings(endpoint, ca_path, secret_path, labels):
         header="authorization="+quote(value,safe="")
         if re.fullmatch(OTEL_HEADER_ENV_PATTERN,"OTEL_EXPORTER_OTLP_HEADERS="+header) is None:raise ValueError()
     except (ValueError,TypeError,AttributeError,UnicodeError):
-        raise ValueError("invalid private OTLP Basic authorization configuration") from None
+        raise ValueError("invalid private OTLP authorization configuration") from None
     return environment,ca,header,{"endpoint":endpoint,"public_ca_sha256":ca_sha256,"resource_labels":labels,
         "header_policy_pattern":OTEL_HEADER_ENV_PATTERN}
 
@@ -197,9 +200,9 @@ def main():
     parser.add_argument("--secondary-image", required=True)
     parser.add_argument("--pull-identity", required=True)
     parser.add_argument("--location", default="northeurope")
-    parser.add_argument("--otel-endpoint",help="Optional HTTPS origin with explicit port")
+    parser.add_argument("--otel-endpoint",help="Optional HTTPS origin or /_ops/telemetry/<source> prefix")
     parser.add_argument("--otel-public-ca",type=Path)
-    parser.add_argument("--otel-secret-file",type=Path,help="Owner-only Basic-auth JSON; never copied to public output")
+    parser.add_argument("--otel-secret-file",type=Path,help="Owner-only Basic/Bearer-auth JSON; never copied to public output")
     parser.add_argument("--otel-deployment-environment")
     parser.add_argument("--otel-service-namespace")
     parser.add_argument("--otel-service-instance")

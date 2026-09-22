@@ -104,8 +104,9 @@ def trace_endpoint(environ):
     parsed = urlsplit(value)
     if (len(value)>2048 or parsed.scheme not in ('http','https') or not parsed.hostname
             or parsed.username or parsed.password or parsed.query or parsed.fragment
-            or parsed.path != '/v1/traces' or not 1 <= (parsed.port or 443) <= 65535):
-        raise ValueError('OTLP endpoint must be a credential-free HTTP(S) /v1/traces URL')
+            or re.fullmatch(r'(?:/_ops/telemetry/[a-z][a-z0-9-]{0,39})?/v1/traces',parsed.path) is None
+            or not 1 <= (parsed.port if parsed.port is not None else 443) <= 65535):
+        raise ValueError('OTLP endpoint must be a credential-free HTTP(S) trace URL with an optional scoped gateway prefix')
     if parsed.scheme == 'http':
         try: loopback = ipaddress.ip_address(parsed.hostname).is_loopback
         except ValueError: loopback = parsed.hostname == 'localhost'

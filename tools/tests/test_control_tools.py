@@ -301,11 +301,34 @@ class BootstrapTemplateTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'invalid private'):template.load_otel_settings(secret['endpoint'],ca,path,labels)
 
     def test_otel_endpoint_labels_and_public_ca_are_strict(self):
+        for endpoint in ('https://example.test', 'https://example.test:443',
+                         'https://example.test/_ops/telemetry/adns-authority',
+                         'https://example.test:443/_ops/telemetry/adns-authority'):
+            self.assertEqual(template.validate_otel_endpoint(endpoint),endpoint)
         for endpoint in ('http://127.0.0.1:4318','https://user:pass@example.test:4318','https://example.test:4318/path',
-                         'https://example.test:4318?token=private','https://example.test','https://example.test:0'):
+                         'https://example.test:4318?token=private','https://example.test:0',
+                         'https://example.test/_ops/telemetry/a%2Fb','https://example.test/_ops/telemetry/../other',
+                         'https://example.test/_ops/telemetry/authority/v1/traces','https://example.test/_ops/telemetry/authority/'):
             with self.assertRaises(ValueError):template.validate_otel_endpoint(endpoint)
         with self.assertRaises(ValueError):template.otel_environment('https://20.166.33.141:4318',{'extra':'credential'})
         for body in (b'not a certificate',b'-----BEGIN PRIVATE KEY-----'):
             with self.assertRaises(ValueError):template.validate_otel_ca(body)
+
+    def test_bounded_bearer_secret_is_private_and_uses_exact_scoped_endpoint(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ca,path,secret,labels=self.otel_fixture(Path(temp))
+            endpoint='https://grafana.example.test/_ops/telemetry/adns-authority'
+            value='Bearer '+'fixture-source-token-'+'a'*48
+            secret.update(endpoint=endpoint,header_value=value,OTEL_EXPORTER_OTLP_HEADERS='authorization='+quote(value,safe=''))
+            path.write_text(json.dumps(secret))
+            environment,_,header,summary=template.load_otel_settings(endpoint,ca,path,labels)
+            self.assertEqual(environment['OTEL_EXPORTER_OTLP_ENDPOINT'],endpoint)
+            self.assertEqual(header,secret['OTEL_EXPORTER_OTLP_HEADERS'])
+            self.assertRegex('OTEL_EXPORTER_OTLP_HEADERS='+header,template.OTEL_HEADER_ENV_PATTERN)
+            self.assertNotIn(value,json.dumps(summary)+json.dumps(template.otel_policy_rules(environment)))
+            for value in ('Bearer short','Bearer '+'a'*257,'Bearer '+'a'*32+'\n','Bearer '+'a'*32+',extra=1','Digest '+'a'*32):
+                changed=dict(secret,header_value=value,OTEL_EXPORTER_OTLP_HEADERS='authorization='+quote(value,safe=''))
+                path.write_text(json.dumps(changed))
+                with self.assertRaises(ValueError):template.load_otel_settings(endpoint,ca,path,labels)
 
 if __name__=='__main__':unittest.main()
