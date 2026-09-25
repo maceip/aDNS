@@ -1,0 +1,66 @@
+{
+  "release_id": "adns-transfer-diagnostics-20260921-v3",
+  "active_profiles": [
+    "azure-aci-snp"
+  ],
+  "valid_from": 1789980086,
+  "valid_until": 1797756146,
+  "max_appraisal_lifetime": 1800,
+  "minimum_tcb": {
+    "Genoa": {
+      "bootloader": 10,
+      "tee": 0,
+      "snp": 23,
+      "microcode": 84
+    }
+  },
+  "approved_measurements": [
+    "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866"
+  ],
+  "approved_host_data": [
+    "cf6475b924e952783ad003357d6e407102813167c95460f099f4f0f605799a96",
+    "6665a4273c40036ed1f3e8c125458463beaa00eb472d39c0e4efd008876e896c"
+  ],
+  "uvm": [
+    {
+      "did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+      "feed": "ContainerPlat-AMD-UVM",
+      "minimum_svn": 104
+    }
+  ],
+  "uvm_endorsement_time_policy": "approved_release",
+  "policy_id": [
+    171,
+    213,
+    147,
+    213,
+    221,
+    234,
+    148,
+    103,
+    76,
+    27,
+    53,
+    241,
+    195,
+    60,
+    99,
+    1,
+    82,
+    63,
+    150,
+    114,
+    108,
+    155,
+    244,
+    42,
+    83,
+    145,
+    127,
+    78,
+    176,
+    181,
+    250,
+    202
+  ]
+}

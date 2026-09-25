@@ -1,0 +1,10 @@
+{
+  "agentdns-ccf-recovery-20260921-v2": {
+    "provisioningState": "Succeeded",
+    "state": "Stopped"
+  },
+  "agentdns-ccf-recover-20260921-v4": {
+    "provisioningState": "Succeeded",
+    "state": "Stopped"
+  }
+}

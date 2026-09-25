@@ -1,0 +1,16 @@
+{
+  "purpose": "ccf-node-tls-bootstrap-only",
+  "node_spki_sha256": "4940a0c011bf376dc352ffc18aece1ba9ea30528b8fd759710bcbeda3383b90e",
+  "quote_sha256": "64ea7e6930662d8379857f52dd0ece6f8c94cf991186f30b0a9d00bd369611d2",
+  "measurement": "dc3f5a934489232a9b1818f12a0a88d2324ced00f8ab370f40451a76b7880bc3e211849a0739642d3d6c3b2b4bfb9866",
+  "host_data": "60a71e408fecbdb60b5609f77a1ddace8d8e1806a6aaff8c58d0269778e5dc2c",
+  "product": "Genoa",
+  "policy_id": "53fe5c5ca8be4102c2baac29b40d1697ad9bb9c05c623a2fd7fae40bed2b531b",
+  "uvm_did": "did:x509:0:sha256:I__iuL25oXEVFdTP_aBLx_eT1RPHbCQ_ECBQfYZpt9s::eku:1.3.6.1.4.1.311.76.59.1.2",
+  "uvm_feed": "ContainerPlat-AMD-UVM",
+  "uvm_svn": 104,
+  "valid_until": 1790024585,
+  "actual_tls_peer_certificate_sha256": "ea4e208670f7a80d952553ad3f616aaf4c1b441b697fcd7c6c56c65122311b2e",
+  "authenticated_service_certificate_sha256": "b0db66b5c707eb04cd0f29cf29f41ada1c4936dc3e5702647a14c67d69998959",
+  "audited_at": 1790022785
+}

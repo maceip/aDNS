@@ -468,6 +468,70 @@ class CaptureTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.state.prepare_lifecycle({"operation": "renew", "request_id": "too-many", "parameters": {"requested_lease_seconds": 60}})
 
+    def test_expired_handles_release_capacity_and_current_signed_retry_survives(self):
+        with mock.patch.object(capture.time, 'monotonic', return_value=1000) as clock:
+            self.register_for_lifecycle()
+            for index in range(128):
+                self.state.prepare_lifecycle({'operation': 'renew', 'request_id': f'abandoned-{index}',
+                                             'parameters': {'requested_lease_seconds': 60}})
+            clock.return_value += self.state.LIFECYCLE_RETENTION_SECONDS
+            prepared = self.state.prepare_lifecycle({'operation': 'renew', 'request_id': 'live-renew',
+                                                    'parameters': {'requested_lease_seconds': 60}})
+            signed, _ = self.sign_prepared(prepared)
+            self.assertEqual(len(self.state._prepared_actions), 1)
+            self.assertEqual(len(self.state._request_ids), 2)  # fixed registration plus live action
+            clock.return_value += 301  # an expired nonce still has an exact cached retry
+            self.assertEqual(self.state.sign_lifecycle({key: signed[key] for key in
+                ('nonce', 'nonce_expires_at', 'intent_hash')} | {'action_id': prepared['action_id']}), signed)
+            self.assertEqual(len(self.state._signed_actions), 2)
+
+    def test_many_renewals_do_not_accumulate_and_never_evict_live_envelopes(self):
+        with mock.patch.object(capture.time, 'monotonic', return_value=1000) as clock:
+            self.register_for_lifecycle()
+            for index in range(2300):
+                prepared = self.state.prepare_lifecycle({'operation': 'renew', 'request_id': f'renew-{index}',
+                                                        'parameters': {'requested_lease_seconds': 60}})
+                self.sign_prepared(prepared)
+                clock.return_value += 90
+                self.assertLessEqual(len(self.state._prepared_actions), 7)
+                self.assertLessEqual(len(self.state._signed_actions), 8)
+                self.assertLessEqual(len(self.state._request_ids), 8)
+
+    def test_unsigned_reprepare_has_a_full_window_without_replacing_signed_nonce(self):
+        with mock.patch.object(capture.time, 'monotonic', return_value=1000) as clock:
+            self.register_for_lifecycle()
+            request = {'operation': 'renew', 'request_id': 'paused-renew',
+                       'parameters': {'requested_lease_seconds': 60}}
+            prepared = self.state.prepare_lifecycle(request)
+            clock.return_value = 1599
+            self.assertEqual(self.state.prepare_lifecycle(request), prepared)
+            clock.return_value = 1700  # beyond the original unsigned handle
+            signed, _ = self.sign_prepared(prepared)
+            clock.return_value = 2299
+            self.assertEqual(self.state.prepare_lifecycle(request), prepared)
+            self.assertEqual(self.state._action_deadlines[prepared['action_id']], 2300)
+            self.assertEqual(self.state.sign_lifecycle({key: signed[key] for key in
+                ('nonce', 'nonce_expires_at', 'intent_hash')} | {'action_id': prepared['action_id']}), signed)
+
+    def test_challenge_ownership_outlives_signing_cache_but_is_bounded(self):
+        with mock.patch.object(capture.time, 'monotonic', return_value=1000) as clock:
+            self.register_for_lifecycle()
+            prepared = self.state.prepare_lifecycle({'operation': 'acme_challenge_create',
+                'request_id': 'long-challenge', 'parameters': {'order_id': 'one',
+                    'txt_value': capture.b64url(bytes(32)), 'ttl': 30, 'lifetime_seconds': 3600}})
+            _, message = self.sign_prepared(prepared)
+            challenge = 'chal-' + hashlib.sha256(capture.canonical(message)).hexdigest()[:32]
+            clock.return_value += 601
+            self.state._prune_lifecycle()
+            self.assertNotIn(prepared['action_id'], self.state._prepared_actions)
+            self.assertIn(challenge, self.state._challenge_ids)
+            self.state.prepare_lifecycle({'operation': 'acme_challenge_delete', 'request_id': 'delete',
+                                         'parameters': {'challenge_id': challenge}})
+            clock.return_value = 4900
+            with self.assertRaisesRegex(ValueError, 'not issued'):
+                self.state.prepare_lifecycle({'operation': 'acme_challenge_delete', 'request_id': 'late-delete',
+                                             'parameters': {'challenge_id': challenge}})
+
     def test_uncertain_submission_retries_identical_request(self):
         nonce = {"nonce": "ab" * 32, "expires_at": int(time.time()) + 250,
                  "issued_at": int(time.time()), "intent_hash": self.state.intent_hash, "tx_id": "2.41", "status": "committed"}

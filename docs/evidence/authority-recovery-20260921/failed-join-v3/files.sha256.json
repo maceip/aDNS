@@ -1,0 +1,11 @@
+{
+  "cce-policy.rego": "6665a4273c40036ed1f3e8c125458463beaa00eb472d39c0e4efd008876e896c",
+  "diagnostic.Dockerfile": "43e5b94377d0964ddbb341d4e742708971fec61a41e1a8d280c95b8c29015c24",
+  "image-provenance.json": "c8d43a57f902228df33727cca4d27d01680cc55e2d70ed181597de8ae1a7cecb",
+  "join.template.json": "badb38ce5024b0122f54bcf0fd8872945f449c9fbeb2d08c6ac11be6431bf3ba",
+  "manifest.json": "13d4c47222b339a1465e48ac7d7709b95055d9efad19cce2f3883119d707b662",
+  "node-appraisal-policy.json": "bee13ea2835371291d4c0a57e6228f89aa1e9e4b7fdc4a1eaada8e85c0601fb7",
+  "node-join-policy.actions.json": "8ba022ccd404dcd89f1c1cd6545b622fe3aef6857a7808bf8825d352c379b060",
+  "node.json": "6887fef0f4b3b386b1bc0fd37a3c9876d679adbe1f6648516ddd00505c9b61a3",
+  "service_cert.pem": "38608d9d011a0b6d1734e0a49615890e3842c53f522a1290511d72d829170ad8"
+}

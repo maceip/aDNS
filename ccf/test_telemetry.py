@@ -114,8 +114,15 @@ class NativeSchemaTests(unittest.TestCase):
     def test_endpoint_rejects_credentials_query_redirect_targets_and_remote_plaintext(self):
         self.assertEqual(telemetry.trace_endpoint({}),'http://127.0.0.1:4318/v1/traces')
         self.assertEqual(telemetry.trace_endpoint({'OTEL_EXPORTER_OTLP_ENDPOINT':'https://collector.example/'}),'https://collector.example/v1/traces')
+        prefix='https://collector.example/_ops/telemetry/adns-authority'
+        self.assertEqual(telemetry.trace_endpoint({'OTEL_EXPORTER_OTLP_ENDPOINT':prefix}),prefix+'/v1/traces')
+        self.assertEqual(telemetry.trace_endpoint({'OTEL_EXPORTER_OTLP_TRACES_ENDPOINT':prefix+'/v1/traces'}),prefix+'/v1/traces')
         for endpoint in ['http://collector.example/v1/traces','https://a:b@collector.example/v1/traces',
-                         'https://collector.example/v1/traces?token=x','https://collector.example/other']:
+                         'https://collector.example/v1/traces?token=x','https://collector.example/other',
+                         prefix+'/v1/logs',prefix+'/v1/traces/',prefix+'/v1/traces#x',
+                         prefix.replace('adns-authority','bad%2Fsource')+'/v1/traces',
+                         prefix.replace('adns-authority','../source')+'/v1/traces',
+                         'https://collector.example:0/v1/traces']:
             with self.assertRaises(ValueError):telemetry.trace_endpoint({'OTEL_EXPORTER_OTLP_TRACES_ENDPOINT':endpoint})
 
     def test_link_cache_is_bounded_and_expires(self):
@@ -274,7 +281,7 @@ class DriverTraceTests(unittest.TestCase):
             status='200 OK'if okay else'401 private-canary'
             conn.sendall(('HTTP/1.1 '+status+'\r\nContent-Length: 0\r\nConnection: close\r\n\r\n').encode())
         with listener(authenticated,self.tls) as (port,errors):
-            config={'OTEL_EXPORTER_OTLP_ENDPOINT':f'https://127.0.0.1:{port}',
+            config={'OTEL_EXPORTER_OTLP_ENDPOINT':f'https://127.0.0.1:{port}/_ops/telemetry/adns-authority',
                 'OTEL_EXPORTER_OTLP_HEADERS':'authorization=wrong-canary',
                 'OTEL_EXPORTER_OTLP_TRACES_HEADERS':'Authorization=Bearer%20private-canary,x-scope-orgid=native-test',
                 'OTEL_EXPORTER_OTLP_CERTIFICATE':'/missing/private-canary',
@@ -291,7 +298,7 @@ class DriverTraceTests(unittest.TestCase):
             ExportTraceServiceRequest.FromString(captured[0][1])
             # Wrong trust and wrong hostname must fail before HTTP headers/body.
             for wrong in [dict(config,OTEL_EXPORTER_OTLP_TRACES_CERTIFICATE=None),
-                          dict(config,OTEL_EXPORTER_OTLP_ENDPOINT=f'https://localhost:{port}')]:
+                          dict(config,OTEL_EXPORTER_OTLP_ENDPOINT=f'https://localhost:{port}/_ops/telemetry/adns-authority')]:
                 if wrong['OTEL_EXPORTER_OTLP_TRACES_CERTIFICATE'] is None:
                     del wrong['OTEL_EXPORTER_OTLP_TRACES_CERTIFICATE'];del wrong['OTEL_EXPORTER_OTLP_CERTIFICATE']
                 tracing=telemetry.initialize(environ=wrong)

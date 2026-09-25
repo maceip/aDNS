@@ -1,0 +1,24 @@
+2026-09-21T20:14:54.183426Z 0   [fail ] CCF/src/host/ledger.h:1021           | Cannot find ledger file for seqno 232
+2026-09-21T20:14:54.183722Z 0   [info ] CCF/src/host/time_bound_logger.h:64  | Operation took too long ( 24.141ms): Reading ledger entries from 232 to 232
+2026-09-21T20:14:54.283747Z 0   [fail ] CCF/src/host/ledger.h:1021           | Cannot find ledger file for seqno 232
+2026-09-21T20:14:54.283841Z 0   [info ] CCF/src/host/time_bound_logger.h:64  | Operation took too long ( 15.740ms): Reading ledger entries from 232 to 232
+2026-09-21T20:14:54.309171Z 0   [info ] CCF/src/host/sig_term.h:39           | SIGTERM: Shutting down enclave gracefully...
+2026-09-21T20:14:54.315631Z 0   [info ] CCF/src/enclave/enclave.h:435        | Enclave stopped successfully. Stopping host...
+2026-09-21T20:14:54.319579Z 0   [info ] CCF/src/host/handle_ring_buffer.h:55 | Host stopped successfully
+2026-09-21T20:14:54.319662Z 0   [info ] CCF/src/host/run.cpp:616             | Exited event loop
+2026-09-21T20:14:54.354089Z 0   [info ] CCF/src/host/time_bound_logger.h:64  | Operation took too long ( 34.276ms): Closing ledger file - fclose(ledger_51820)
+2026-09-21T20:14:54.379744Z 0   [info ] CCF/src/host/run.cpp:1157            | Ran an extra 2 cleanup iteration(s)
+Traceback (most recent call last):
+  File "/opt/agentdns/run.py", line 423, in <module>
+    if __name__=="__main__":raise SystemExit(main())
+                                             ^^^^^^
+  File "/opt/agentdns/run.py", line 344, in main
+    return supervise(config_path,config,state,args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/agentdns/run.py", line 404, in supervise
+    provisioned=provision_transfer_secret(address,certificate,provision_body)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/agentdns/run.py", line 244, in provision_transfer_secret
+    raise RuntimeError(f"TSIG provisioning rejected (HTTP {status})")
+RuntimeError: TSIG provisioning rejected (HTTP 400)
+

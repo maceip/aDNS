@@ -1,0 +1,29 @@
+{
+  "primary": {
+    "image": "agentdnsport20260913.azurecr.io/primary@sha256:f180a8a8e316ded2c8ccc7603e46bc18ded4446fafe2118f6038105fb7debcf4",
+    "archive_tag": "agentdnsport20260913.azurecr.io/primary:20260921-transfer-39d854d",
+    "config_sha256": "8975bd151d46d24074b495f2f2a07d10f92f2e5fa1449ceffb275f9a4ee8116b",
+    "layer_count": 8,
+    "oci_layer_sha256": [
+      "4f650cfe0ed9260faecb6d99a64a1b3dc31f9319a0c234d2d514ab5d80eae231",
+      "76726e328314bb2efea3f4ac6d33c2c250034913fbc67a8d5eb1cd446e13d72d",
+      "c858df27435131ba11c9385cb98630865fe47fc81db2174153691b21a838e1f9",
+      "44015aff9d7da21ea37689650c9c421c41b2f9e22b7028452aec5e6f21ad720b",
+      "c93d73a163252bd4244922ac95140f6f4b08c17261b19db4091b281e608c73f3",
+      "9ba1cc62b2763d01f8faa81d51e9190f292fc87909634c3c01369508400c1f4b",
+      "e532ffb6d3b593bec96c89a6b96209dfec1996cf05d0008afbcf4a6a7b4fa714",
+      "f5a3688f4b1c98659fc11fe3c0a63c1f81713963025b475d92ee864d1b6e0482"
+    ]
+  },
+  "secondary": {
+    "image": "agentdnsport20260913.azurecr.io/secondary@sha256:dfd9158f60a9a0cd67b445b001ee636a0389c66ce926af3c386588d886976861",
+    "archive_tag": "agentdnsport20260913.azurecr.io/secondary:20260919-startup-pinned",
+    "config_sha256": "71afc3746bf8353dda4f8ea362266f6adc0a3a6d22b565fcafb4069e23c0f17d",
+    "layer_count": 3,
+    "oci_layer_sha256": [
+      "e51aee9c82ec5dd5ba2add49c45c6d85d460512757e2615b69bcdf9469c7cb58",
+      "6f0d74a4bd219be1a952ca63531a1401607de85d547c0a05f07c9abd475b2d53",
+      "1fa68d1c56d8c2509e493af68f6f5f0b0f3327f70311f9cb91578794b9f74e9f"
+    ]
+  }
+}

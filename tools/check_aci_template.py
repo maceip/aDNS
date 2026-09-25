@@ -188,7 +188,7 @@ def validate_otel(template, containers, volumes, policies):
     rules=policies["primary"]["env_rules"]
     otel_rules=[rule for rule in rules if rule["pattern"].lstrip("^").startswith("OTEL_")]
     if sorted(otel_rules,key=lambda rule:rule["pattern"])!=sorted(otel_policy_rules(expected),key=lambda rule:rule["pattern"]):
-        raise ValueError("CCE must constrain exact public OTLP settings and a nonliteral Basic-auth pattern")
+        raise ValueError("CCE must constrain exact public OTLP settings and the bounded nonliteral authorization pattern")
     # Broad extra patterns must not bypass the explicit auth/environment rules.
     platform_patterns={r"(?i)(FABRIC)_.+=.+",r"HOSTNAME=.+",r"T(E)?MP=.+",r"FabricPackageFileName=.+",
         r"HostedServiceName=.+",r"IDENTITY_API_VERSION=.+",r"IDENTITY_HEADER=.+",r"IDENTITY_SERVER_THUMBPRINT=.+",
@@ -201,7 +201,7 @@ def validate_otel(template, containers, volumes, policies):
         raise ValueError("CCE must constrain the read-only public OTLP CA mount")
     return {"configured":True,"trace_export_enabled":True,"endpoint":expected["OTEL_EXPORTER_OTLP_ENDPOINT"],
             "public_ca_sha256":ca_sha256,"resource_labels":labels,
-            "credential_policy":"secureString reference and bounded nonliteral percent-encoded Basic authorization"}
+            "credential_policy":"secureString reference and bounded nonliteral percent-encoded Basic or Bearer authorization"}
 
 
 def check(template_path, archives, mappings):

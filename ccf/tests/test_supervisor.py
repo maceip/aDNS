@@ -26,6 +26,17 @@ supervisor=importlib.util.module_from_spec(spec);spec.loader.exec_module(supervi
 
 
 class SupervisorTest(unittest.TestCase):
+    def test_non_genesis_secret_is_rejected_before_any_child_or_secret_read(self):
+        from types import SimpleNamespace
+        for mode in ('Join', 'Recover', 'invalid'):
+            with self.subTest(mode=mode), patch.object(supervisor.subprocess, 'Popen') as child, \
+                    patch.object(supervisor, 'load_transfer_secret') as secret:
+                with self.assertRaisesRegex(ValueError, 'only valid for Start'):
+                    supervisor.supervise(None, {'command': {'type': mode}}, None,
+                        SimpleNamespace(provision_tsig_file='/must-not-be-read'))
+                child.assert_not_called()
+                secret.assert_not_called()
+
     def setUp(self):
         self.temporary=tempfile.TemporaryDirectory();self.root=pathlib.Path(self.temporary.name)
         self.state=self.root/"state";self.state.mkdir()

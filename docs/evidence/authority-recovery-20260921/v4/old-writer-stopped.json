@@ -1,0 +1,16 @@
+{
+  "containers": [
+    {
+      "finishTime": null,
+      "name": "primary",
+      "state": null
+    },
+    {
+      "finishTime": null,
+      "name": "secondary",
+      "state": null
+    }
+  ],
+  "provisioningState": "Succeeded",
+  "state": "Stopped"
+}

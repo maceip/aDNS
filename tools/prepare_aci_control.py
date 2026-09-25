@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Create isolated validation member keys and a public CCF bootstrap manifest.
 
-Run only against a new output directory. Private files are mode0600 and never
+Initial Start/genesis validation only: creates fresh member keys, never recovery
+material for an existing service. Run only against a new output directory. Private files are mode0600 and never
 printed; only public configuration/member material belongs in a launch image.
 """
 import argparse

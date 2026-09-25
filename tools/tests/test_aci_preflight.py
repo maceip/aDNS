@@ -152,6 +152,18 @@ class TelemetryPreflightTests(unittest.TestCase):
             with self.subTest(change=change),self.assertRaises(ValueError):
                 preflight.validate_otel(template,containers,{},policy)
 
+    def test_scoped_endpoint_is_measured_exactly_and_disabled_default_is_unchanged(self):
+        template,containers,volumes,policy=self.fixture()
+        endpoint='https://grafana.example.test/_ops/telemetry/adns-authority'
+        environment=containers['primary']['environmentVariables']
+        environment[0]['value']=endpoint
+        public={item['name']:item['value'] for item in environment if 'value' in item}
+        policy['primary']['env_rules']=builder.otel_policy_rules(public)
+        self.assertEqual(preflight.validate_otel(template,containers,volumes,policy)['endpoint'],endpoint)
+        environment[0]['value']=endpoint.replace('adns-authority','worker')
+        with self.assertRaisesRegex(ValueError,'exact public OTLP'):
+            preflight.validate_otel(template,containers,volumes,policy)
+
     def test_literal_secret_broad_policy_wrong_ca_and_writable_mount_are_rejected(self):
         for change in ('literal','parameter-default','duplicate','http','broad-policy','literal-policy','policy-mount','mount','extra-label','ca'):
             template,containers,volumes,policy=self.fixture();primary=containers['primary']

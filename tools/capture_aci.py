@@ -492,6 +492,11 @@ def start_mail_fixtures(state):
 
 class CaptureState:
     MAX_LIFECYCLE_ACTIONS = 128
+    # This is a retry cache, not the replay authority. CCF atomically retains
+    # request IDs/results and rejects a changed envelope for a committed ID.
+    # The controller durably retains signed envelopes for historical retries.
+    # Retain at least the complete 300-second nonce window after signing.
+    LIFECYCLE_RETENTION_SECONDS = 600
 
     def __init__(self, config, *, config_validator=validate_config):
         # Copy and validate once. Nothing supplied to HTTP handlers changes this scope.
@@ -532,6 +537,48 @@ class CaptureState:
         self._request_ids = {self.action["request_id"]: self.intent_hash}
         self._signed_actions = {}
         self._challenge_ids = set()
+        self._action_deadlines = {}
+        self._challenge_deadlines = {}
+        self._registration_action_id = self.intent_hash
+
+    def _prune_lifecycle(self):
+        """Bound abandoned/expired handles; never discard the current identity.
+
+        Called under _lock. Monotonic retention cannot be shortened by a wall
+        clock adjustment. Exact older retries go directly to CCF using the
+        controller's persisted envelope, not by asking for a fresh signature.
+        """
+        now = time.monotonic()
+        for action_id, deadline in list(self._action_deadlines.items()):
+            if deadline > now or action_id == self._registration_action_id:
+                continue
+            action = self._prepared_actions.pop(action_id)
+            self._request_ids.pop(action['request_id'], None)
+            self._signed_actions.pop(action_id, None)
+            del self._action_deadlines[action_id]
+        for challenge_id, deadline in list(self._challenge_deadlines.items()):
+            if deadline <= now:
+                self._challenge_ids.remove(challenge_id)
+                del self._challenge_deadlines[challenge_id]
+
+    def _prepare_action(self, action):
+        """Cache one already scope-validated action under the caller's lock."""
+        self._prune_lifecycle()
+        action_id = hashlib.sha256(canonical(action)).hexdigest()
+        previous = self._request_ids.get(action['request_id'])
+        if previous is not None and previous != action_id:
+            raise ValueError('request ID already belongs to a different fixed action')
+        if action_id not in self._prepared_actions:
+            if len(self._prepared_actions) >= self.MAX_LIFECYCLE_ACTIONS:
+                raise ValueError('bounded lifecycle action capacity reached; live handles retained')
+            self._action_deadlines[action_id] = time.monotonic() + self.LIFECYCLE_RETENTION_SECONDS
+            self._request_ids[action['request_id']] = action_id
+            self._prepared_actions[action_id] = action
+        elif action_id not in self._signed_actions:
+            # A controller resuming an unsigned persisted action re-prepares
+            # it before nonce/signing. Give that live attempt a full window.
+            self._action_deadlines[action_id] = time.monotonic() + self.LIFECYCLE_RETENTION_SECONDS
+        return strict_json(canonical({'action_id': action_id, 'action': action, 'intent_hash': action_id}))
 
     def inventory(self):
         def tcb(offset):
@@ -579,9 +626,20 @@ class CaptureState:
             if self.registration_id is not None and self.registration_id != derived:
                 raise ValueError("fixed registration has already been signed")
             self.registration_id = derived
+            self._registration_action_id = expected
         elif action["operation"] == "acme_challenge_create":
-            self._challenge_ids.add("chal-" + digest[:32])
+            self._prune_lifecycle()
+            if len(self._challenge_ids) >= self.MAX_LIFECYCLE_ACTIONS:
+                raise ValueError('bounded active challenge capacity reached')
+            challenge_id = "chal-" + digest[:32]
+            self._challenge_ids.add(challenge_id)
+            # CCF may accept just before nonce expiry; retain ownership through
+            # the longest possible challenge lifetime, independently of cache.
+            self._challenge_deadlines[challenge_id] = (time.monotonic() + 300
+                + action['parameters']['lifetime_seconds'])
         self._signed_actions[expected] = (message, envelope)
+        if expected in self._action_deadlines:
+            self._action_deadlines[expected] = time.monotonic() + self.LIFECYCLE_RETENTION_SECONDS
         return strict_json(canonical(envelope))
 
     def signed_request(self, nonce_fields):
@@ -596,6 +654,7 @@ class CaptureState:
         operation = request["operation"]
         values = request["parameters"]
         with self._lock:
+            self._prune_lifecycle()
             if self.registration_id is None:
                 raise ValueError("sign the fixed registration before preparing lifecycle actions")
             parameters = {"registration_id": self.registration_id}
@@ -641,15 +700,7 @@ class CaptureState:
                 raise ValueError("unsupported lifecycle operation")
             action = {key: self.action[key] for key in ("audience", "grant_id", "zone", "signer_spki_der")}
             action.update(request_id=request_id, operation=operation, parameters=parameters)
-            action_id = hashlib.sha256(canonical(action)).hexdigest()
-            previous = self._request_ids.get(request_id)
-            if previous is not None and previous != action_id:
-                raise ValueError("request ID already belongs to a different fixed action")
-            if action_id not in self._prepared_actions and len(self._prepared_actions) >= self.MAX_LIFECYCLE_ACTIONS:
-                raise ValueError("bounded validation lifecycle action capacity reached")
-            self._request_ids[request_id] = action_id
-            self._prepared_actions[action_id] = action
-            return strict_json(canonical({"action_id": action_id, "action": action, "intent_hash": action_id}))
+            return self._prepare_action(action)
 
     def sign_lifecycle(self, request):
         exact_fields(request, ("action_id", "nonce", "nonce_expires_at", "intent_hash"))
@@ -657,6 +708,7 @@ class CaptureState:
         if type(action_id) is not str:
             raise ValueError("invalid prepared action ID")
         with self._lock:
+            self._prune_lifecycle()
             action = self._prepared_actions.get(action_id)
             if action is None:
                 raise ValueError("unknown prepared lifecycle action")
